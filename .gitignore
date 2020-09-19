@@ -1,0 +1,10 @@
+.vs/
+
+*.log
+*.exe
+*.dmp
+*.res
+*.obj
+*.pdb
+
+*.sublime-workspace
