@@ -14,5 +14,6 @@ struct Color { float r, g, b, a; };
 //    Color { 0.5, 0.2, 0.7, 1.0 }  ==>  SDL_Color { 127,  51, 178, 255 }
 
 INTERNAL SDL_Color ColorToSDLColor (Color color);
+INTERNAL Color     MakeColor       (float r, float g, float b, float a = 1.0f);
 
 #endif /* UTILITY_HPP */

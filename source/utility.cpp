@@ -7,3 +7,8 @@ INTERNAL SDL_Color ColorToSDLColor (Color color)
     c.a = (U8)(color.a * 255.0f);
     return c;
 }
+
+INTERNAL Color MakeColor (float r, float g, float b, float a)
+{
+    return Color { r,g,b,a };
+}

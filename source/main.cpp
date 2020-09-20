@@ -19,7 +19,7 @@ int main (int argc, char** argv)
             }
         }
 
-        ClearWindow({ 0,0,0,1 });
+        ClearWindow(MakeColor(0,0,0));
         RefreshWindow();
     }
 
