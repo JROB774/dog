@@ -22,18 +22,22 @@
 #define INTERNAL   static
 
 // Short-hand type definitions for fixed-width integral types.
-typedef  uint8_t  u8;
-typedef uint16_t u16;
-typedef uint32_t u32;
-typedef uint64_t u64;
-typedef   int8_t  s8;
-typedef  int16_t s16;
-typedef  int32_t s32;
-typedef  int64_t s64;
+typedef  uint8_t  U8;
+typedef uint16_t U16;
+typedef uint32_t U32;
+typedef uint64_t U64;
+typedef   int8_t  S8;
+typedef  int16_t S16;
+typedef  int32_t S32;
+typedef  int64_t S64;
 
 // Header includes.
+#include "utility.hpp"
 #include "window.hpp"
+#include "renderer.hpp"
 // Source includes.
+#include "utility.cpp"
 #include "window.cpp"
+#include "renderer.cpp"
 
 #endif /* MAIN_HPP */

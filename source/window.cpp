@@ -15,9 +15,10 @@ INTERNAL void QuitWindow ()
     SDL_DestroyWindow(gWindow.window);
 }
 
-INTERNAL void ClearWindow (u8 r, u8 g, u8 b, u8 a)
+INTERNAL void ClearWindow (Color color)
 {
-    SDL_SetRenderDrawColor(gWindow.renderer, r,g,b,a);
+    SDL_Color c = ColorToSDLColor(color);
+    SDL_SetRenderDrawColor(gWindow.renderer, c.r,c.g,c.b,c.a);
     SDL_RenderClear(gWindow.renderer);
 }
 
