@@ -5,6 +5,7 @@ struct Image
 {
     SDL_Texture* texture;
     float w, h;
+    Color color; // Multiply color.
 };
 
 INTERNAL void LoadImage (Image& image, const char* file_name);

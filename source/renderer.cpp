@@ -30,6 +30,9 @@ INTERNAL void DrawFill (float x, float y, float w, float h, Color color)
 
 INTERNAL void DrawImage (Image& image, float x, float y)
 {
+    SDL_Color c = ColorToSDLColor(image.color);
+    SDL_SetTextureColorMod(image.texture, c.r,c.g,c.b);
+    SDL_SetTextureAlphaMod(image.texture, c.a);
     SDL_FRect rect = { x,y,image.w,image.h };
     SDL_RenderCopyF(gWindow.renderer, image.texture, NULL, &rect);
 }

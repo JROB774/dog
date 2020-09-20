@@ -10,6 +10,8 @@ INTERNAL void LoadImage (Image& image, const char* file_name)
     image.w = (float)surface->w;
     image.h = (float)surface->h;
 
+    image.color = MakeColor(1,1,1,1);
+
     SDL_FreeSurface(surface);
 }
 
