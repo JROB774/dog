@@ -27,3 +27,9 @@ INTERNAL void DrawFill (float x, float y, float w, float h, Color color)
     SDL_FRect rect = { x,y,w,h };
     SDL_RenderFillRectF(gWindow.renderer, &rect);
 }
+
+INTERNAL void DrawImage (Image& image, float x, float y)
+{
+    SDL_FRect rect = { x,y,image.w,image.h };
+    SDL_RenderCopyF(gWindow.renderer, image.texture, NULL, &rect);
+}

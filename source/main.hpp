@@ -33,10 +33,12 @@ typedef  int64_t S64;
 
 // Header includes.
 #include "utility.hpp"
+#include "image.hpp"
 #include "window.hpp"
 #include "renderer.hpp"
 // Source includes.
 #include "utility.cpp"
+#include "image.cpp"
 #include "window.cpp"
 #include "renderer.cpp"
 
