@@ -2,7 +2,7 @@ INTERNAL void LoadImage (Image& image, const char* file_name)
 {
     SDL_Surface* surface = SDL_LoadBMP(file_name);
     ASSERT(surface);
-    SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 0x80,0x80,0x80));
+    SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 0x00,0x7F,0x7F));
 
     image.texture = SDL_CreateTextureFromSurface(gWindow.renderer, surface);
     ASSERT(image.texture);
