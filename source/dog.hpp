@@ -13,8 +13,8 @@ GLOBAL struct Dog
 	bool jump = false;
 	bool action = false;
 
-	const float max_vel_x = 10;
-	const float max_vel_y = 10;
+	const float max_vel_x = 100;
+	const float max_vel_y = 100;
 
 	const int width = 24;
 	const int height = 24;
@@ -23,7 +23,7 @@ GLOBAL struct Dog
 } gDog;
 
 void DogCreate();
-void DogUpdate();
+void DogUpdate(float _dt);
 void DogDraw();
 
 #endif
