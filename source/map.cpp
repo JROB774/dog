@@ -94,6 +94,8 @@ INTERNAL void DrawMap (Map& map)
 {
     SDL_Rect clip = { 0,0,TILE_CLIP_W,TILE_CLIP_H };
 
+    DrawFill(0.0f,0.0f, (float)(map.w*TILE_W),(float)(map.h*TILE_H), MakeColor(1,1,1));
+
     // Draw the background tiles.
     for (int iy=0; iy<map.h; ++iy)
     {
