@@ -41,14 +41,20 @@ typedef  int64_t S64;
 #include "image.hpp"
 #include "window.hpp"
 #include "renderer.hpp"
+#include "audio.hpp"
+#include "timer.hpp"
 #include "map.hpp"
 #include "input.hpp"
+#include "game.hpp"
 // Source includes.
 #include "utility.cpp"
 #include "image.cpp"
 #include "window.cpp"
 #include "renderer.cpp"
+#include "audio.cpp"
+#include "timer.cpp"
 #include "map.cpp"
 #include "input.cpp"
+#include "game.cpp"
 
 #endif /* MAIN_HPP */

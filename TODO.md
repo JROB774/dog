@@ -2,7 +2,9 @@
 
 ## Josh
 
-* [ ] Implement frame-capping (60 FPS).
+* [X] Implement frame-capping (60 FPS).
+* [X] Add game.hpp/cpp for putting the game logic in.
+* [ ] Audio system for sound using this [library](https://github.com/jakebesworth/Simple-SDL2-Audio).
 
 ## TiKo
 
@@ -13,6 +15,5 @@
 * [ ] Map navigation.
 * [ ] Enemies/hazards.
 * [ ] Particle effect system.
-* [ ] Audio system for sound using this [library](https://github.com/jakebesworth/Simple-SDL2-Audio).
 
 *Flesh out these and add more as needed...*
