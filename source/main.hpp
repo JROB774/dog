@@ -46,6 +46,8 @@ typedef  int64_t S64;
 #include "map.hpp"
 #include "input.hpp"
 #include "game.hpp"
+#include "dog.hpp"
+
 // Source includes.
 #include "utility.cpp"
 #include "image.cpp"
@@ -56,5 +58,6 @@ typedef  int64_t S64;
 #include "map.cpp"
 #include "input.cpp"
 #include "game.cpp"
+#include "dog.cpp"
 
 #endif /* MAIN_HPP */

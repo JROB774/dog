@@ -10,6 +10,8 @@ int main (int argc, char** argv)
 
     ShowWindow();
 
+    DogCreate();
+
     bool running = true;
     while (running)
     {
@@ -31,6 +33,7 @@ int main (int argc, char** argv)
         RenderGame(gTimer.delta_time);
 
         CapFramerate();
+
         RefreshWindow();
     }
 
