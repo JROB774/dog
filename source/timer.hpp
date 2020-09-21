@@ -14,8 +14,7 @@ GLOBAL struct Timer
 
 } gTimer;
 
-INTERNAL float CounterToSeconds (U64 counter);
-INTERNAL void  InitFrameTimer   ();
-INTERNAL void  CapFramerate     ();
+INTERNAL void InitFrameTimer ();
+INTERNAL void CapFramerate   ();
 
 #endif /* TIMER_HPP */

@@ -1,11 +1,16 @@
+#include <sstream>
+
 INTERNAL bool InitWindow (const char* title, int w, int h)
 {
     // The window starts off hidden so we don't have a white window displaying whilst all the resources load and systems initialize.
-    gWindow.window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED, w,h, SDL_WINDOW_HIDDEN);
+    gWindow.window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED, w,h, SDL_WINDOW_RESIZABLE|SDL_WINDOW_HIDDEN);
     ASSERT(gWindow.window);
     gWindow.renderer = SDL_CreateRenderer(gWindow.window, -1, SDL_RENDERER_ACCELERATED);
     ASSERT(gWindow.renderer);
-    SDL_RenderSetScale(gWindow.renderer, 2,2);
+    SDL_SetWindowMinimumSize(gWindow.window, w,h);
+
+    gWindow.screenw = w;
+    gWindow.screenh = h;
 
     return true;
 }
@@ -36,4 +41,27 @@ INTERNAL void ShowWindow ()
 INTERNAL void HideWindow ()
 {
     SDL_HideWindow(gWindow.window);
+}
+
+INTERNAL void SetViewport ()
+{
+    int windoww,windowh;
+    SDL_GetWindowSize(gWindow.window, &windoww,&windowh);
+
+    int sx = (int)roundf(((float)windoww / (float)gWindow.screenw));
+    int sy = (int)roundf(((float)windowh / (float)gWindow.screenh));
+
+    // Determine the smallest scale and use that.
+    float scale = (float)((sx < sy) ? sx : sy);
+
+    SDL_RenderSetScale(gWindow.renderer, scale,scale);
+
+    SDL_Rect viewport;
+
+    viewport.x = ((windoww - (gWindow.screenw * (int)scale)) / 2) / (int)scale;
+    viewport.y = ((windowh - (gWindow.screenh * (int)scale)) / 2) / (int)scale;
+    viewport.w = gWindow.screenw;
+    viewport.h = gWindow.screenh;
+
+    SDL_RenderSetViewport(gWindow.renderer, &viewport);
 }
