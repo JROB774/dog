@@ -1,10 +1,15 @@
 GLOBAL constexpr U32 TILE_EMPTY_COLOR = 0xFFFFFFFF;
+GLOBAL constexpr U32 TILE_BACK2_COLOR = 0xFF808080;
+GLOBAL constexpr U32 TILE_BACK1_COLOR = 0xFF404040;
 GLOBAL constexpr U32 TILE_SOLID_COLOR = 0xFF000000;
 
-GLOBAL constexpr TileFlag TILE_FLAG_W = 0x01;
-GLOBAL constexpr TileFlag TILE_FLAG_S = 0x02;
-GLOBAL constexpr TileFlag TILE_FLAG_E = 0x04;
-GLOBAL constexpr TileFlag TILE_FLAG_N = 0x00;
+GLOBAL constexpr int TILE_FLAG_W = 0x01;
+GLOBAL constexpr int TILE_FLAG_S = 0x02;
+GLOBAL constexpr int TILE_FLAG_E = 0x04;
+GLOBAL constexpr int TILE_FLAG_N = 0x08;
+
+GLOBAL constexpr int TILE_CLIP_W = 32;
+GLOBAL constexpr int TILE_CLIP_H = 32;
 
 INTERNAL void LoadMap (Map& map, const char* file_name)
 {
@@ -22,6 +27,11 @@ INTERNAL void LoadMap (Map& map, const char* file_name)
     map.tiles = MALLOC(Tile, map.w*map.h);
     ASSERT(map.tiles);
 
+    // Seed the random tiles for the map using the map's name so that they remain consistent!
+    unsigned int random_seed = 0;
+    for (int i=0; i<strlen(file_name); ++i) random_seed += file_name[i];
+    srand(random_seed);
+
     U32* pixels = (U32*)surface->pixels;
     for (int iy=0; iy<map.h; ++iy)
     {
@@ -35,15 +45,47 @@ INTERNAL void LoadMap (Map& map, const char* file_name)
             switch (pixel)
             {
                 case (TILE_EMPTY_COLOR): tile->type = TILE_EMPTY; break;
+                case (TILE_BACK2_COLOR): tile->type = TILE_BACK2; break;
+                case (TILE_BACK1_COLOR): tile->type = TILE_BACK1; break;
                 case (TILE_SOLID_COLOR): tile->type = TILE_SOLID; break;
             }
 
-            // Special case for TILE_SOLID type tiles where we check the surrounding tiles
-            // and set flags for each of the directions, determining the correct graphic.
-            tile->flag = 0x00;
-            if (tile->type == TILE_SOLID)
+            if (tile->type != TILE_EMPTY)
             {
-                // @Incomplete: ...
+                tile->variant = 0;
+                tile->offset = 0;
+
+                switch (tile->type)
+                {
+                    case (TILE_SOLID): tile->variant = rand() % (int)((map.tileset.h/TILE_CLIP_H)-2); break;
+                    case (TILE_BACK2): tile->variant =          (int)((map.tileset.h/TILE_CLIP_H)-2); break;
+                    case (TILE_BACK1): tile->variant =          (int)((map.tileset.h/TILE_CLIP_H)-1); break;
+                }
+
+                switch (tile->type)
+                {
+                    case (TILE_SOLID):
+                    {
+                        if ((ix == (      0)) || (pixels[(iy)*map.w+(ix-1)] == TILE_SOLID_COLOR)) tile->offset |= TILE_FLAG_W;
+                        if ((iy == (map.h-1)) || (pixels[(iy+1)*map.w+(ix)] == TILE_SOLID_COLOR)) tile->offset |= TILE_FLAG_S;
+                        if ((ix == (map.w-1)) || (pixels[(iy)*map.w+(ix+1)] == TILE_SOLID_COLOR)) tile->offset |= TILE_FLAG_E;
+                        if ((iy == (      0)) || (pixels[(iy-1)*map.w+(ix)] == TILE_SOLID_COLOR)) tile->offset |= TILE_FLAG_N;
+                    } break;
+                    case (TILE_BACK2):
+                    {
+                        if ((ix == (      0)) || (pixels[(iy)*map.w+(ix-1)] != TILE_EMPTY_COLOR)) tile->offset |= TILE_FLAG_W;
+                        if ((iy == (map.h-1)) || (pixels[(iy+1)*map.w+(ix)] != TILE_EMPTY_COLOR)) tile->offset |= TILE_FLAG_S;
+                        if ((ix == (map.w-1)) || (pixels[(iy)*map.w+(ix+1)] != TILE_EMPTY_COLOR)) tile->offset |= TILE_FLAG_E;
+                        if ((iy == (      0)) || (pixels[(iy-1)*map.w+(ix)] != TILE_EMPTY_COLOR)) tile->offset |= TILE_FLAG_N;
+                    } break;
+                    case (TILE_BACK1):
+                    {
+                        if ((ix == (      0)) || (pixels[(iy)*map.w+(ix-1)] == TILE_SOLID_COLOR) || (pixels[(iy)*map.w+(ix-1)] == TILE_BACK1_COLOR)) tile->offset |= TILE_FLAG_W;
+                        if ((iy == (map.h-1)) || (pixels[(iy+1)*map.w+(ix)] == TILE_SOLID_COLOR) || (pixels[(iy+1)*map.w+(ix)] == TILE_BACK1_COLOR)) tile->offset |= TILE_FLAG_S;
+                        if ((ix == (map.w-1)) || (pixels[(iy)*map.w+(ix+1)] == TILE_SOLID_COLOR) || (pixels[(iy)*map.w+(ix+1)] == TILE_BACK1_COLOR)) tile->offset |= TILE_FLAG_E;
+                        if ((iy == (      0)) || (pixels[(iy-1)*map.w+(ix)] == TILE_SOLID_COLOR) || (pixels[(iy-1)*map.w+(ix)] == TILE_BACK1_COLOR)) tile->offset |= TILE_FLAG_N;
+                    } break;
+                }
             }
         }
     }
@@ -60,15 +102,44 @@ INTERNAL void FreeMap (Map& map)
 
 INTERNAL void DrawMap (Map& map)
 {
+    SDL_Rect clip = { 0,0,TILE_CLIP_W,TILE_CLIP_H };
+
+    // Draw the background 2 tiles.
     for (int iy=0; iy<map.h; ++iy)
     {
         for (int ix=0; ix<map.w; ++ix)
         {
             Tile* tile = &map.tiles[iy*map.w+ix];
-            switch (tile->type)
+            if (tile->type == TILE_BACK2)
             {
-                case (TILE_EMPTY): DrawFill(ix*TILE_W, iy*TILE_H, TILE_W,TILE_H, MakeColor(1,1,1)); break;
-                case (TILE_SOLID): DrawFill(ix*TILE_W, iy*TILE_H, TILE_W,TILE_H, MakeColor(0,0,0)); break;
+                clip.x = tile->offset * TILE_CLIP_W, clip.y = tile->variant * TILE_CLIP_H;
+                DrawImage(map.tileset, (float)((ix*TILE_W)+(TILE_W/2)-(TILE_CLIP_W/2)), (float)((iy*TILE_H)+(TILE_H/2)-(TILE_CLIP_H/2)), &clip);
+            }
+        }
+    }
+    // Draw the background 1 tiles.
+    for (int iy=0; iy<map.h; ++iy)
+    {
+        for (int ix=0; ix<map.w; ++ix)
+        {
+            Tile* tile = &map.tiles[iy*map.w+ix];
+            if (tile->type == TILE_BACK1)
+            {
+                clip.x = tile->offset * TILE_CLIP_W, clip.y = tile->variant * TILE_CLIP_H;
+                DrawImage(map.tileset, (float)((ix*TILE_W)+(TILE_W/2)-(TILE_CLIP_W/2)), (float)((iy*TILE_H)+(TILE_H/2)-(TILE_CLIP_H/2)), &clip);
+            }
+        }
+    }
+    // Draw the solid tiles.
+    for (int iy=0; iy<map.h; ++iy)
+    {
+        for (int ix=0; ix<map.w; ++ix)
+        {
+            Tile* tile = &map.tiles[iy*map.w+ix];
+            if (tile->type == TILE_SOLID)
+            {
+                clip.x = tile->offset * TILE_CLIP_W, clip.y = tile->variant * TILE_CLIP_H;
+                DrawImage(map.tileset, (float)((ix*TILE_W)+(TILE_W/2)-(TILE_CLIP_W/2)), (float)((iy*TILE_H)+(TILE_H/2)-(TILE_CLIP_H/2)), &clip);
             }
         }
     }

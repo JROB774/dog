@@ -1,21 +1,21 @@
 #ifndef MAP_HPP
 #define MAP_HPP
 
-GLOBAL constexpr int TILE_W      = 16;
-GLOBAL constexpr int TILE_CLIP_W = 24;
-GLOBAL constexpr int TILE_H      = 16;
-GLOBAL constexpr int TILE_CLIP_H = 24;
+typedef int TileType;
 
-typedef U8 TileType;
-typedef U8 TileFlag;
+GLOBAL constexpr TileType TILE_EMPTY = 0;
+GLOBAL constexpr TileType TILE_BACK2 = 1;
+GLOBAL constexpr TileType TILE_BACK1 = 2;
+GLOBAL constexpr TileType TILE_SOLID = 3;
 
-GLOBAL constexpr TileType TILE_EMPTY = 0x00;
-GLOBAL constexpr TileType TILE_SOLID = 0xFF;
+GLOBAL constexpr int TILE_W = 16;
+GLOBAL constexpr int TILE_H = 16;
 
 struct Tile
 {
     TileType type;
-    TileFlag flag;
+    int offset;
+    int variant;
 };
 
 struct Map

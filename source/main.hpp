@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <string.h>
 
 // Macros for memory allocation functions to perform the C++ casts.
 #define MALLOC(t,sz) ((t*)(malloc((sz)*sizeof(t))))

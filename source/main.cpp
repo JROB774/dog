@@ -6,7 +6,7 @@ int main (int argc, char** argv)
 
     Map test;
 
-    InitWindow("Cover Jam Game", 320,240);
+    InitWindow("Cover Jam Game", 640,480);
     LoadMap(test, "assets/maptest.bmp");
 
     ShowWindow();
@@ -23,7 +23,7 @@ int main (int argc, char** argv)
             }
         }
 
-        ClearWindow(MakeColor(0.5f,0.5f,0.5f));
+        ClearWindow(MakeColor(1,1,1));
         DrawMap(test);
         RefreshWindow();
     }
