@@ -1,14 +1,10 @@
 #ifndef MAP_HPP
 #define MAP_HPP
 
-typedef int TileType;
-
-GLOBAL constexpr TileType TILE_EMPTY = 0;
-GLOBAL constexpr TileType TILE_BACKG = 1;
-GLOBAL constexpr TileType TILE_SOLID = 2;
-
 GLOBAL constexpr int TILE_W = 16;
 GLOBAL constexpr int TILE_H = 16;
+
+enum TileType { TILE_EMPTY, TILE_BACKG, TILE_SOLID };
 
 struct Tile
 {
