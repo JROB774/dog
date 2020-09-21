@@ -33,22 +33,26 @@
 #ifndef AUDIO_HPP
 #define AUDIO_HPP
 
-struct Audio
-{
-    SDL_AudioSpec spec;
-    Audio* next;
+struct Audio;
 
-    U32 length;
-    U32 length_true; // What??
-    U8* buffer_true; // What??
-    U8* buffer;
-    U8  loop;
-    U8  fade;
-    U8  free;
-    U8  volume;
+struct Sound
+{
+    Audio* audio = NULL;
+};
+struct Music
+{
+    Audio* audio = NULL;
 };
 
-INTERNAL void LoadAudio (Audio& audio, int volume, const char* file_name);
-INTERNAL void FreeAudio (Audio& audio);
+INTERNAL bool InitAudio    ();
+INTERNAL void QuitAudio    ();
+INTERNAL void UnpauseAudio ();
+INTERNAL void PauseAudio   ();
+INTERNAL void LoadSound    (Sound& sound, const char* file_name, int volume);
+INTERNAL void FreeSound    (Sound& sound);
+INTERNAL void PlaySound    (Sound& sound, int volume);
+INTERNAL void LoadMusic    (Music& music, const char* file_name, int volume);
+INTERNAL void FreeMusic    (Music& music);
+INTERNAL void PlayMusic    (Music& music, int volume);
 
 #endif /* AUDIO_HPP */

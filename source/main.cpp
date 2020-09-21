@@ -5,8 +5,10 @@ int main (int argc, char** argv)
     SDL_Init(SDL_INIT_EVERYTHING);
 
     InitWindow("Cover Jam Game", 640,480);
-    InitFrameTimer();
+    InitAudio();
     InitGame();
+
+    InitFrameTimer();
 
     ShowWindow();
 
@@ -35,6 +37,7 @@ int main (int argc, char** argv)
     }
 
     QuitGame();
+    QuitAudio();
     QuitWindow();
 
     SDL_Quit();
