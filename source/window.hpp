@@ -5,6 +5,8 @@ GLOBAL struct Window
 {
     SDL_Renderer* renderer;
     SDL_Window*   window;
+    int screenw;
+    int screenh;
 
 } gWindow;
 
@@ -14,5 +16,6 @@ INTERNAL void ClearWindow   (Color color);
 INTERNAL void RefreshWindow ();
 INTERNAL void ShowWindow    ();
 INTERNAL void HideWindow    ();
+INTERNAL void SetViewport   ();
 
 #endif /* WINDOW_HPP */
