@@ -7,6 +7,8 @@ int main (int argc, char** argv)
     Map test;
 
     InitWindow("Cover Jam Game", 640,480);
+    InitFrameTimer();
+
     LoadMap(test, "assets/maptest.bmp");
 
     ShowWindow();
@@ -24,7 +26,10 @@ int main (int argc, char** argv)
         }
 
         ClearWindow(MakeColor(1,1,1));
+
         DrawMap(test);
+
+        CapFramerate();
         RefreshWindow();
     }
 
