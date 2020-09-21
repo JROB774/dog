@@ -27,7 +27,8 @@ int main (int argc, char** argv)
 
         ClearWindow(MakeColor(1,1,1));
 
-        DrawMap(test);
+        UpdateGame(gTimer.delta_time);
+        RenderGame(gTimer.delta_time);
 
         CapFramerate();
         RefreshWindow();

@@ -43,6 +43,7 @@ typedef  int64_t S64;
 #include "renderer.hpp"
 #include "timer.hpp"
 #include "map.hpp"
+#include "game.hpp"
 // Source includes.
 #include "utility.cpp"
 #include "image.cpp"
@@ -50,5 +51,6 @@ typedef  int64_t S64;
 #include "renderer.cpp"
 #include "timer.cpp"
 #include "map.cpp"
+#include "game.cpp"
 
 #endif /* MAIN_HPP */
