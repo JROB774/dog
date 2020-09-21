@@ -14,9 +14,12 @@ int main (int argc, char** argv)
     bool running = true;
     while (running)
     {
+        UpdateKeyboardState();
+
         SDL_Event event;
         while (SDL_PollEvent(&event))
         {
+
             if (event.type == SDL_QUIT)
             {
                 running = false;
