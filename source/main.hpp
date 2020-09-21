@@ -7,6 +7,10 @@
 #include <stdio.h>
 #include <stdint.h>
 
+// Macros for memory allocation functions to perform the C++ casts.
+#define MALLOC(t,sz) ((t*)(malloc((sz)*sizeof(t))))
+#define FREE(ptr) free(ptr)
+
 // Custom assert macro that just calls C's assert() function. The only
 // difference is that this macro can be toggled with BUILD_DEBUG.
 #if defined(BUILD_DEBUG)
@@ -36,10 +40,12 @@ typedef  int64_t S64;
 #include "image.hpp"
 #include "window.hpp"
 #include "renderer.hpp"
+#include "map.hpp"
 // Source includes.
 #include "utility.cpp"
 #include "image.cpp"
 #include "window.cpp"
 #include "renderer.cpp"
+#include "map.cpp"
 
 #endif /* MAIN_HPP */

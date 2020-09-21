@@ -16,7 +16,7 @@ INTERNAL void DrawRect (float x, float y, float w, float h, Color color)
 {
     SDL_Color c = ColorToSDLColor(color);
     SDL_SetRenderDrawColor(gWindow.renderer, c.r,c.g,c.b,c.a);
-    SDL_FRect rect = { x,y,w,h };
+    Rect rect = { x,y,w,h };
     SDL_RenderDrawRectF(gWindow.renderer, &rect);
 }
 
@@ -24,15 +24,15 @@ INTERNAL void DrawFill (float x, float y, float w, float h, Color color)
 {
     SDL_Color c = ColorToSDLColor(color);
     SDL_SetRenderDrawColor(gWindow.renderer, c.r,c.g,c.b,c.a);
-    SDL_FRect rect = { x,y,w,h };
+    Rect rect = { x,y,w,h };
     SDL_RenderFillRectF(gWindow.renderer, &rect);
 }
 
-INTERNAL void DrawImage (Image& image, float x, float y)
+INTERNAL void DrawImage (Image& image, float x, float y, const SDL_Rect* clip)
 {
     SDL_Color c = ColorToSDLColor(image.color);
     SDL_SetTextureColorMod(image.texture, c.r,c.g,c.b);
     SDL_SetTextureAlphaMod(image.texture, c.a);
-    SDL_FRect rect = { x,y,image.w,image.h };
-    SDL_RenderCopyF(gWindow.renderer, image.texture, NULL, &rect);
+    Rect rect = { x,y,image.w,image.h };
+    SDL_RenderCopyF(gWindow.renderer, image.texture, clip, &rect);
 }

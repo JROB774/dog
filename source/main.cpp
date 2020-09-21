@@ -4,10 +4,10 @@ int main (int argc, char** argv)
 {
     SDL_Init(SDL_INIT_EVERYTHING);
 
-    Image test;
+    Map test;
 
-    InitWindow("Cover Jam Game", 640,360);
-    LoadImage(test, "assets/test.bmp");
+    InitWindow("Cover Jam Game", 320,240);
+    LoadMap(test, "assets/maptest.bmp");
 
     ShowWindow();
 
@@ -24,11 +24,11 @@ int main (int argc, char** argv)
         }
 
         ClearWindow(MakeColor(0.5f,0.5f,0.5f));
-        DrawImage(test, 20,30);
+        DrawMap(test);
         RefreshWindow();
     }
 
-    FreeImage(test);
+    FreeMap(test);
     QuitWindow();
 
     SDL_Quit();
