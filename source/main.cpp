@@ -4,12 +4,9 @@ int main (int argc, char** argv)
 {
     SDL_Init(SDL_INIT_EVERYTHING);
 
-    Map test;
-
     InitWindow("Cover Jam Game", 640,480);
     InitFrameTimer();
-
-    LoadMap(test, "assets/maptest.bmp");
+    InitGame();
 
     ShowWindow();
 
@@ -34,7 +31,7 @@ int main (int argc, char** argv)
         RefreshWindow();
     }
 
-    FreeMap(test);
+    QuitGame();
     QuitWindow();
 
     SDL_Quit();
