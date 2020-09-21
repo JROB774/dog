@@ -43,6 +43,7 @@ typedef  int64_t S64;
 #include "renderer.hpp"
 #include "map.hpp"
 #include "input.hpp"
+#include "dog.hpp"
 // Source includes.
 #include "utility.cpp"
 #include "image.cpp"
@@ -50,5 +51,6 @@ typedef  int64_t S64;
 #include "renderer.cpp"
 #include "map.cpp"
 #include "input.cpp"
+#include "dog.cpp"
 
 #endif /* MAIN_HPP */

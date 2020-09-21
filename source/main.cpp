@@ -5,11 +5,13 @@ int main (int argc, char** argv)
     SDL_Init(SDL_INIT_EVERYTHING);
 
     Map test;
-
+    
     InitWindow("Cover Jam Game", 640,480);
     LoadMap(test, "assets/maptest.bmp");
 
     ShowWindow();
+
+    DogCreate();
 
     bool running = true;
     while (running)
@@ -28,6 +30,7 @@ int main (int argc, char** argv)
 
         ClearWindow(MakeColor(1,1,1));
         DrawMap(test);
+        DogDraw();
         RefreshWindow();
     }
 
