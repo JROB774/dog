@@ -42,11 +42,13 @@ typedef  int64_t S64;
 #include "window.hpp"
 #include "renderer.hpp"
 #include "map.hpp"
+#include "input.hpp"
 // Source includes.
 #include "utility.cpp"
 #include "image.cpp"
 #include "window.cpp"
 #include "renderer.cpp"
 #include "map.cpp"
+#include "input.cpp"
 
 #endif /* MAIN_HPP */
