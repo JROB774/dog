@@ -4,9 +4,8 @@
 typedef int TileType;
 
 GLOBAL constexpr TileType TILE_EMPTY = 0;
-GLOBAL constexpr TileType TILE_BACK2 = 1;
-GLOBAL constexpr TileType TILE_BACK1 = 2;
-GLOBAL constexpr TileType TILE_SOLID = 3;
+GLOBAL constexpr TileType TILE_BACKG = 1;
+GLOBAL constexpr TileType TILE_SOLID = 2;
 
 GLOBAL constexpr int TILE_W = 16;
 GLOBAL constexpr int TILE_H = 16;
