@@ -2,7 +2,8 @@
 
 ## Josh
 
-* [ ] Implement frame-capping (60 FPS).
+* [X] Implement frame-capping (60 FPS).
+* [X] Add game.hpp/cpp for putting the game logic in.
 
 ## TiKo
 
