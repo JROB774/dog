@@ -3,9 +3,9 @@
 int main (int argc, char** argv)
 {
     SDL_Init(SDL_INIT_EVERYTHING);
+    initAudio();
 
     InitWindow("DOG", 320,240);
-    InitAudio();
     InitGame();
 
     InitFrameTimer();
@@ -38,9 +38,9 @@ int main (int argc, char** argv)
     }
 
     QuitGame();
-    QuitAudio();
     QuitWindow();
 
+    endAudio();
     SDL_Quit();
 
     return 0;
