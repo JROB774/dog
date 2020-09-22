@@ -84,6 +84,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 					printf("==========Report===========\n");
 					printf("INTERSECTION SIZE: %f\n", intersection.h);
 					printf("Character Bounds: %f, %f, %f, %f\n", dog.pos.x + dog.bounds.x , temp_v.y + dog.bounds.y, dog.bounds.w, dog.bounds.h);
+					printf("Actual Dog Posistion: %f, %f, %f, %f\n", dog.pos.x, temp_v.y, dog.bounds.w, dog.bounds.h);
 					printf("Tile Bounds:      %d, %d, %d, %d\n", ix * 16, iy * 16, 16, 16);
 					
 					if(dog.vel.y > 0){dog.pos.y -= intersection.h;}
@@ -92,6 +93,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 					dog.grounded = true;
 
 					printf("New Character Bounds: %f, %f, %f, %f\n", dog.pos.x + dog.bounds.x , dog.pos.y + dog.bounds.y, dog.bounds.w, dog.bounds.h);
+					printf("New Actual Dog Posistion: %f, %f, %f, %f\n", dog.pos.x, dog.pos.y, dog.bounds.w, dog.bounds.h);
 				}
 			}
 		}
