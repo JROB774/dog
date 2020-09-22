@@ -1,12 +1,15 @@
 #ifndef MAIN_HPP
 #define MAIN_HPP
 
-#include <SDL2/SDL.h>
-
 #include <cstdlib>
 #include <cstdio>
 #include <cstdint>
 #include <cstring>
+
+#include <string>
+#include <vector>
+
+#include <SDL2/SDL.h>
 
 // Header includes.
 #include "utility.hpp"

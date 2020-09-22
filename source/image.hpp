@@ -8,7 +8,7 @@ struct Image
     Color color; // Multiply color.
 };
 
-INTERNAL void LoadImage (Image& image, const char* file_name);
+INTERNAL void LoadImage (Image& image, std::string file_name);
 INTERNAL void FreeImage (Image& image);
 
 #endif /* IMAGE_HPP */

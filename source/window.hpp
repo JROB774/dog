@@ -10,7 +10,7 @@ GLOBAL struct Window
 
 } gWindow;
 
-INTERNAL bool InitWindow    (const char* title, int w, int h);
+INTERNAL bool InitWindow    (std::string title, int w, int h);
 INTERNAL void QuitWindow    ();
 INTERNAL void ClearWindow   (Color color);
 INTERNAL void RefreshWindow ();

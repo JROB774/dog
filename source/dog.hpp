@@ -3,7 +3,7 @@
 
 struct Dog
 {
-    Vec2 pos, vel;
+    Vec2 pos;
 
     Image image;
     Flip flip;

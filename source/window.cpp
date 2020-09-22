@@ -1,9 +1,9 @@
 #include <sstream>
 
-INTERNAL bool InitWindow (const char* title, int w, int h)
+INTERNAL bool InitWindow (std::string title, int w, int h)
 {
     // The window starts off hidden so we don't have a white window displaying whilst all the resources load and systems initialize.
-    gWindow.window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED, w,h, SDL_WINDOW_RESIZABLE|SDL_WINDOW_HIDDEN);
+    gWindow.window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED, w,h, SDL_WINDOW_RESIZABLE|SDL_WINDOW_HIDDEN);
     ASSERT(gWindow.window);
     gWindow.renderer = SDL_CreateRenderer(gWindow.window, -1, SDL_RENDERER_ACCELERATED);
     ASSERT(gWindow.renderer);

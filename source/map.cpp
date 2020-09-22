@@ -12,11 +12,12 @@ GLOBAL constexpr int TILE_FLAG_N = 0x08;
 GLOBAL constexpr int TILE_CLIP_W = 32;
 GLOBAL constexpr int TILE_CLIP_H = 32;
 
-INTERNAL void LoadMap (Map& map, const char* file_name)
+INTERNAL void LoadMap (Map& map, std::string file_name)
 {
-    LoadImage(map.tileset, "assets/tilestd.bmp"); // @Hardcoded!
+    LoadImage(map.tileset, "tilestd.bmp"); // @Hardcoded!
 
-    SDL_Surface* surface = SDL_LoadBMP(file_name);
+    file_name = "assets/maps/" + file_name;
+    SDL_Surface* surface = SDL_LoadBMP(file_name.c_str());
     ASSERT(surface);
 
     // We want the data to be formatted as 32-bit RGBA so we know how to access the pixels.
@@ -25,12 +26,11 @@ INTERNAL void LoadMap (Map& map, const char* file_name)
     map.w = surface->w;
     map.h = surface->h;
 
-    map.tiles = (Tile*)malloc(map.w*map.h * sizeof(Tile));
-    ASSERT(map.tiles);
+    map.tiles.resize(map.w*map.h);
 
     // Seed the random tiles for the map using the map's name so that they remain consistent!
     unsigned int random_seed = 0;
-    for (int i=0; i<strlen(file_name); ++i) random_seed += file_name[i];
+    for (int i=0; i<file_name.length(); ++i) random_seed += file_name[i];
     srand(random_seed);
 
     U32* pixels = (U32*)surface->pixels;
@@ -88,7 +88,7 @@ INTERNAL void LoadMap (Map& map, const char* file_name)
 INTERNAL void FreeMap (Map& map)
 {
     FreeImage(map.tileset);
-    free(map.tiles);
+    map.tiles.clear();
     map.w = 0, map.h = 0;
 }
 
