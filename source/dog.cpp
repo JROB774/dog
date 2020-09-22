@@ -35,8 +35,12 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 	// Only if one direction is being pressed will we move the dog.
 	if (dog.right != dog.left)
 	{
-		if (dog.right) { dog.vel.x += (DOG_MOVE_SPEED * dt); dog.flip = FLIP_NONE; } // Move right.
-		if (dog.left ) { dog.vel.x -= (DOG_MOVE_SPEED * dt); dog.flip = FLIP_HORZ; } // Move left.
+		if (dog.right) { dog.vel.x =  DOG_MOVE_SPEED; dog.flip = FLIP_NONE; } // Move right.
+		if (dog.left ) { dog.vel.x = -DOG_MOVE_SPEED; dog.flip = FLIP_HORZ; } // Move left.
+	}
+	if (!dog.left && !dog.right)
+	{
+		dog.vel.x = 0.0f;
 	}
 
 	// Apply a jump force if the key is presed.
@@ -50,19 +54,19 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 	}
 
 	// Apply a gravity force to the dog.
-	//if (!dog.grounded) dog.vel.y += GRAVITY; else dog.vel.y = 0.0f;
-	dog.vel.y += GRAVITY;
+	if (!dog.grounded) dog.vel.y += GRAVITY; else dog.vel.y = 0.0f;
 
 	// Clamp the velocity in range.
-	if (dog.vel.y < -DOG_MAX_VEL) dog.vel.y = -DOG_MAX_VEL;
-	if (dog.vel.y >  DOG_MAX_VEL) dog.vel.y =  DOG_MAX_VEL;
-	if (dog.vel.x < -DOG_MAX_VEL) dog.vel.x = -DOG_MAX_VEL;
-	if (dog.vel.x >  DOG_MAX_VEL) dog.vel.x =  DOG_MAX_VEL;
+	// if (dog.vel.y < -DOG_MAX_VEL) dog.vel.y = -DOG_MAX_VEL;
+	// if (dog.vel.y >  DOG_MAX_VEL) dog.vel.y =  DOG_MAX_VEL;
+	// if (dog.vel.x < -DOG_MAX_VEL) dog.vel.x = -DOG_MAX_VEL;
+	// if (dog.vel.x >  DOG_MAX_VEL) dog.vel.x =  DOG_MAX_VEL;
 
-	Vec2 temp_v = {dog.pos.x + (dog.vel.x * dt), dog.pos.y + (dog.vel.y * dt)};
-	printf("Dog Y Velocity 1: %f\n", dog.vel.y);
+	// Apply velocity to the dog.
+	dog.pos.x += (dog.vel.x * dt);
+	dog.pos.y += (dog.vel.y * dt);
 
-	// Perform simple collision detection on the dog.
+	// Perform simple tile collision on the dog to correct the player's position.
 	for (int iy=0; iy<gGameState.map.h; ++iy)
 	{
 		for (int ix=0; ix<gGameState.map.w; ++ix)
@@ -70,38 +74,41 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 			Tile* tile = &gGameState.map.tiles[iy*gGameState.map.w+ix];
 			if (tile->type == TILE_SOLID)
 			{
-				Vec2 temp_2 = {temp_v.x, dog.pos.y};
 				Rect intersection;
-				if (TileEntityCollision(temp_2,dog.bounds, ix,iy, intersection))
+				if (TileEntityCollision(dog.pos,dog.bounds, ix,iy, intersection))
 				{
-					if(dog.vel.x > 0){dog.pos.x -= intersection.w;}
-					if(dog.vel.x < 0){dog.pos.x += intersection.w;}
-					dog.vel.x = 0;
-				}
-				temp_2 = {dog.pos.x, temp_v.y};
-				if (TileEntityCollision(temp_2,dog.bounds, ix,iy, intersection))
-				{
-					printf("==========Report===========\n");
-					printf("INTERSECTION SIZE: %f\n", intersection.h);
-					printf("Character Bounds: %f, %f, %f, %f\n", dog.pos.x + dog.bounds.x , temp_v.y + dog.bounds.y, dog.bounds.w, dog.bounds.h);
-					printf("Actual Dog Posistion: %f, %f, %f, %f\n", dog.pos.x, temp_v.y, dog.bounds.w, dog.bounds.h);
-					printf("Tile Bounds:      %d, %d, %d, %d\n", ix * 16, iy * 16, 16, 16);
-					
-					if(dog.vel.y > 0){dog.pos.y -= intersection.h;}
-					if(dog.vel.y < 0){dog.pos.y += intersection.h;}
-					dog.vel.y = 0;
-					dog.grounded = true;
-
-					printf("New Character Bounds: %f, %f, %f, %f\n", dog.pos.x + dog.bounds.x , dog.pos.y + dog.bounds.y, dog.bounds.w, dog.bounds.h);
-					printf("New Actual Dog Posistion: %f, %f, %f, %f\n", dog.pos.x, dog.pos.y, dog.bounds.w, dog.bounds.h);
+					if (intersection.w < intersection.h)
+					{
+						if (dog.vel.x < 0) dog.pos.x += intersection.w; else dog.pos.x -= intersection.w;
+					}
+					else
+					{
+						if (dog.vel.y < 0) dog.pos.y += intersection.h; else dog.pos.y -= intersection.h;
+					}
 				}
 			}
 		}
 	}
 
-	// Apply velocity to the dog.
-	dog.pos.x += (dog.vel.x * dt);
-	dog.pos.y += (dog.vel.y * dt);
+	// Check if the dog is grounded or not after correcting position.
+	Vec2 tpos = dog.pos;
+	tpos.y++;
+	dog.grounded = false;
+	for (int iy=0; iy<gGameState.map.h; ++iy)
+	{
+		for (int ix=0; ix<gGameState.map.w; ++ix)
+		{
+			Tile* tile = &gGameState.map.tiles[iy*gGameState.map.w+ix];
+			if (tile->type == TILE_SOLID)
+			{
+				Rect intersection;
+				if (TileEntityCollision(tpos,dog.bounds, ix,iy, intersection))
+				{
+					if (dog.vel.y >= 0) dog.grounded = true;
+				}
+			}
+		}
+	}
 }
 
 INTERNAL void DrawDog (Dog& dog, float dt)
