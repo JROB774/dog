@@ -59,7 +59,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 	if (!dog.grounded){
 		if(dog.ledge_buffer <= 0){dog.vel.y += DOG_WEIGHT * GRAVITY;}
 		dog.ledge_buffer -= dt;
-		printf("ledge_buffer %f\n", dog.ledge_buffer);
+		// printf("ledge_buffer %f\n", dog.ledge_buffer);
 	}
 	else{
 		dog.vel.y = 0.0f;

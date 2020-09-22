@@ -20,10 +20,10 @@ INTERNAL bool TileEntityCollision (Vec2 pos, Rect bounds, int tx, int ty, Rect& 
     float x2 = x1    + bounds.w;
     float y2 = y1    + bounds.h;
     // Tile Bounds
-    float x3 = tx * TILE_W;
-    float y3 = ty * TILE_H;
-    float x4 = x3 + TILE_W;
-    float y4 = y3 + TILE_H;
+    float x3 = (float)tx * TILE_W;
+    float y3 = (float)ty * TILE_H;
+    float x4 =        x3 + TILE_W;
+    float y4 =        y3 + TILE_H;
     // Intersection
     float x5 = MAX(x1, x3);
     float y5 = MAX(y1, y3);
