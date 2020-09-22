@@ -1,29 +1,32 @@
-void UpdateKeyboardState()
+GLOBAL U8 gPreviousKeystate[SDL_NUM_SCANCODES];
+GLOBAL U8 gCurrentKeystate[SDL_NUM_SCANCODES];
+
+INTERNAL void UpdateKeyboardState ()
 {
-	memcpy(previous_keystates, current_keystates, SDL_NUM_SCANCODES * sizeof(U8));
-	memcpy(current_keystates, SDL_GetKeyboardState(NULL), SDL_NUM_SCANCODES * sizeof(U8));
+	memcpy(gPreviousKeystate, gCurrentKeystate, SDL_NUM_SCANCODES * sizeof(U8));
+	memcpy(gCurrentKeystate, SDL_GetKeyboardState(NULL), SDL_NUM_SCANCODES * sizeof(U8));
 }
 
-bool IsKeyDown(SDL_Scancode _code)
+INTERNAL bool IsKeyDown (SDL_Scancode code)
 {
-	if(_code < 0 || _code > SDL_NUM_SCANCODES){return false;}
-	return (current_keystates[_code] != 0);
+	if (code < 0 || code > SDL_NUM_SCANCODES) return false;
+	return (gCurrentKeystate[code] != 0);
 }
 
-bool IsKeyUp(SDL_Scancode _code)
+INTERNAL bool IsKeyUp (SDL_Scancode code)
 {
-	if(_code < 0 || _code > SDL_NUM_SCANCODES){return false;}
-	return (current_keystates[_code] == 0); 
+	if (code < 0 || code > SDL_NUM_SCANCODES) return false;
+	return (gCurrentKeystate[code] == 0);
 }
 
-bool IsKeyPressed(SDL_Scancode _code)
+INTERNAL bool IsKeyPressed (SDL_Scancode code)
 {
-	if(_code < 0 || _code > SDL_NUM_SCANCODES){return false;}
-	return (current_keystates[_code] == 1 && previous_keystates[_code] == 0);
+	if (code < 0 || code > SDL_NUM_SCANCODES) return false;
+	return (gCurrentKeystate[code] == 1 && gPreviousKeystate[code] == 0);
 }
 
-bool IsKeyReleased(SDL_Scancode _code)
+INTERNAL bool IsKeyReleased (SDL_Scancode code)
 {
-	if(_code < 0 || _code > SDL_NUM_SCANCODES){return false;}
-	return (current_keystates[_code] == 0 && previous_keystates[_code] == 1);
+	if(code < 0 || code > SDL_NUM_SCANCODES) return false;
+	return (gCurrentKeystate[code] == 0 && gPreviousKeystate[code] == 1);
 }
