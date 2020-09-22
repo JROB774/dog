@@ -44,18 +44,26 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 	}
 
 	// Apply a jump force if the key is presed.
-	if (dog.grounded)
+	if (dog.grounded || dog.ledge_buffer > 0)
 	{
 		if (IsKeyPressed(SDL_SCANCODE_Z) || IsKeyPressed(SDL_SCANCODE_SPACE))
 		{
-			dog.vel.y -= DOG_JUMP_FORCE;
+			dog.vel.y = -DOG_JUMP_FORCE;
 			dog.grounded = false;
+			dog.ledge_buffer = 0;
 		}
 	}
 
 	// Apply a gravity force to the dog.
-	if (!dog.grounded) dog.vel.y += GRAVITY; else dog.vel.y = 0.0f;
-
+	if (!dog.grounded){
+		if(dog.ledge_buffer <= 0){dog.vel.y += GRAVITY;}
+		dog.ledge_buffer -= dt;
+		printf("ledge_buffer %f\n", dog.ledge_buffer); 
+	}
+	else{
+		dog.vel.y = 0.0f;
+		dog.ledge_buffer = 0.08f;
+	}
 	// Clamp the velocity in range.
 	// if (dog.vel.y < -DOG_MAX_VEL) dog.vel.y = -DOG_MAX_VEL;
 	// if (dog.vel.y >  DOG_MAX_VEL) dog.vel.y =  DOG_MAX_VEL;
@@ -83,7 +91,11 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 					}
 					else
 					{
-						if (dog.vel.y < 0) dog.pos.y += intersection.h; else dog.pos.y -= intersection.h;
+						if (dog.vel.y < 0){
+							dog.pos.y += intersection.h;
+							dog.vel.y = -dog.vel.y/2;
+						} 
+						else dog.pos.y -= intersection.h;
 					}
 				}
 			}

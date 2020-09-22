@@ -14,6 +14,8 @@ struct Dog
     bool right;
 
     bool grounded;
+
+    float ledge_buffer;
 };
 
 INTERNAL void CreateDog (Dog& dog, float x, float y);
