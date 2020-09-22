@@ -2,6 +2,7 @@ GLOBAL constexpr float DOG_MOVE_SPEED = (8 * TILE_W);
 GLOBAL constexpr float DOG_MAX_VEL = (20 * TILE_W);
 
 GLOBAL constexpr float DOG_JUMP_FORCE = (25 * TILE_W);
+GLOBAL constexpr float DOG_WEIGHT = 0.75f;
 
 GLOBAL constexpr int DOG_CLIP_W = 24;
 GLOBAL constexpr int DOG_CLIP_H = 24;
@@ -54,7 +55,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 	}
 
 	// Apply a gravity force to the dog.
-	if (!dog.grounded) dog.vel.y += GRAVITY; else dog.vel.y = 0.0f;
+	if (!dog.grounded) dog.vel.y += (DOG_WEIGHT * GRAVITY); else dog.vel.y = 0.0f;
 
 	// Clamp the velocity in range.
 	// if (dog.vel.y < -DOG_MAX_VEL) dog.vel.y = -DOG_MAX_VEL;
