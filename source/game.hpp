@@ -1,6 +1,8 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
+GLOBAL constexpr float GRAVITY = 50.0f;
+
 GLOBAL struct GameState
 {
     Map map;

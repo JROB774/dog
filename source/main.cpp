@@ -4,7 +4,7 @@ int main (int argc, char** argv)
 {
     SDL_Init(SDL_INIT_EVERYTHING);
 
-    InitWindow("Cover Jam Game", 320,240);
+    InitWindow("DOG", 320,240);
     InitAudio();
     InitGame();
 

@@ -1,7 +1,7 @@
 INTERNAL void InitGame ()
 {
     LoadMap(gGameState.map, "assets/maptest.bmp");
-    CreateDog(gGameState.dog, 40, 40);
+    CreateDog(gGameState.dog, 40, 100);
 }
 
 INTERNAL void QuitGame ()

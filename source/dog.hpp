@@ -3,16 +3,13 @@
 
 struct Dog
 {
-	Vec2 pos;
-	Vec2 vel;
+    Vec2 pos, vel;
 
-	Image image;
+    Image image;
     Flip flip;
 
-	bool left;
-	bool right;
-	bool jump;
-	bool action;
+    bool jump, action;
+    bool left, right;
 };
 
 INTERNAL void CreateDog (Dog& dog, float x, float y);
