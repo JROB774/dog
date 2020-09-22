@@ -118,13 +118,11 @@ INTERNAL void FreeMap (Map& map)
     map.w = 0, map.h = 0;
 }
 
-INTERNAL void DrawMap (Map& map)
+INTERNAL void DrawMapBackg (Map& map)
 {
-    SDL_Rect clip = { 0,0,TILE_CLIP_W,TILE_CLIP_H };
-
-    DrawFill(0.0f,0.0f, (float)(map.w*TILE_W),(float)(map.h*TILE_H), MakeColor(1,1,1));
-
     // Draw the background tiles.
+    DrawFill(0.0f,0.0f, (float)(map.w*TILE_W),(float)(map.h*TILE_H), MakeColor(1,1,1));
+    SDL_Rect clip = { 0,0,TILE_CLIP_W,TILE_CLIP_H };
     for (int iy=0; iy<map.h; ++iy)
     {
         for (int ix=0; ix<map.w; ++ix)
@@ -137,7 +135,13 @@ INTERNAL void DrawMap (Map& map)
             }
         }
     }
+}
+
+
+INTERNAL void DrawMapFront (Map& map)
+{
     // Draw the solid tiles.
+    SDL_Rect clip = { 0,0,TILE_CLIP_W,TILE_CLIP_H };
     for (int iy=0; iy<map.h; ++iy)
     {
         for (int ix=0; ix<map.w; ++ix)

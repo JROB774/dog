@@ -24,6 +24,8 @@ INTERNAL bool TileEntityCollision (Vec2 pos, Rect bounds, int tx, int ty, Rect& 
 
 INTERNAL void LoadMap (Map& map, const char* file_name);
 INTERNAL void FreeMap (Map& map);
-INTERNAL void DrawMap (Map& map);
+
+INTERNAL void DrawMapBackg (Map& map);
+INTERNAL void DrawMapFront (Map& map);
 
 #endif /* MAP_HPP */

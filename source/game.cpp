@@ -16,6 +16,7 @@ INTERNAL void UpdateGame (float dt)
 
 INTERNAL void RenderGame (float dt)
 {
-    DrawMap(gGameState.map);
+    DrawMapBackg(gGameState.map);
     DrawDog(gGameState.dog, dt);
+    DrawMapFront(gGameState.map);
 }
