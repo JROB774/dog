@@ -20,7 +20,7 @@ set LibraryDirs=-libpath:..\library\win32\%Architecture%\
 
 set Defines=
 
-set CompilerFlags=-Zc:__cplusplus -std:c++17 -nologo -W4 -MT -Oi -GR- -Z7
+set CompilerFlags=-Zc:__cplusplus -std:c++17 -nologo -W4 -MT -Oi -GR- -EHsc -Z7
 set LinkerFlags=-opt:ref -incremental:no
 
 set CompilerWarnings=-wd4100 -wd4505 -wd4189

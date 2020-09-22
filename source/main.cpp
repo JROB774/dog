@@ -2,6 +2,8 @@
 
 int main (int argc, char** argv)
 {
+    gWindow.running = false;
+
     SDL_Init(SDL_INIT_EVERYTHING);
 
     InitWindow("DOG", 320,240);
@@ -11,8 +13,8 @@ int main (int argc, char** argv)
 
     ShowWindow();
 
-    bool running = true;
-    while (running)
+    gWindow.running = true;
+    while (gWindow.running)
     {
         UpdateKeyboardState();
 
@@ -21,7 +23,7 @@ int main (int argc, char** argv)
         {
             if (event.type == SDL_QUIT)
             {
-                running = false;
+                gWindow.running = false;
             }
         }
 

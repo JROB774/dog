@@ -1,18 +1,29 @@
 #ifndef MAIN_HPP
 #define MAIN_HPP
 
+#ifndef _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
+#include <windows.h>
+#include <dbghelp.h>
+
 #include <cstdlib>
 #include <cstdio>
 #include <cstdint>
 #include <cstring>
+#include <ctime>
 
 #include <string>
+#include <algorithm>
 #include <vector>
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_syswm.h>
 
 // Header includes.
 #include "utility.hpp"
+#include "error.hpp"
 #include "image.hpp"
 #include "window.hpp"
 #include "renderer.hpp"
@@ -24,6 +35,7 @@
 
 // Source includes.
 #include "utility.cpp"
+#include "error.cpp"
 #include "image.cpp"
 #include "window.cpp"
 #include "renderer.cpp"

@@ -16,7 +16,7 @@ INTERNAL void CreateDog (Dog& dog, float x, float y)
 {
 	dog.pos = { x, y };
 
-	LoadImage(dog.image, "assets/dog.bmp");
+	LoadImage(dog.image, "dog.bmp");
 	dog.flip = FLIP_NONE;
 }
 

@@ -7,6 +7,7 @@ GLOBAL struct Window
     SDL_Window*   window;
     int screenw;
     int screenh;
+    bool running;
 
 } gWindow;
 

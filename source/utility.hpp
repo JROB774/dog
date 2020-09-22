@@ -36,4 +36,29 @@ struct Color { float r, g, b, a; };
 INTERNAL SDL_Color ColorToSDLColor (Color color);
 INTERNAL Color     MakeColor       (float r, float g, float b, float a = 1.0f);
 
+// Alert message box.
+
+GLOBAL constexpr int ALERT_BUTTON_YES_NO_CANCEL = MB_YESNOCANCEL;
+GLOBAL constexpr int ALERT_BUTTON_YES_NO        = MB_YESNO;
+GLOBAL constexpr int ALERT_BUTTON_OK            = MB_OK;
+GLOBAL constexpr int ALERT_BUTTON_OK_CANCEL     = MB_OKCANCEL;
+
+GLOBAL constexpr int ALERT_TYPE_INFO    = MB_ICONINFORMATION;
+GLOBAL constexpr int ALERT_TYPE_WARNING = MB_ICONWARNING;
+GLOBAL constexpr int ALERT_TYPE_ERROR   = MB_ICONERROR;
+
+GLOBAL constexpr int ALERT_RESULT_INVALID = 0;
+GLOBAL constexpr int ALERT_RESULT_CANCEL  = IDCANCEL;
+GLOBAL constexpr int ALERT_RESULT_OK      = IDOK;
+GLOBAL constexpr int ALERT_RESULT_NO      = IDNO;
+GLOBAL constexpr int ALERT_RESULT_YES     = IDYES;
+
+INTERNAL int ShowAlert (std::string title, std::string msg, int type, int buttons);
+
+// Some utility functions.
+
+INTERNAL std::string FixPathSlashes (std::string path_name);
+INTERNAL std::string FormatStringV  (const char* format, va_list args);
+INTERNAL std::string FormatTime     (const char* format);
+
 #endif /* UTILITY_HPP */
