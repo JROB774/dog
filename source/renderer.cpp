@@ -28,7 +28,7 @@ INTERNAL void DrawFill (float x, float y, float w, float h, Color color)
     SDL_RenderFillRectF(gWindow.renderer, &rect);
 }
 
-INTERNAL void DrawImage (Image& image, float x, float y, const SDL_Rect* clip)
+INTERNAL void DrawImage (Image& image, float x, float y, Flip flip, const SDL_Rect* clip)
 {
     SDL_Color c = ColorToSDLColor(image.color);
     SDL_SetTextureColorMod(image.texture, c.r,c.g,c.b);
@@ -39,5 +39,5 @@ INTERNAL void DrawImage (Image& image, float x, float y, const SDL_Rect* clip)
     rect.y = roundf(rect.y);
     rect.w = roundf(rect.w);
     rect.h = roundf(rect.h);
-    SDL_RenderCopyF(gWindow.renderer, image.texture, clip, &rect);
+    SDL_RenderCopyExF(gWindow.renderer, image.texture, clip, &rect, 0.0f, NULL, flip);
 }

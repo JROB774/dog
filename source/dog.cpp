@@ -1,11 +1,23 @@
+GLOBAL constexpr int DOG_CLIP_W = 24;
+GLOBAL constexpr int DOG_CLIP_H = 24;
+
 INTERNAL void CreateDog (Dog& dog, float x, float y)
 {
+	dog.pos = { x, y };
+	dog.vel = { 0, 0 };
+
 	LoadImage(dog.image, "assets/dog.bmp");
+	dog.flip = FLIP_NONE;
+
+	dog.left = false;
+	dog.right = false;
+	dog.jump = false;
+	dog.action = false;
 }
 
 INTERNAL void UpdateDog (Dog& dog, float dt)
 {
-
+	/*
 	if(IsKeyDown(SDL_SCANCODE_D) || IsKeyDown(SDL_SCANCODE_RIGHT)){dog.right = true; dog.left = false;}
 		else{dog.right = false;}
 	if(IsKeyDown(SDL_SCANCODE_A) || IsKeyDown(SDL_SCANCODE_LEFT)){dog.left = true; dog.right = false;}
@@ -37,11 +49,11 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 	}
 
 	dog.x += (dt * dog.vel_x);
+	*/
 }
 
 INTERNAL void DrawDog (Dog& dog, float dt)
 {
-	SDL_Rect clip = {0,0,24,24};
-
-	DrawImage(dog.image, dog.x, dog.y, &clip);
+	SDL_Rect clip = { 0,0,DOG_CLIP_W,DOG_CLIP_H };
+	DrawImage(dog.image, dog.pos.x, dog.pos.y, FLIP_NONE, &clip);
 }
