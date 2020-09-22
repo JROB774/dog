@@ -2,6 +2,7 @@ GLOBAL constexpr float DOG_MOVE_SPEED = (8 * TILE_W);
 GLOBAL constexpr float DOG_MAX_VEL = (20 * TILE_W);
 
 GLOBAL constexpr float DOG_JUMP_FORCE = (25 * TILE_W);
+GLOBAL constexpr float DOG_WEIGHT = 0.75f;
 
 GLOBAL constexpr int DOG_CLIP_W = 24;
 GLOBAL constexpr int DOG_CLIP_H = 24;
@@ -56,14 +57,15 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 
 	// Apply a gravity force to the dog.
 	if (!dog.grounded){
-		if(dog.ledge_buffer <= 0){dog.vel.y += GRAVITY;}
+		if(dog.ledge_buffer <= 0){dog.vel.y += DOG_WEIGHT * GRAVITY;}
 		dog.ledge_buffer -= dt;
-		printf("ledge_buffer %f\n", dog.ledge_buffer); 
+		printf("ledge_buffer %f\n", dog.ledge_buffer);
 	}
 	else{
 		dog.vel.y = 0.0f;
 		dog.ledge_buffer = 0.08f;
 	}
+
 	// Clamp the velocity in range.
 	// if (dog.vel.y < -DOG_MAX_VEL) dog.vel.y = -DOG_MAX_VEL;
 	// if (dog.vel.y >  DOG_MAX_VEL) dog.vel.y =  DOG_MAX_VEL;
@@ -94,7 +96,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 						if (dog.vel.y < 0){
 							dog.pos.y += intersection.h;
 							dog.vel.y = -dog.vel.y/2;
-						} 
+						}
 						else dog.pos.y -= intersection.h;
 					}
 				}
@@ -127,6 +129,4 @@ INTERNAL void DrawDog (Dog& dog, float dt)
 {
 	SDL_Rect clip = { 0,0,DOG_CLIP_W,DOG_CLIP_H };
 	DrawImage(dog.image, dog.pos.x, dog.pos.y, dog.flip, &clip);
-
-	DrawFill(dog.pos.x+dog.bounds.x,dog.pos.y+dog.bounds.y,dog.bounds.w,dog.bounds.h, MakeColor(1,0,0,0.25f));
 }
