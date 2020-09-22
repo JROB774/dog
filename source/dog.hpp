@@ -1,7 +1,7 @@
 #ifndef DOG_HPP
 #define DOG_HPP
 
-GLOBAL struct Dog
+struct Dog
 {
 	float x;
 	float y;
@@ -20,10 +20,10 @@ GLOBAL struct Dog
 	const int height = 24;
 
 	Image image;
-} gDog;
+};
 
-void DogCreate();
-void DogUpdate(float _dt);
-void DogDraw();
+INTERNAL void CreateDog (Dog& dog, float x, float y);
+INTERNAL void UpdateDog (Dog& dog, float dt);
+INTERNAL void DrawDog   (Dog& dog, float dt);
 
-#endif
+#endif /* DOG_HPP */

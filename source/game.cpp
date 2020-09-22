@@ -1,23 +1,21 @@
-Map gTestMap;
-
 INTERNAL void InitGame ()
 {
-    LoadMap(gTestMap, "assets/maptest.bmp");
-    DogCreate();
+    LoadMap(gGameState.map, "assets/maptest.bmp");
+    CreateDog(gGameState.dog, 40, 40);
 }
+
 INTERNAL void QuitGame ()
 {
-    FreeMap(gTestMap);
+    FreeMap(gGameState.map);
 }
 
 INTERNAL void UpdateGame (float dt)
 {
-    // ...
-	DogUpdate(dt);
+	UpdateDog(gGameState.dog, dt);
 }
 
 INTERNAL void RenderGame (float dt)
 {
-    DrawMap(gTestMap);
-    DogDraw();
+    DrawMap(gGameState.map);
+    DrawDog(gGameState.dog, dt);
 }

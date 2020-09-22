@@ -43,10 +43,10 @@ typedef  int64_t S64;
 #include "renderer.hpp"
 #include "audio.hpp"
 #include "timer.hpp"
-#include "map.hpp"
 #include "input.hpp"
-#include "game.hpp"
+#include "map.hpp"
 #include "dog.hpp"
+#include "game.hpp"
 
 // Source includes.
 #include "utility.cpp"
@@ -55,9 +55,9 @@ typedef  int64_t S64;
 #include "renderer.cpp"
 #include "audio.cpp"
 #include "timer.cpp"
-#include "map.cpp"
 #include "input.cpp"
-#include "game.cpp"
+#include "map.cpp"
 #include "dog.cpp"
+#include "game.cpp"
 
 #endif /* MAIN_HPP */

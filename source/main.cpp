@@ -12,8 +12,6 @@ int main (int argc, char** argv)
 
     ShowWindow();
 
-    
-
     bool running = true;
     while (running)
     {
