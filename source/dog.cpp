@@ -57,9 +57,8 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 
 	// Apply a gravity force to the dog.
 	if (!dog.grounded){
-		if(dog.ledge_buffer <= 0){dog.vel.y += DOG_WEIGHT * GRAVITY;}
+		dog.vel.y += DOG_WEIGHT * GRAVITY;
 		dog.ledge_buffer -= dt;
-		printf("ledge_buffer %f\n", dog.ledge_buffer);
 	}
 	else{
 		dog.vel.y = 0.0f;
@@ -72,11 +71,11 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 	// if (dog.vel.x < -DOG_MAX_VEL) dog.vel.x = -DOG_MAX_VEL;
 	// if (dog.vel.x >  DOG_MAX_VEL) dog.vel.x =  DOG_MAX_VEL;
 
-	// Apply velocity to the dog.
-	dog.pos.x += (dog.vel.x * dt);
-	dog.pos.y += (dog.vel.y * dt);
+	Vec2 test = dog.pos;
+	Vec2 output = {0,0};
 
 	// Perform simple tile collision on the dog to correct the player's position.
+	// It works but its a pretty bad solution... it should cover all game scenarios.
 	for (int iy=0; iy<gGameState.map.h; ++iy)
 	{
 		for (int ix=0; ix<gGameState.map.w; ++ix)
@@ -84,20 +83,38 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 			Tile* tile = &gGameState.map.tiles[iy*gGameState.map.w+ix];
 			if (tile->type == TILE_SOLID)
 			{
+				//Testing X Posistion
+				test.x = dog.pos.x + (dog.vel.x * dt);
+				test.y = dog.pos.y;
+
 				Rect intersection;
-				if (TileEntityCollision(dog.pos,dog.bounds, ix,iy, intersection))
+				if (TileEntityCollision(test,dog.bounds, ix,iy, intersection))
 				{
-					if (intersection.w < intersection.h)
-					{
-						if (dog.vel.x < 0) dog.pos.x += intersection.w; else dog.pos.x -= intersection.w;
+					if(dog.vel.x < 0){
+						dog.vel.x = 0;
 					}
-					else
-					{
-						if (dog.vel.y < 0){
-							dog.pos.y += intersection.h;
-							dog.vel.y = -dog.vel.y/2;
-						}
-						else dog.pos.y -= intersection.h;
+					if(dog.vel.x > 0){
+						//dog.pos.x -= intersection.w;
+						dog.vel.x = 0;
+					}
+				}
+
+				test.x = dog.pos.x;
+				test.y = dog.pos.y + (dog.vel.y * dt);
+
+				//Testing Y Posistion
+
+				
+				if (TileEntityCollision(test,dog.bounds, ix,iy, intersection))
+				{
+					if(dog.vel.y < 0){
+						//dog.pos.y += intersection.h;
+						dog.vel.y = -dog.vel.y/2;
+						//dog.grounded = true;
+					}
+					else{
+						//dog.pos.y -= intersection.h;
+						dog.vel.y = 0;
 					}
 				}
 			}
@@ -123,6 +140,10 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 			}
 		}
 	}
+
+	// Apply velocity to the dog.
+	dog.pos.x += (dog.vel.x * dt);
+	dog.pos.y += (dog.vel.y * dt);
 }
 
 INTERNAL void DrawDog (Dog& dog, float dt)
