@@ -115,6 +115,4 @@ INTERNAL void DrawDog (Dog& dog, float dt)
 {
 	SDL_Rect clip = { 0,0,DOG_CLIP_W,DOG_CLIP_H };
 	DrawImage(dog.image, dog.pos.x, dog.pos.y, dog.flip, &clip);
-
-	DrawFill(dog.pos.x+dog.bounds.x,dog.pos.y+dog.bounds.y,dog.bounds.w,dog.bounds.h, MakeColor(1,0,0,0.25f));
 }
