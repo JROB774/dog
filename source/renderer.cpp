@@ -35,5 +35,9 @@ INTERNAL void DrawImage (Image& image, float x, float y, const SDL_Rect* clip)
     SDL_SetTextureAlphaMod(image.texture, c.a);
     Rect rect = { x,y,image.w,image.h };
     if (clip) { rect.w = (float)clip->w, rect.h = (float)clip->h; }
+    rect.x = roundf(rect.x);
+    rect.y = roundf(rect.y);
+    rect.w = roundf(rect.w);
+    rect.h = roundf(rect.h);
     SDL_RenderCopyF(gWindow.renderer, image.texture, clip, &rect);
 }
