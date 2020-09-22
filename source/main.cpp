@@ -1,10 +1,28 @@
 #include "main.hpp"
 
+INTERNAL void QuitApplication ()
+{
+    QuitGame();
+    QuitWindow();
+
+    SDL_Quit();
+
+    QuitErrorSystem();
+}
+
 int main (int argc, char** argv)
 {
-    gWindow.running = false;
+    ErrorTerminateCallback = QuitApplication;
+    ErrorMaximumCallback = QuitApplication;
 
-    SDL_Init(SDL_INIT_EVERYTHING);
+    gWindow.running = true;
+
+    InitErrorSystem();
+
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
+    {
+        LOG_ERROR(ERR_MAX, "Failed to initialize SDL! (%s)", SDL_GetError());
+    }
 
     InitWindow("DOG", 320,240);
     InitGame();
@@ -13,7 +31,6 @@ int main (int argc, char** argv)
 
     ShowWindow();
 
-    gWindow.running = true;
     while (gWindow.running)
     {
         UpdateKeyboardState();
@@ -38,10 +55,7 @@ int main (int argc, char** argv)
         RefreshWindow();
     }
 
-    QuitGame();
-    QuitWindow();
-
-    SDL_Quit();
+    QuitApplication();
 
     return 0;
 }

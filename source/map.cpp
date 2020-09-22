@@ -18,7 +18,10 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
 
     file_name = "assets/maps/" + file_name;
     SDL_Surface* surface = SDL_LoadBMP(file_name.c_str());
-    ASSERT(surface);
+    if (!surface)
+    {
+        LOG_ERROR(ERR_MAX, "Failed to load map '%s'! (%s)", file_name.c_str(), SDL_GetError());
+    }
 
     // We want the data to be formatted as 32-bit RGBA so we know how to access the pixels.
     ASSERT(surface->format->BytesPerPixel == 4);

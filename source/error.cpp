@@ -50,8 +50,8 @@ INTERNAL void LogError (const char* file, int line, ErrorLevel level, const char
 
     #if defined(BUILD_DEBUG)
     va_start(args, format);
-    fprintf(stderr, format, time_str.c_str(), file_str.c_str(), line);
-    vfprintf(stderr, err_format, args);
+    fprintf(stderr, err_format, time_str.c_str(), file_str.c_str(), line);
+    vfprintf(stderr, format, args);
     fprintf(stderr, "\n");
     va_end(args);
     fflush(stderr);
@@ -60,8 +60,8 @@ INTERNAL void LogError (const char* file, int line, ErrorLevel level, const char
     if (gErrorLog)
     {
         va_start(args, format);
-        fprintf(gErrorLog, format, time_str.c_str(), file_str.c_str(), line);
-        vfprintf(gErrorLog, err_format, args);
+        fprintf(gErrorLog, err_format, time_str.c_str(), file_str.c_str(), line);
+        vfprintf(gErrorLog, format, args);
         fprintf(gErrorLog, "\n");
         va_end(args);
         fflush(gErrorLog);
