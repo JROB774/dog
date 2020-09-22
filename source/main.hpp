@@ -21,6 +21,10 @@
 #define ASSERT()
 #endif
 
+// Maximum and miminum macros.
+#define MAX(a,b) (((a)<(b)) ? (b) : (a))
+#define MIN(a,b) (((a)<(b)) ? (a) : (b))
+
 // More descriptive definitions for the static keyword.
 #define PERSISTENT static
 #define GLOBAL     static

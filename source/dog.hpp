@@ -5,11 +5,15 @@ struct Dog
 {
     Vec2 pos, vel;
 
+    Rect bounds;
+
     Image image;
     Flip flip;
 
-    bool jump, action;
-    bool left, right;
+    bool left;
+    bool right;
+
+    bool grounded;
 };
 
 INTERNAL void CreateDog (Dog& dog, float x, float y);
