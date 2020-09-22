@@ -5,17 +5,8 @@ struct Dog
 {
     Vec2 pos, vel;
 
-    Rect bounds;
-
     Image image;
     Flip flip;
-
-    bool left;
-    bool right;
-
-    bool grounded;
-
-    float ledge_buffer;
 };
 
 INTERNAL void CreateDog (Dog& dog, float x, float y);

@@ -3,7 +3,6 @@
 int main (int argc, char** argv)
 {
     SDL_Init(SDL_INIT_EVERYTHING);
-    initAudio();
 
     InitWindow("DOG", 320,240);
     InitGame();
@@ -40,7 +39,6 @@ int main (int argc, char** argv)
     QuitGame();
     QuitWindow();
 
-    endAudio();
     SDL_Quit();
 
     return 0;

@@ -20,8 +20,6 @@ struct Map
     Tile* tiles;
 };
 
-INTERNAL bool TileEntityCollision (Vec2 pos, Rect bounds, int tx, int ty, Rect& intersection);
-
 INTERNAL void LoadMap (Map& map, const char* file_name);
 INTERNAL void FreeMap (Map& map);
 
