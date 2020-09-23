@@ -17,8 +17,16 @@
 
 ## Unassigned
 
-* [ ] Map navigation.
-* [ ] Enemies/hazards.
+* [ ] Main menu / title screen.
+* [ ] Map navigation (move from room to room).
+* [ ] Implement the dig system with breakable blocks.
+* [ ] Implement collectible bones.
+* [ ] Animation system (simple frame-based animation playback).
+* [ ] Hazards:
+  * [ ] Enemies:
+    * ???
+  * [ ] Spikes
 * [ ] Particle effect system.
+* [ ] Win and lose states.
 
 *Flesh out these and add more as needed...*
