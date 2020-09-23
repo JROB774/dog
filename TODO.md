@@ -11,6 +11,7 @@
   * [x] Sounds
   * [ ] Music
 * [x] Animation system (simple frame-based animation playback).
+* [x] Map navigation (move from room to room).
 
 ## TiKo
 
@@ -19,7 +20,6 @@
 ## Unassigned
 
 * [ ] Main menu / title screen.
-* [ ] Map navigation (move from room to room).
 * [ ] Implement the dig system with breakable blocks.
 * [ ] Implement collectible bones.
 * [ ] Hazards:
