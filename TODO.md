@@ -10,6 +10,7 @@
 * [ ] Implement a simple audio system:
   * [x] Sounds
   * [ ] Music
+* [x] Animation system (simple frame-based animation playback).
 
 ## TiKo
 
@@ -21,7 +22,6 @@
 * [ ] Map navigation (move from room to room).
 * [ ] Implement the dig system with breakable blocks.
 * [ ] Implement collectible bones.
-* [ ] Animation system (simple frame-based animation playback).
 * [ ] Hazards:
   * [ ] Enemies:
     * ???
