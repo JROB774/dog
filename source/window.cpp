@@ -21,6 +21,7 @@ INTERNAL bool InitWindow (std::string title, int w, int h)
         return false;
     }
 
+    SDL_SetRenderDrawBlendMode(gWindow.renderer, SDL_BLENDMODE_BLEND);
     SDL_SetWindowMinimumSize(gWindow.window, w,h);
 
     gWindow.screenw = w;
