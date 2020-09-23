@@ -2,9 +2,9 @@
 
 @echo off
 
-set Libraries=                                                       ^
-SDL2main.lib SDL2.lib opengl32.lib dinput8.lib dxguid.lib user32.lib ^
-gdi32.lib winmm.lib imm32.lib ole32.lib oleaut32.lib shell32.lib     ^
+set Libraries=                                                              ^
+SDL2main.lib SDL2.lib SDL2_mixer.lib opengl32.lib dinput8.lib dxguid.lib    ^
+user32.lib gdi32.lib winmm.lib imm32.lib ole32.lib oleaut32.lib shell32.lib ^
 version.lib uuid.lib advapi32.lib setupapi.lib dbghelp.lib setargv.obj
 
 :: SELECT WHICH ARCHITECTURE YOU WANT BY UNCOMMENTING
