@@ -1,5 +1,3 @@
-#include <algorithm>
-
 GLOBAL constexpr U32 TILE_EMPTY_COLOR = 0xFFFFFFFF;
 GLOBAL constexpr U32 TILE_BACKG_COLOR = 0xFF808080;
 GLOBAL constexpr U32 TILE_SOLID_COLOR = 0xFF000000;
@@ -11,6 +9,32 @@ GLOBAL constexpr int TILE_FLAG_N = 0x08;
 
 GLOBAL constexpr int TILE_CLIP_W = 32;
 GLOBAL constexpr int TILE_CLIP_H = 32;
+
+INTERNAL bool TileEntityCollision (Vec2 pos, Rect bounds, int tx, int ty, Rect& intersection)
+{
+    // Entity Bounds
+    float x1 = pos.x + bounds.x;
+    float y1 = pos.y + bounds.y;
+    float x2 = x1    + bounds.w;
+    float y2 = y1    + bounds.h;
+    // Tile Bounds
+    float x3 = (float)tx * TILE_W;
+    float y3 = (float)ty * TILE_H;
+    float x4 =        x3 + TILE_W;
+    float y4 =        y3 + TILE_H;
+    // Intersection
+    float x5 = std::max(x1, x3);
+    float y5 = std::max(y1, y3);
+    float x6 = std::min(x2, x4);
+    float y6 = std::min(y2, y4);
+
+    intersection.x = x5;
+    intersection.y = y5;
+    intersection.w = x6 - x5;
+    intersection.h = y6 - y5;
+
+    return ((x5 < x6) && (y5 < y6));
+}
 
 INTERNAL void LoadMap (Map& map, std::string file_name)
 {

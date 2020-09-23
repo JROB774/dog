@@ -5,6 +5,10 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+
 #include <windows.h>
 #include <dbghelp.h>
 
