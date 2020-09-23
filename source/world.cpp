@@ -63,23 +63,20 @@ INTERNAL void LoadWorld ()
     LoadMap(gWorld.current_map, START_MAP);
 
     // Find the location of the start room on the map.
-    int cx = 0, cy = 0;
     bool done = false;
-    for (auto& row: gWorld.rooms)
+    for (int ry=0; ry<gWorld.rooms.size(); ++ry)
     {
-        for (auto& col: row)
+        for (int rx=0; rx<gWorld.rooms[ry].size(); ++rx)
         {
-            if (col == START_MAP)
+            if (gWorld.rooms[ry][rx] == START_MAP)
             {
-                gWorld.current_map_x = cx;
-                gWorld.current_map_y = cy;
+                gWorld.current_map_x = rx;
+                gWorld.current_map_y = ry;
                 done = true;
                 break;
             }
-            cx++;
         }
         if (done) break;
-        cy++;
     }
 
     // printf("World: %s (%d %d)\n", START_MAP, gWorld.current_map_x, gWorld.current_map_y);
@@ -130,30 +127,47 @@ INTERNAL void WorldTransitionIfOutOfBounds ()
     FreeMap(gWorld.current_map);
     LoadMap(gWorld.current_map, new_map);
 
-    if (left)  gGameState.dog.pos.x = (float)((gWorld.current_map.w * TILE_W) - (pw));
-    if (up)    gGameState.dog.pos.y = (float)((gWorld.current_map.h * TILE_H) - (ph));
-    if (right) gGameState.dog.pos.x = (float)(0);
-    if (down)  gGameState.dog.pos.y = (float)(0);
-
     // Find the location of the start room on the map.
-    int cx = 0, cy = 0;
     bool done = false;
-    for (auto& row: gWorld.rooms)
+    for (int ry=0; ry<gWorld.rooms.size(); ++ry)
     {
-        for (auto& col: row)
+        for (int rx=0; rx<gWorld.rooms[ry].size(); ++rx)
         {
-            if (col == new_map)
+            if (gWorld.rooms[ry][rx] == new_map)
             {
-                gWorld.current_map_x = cx;
-                gWorld.current_map_y = cy;
+                gWorld.current_map_x = rx;
+                gWorld.current_map_y = ry;
                 done = true;
                 break;
             }
-            cx++;
         }
         if (done) break;
-        cy++;
     }
 
     // printf("World: %s (%d %d)\n", new_map.c_str(), gWorld.current_map_x, gWorld.current_map_y);
+
+    // Calculate the player's new position relative to the new room.
+    if (left)
+    {
+        px = ((gWorld.current_map.w * TILE_W) - (pw));
+        py = (py % WINDOW_SCREEN_H) + ((wy-gWorld.current_map_y) * WINDOW_SCREEN_H);
+    }
+    if (up)
+    {
+        px = (px % WINDOW_SCREEN_W) + ((wx-gWorld.current_map_x) * WINDOW_SCREEN_W);
+        py = ((gWorld.current_map.h * TILE_H) - (ph));
+    }
+    if (right)
+    {
+        px = 0;
+        py = (py % WINDOW_SCREEN_H) + ((wy-gWorld.current_map_y) * WINDOW_SCREEN_H);
+    }
+    if (down)
+    {
+        px = (px % WINDOW_SCREEN_W) + ((wx-gWorld.current_map_x) * WINDOW_SCREEN_W);
+        py = 0;
+    }
+
+    gGameState.dog.pos.x = (float)px;
+    gGameState.dog.pos.y = (float)py;
 }
