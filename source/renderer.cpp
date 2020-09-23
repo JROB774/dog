@@ -41,3 +41,13 @@ INTERNAL void DrawImage (Image& image, float x, float y, Flip flip, const SDL_Re
     rect.h = roundf(rect.h);
     SDL_RenderCopyExF(gWindow.renderer, image.texture, clip, &rect, 0.0f, NULL, flip);
 }
+
+INTERNAL void DrawRect (Rect rect, Color color)
+{
+    DrawRect(rect.x, rect.y, rect.w, rect.h, color);
+}
+
+INTERNAL void DrawFill (Rect rect, Color color)
+{
+    DrawFill(rect.x, rect.y, rect.w, rect.h, color);
+}
