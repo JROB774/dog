@@ -1,22 +1,23 @@
 INTERNAL void InitGame ()
 {
-    LoadMap(gGameState.map, "main-test.bmp");
-    CreateDog(gGameState.dog, 48, 100);
+    LoadWorld();
+    CreateDog(gGameState.dog, START_X, START_Y);
 }
 
 INTERNAL void QuitGame ()
 {
-    FreeMap(gGameState.map);
+    FreeWorld();
 }
 
 INTERNAL void UpdateGame (float dt)
 {
+    WorldTransitionIfOutOfBounds();
 	UpdateDog(gGameState.dog, dt);
 }
 
 INTERNAL void RenderGame (float dt)
 {
-    DrawMapBackg(gGameState.map);
+    DrawMapBackg(gWorld.current_map);
     DrawDog(gGameState.dog, dt);
-    DrawMapFront(gGameState.map);
+    DrawMapFront(gWorld.current_map);
 }

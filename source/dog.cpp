@@ -85,11 +85,11 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 
     // Perform simple tile collision on the dog to correct the player's position.
     // It works but its a pretty bad solution... it should cover all game scenarios.
-    for (int iy=0; iy<gGameState.map.h; ++iy)
+    for (int iy=0; iy<gWorld.current_map.h; ++iy)
     {
-        for (int ix=0; ix<gGameState.map.w; ++ix)
+        for (int ix=0; ix<gWorld.current_map.w; ++ix)
         {
-            Tile* tile = &gGameState.map.tiles[iy*gGameState.map.w+ix];
+            Tile* tile = &gWorld.current_map.tiles[iy*gWorld.current_map.w+ix];
             if (tile->type == TILE_SOLID)
             {
                 //Testing X Posistion
@@ -134,11 +134,11 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
     Vec2 tpos = dog.pos;
     tpos.y++;
     dog.grounded = false;
-    for (int iy=0; iy<gGameState.map.h; ++iy)
+    for (int iy=0; iy<gWorld.current_map.h; ++iy)
     {
-        for (int ix=0; ix<gGameState.map.w; ++ix)
+        for (int ix=0; ix<gWorld.current_map.w; ++ix)
         {
-            Tile* tile = &gGameState.map.tiles[iy*gGameState.map.w+ix];
+            Tile* tile = &gWorld.current_map.tiles[iy*gWorld.current_map.w+ix];
             if (tile->type == TILE_SOLID)
             {
                 Rect intersection;

@@ -1,11 +1,3 @@
-GLOBAL constexpr const char* WINDOW_TITLE = "DOG";
-
-GLOBAL constexpr int WINDOW_SCREEN_W = 320;
-GLOBAL constexpr int WINDOW_SCREEN_H = 240;
-
-GLOBAL constexpr int WINDOW_START_W = 640;
-GLOBAL constexpr int WINDOW_START_H = 480;
-
 INTERNAL bool InitWindow ()
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)

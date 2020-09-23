@@ -18,6 +18,7 @@
 #include <cstring>
 #include <ctime>
 
+#include <fstream>
 #include <sstream>
 #include <string>
 #include <algorithm>
@@ -43,6 +44,7 @@
 #include "animation.hpp"
 #include "map.hpp"
 #include "dog.hpp"
+#include "world.hpp"
 #include "game.hpp"
 
 // Source includes.
@@ -57,6 +59,7 @@
 #include "animation.cpp"
 #include "map.cpp"
 #include "dog.cpp"
+#include "world.cpp"
 #include "game.cpp"
 
 #endif /* MAIN_HPP */

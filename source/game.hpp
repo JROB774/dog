@@ -5,7 +5,6 @@ GLOBAL constexpr float GRAVITY = 32.0f;
 
 GLOBAL struct GameState
 {
-    Map map;
     Dog dog;
 
 } gGameState;
