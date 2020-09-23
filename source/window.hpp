@@ -5,13 +5,11 @@ GLOBAL struct Window
 {
     SDL_Renderer* renderer;
     SDL_Window*   window;
-    int screenw;
-    int screenh;
-    bool running;
+    bool          running;
 
 } gWindow;
 
-INTERNAL bool InitWindow    (std::string title, int w, int h);
+INTERNAL bool InitWindow    ();
 INTERNAL void QuitWindow    ();
 INTERNAL void ClearWindow   (Color color);
 INTERNAL void RefreshWindow ();

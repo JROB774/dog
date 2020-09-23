@@ -1,4 +1,12 @@
-INTERNAL bool InitWindow (std::string title, int w, int h)
+GLOBAL constexpr const char* WINDOW_TITLE = "DOG";
+
+GLOBAL constexpr int WINDOW_SCREEN_W = 320;
+GLOBAL constexpr int WINDOW_SCREEN_H = 240;
+
+GLOBAL constexpr int WINDOW_START_W = 640;
+GLOBAL constexpr int WINDOW_START_H = 480;
+
+INTERNAL bool InitWindow ()
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
@@ -7,7 +15,7 @@ INTERNAL bool InitWindow (std::string title, int w, int h)
     }
 
     // The window starts off hidden so we don't have a white window displaying whilst all the resources load and systems initialize.
-    gWindow.window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED, w,h, SDL_WINDOW_RESIZABLE|SDL_WINDOW_HIDDEN);
+    gWindow.window = SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED, WINDOW_START_W,WINDOW_START_H, SDL_WINDOW_RESIZABLE|SDL_WINDOW_HIDDEN);
     if (!gWindow.window)
     {
         LOG_ERROR(ERR_MAX, "Failed to create window! (%s)", SDL_GetError());
@@ -22,10 +30,7 @@ INTERNAL bool InitWindow (std::string title, int w, int h)
     }
 
     SDL_SetRenderDrawBlendMode(gWindow.renderer, SDL_BLENDMODE_BLEND);
-    SDL_SetWindowMinimumSize(gWindow.window, w,h);
-
-    gWindow.screenw = w;
-    gWindow.screenh = h;
+    SDL_SetWindowMinimumSize(gWindow.window, WINDOW_SCREEN_W,WINDOW_SCREEN_H);
 
     return true;
 }
@@ -64,8 +69,8 @@ INTERNAL void SetViewport ()
     int windoww,windowh;
     SDL_GetWindowSize(gWindow.window, &windoww,&windowh);
 
-    int sx = (int)roundf(((float)windoww / (float)gWindow.screenw));
-    int sy = (int)roundf(((float)windowh / (float)gWindow.screenh));
+    int sx = (int)roundf(((float)windoww / (float)WINDOW_SCREEN_W));
+    int sy = (int)roundf(((float)windowh / (float)WINDOW_SCREEN_H));
 
     // Determine the smallest scale and use that.
     float scale = (float)((sx < sy) ? sx : sy);
@@ -74,10 +79,10 @@ INTERNAL void SetViewport ()
 
     SDL_Rect viewport;
 
-    viewport.x = ((windoww - (gWindow.screenw * (int)scale)) / 2) / (int)scale;
-    viewport.y = ((windowh - (gWindow.screenh * (int)scale)) / 2) / (int)scale;
-    viewport.w = gWindow.screenw;
-    viewport.h = gWindow.screenh;
+    viewport.x = ((windoww - (WINDOW_SCREEN_W * (int)scale)) / 2) / (int)scale;
+    viewport.y = ((windowh - (WINDOW_SCREEN_H * (int)scale)) / 2) / (int)scale;
+    viewport.w = WINDOW_SCREEN_W;
+    viewport.h = WINDOW_SCREEN_H;
 
     SDL_RenderSetViewport(gWindow.renderer, &viewport);
 }

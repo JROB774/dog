@@ -5,6 +5,7 @@ INTERNAL void QuitApplication ()
     QuitGame();
     QuitMixer();
     QuitWindow();
+
     QuitErrorSystem();
 }
 
@@ -18,7 +19,8 @@ int main (int argc, char** argv)
     gWindow.running = true;
 
     InitErrorSystem();
-    InitWindow("DOG", 320,240);
+
+    InitWindow();
     InitMixer();
     InitGame();
 
