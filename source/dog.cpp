@@ -24,11 +24,12 @@ INTERNAL void CreateDog (Dog& dog, float x, float y)
     LoadImage(dog.image, "dog.bmp");
     dog.flip = FLIP_NONE;
 
-    LoadAnimation(dog.anim[DOG_STATE_IDLE ], "dog-idle.anim" );
-    LoadAnimation(dog.anim[DOG_STATE_BLINK], "dog-blink.anim");
-    LoadAnimation(dog.anim[DOG_STATE_MOVE ], "dog-move.anim" );
-    LoadAnimation(dog.anim[DOG_STATE_JUMP ], "dog-jump.anim" );
-    LoadAnimation(dog.anim[DOG_STATE_FALL ], "dog-fall.anim" );
+    LoadAnimation(dog.anim[DOG_STATE_IDLE], "dog-idle.anim");
+    LoadAnimation(dog.anim[DOG_STATE_BLNK], "dog-blnk.anim");
+    LoadAnimation(dog.anim[DOG_STATE_MOVE], "dog-move.anim");
+    LoadAnimation(dog.anim[DOG_STATE_JUMP], "dog-jump.anim");
+    LoadAnimation(dog.anim[DOG_STATE_FALL], "dog-fall.anim");
+    LoadAnimation(dog.anim[DOG_STATE_BARK], "dog-bark.anim");
 
     dog.left = false;
     dog.right = false;
@@ -173,20 +174,29 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
         }
         else
         {
-            if (dog.state != DOG_STATE_BLINK)
+            if (dog.state != DOG_STATE_BARK)
             {
-                dog.state = DOG_STATE_IDLE;
-                if ((rand() % 1000) < 10)
+                if (IsKeyPressed(SDL_SCANCODE_X))
                 {
-                    ResetAnimation(dog.anim[DOG_STATE_BLINK]);
-                    dog.state = DOG_STATE_BLINK;
+                    ResetAnimation(dog.anim[DOG_STATE_BARK]);
+                    dog.state = DOG_STATE_BARK;
                 }
             }
-            else
+
+            if (dog.state == DOG_STATE_BARK || dog.state == DOG_STATE_BLNK)
             {
                 if (IsAnimationDone(dog.anim[dog.state]))
                 {
                     dog.state = DOG_STATE_IDLE;
+                }
+            }
+            else
+            {
+                dog.state = DOG_STATE_IDLE;
+                if ((rand() % 1000) < 10)
+                {
+                    ResetAnimation(dog.anim[DOG_STATE_BLNK]);
+                    dog.state = DOG_STATE_BLNK;
                 }
             }
         }
