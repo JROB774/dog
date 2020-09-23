@@ -8,3 +8,5 @@
 *.pdb
 
 *.sublime-workspace
+
+binary/*.dll
