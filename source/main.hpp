@@ -27,6 +27,9 @@
 #include <SDL2/SDL_syswm.h>
 #include <SDL2/SDL_mixer.h>
 
+#include <GON/GON.hpp>
+#include <GON/GON.cpp>
+
 // Header includes.
 #include "utility.hpp"
 #include "error.hpp"
@@ -36,6 +39,7 @@
 #include "timer.hpp"
 #include "input.hpp"
 #include "mixer.hpp"
+#include "animation.hpp"
 #include "map.hpp"
 #include "dog.hpp"
 #include "game.hpp"
@@ -49,6 +53,7 @@
 #include "timer.cpp"
 #include "input.cpp"
 #include "mixer.cpp"
+#include "animation.cpp"
 #include "map.cpp"
 #include "dog.cpp"
 #include "game.cpp"
