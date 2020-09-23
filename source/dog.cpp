@@ -1,4 +1,4 @@
-GLOBAL constexpr float DOG_MOVE_SPEED = (8 * TILE_W);
+GLOBAL constexpr float DOG_MOVE_SPEED = (10 * TILE_W);
 GLOBAL constexpr float DOG_MAX_VEL = (20 * TILE_W);
 
 GLOBAL constexpr float DOG_JUMP_FORCE = (25 * TILE_W);
@@ -28,6 +28,7 @@ INTERNAL void CreateDog (Dog& dog, float x, float y)
     LoadAnimation(dog.anim[DOG_STATE_BLINK], "dog-blink.anim");
     LoadAnimation(dog.anim[DOG_STATE_MOVE ], "dog-move.anim" );
     LoadAnimation(dog.anim[DOG_STATE_JUMP ], "dog-jump.anim" );
+    LoadAnimation(dog.anim[DOG_STATE_FALL ], "dog-fall.anim" );
 
     dog.left = false;
     dog.right = false;
@@ -155,7 +156,14 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
     // Handle setting the dog's current animation state.
     if (!dog.grounded)
     {
-        dog.state = DOG_STATE_JUMP;
+        if (dog.vel.y <= 0.0f)
+        {
+            dog.state = DOG_STATE_JUMP;
+        }
+        else
+        {
+            dog.state = DOG_STATE_FALL;
+        }
     }
     else
     {

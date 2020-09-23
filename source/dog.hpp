@@ -7,6 +7,7 @@ enum DogState
     DOG_STATE_BLINK,
     DOG_STATE_MOVE,
     DOG_STATE_JUMP,
+    DOG_STATE_FALL,
     DOG_STATE_TOTAL
 };
 
