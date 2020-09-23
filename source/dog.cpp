@@ -173,8 +173,22 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
         }
         else
         {
-            dog.state = DOG_STATE_IDLE;
-            // @Incomplete: Add blinking state set..
+            if (dog.state != DOG_STATE_BLINK)
+            {
+                dog.state = DOG_STATE_IDLE;
+                if ((rand() % 1000) < 10)
+                {
+                    ResetAnimation(dog.anim[DOG_STATE_BLINK]);
+                    dog.state = DOG_STATE_BLINK;
+                }
+            }
+            else
+            {
+                if (IsAnimationDone(dog.anim[dog.state]))
+                {
+                    dog.state = DOG_STATE_IDLE;
+                }
+            }
         }
     }
 }

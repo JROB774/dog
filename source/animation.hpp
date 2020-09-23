@@ -23,6 +23,8 @@ struct Animation
 INTERNAL void LoadAnimation   (Animation& animation, std::string file_name);
 INTERNAL void FreeAnimation   (Animation& animation);
 INTERNAL void UpdateAnimation (Animation& animation, float dt);
+INTERNAL void ResetAnimation  (Animation& animation);
+INTERNAL bool IsAnimationDone (Animation& animation);
 
 INTERNAL const SDL_Rect* GetAnimationClip (Animation& animation);
 

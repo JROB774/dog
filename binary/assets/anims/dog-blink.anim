@@ -4,4 +4,4 @@ start_position [ 48 0 ]
 frame_size [ 24 24 ]
 frame_count 1
 frame_durations [ 0.2 ]
-looped true
+looped false

@@ -23,7 +23,7 @@ INTERNAL void LoadAnimation (Animation& animation, std::string file_name)
         x += w;
     }
 
-    animation.state.timer = 0.0f;
+    animation.state.timer = 0;
     animation.state.frame = 0;
 }
 
@@ -34,7 +34,7 @@ INTERNAL void FreeAnimation (Animation& animation)
 
 INTERNAL void UpdateAnimation (Animation& animation, float dt)
 {
-    if (animation.looped || animation.state.frame < animation.frames.size()-1)
+    if (animation.looped || animation.state.frame < animation.frames.size())
     {
         float time = 0.0f;
         for (int i=0; i<animation.frames.size(); ++i)
@@ -67,6 +67,21 @@ INTERNAL void UpdateAnimation (Animation& animation, float dt)
             }
         }
     }
+}
+
+INTERNAL void ResetAnimation (Animation& animation)
+{
+    animation.state.timer = 0;
+    animation.state.frame = 0;
+}
+
+INTERNAL bool IsAnimationDone (Animation& animation)
+{
+    if (animation.looped) return false;
+    float total_time = 0.0f;
+    for (auto& frame: animation.frames) total_time += frame.duration;
+    if (animation.state.timer >= total_time) return true;
+    return false;
 }
 
 INTERNAL const SDL_Rect* GetAnimationClip (Animation& animation)
