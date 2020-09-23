@@ -1,51 +1,32 @@
 #ifndef MAIN_HPP
 #define MAIN_HPP
 
-#include <SDL2/SDL.h>
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdint.h>
-#include <string.h>
-
-// Macros for memory allocation functions to perform the C++ casts.
-#define MALLOC(t,sz) ((t*)(malloc((sz)*sizeof(t))))
-#define FREE(ptr) free(ptr)
-
-// Custom assert macro that just calls C's assert() function. The only
-// difference is that this macro can be toggled with BUILD_DEBUG.
-#if defined(BUILD_DEBUG)
-#include <assert.h>
-#define ASSERT(e) assert(e)
-#else
-#define ASSERT()
+#ifndef _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 #endif
 
-// Maximum and miminum macros.
-#define MAX(a,b) (((a)<(b)) ? (b) : (a))
-#define MIN(a,b) (((a)<(b)) ? (a) : (b))
+#include <windows.h>
+#include <dbghelp.h>
 
-// More descriptive definitions for the static keyword.
-#define PERSISTENT static
-#define GLOBAL     static
-#define INTERNAL   static
+#include <cstdlib>
+#include <cstdio>
+#include <cstdint>
+#include <cstring>
+#include <ctime>
 
-// Short-hand type definitions for fixed-width integral types.
-typedef  uint8_t  U8;
-typedef uint16_t U16;
-typedef uint32_t U32;
-typedef uint64_t U64;
-typedef   int8_t  S8;
-typedef  int16_t S16;
-typedef  int32_t S32;
-typedef  int64_t S64;
+#include <string>
+#include <algorithm>
+#include <vector>
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_syswm.h>
 
 // Header includes.
 #include "utility.hpp"
+#include "error.hpp"
 #include "image.hpp"
 #include "window.hpp"
 #include "renderer.hpp"
-#include "audio.hpp"
 #include "timer.hpp"
 #include "input.hpp"
 #include "map.hpp"
@@ -54,10 +35,10 @@ typedef  int64_t S64;
 
 // Source includes.
 #include "utility.cpp"
+#include "error.cpp"
 #include "image.cpp"
 #include "window.cpp"
 #include "renderer.cpp"
-#include "audio.cpp"
 #include "timer.cpp"
 #include "input.cpp"
 #include "map.cpp"

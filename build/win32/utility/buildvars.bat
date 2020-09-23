@@ -5,7 +5,7 @@
 set Libraries=                                                       ^
 SDL2main.lib SDL2.lib opengl32.lib dinput8.lib dxguid.lib user32.lib ^
 gdi32.lib winmm.lib imm32.lib ole32.lib oleaut32.lib shell32.lib     ^
-version.lib uuid.lib advapi32.lib setupapi.lib setargv.obj
+version.lib uuid.lib advapi32.lib setupapi.lib dbghelp.lib setargv.obj
 
 :: SELECT WHICH ARCHITECTURE YOU WANT BY UNCOMMENTING
 :: set Architecture=x86
@@ -20,7 +20,7 @@ set LibraryDirs=-libpath:..\library\win32\%Architecture%\
 
 set Defines=
 
-set CompilerFlags=-Zc:__cplusplus -std:c++17 -nologo -W4 -MT -Oi -GR- -Z7
+set CompilerFlags=-Zc:__cplusplus -std:c++17 -nologo -W4 -MT -Oi -GR- -EHsc -Z7
 set LinkerFlags=-opt:ref -incremental:no
 
 set CompilerWarnings=-wd4100 -wd4505 -wd4189

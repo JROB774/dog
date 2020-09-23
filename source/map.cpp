@@ -12,38 +12,16 @@ GLOBAL constexpr int TILE_FLAG_N = 0x08;
 GLOBAL constexpr int TILE_CLIP_W = 32;
 GLOBAL constexpr int TILE_CLIP_H = 32;
 
-INTERNAL bool TileEntityCollision (Vec2 pos, Rect bounds, int tx, int ty, Rect& intersection)
+INTERNAL void LoadMap (Map& map, std::string file_name)
 {
-    // Entity Bounds
-    float x1 = pos.x + bounds.x;
-    float y1 = pos.y + bounds.y;
-    float x2 = x1    + bounds.w;
-    float y2 = y1    + bounds.h;
-    // Tile Bounds
-    float x3 = tx * TILE_W;
-    float y3 = ty * TILE_H;
-    float x4 = x3 + TILE_W;
-    float y4 = y3 + TILE_H;
-    // Intersection
-    float x5 = MAX(x1, x3);
-    float y5 = MAX(y1, y3);
-    float x6 = MIN(x2, x4);
-    float y6 = MIN(y2, y4);
+    LoadImage(map.tileset, "tilestd.bmp"); // @Hardcoded!
 
-    intersection.x = x5;
-    intersection.y = y5;
-    intersection.w = x6 - x5;
-    intersection.h = y6 - y5;
-
-    return ((x5 < x6) && (y5 < y6));
-}
-
-INTERNAL void LoadMap (Map& map, const char* file_name)
-{
-    LoadImage(map.tileset, "assets/tilestd.bmp"); // @Hardcoded!
-
-    SDL_Surface* surface = SDL_LoadBMP(file_name);
-    ASSERT(surface);
+    file_name = "assets/maps/" + file_name;
+    SDL_Surface* surface = SDL_LoadBMP(file_name.c_str());
+    if (!surface)
+    {
+        LOG_ERROR(ERR_MAX, "Failed to load map '%s'! (%s)", file_name.c_str(), SDL_GetError());
+    }
 
     // We want the data to be formatted as 32-bit RGBA so we know how to access the pixels.
     ASSERT(surface->format->BytesPerPixel == 4);
@@ -51,12 +29,11 @@ INTERNAL void LoadMap (Map& map, const char* file_name)
     map.w = surface->w;
     map.h = surface->h;
 
-    map.tiles = (Tile*)malloc(map.w*map.h * sizeof(Tile));
-    ASSERT(map.tiles);
+    map.tiles.resize(map.w*map.h);
 
     // Seed the random tiles for the map using the map's name so that they remain consistent!
     unsigned int random_seed = 0;
-    for (int i=0; i<strlen(file_name); ++i) random_seed += file_name[i];
+    for (int i=0; i<file_name.length(); ++i) random_seed += file_name[i];
     srand(random_seed);
 
     U32* pixels = (U32*)surface->pixels;
@@ -114,7 +91,7 @@ INTERNAL void LoadMap (Map& map, const char* file_name)
 INTERNAL void FreeMap (Map& map)
 {
     FreeImage(map.tileset);
-    free(map.tiles);
+    map.tiles.clear();
     map.w = 0, map.h = 0;
 }
 

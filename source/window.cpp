@@ -1,12 +1,20 @@
-#include <sstream>
-
-INTERNAL bool InitWindow (const char* title, int w, int h)
+INTERNAL bool InitWindow (std::string title, int w, int h)
 {
     // The window starts off hidden so we don't have a white window displaying whilst all the resources load and systems initialize.
-    gWindow.window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED, w,h, SDL_WINDOW_RESIZABLE|SDL_WINDOW_HIDDEN);
-    ASSERT(gWindow.window);
+    gWindow.window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED, w,h, SDL_WINDOW_RESIZABLE|SDL_WINDOW_HIDDEN);
+    if (!gWindow.window)
+    {
+        LOG_ERROR(ERR_MAX, "Failed to create window! (%s)", SDL_GetError());
+        return false;
+    }
+
     gWindow.renderer = SDL_CreateRenderer(gWindow.window, -1, SDL_RENDERER_ACCELERATED);
-    ASSERT(gWindow.renderer);
+    if (!gWindow.renderer)
+    {
+        LOG_ERROR(ERR_MAX, "Failed to create renderer! (%s)", SDL_GetError());
+        return false;
+    }
+
     SDL_SetWindowMinimumSize(gWindow.window, w,h);
 
     gWindow.screenw = w;

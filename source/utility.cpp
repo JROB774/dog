@@ -12,3 +12,68 @@ INTERNAL Color MakeColor (float r, float g, float b, float a)
 {
     return Color { r,g,b,a };
 }
+
+INTERNAL int ShowAlert (std::string title, std::string msg, int type, int buttons)
+{
+    // NOTE: We don't allow hidden windows because it causes program hang.
+    HWND hwnd = NULL;
+    bool hidden = SDL_GetWindowFlags(gWindow.window) & SDL_WINDOW_HIDDEN;
+
+    if (!hidden)
+    {
+        SDL_SysWMinfo win_info = {};
+        SDL_VERSION(&win_info.version);
+        if (SDL_GetWindowWMInfo(gWindow.window, &win_info))
+        {
+            hwnd = win_info.info.win.window;;
+        }
+    }
+
+    return MessageBoxA(hwnd, msg.c_str(), title.c_str(), (type|buttons));
+}
+
+INTERNAL std::string FixPathSlashes (std::string path_name)
+{
+    std::replace(path_name.begin(), path_name.end(), '\\', '/');
+    return path_name;
+}
+
+INTERNAL std::string FormatStringV (const char* format, va_list args)
+{
+    std::string str;
+    int size = vsnprintf(NULL, 0, format, args) + 1;
+    char* buffer = (char*)malloc(size*sizeof(char));
+    if (buffer)
+    {
+        vsnprintf(buffer, size, format, args);
+        str = buffer;
+        free(buffer);
+    }
+    return str;
+}
+
+INTERNAL std::string FormatTime (const char* format)
+{
+    time_t     raw_time = time(NULL);
+    struct tm* cur_time = localtime(&raw_time);
+
+    size_t length = 256;
+    size_t result = 0;
+
+    // We go until our buffer is big enough.
+    char* buffer = NULL;
+    do
+    {
+        if (buffer) free(buffer);
+        buffer = (char*)malloc(length*sizeof(char));
+        if (!buffer) return std::string();
+
+        result = strftime(buffer, length, format, cur_time);
+        length *= 2;
+    }
+    while (!result);
+
+    std::string time_str(buffer);
+    free(buffer);
+    return time_str;
+}
