@@ -15,9 +15,17 @@ GLOBAL constexpr float DOG_BOUNDS_H =  7;
 INTERNAL void CreateDog (Dog& dog, float x, float y)
 {
 	dog.pos = { x, y };
+	dog.vel = { 0, 0 };
+
+	dog.bounds = { DOG_BOUNDS_X,DOG_BOUNDS_Y,DOG_BOUNDS_W,DOG_BOUNDS_H };
 
 	LoadImage(dog.image, "dog.bmp");
 	dog.flip = FLIP_NONE;
+
+	dog.left = false;
+	dog.right = false;
+
+	dog.grounded = false;
 }
 
 INTERNAL void UpdateDog (Dog& dog, float dt)
