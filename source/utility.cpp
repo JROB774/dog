@@ -32,6 +32,15 @@ INTERNAL int ShowAlert (std::string title, std::string msg, int type, int button
     return MessageBoxA(hwnd, msg.c_str(), title.c_str(), (type|buttons));
 }
 
+INTERNAL std::vector<std::string> TokenizeString (std::string str, char delim)
+{
+    std::stringstream test(str);
+    std::string segment;
+    std::vector<std::string> seglist;
+    while(std::getline(test, segment, delim)) seglist.push_back(segment);
+    return seglist;
+}
+
 INTERNAL std::string FixPathSlashes (std::string path_name)
 {
     std::replace(path_name.begin(), path_name.end(), '\\', '/');

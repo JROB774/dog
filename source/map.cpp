@@ -38,7 +38,11 @@ INTERNAL bool TileEntityCollision (Vec2 pos, Rect bounds, int tx, int ty, Rect& 
 
 INTERNAL void LoadMap (Map& map, std::string file_name)
 {
-    LoadImage(map.tileset, "tilestd.bmp"); // @Hardcoded!
+    auto tokens = TokenizeString(file_name, '-');
+    ASSERT(tokens.size() == 2); // Tileset and map name.
+
+    std::string tileset_file = "tile" + tokens[0] + ".bmp";
+    LoadImage(map.tileset, tileset_file.c_str());
 
     file_name = "assets/maps/" + file_name;
     SDL_Surface* surface = SDL_LoadBMP(file_name.c_str());

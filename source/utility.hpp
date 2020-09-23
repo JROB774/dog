@@ -58,6 +58,8 @@ INTERNAL int ShowAlert (std::string title, std::string msg, int type, int button
 
 // Some utility functions.
 
+INTERNAL std::vector<std::string> TokenizeString (std::string str, char delim);
+
 INTERNAL std::string FixPathSlashes (std::string path_name);
 INTERNAL std::string FormatStringV  (const char* format, va_list args);
 INTERNAL std::string FormatTime     (const char* format);

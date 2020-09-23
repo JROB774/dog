@@ -1,6 +1,6 @@
 INTERNAL void InitGame ()
 {
-    LoadMap(gGameState.map, "maptest.bmp");
+    LoadMap(gGameState.map, "main-test.bmp");
     CreateDog(gGameState.dog, 48, 100);
 }
 

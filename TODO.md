@@ -2,13 +2,17 @@
 
 ## Josh
 
-* [X] Implement frame-capping (60 FPS).
-* [X] Add game.hpp/cpp for putting the game logic in.
-* [ ] Audio system for sound using this [library](https://github.com/jakebesworth/Simple-SDL2-Audio).
+* [x] Implement frame-capping (60 FPS).
+* [x] Add game.hpp/cpp for putting the game logic in.
+* [x] Change how map names are formatted: tileset-mapname
+
+* [ ] Replace static SDL with dynamic SDL.
+* [ ] Add in SDL_mixer library.
+* [ ] Implement a simple audio system.
 
 ## TiKo
 
-* [ ] Player control + input handling.
+* [x] Player control + input handling.
 
 ## Unassigned
 

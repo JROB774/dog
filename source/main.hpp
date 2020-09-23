@@ -18,6 +18,7 @@
 #include <cstring>
 #include <ctime>
 
+#include <sstream>
 #include <string>
 #include <algorithm>
 #include <vector>
