@@ -17,7 +17,9 @@ INTERNAL void UpdateGame (float dt)
 
 INTERNAL void RenderGame (float dt)
 {
+    BeginCamera();
     DrawMapBackg(gWorld.current_map);
     DrawDog(gGameState.dog, dt);
     DrawMapFront(gWorld.current_map);
+    EndCamera();
 }

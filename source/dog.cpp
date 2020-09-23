@@ -201,6 +201,12 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
             }
         }
     }
+
+    // The camera tracks the dogs current position!
+    float cx = roundf(dog.pos.x + (DOG_CLIP_W/2) - (WINDOW_SCREEN_W/2));
+    float cy = roundf(dog.pos.y + (DOG_CLIP_H/2) - (WINDOW_SCREEN_H/2));
+
+    SetCamera(cx,cy);
 }
 
 INTERNAL void DrawDog (Dog& dog, float dt)
