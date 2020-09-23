@@ -69,7 +69,7 @@ INTERNAL void UpdateAnimation (Animation& animation, float dt)
     }
 }
 
-INTERNAL SDL_Rect GetAnimationClip (Animation& animation)
+INTERNAL const SDL_Rect* GetAnimationClip (Animation& animation)
 {
-    return animation.frames.at(animation.state.frame).clip;
+    return &animation.frames.at(animation.state.frame).clip;
 }

@@ -1,14 +1,27 @@
 #ifndef DOG_HPP
 #define DOG_HPP
 
+enum DogState
+{
+    DOG_STATE_IDLE,
+    DOG_STATE_BLINK,
+    DOG_STATE_MOVE,
+    DOG_STATE_JUMP,
+    DOG_STATE_TOTAL
+};
+
 struct Dog
 {
-    Vec2 pos, vel;
+    DogState state;
+
+    Vec2 pos,vel;
 
     Rect bounds;
 
     Image image;
     Flip flip;
+
+    Animation anim[DOG_STATE_TOTAL];
 
     bool left;
     bool right;

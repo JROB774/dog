@@ -14,6 +14,8 @@ GLOBAL constexpr float DOG_BOUNDS_H =  7;
 
 INTERNAL void CreateDog (Dog& dog, float x, float y)
 {
+	dog.state = DOG_STATE_IDLE;
+
 	dog.pos = { x, y };
 	dog.vel = { 0, 0 };
 
@@ -21,6 +23,11 @@ INTERNAL void CreateDog (Dog& dog, float x, float y)
 
 	LoadImage(dog.image, "dog.bmp");
 	dog.flip = FLIP_NONE;
+
+	LoadAnimation(dog.anim[DOG_STATE_IDLE ], "dog-idle.anim" );
+	LoadAnimation(dog.anim[DOG_STATE_BLINK], "dog-blink.anim");
+	LoadAnimation(dog.anim[DOG_STATE_MOVE ], "dog-move.anim" );
+	LoadAnimation(dog.anim[DOG_STATE_JUMP ], "dog-jump.anim" );
 
 	dog.left = false;
 	dog.right = false;
@@ -144,10 +151,30 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 	// Apply velocity to the dog.
 	dog.pos.x += (dog.vel.x * dt);
 	dog.pos.y += (dog.vel.y * dt);
+
+	// Handle setting the dog's current animation state.
+	if (!dog.grounded)
+	{
+		dog.state = DOG_STATE_JUMP;
+	}
+	else
+	{
+		if (dog.vel.x != 0.0f)
+		{
+			dog.state = DOG_STATE_MOVE;
+		}
+		else
+		{
+			dog.state = DOG_STATE_IDLE;
+			// @Incomplete: Add blinking state set..
+		}
+	}
 }
 
 INTERNAL void DrawDog (Dog& dog, float dt)
 {
+	UpdateAnimation(dog.anim[dog.state], dt);
+
 	SDL_Rect clip = { 0,0,DOG_CLIP_W,DOG_CLIP_H };
-	DrawImage(dog.image, dog.pos.x, dog.pos.y, dog.flip, &clip);
+	DrawImage(dog.image, dog.pos.x, dog.pos.y, dog.flip, GetAnimationClip(dog.anim[dog.state]));
 }
