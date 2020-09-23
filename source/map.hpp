@@ -9,8 +9,7 @@ enum TileType { TILE_EMPTY, TILE_BACKG, TILE_SOLID };
 struct Tile
 {
     TileType type;
-    int offset;
-    int variant;
+    int xoff,yoff; // In tiles!
 };
 
 struct Map

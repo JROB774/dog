@@ -66,7 +66,7 @@ INTERNAL std::string FormatTime     (const char* format);
 
 // Random functions.
 
-INTERNAL void RandomSeed  (int seed)
+INTERNAL void RandomSeed  (int seed = -1);
 INTERNAL int  RandomRange (int min, int max); // Inclusive!
 INTERNAL int  Random      ();
 

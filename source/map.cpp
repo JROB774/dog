@@ -1,3 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+// HOW TILESETS WORK:
+//
+// The first two rows of tiles are the different directional pieces that make
+// up the solid tile. Row one and two are simply alternate graphics to add
+// some more visual variance to the solid tiles. The third row are different
+// graphics randomly selected for the inner-solid tiles. These graphics have a
+// small random change of appearing instead of the default inner-solid tiles.
+// The final row is the different directional pieces for background tiles.
+//
+////////////////////////////////////////////////////////////////////////////////
+
 GLOBAL constexpr U32 TILE_EMPTY_COLOR = 0xFFFFFFFF;
 GLOBAL constexpr U32 TILE_BACKG_COLOR = 0xFF808080;
 GLOBAL constexpr U32 TILE_SOLID_COLOR = 0xFF000000;
@@ -83,31 +96,43 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
 
             if (tile->type != TILE_EMPTY)
             {
-                tile->variant = 0;
-                tile->offset = 0;
+                tile->xoff = 0;
+                tile->yoff = 0;
 
+                // Set the row for solid and background tiles.
                 switch (tile->type)
                 {
-                    case (TILE_SOLID): tile->variant = rand() % (int)((map.tileset.h/TILE_CLIP_H)-1); break;
-                    case (TILE_BACKG): tile->variant =          (int)((map.tileset.h/TILE_CLIP_H)-1); break;
+                    case (TILE_SOLID): tile->yoff = RandomRange(0, 1); break;
+                    case (TILE_BACKG): tile->yoff = 3;                 break;
                 }
 
+                // Set the direction for solid and background tiles.
                 switch (tile->type)
                 {
                     case (TILE_SOLID):
                     {
-                        if ((ix == (      0)) || (pixels[(iy)*map.w+(ix-1)] == TILE_SOLID_COLOR)) tile->offset |= TILE_FLAG_W;
-                        if ((iy == (map.h-1)) || (pixels[(iy+1)*map.w+(ix)] == TILE_SOLID_COLOR)) tile->offset |= TILE_FLAG_S;
-                        if ((ix == (map.w-1)) || (pixels[(iy)*map.w+(ix+1)] == TILE_SOLID_COLOR)) tile->offset |= TILE_FLAG_E;
-                        if ((iy == (      0)) || (pixels[(iy-1)*map.w+(ix)] == TILE_SOLID_COLOR)) tile->offset |= TILE_FLAG_N;
+                        if ((ix == (      0)) || (pixels[(iy)*map.w+(ix-1)] == TILE_SOLID_COLOR)) tile->xoff |= TILE_FLAG_W;
+                        if ((iy == (map.h-1)) || (pixels[(iy+1)*map.w+(ix)] == TILE_SOLID_COLOR)) tile->xoff |= TILE_FLAG_S;
+                        if ((ix == (map.w-1)) || (pixels[(iy)*map.w+(ix+1)] == TILE_SOLID_COLOR)) tile->xoff |= TILE_FLAG_E;
+                        if ((iy == (      0)) || (pixels[(iy-1)*map.w+(ix)] == TILE_SOLID_COLOR)) tile->xoff |= TILE_FLAG_N;
                     } break;
                     case (TILE_BACKG):
                     {
-                        if ((ix == (      0)) || (pixels[(iy)*map.w+(ix-1)] != TILE_EMPTY_COLOR)) tile->offset |= TILE_FLAG_W;
-                        if ((iy == (map.h-1)) || (pixels[(iy+1)*map.w+(ix)] != TILE_EMPTY_COLOR)) tile->offset |= TILE_FLAG_S;
-                        if ((ix == (map.w-1)) || (pixels[(iy)*map.w+(ix+1)] != TILE_EMPTY_COLOR)) tile->offset |= TILE_FLAG_E;
-                        if ((iy == (      0)) || (pixels[(iy-1)*map.w+(ix)] != TILE_EMPTY_COLOR)) tile->offset |= TILE_FLAG_N;
+                        if ((ix == (      0)) || (pixels[(iy)*map.w+(ix-1)] != TILE_EMPTY_COLOR)) tile->xoff |= TILE_FLAG_W;
+                        if ((iy == (map.h-1)) || (pixels[(iy+1)*map.w+(ix)] != TILE_EMPTY_COLOR)) tile->xoff |= TILE_FLAG_S;
+                        if ((ix == (map.w-1)) || (pixels[(iy)*map.w+(ix+1)] != TILE_EMPTY_COLOR)) tile->xoff |= TILE_FLAG_E;
+                        if ((iy == (      0)) || (pixels[(iy-1)*map.w+(ix)] != TILE_EMPTY_COLOR)) tile->xoff |= TILE_FLAG_N;
                     } break;
+                }
+
+                // Special case for inner-solid tiles to add some visual variance.
+                if ((tile->type == TILE_SOLID) && (tile->xoff == 0x0F))
+                {
+                    if (RandomRange(0, 100) <= 15)
+                    {
+                        tile->yoff = 2;
+                        tile->xoff = RandomRange(0, 15);
+                    }
                 }
             }
         }
@@ -135,7 +160,7 @@ INTERNAL void DrawMapBackg (Map& map)
             Tile* tile = &map.tiles[iy*map.w+ix];
             if (tile->type == TILE_BACKG)
             {
-                clip.x = tile->offset * TILE_CLIP_W, clip.y = tile->variant * TILE_CLIP_H;
+                clip.x = tile->xoff * TILE_CLIP_W, clip.y = tile->yoff * TILE_CLIP_H;
                 DrawImage(map.tileset, (float)((ix*TILE_W)+(TILE_W/2)-(TILE_CLIP_W/2)), (float)((iy*TILE_H)+(TILE_H/2)-(TILE_CLIP_H/2)), FLIP_NONE, &clip);
             }
         }
@@ -154,7 +179,7 @@ INTERNAL void DrawMapFront (Map& map)
             Tile* tile = &map.tiles[iy*map.w+ix];
             if (tile->type == TILE_SOLID)
             {
-                clip.x = tile->offset * TILE_CLIP_W, clip.y = tile->variant * TILE_CLIP_H;
+                clip.x = tile->xoff * TILE_CLIP_W, clip.y = tile->yoff * TILE_CLIP_H;
                 DrawImage(map.tileset, (float)((ix*TILE_W)+(TILE_W/2)-(TILE_CLIP_W/2)), (float)((iy*TILE_H)+(TILE_H/2)-(TILE_CLIP_H/2)), FLIP_NONE, &clip);
             }
         }
