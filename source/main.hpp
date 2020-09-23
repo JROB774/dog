@@ -25,6 +25,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_syswm.h>
+#include <SDL2/SDL_mixer.h>
 
 // Header includes.
 #include "utility.hpp"
@@ -34,6 +35,7 @@
 #include "renderer.hpp"
 #include "timer.hpp"
 #include "input.hpp"
+#include "mixer.hpp"
 #include "map.hpp"
 #include "dog.hpp"
 #include "game.hpp"
@@ -46,6 +48,7 @@
 #include "renderer.cpp"
 #include "timer.cpp"
 #include "input.cpp"
+#include "mixer.cpp"
 #include "map.cpp"
 #include "dog.cpp"
 #include "game.cpp"

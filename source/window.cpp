@@ -1,5 +1,11 @@
 INTERNAL bool InitWindow (std::string title, int w, int h)
 {
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
+    {
+        LOG_ERROR(ERR_MAX, "Failed to initialize SDL! (%s)", SDL_GetError());
+        return false;
+    }
+
     // The window starts off hidden so we don't have a white window displaying whilst all the resources load and systems initialize.
     gWindow.window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED, w,h, SDL_WINDOW_RESIZABLE|SDL_WINDOW_HIDDEN);
     if (!gWindow.window)
@@ -27,6 +33,7 @@ INTERNAL void QuitWindow ()
 {
     SDL_DestroyRenderer(gWindow.renderer);
     SDL_DestroyWindow(gWindow.window);
+    SDL_Quit();
 }
 
 INTERNAL void ClearWindow (Color color)
