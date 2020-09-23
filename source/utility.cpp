@@ -86,3 +86,22 @@ INTERNAL std::string FormatTime (const char* format)
     free(buffer);
     return time_str;
 }
+
+INTERNAL void RandomSeed (int seed)
+{
+    if (seed < 0) srand((unsigned int)time(NULL));
+    else srand((unsigned int)seed);
+}
+
+INTERNAL int RandomRange (int min, int max)
+{
+    if (min  > max) std::swap(min, max);
+    if (min == max) return min;
+    int diff = (max-min)+1;
+    return (rand() % diff + min);
+}
+
+INTERNAL int Random ()
+{
+    return rand();
+}

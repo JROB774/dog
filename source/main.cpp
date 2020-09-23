@@ -11,12 +11,12 @@ INTERNAL void QuitApplication ()
 
 int main (int argc, char** argv)
 {
-    srand((unsigned int)time(NULL));
-
     ErrorTerminateCallback = QuitApplication;
     ErrorMaximumCallback = QuitApplication;
 
     gWindow.running = true;
+
+    RandomSeed();
 
     InitErrorSystem();
 

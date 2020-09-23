@@ -64,4 +64,10 @@ INTERNAL std::string FixPathSlashes (std::string path_name);
 INTERNAL std::string FormatStringV  (const char* format, va_list args);
 INTERNAL std::string FormatTime     (const char* format);
 
+// Random functions.
+
+INTERNAL void RandomSeed  (int seed)
+INTERNAL int  RandomRange (int min, int max); // Inclusive!
+INTERNAL int  Random      ();
+
 #endif /* UTILITY_HPP */

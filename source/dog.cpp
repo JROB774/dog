@@ -193,7 +193,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
             else
             {
                 dog.state = DOG_STATE_IDLE;
-                if ((rand() % 1000) < 10)
+                if (RandomRange(0, 1000) <= 10)
                 {
                     ResetAnimation(dog.anim[DOG_STATE_BLNK]);
                     dog.state = DOG_STATE_BLNK;
