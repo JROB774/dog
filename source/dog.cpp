@@ -117,7 +117,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
                 {
                     if(dog.vel.y < 0){
                         //dog.pos.y += intersection.h;
-                        dog.vel.y = -dog.vel.y/2;
+                        dog.vel.y = 0;
                         //dog.grounded = true;
                     }
                     else{
