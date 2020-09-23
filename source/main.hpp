@@ -21,6 +21,7 @@
 #include <sstream>
 #include <string>
 #include <algorithm>
+#include <random>
 #include <vector>
 
 #include <SDL2/SDL.h>

@@ -75,7 +75,7 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
     // Seed the random tiles for the map using the map's name so that they remain consistent!
     unsigned int random_seed = 0;
     for (int i=0; i<file_name.length(); ++i) random_seed += file_name[i];
-    srand(random_seed);
+    RandomSeed(random_seed);
 
     U32* pixels = (U32*)surface->pixels;
     for (int iy=0; iy<map.h; ++iy)
@@ -166,7 +166,6 @@ INTERNAL void DrawMapBackg (Map& map)
         }
     }
 }
-
 
 INTERNAL void DrawMapFront (Map& map)
 {
