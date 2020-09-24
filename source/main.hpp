@@ -46,7 +46,9 @@
 #include "dog.hpp"
 #include "world.hpp"
 #include "camera.hpp"
+#include "font.hpp"
 #include "game.hpp"
+
 
 // Source includes.
 #include "utility.cpp"
@@ -62,6 +64,8 @@
 #include "dog.cpp"
 #include "world.cpp"
 #include "camera.cpp"
+#include "font.cpp"
 #include "game.cpp"
+
 
 #endif /* MAIN_HPP */

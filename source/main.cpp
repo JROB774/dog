@@ -22,6 +22,7 @@ int main (int argc, char** argv)
 
     InitWindow();
     InitMixer();
+    CreateFont();
     InitGame();
 
     InitFrameTimer();
