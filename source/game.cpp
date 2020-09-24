@@ -1,15 +1,21 @@
 INTERNAL void InitGame ()
 {
-    InitBones();
+    LoadFont(gGameState.lfont, 24, 24, "lfont.bmp");
+    LoadFont(gGameState.sfont, 12, 12, "sfont.bmp");
+
     LoadWorld();
+    InitBones();
+
     CreateDog(gGameState.dog, START_X, START_Y);
 }
 
 INTERNAL void QuitGame ()
 {
     DeleteDog(gGameState.dog);
-    FreeWorld();
     DeleteBones();
+    FreeWorld();
+    FreeFont(gGameState.sfont);
+    FreeFont(gGameState.lfont);
 }
 
 INTERNAL void UpdateGame (float dt)

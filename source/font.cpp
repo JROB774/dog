@@ -3,7 +3,6 @@ GLOBAL constexpr int FONT_COL_COUNT = 32;
 
 INTERNAL void LoadFont (Font& font, float cw, float ch, std::string file_name)
 {
-    file_name = "assets/fonts/" + file_name;
     LoadImage(font.image, file_name);
 
     for(int iy = 0; iy < FONT_ROW_COUNT; iy++){
