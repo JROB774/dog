@@ -22,6 +22,4 @@ INTERNAL void RenderGame (float dt)
     DrawDog(gGameState.dog, dt);
     DrawMapFront(gWorld.current_map);
     EndCamera();
-
-    // RenderFont("TESTINGS", 100, 100);
 }

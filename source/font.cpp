@@ -1,10 +1,10 @@
 void CreateFont()
 {
-    LoadImage(gfont.image, "TEMP_FONT.bmp");
+    LoadImage(gfont.image, "font.bmp");
 
-    for(int iy = 0; iy < gfont.column_amount; iy++){
-        for(int ix = 0; ix < gfont.row_amount; ix++){
-            gfont.bounds[ix + (iy * gfont.row_amount)] = {ix * gfont.base.w, iy * gfont.base.h, gfont.base.w, gfont.base.h};
+    for(int iy = 0; iy < gfont.row_amount; iy++){
+        for(int ix = 0; ix < gfont.column_amount; ix++){
+            gfont.bounds[ix + (iy * gfont.column_amount)] = {ix * gfont.base.w, iy * gfont.base.h, gfont.base.w, gfont.base.h};
         }
     }
 }

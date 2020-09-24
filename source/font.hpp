@@ -1,15 +1,23 @@
-#ifndef FONT_H
-#define FONT_H
+#ifndef FONT_HPP
+#define FONT_HPP
+
+GLOBAL constexpr int FONT_CHAR_COUNT = 256;
+
+GLOBAL constexpr int FONT_CHAR_W = 24;
+GLOBAL constexpr int FONT_CHAR_H = 24;
+
+GLOBAL constexpr int FONT_ROW_COUNT = 3;
+GLOBAL constexpr int FONT_COL_COUNT = 32;
 
 GLOBAL struct Font
 {
     Image image;
 
-    SDL_Rect bounds[255];
-    SDL_Rect base = {0,0,32,32};
+    SDL_Rect bounds[FONT_CHAR_COUNT];
+    SDL_Rect base = {0,0,FONT_CHAR_W,FONT_CHAR_H};
 
-    int row_amount = 10;
-    int column_amount = 10;
+    int row_amount = FONT_ROW_COUNT;
+    int column_amount = FONT_COL_COUNT;
 } gfont;
 
 void CreateFont();
