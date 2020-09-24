@@ -58,16 +58,24 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
     {
         if (IsKeyPressed(SDL_SCANCODE_Z) || IsKeyPressed(SDL_SCANCODE_SPACE))
         {
-            dog.vel.y = -DOG_JUMP_FORCE;
+            dog.vel.y = (-DOG_JUMP_FORCE/2);
             dog.grounded = false;
             dog.ledge_buffer = 0;
+            dog.jump_height = 0.18;
         }
+    }
+
+    if(IsKeyReleased(SDL_SCANCODE_Z) || IsKeyReleased(SDL_SCANCODE_SPACE)){
+        dog.jump_height = 0;
     }
 
     // Apply a gravity force to the dog.
     if (!dog.grounded){
-        dog.vel.y += DOG_WEIGHT * GRAVITY;
+        if(dog.jump_height <= 0){
+            dog.vel.y += DOG_WEIGHT * GRAVITY;   
+        }
         dog.ledge_buffer -= dt;
+        dog.jump_height -= dt;
     }
     else{
         dog.vel.y = 0.0f;
@@ -119,6 +127,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
                     if(dog.vel.y < 0){
                         //dog.pos.y += intersection.h;
                         dog.vel.y = 0;
+                        dog.jump_height = 0;
                         //dog.grounded = true;
                     }
                     else{
