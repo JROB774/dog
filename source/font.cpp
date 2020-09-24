@@ -16,3 +16,8 @@ void RenderFont(std::string _text, int _x, int _y)
 		_x += gfont.base.w;
 	}
 }
+
+void DestroyFont()
+{
+	FreeImage(gfont.image);
+}
