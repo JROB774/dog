@@ -122,10 +122,10 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
                     } break;
                     case (TILE_BACKG):
                     {
-                        if ((ix == (      0)) || (pixels[(iy)*map.w+(ix-1)] != TILE_EMPTY_COLOR)) tile->xoff |= TILE_FLAG_W;
-                        if ((iy == (map.h-1)) || (pixels[(iy+1)*map.w+(ix)] != TILE_EMPTY_COLOR)) tile->xoff |= TILE_FLAG_S;
-                        if ((ix == (map.w-1)) || (pixels[(iy)*map.w+(ix+1)] != TILE_EMPTY_COLOR)) tile->xoff |= TILE_FLAG_E;
-                        if ((iy == (      0)) || (pixels[(iy-1)*map.w+(ix)] != TILE_EMPTY_COLOR)) tile->xoff |= TILE_FLAG_N;
+                        if ((ix == (      0)) || (pixels[(iy)*map.w+(ix-1)] == TILE_BACKG_COLOR) || (pixels[(iy)*map.w+(ix-1)] == TILE_SOLID_COLOR)) tile->xoff |= TILE_FLAG_W;
+                        if ((iy == (map.h-1)) || (pixels[(iy+1)*map.w+(ix)] == TILE_BACKG_COLOR) || (pixels[(iy+1)*map.w+(ix)] == TILE_SOLID_COLOR)) tile->xoff |= TILE_FLAG_S;
+                        if ((ix == (map.w-1)) || (pixels[(iy)*map.w+(ix+1)] == TILE_BACKG_COLOR) || (pixels[(iy)*map.w+(ix+1)] == TILE_SOLID_COLOR)) tile->xoff |= TILE_FLAG_E;
+                        if ((iy == (      0)) || (pixels[(iy-1)*map.w+(ix)] == TILE_BACKG_COLOR) || (pixels[(iy-1)*map.w+(ix)] == TILE_SOLID_COLOR)) tile->xoff |= TILE_FLAG_N;
                     } break;
                 }
 
