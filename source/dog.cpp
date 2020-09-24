@@ -23,6 +23,7 @@ INTERNAL void CreateDog (Dog& dog, float x, float y)
 
     LoadImage(dog.image, "dog.bmp");
     dog.flip = FLIP_NONE;
+    LoadSound(dog.bark, "bark.wav");
 
     LoadAnimation(dog.anim[DOG_STATE_IDLE], "dog-idle.anim");
     LoadAnimation(dog.anim[DOG_STATE_BLNK], "dog-blnk.anim");
@@ -193,6 +194,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
                 {
                     ResetAnimation(dog.anim[DOG_STATE_BARK]);
                     dog.state = DOG_STATE_BARK;
+                    PlaySound(dog.bark);
                 }
             }
 
@@ -240,6 +242,12 @@ INTERNAL void DrawDog (Dog& dog, float dt)
 
     SDL_Rect clip = { 0,0,DOG_CLIP_W,DOG_CLIP_H };
     DrawImage(dog.image, dog.pos.x, dog.pos.y, dog.flip, GetAnimationClip(dog.anim[dog.state]));
+}
+
+INTERNAL void DeleteDog (Dog& dog)
+{
+    FreeImage(dog.image);
+    FreeSound(dog.bark);
 }
 
 INTERNAL bool DogCollideWithEntity (Dog& dog, float ex, float ey, Rect ebounds)

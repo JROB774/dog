@@ -22,6 +22,7 @@ struct Dog
 
     Image image;
     Flip flip;
+    Sound bark;
 
     Animation anim[DOG_STATE_TOTAL];
 
@@ -39,6 +40,7 @@ struct Dog
 INTERNAL void CreateDog (Dog& dog, float x, float y);
 INTERNAL void UpdateDog (Dog& dog, float dt);
 INTERNAL void DrawDog   (Dog& dog, float dt);
+INTERNAL void DeleteDog (Dog& dog);
 
 INTERNAL bool DogCollideWithEntity (Dog& dog, float ex, float ey, Rect ebounds);
 

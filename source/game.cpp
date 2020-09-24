@@ -6,6 +6,7 @@ INTERNAL void InitGame ()
 
 INTERNAL void QuitGame ()
 {
+    DeleteDog(gGameState.dog);
     FreeWorld();
 }
 
