@@ -232,6 +232,26 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
             dog.dead = true;
         }
     }
+    for (auto& sbone: gWorld.current_map.sbones)
+    {
+        if (!sbone.dead)
+        {
+            if (DogCollideWithEntity(dog, sbone.x, sbone.y, sbone.bounds))
+            {
+                sbone.dead = true;
+            }
+        }
+    }
+    for (auto& lbone: gWorld.current_map.lbones)
+    {
+        if (!lbone.dead)
+        {
+            if (DogCollideWithEntity(dog, lbone.x, lbone.y, lbone.bounds))
+            {
+                lbone.dead = true;
+            }
+        }
+    }
 }
 
 INTERNAL void DrawDog (Dog& dog, float dt)
