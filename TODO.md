@@ -21,12 +21,16 @@
 ## Unassigned
 
 * [ ] Main menu / title screen.
+* [ ] Pause menu.
 * [ ] Implement the dig system with breakable blocks.
-* [ ] Implement collectible bones.
+* [ ] Implement collectible bones:
+  * [ ] Small bones.
+  * [ ] Large bones.
+  * [ ] GUI for collectible count.
 * [ ] Hazards:
+  * [ ] Spikes
   * [ ] Enemies:
     * ???
-  * [ ] Spikes
 * [ ] Particle effect system.
 * [ ] Win and lose states.
 
