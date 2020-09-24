@@ -1,4 +1,4 @@
-void CreateFont()
+void InitFont()
 {
     LoadImage(gfont.image, "font.bmp");
 
@@ -9,7 +9,7 @@ void CreateFont()
     }
 }
 
-void RenderFont(std::string text, float x, float y)
+void DrawFont(std::string text, float x, float y)
 {
     for(int i = 0; i < text.length(); i++){
         DrawImage(gfont.image, x, y, FLIP_NONE, &gfont.bounds[static_cast<U8>(text.at(i))]);
@@ -17,7 +17,7 @@ void RenderFont(std::string text, float x, float y)
     }
 }
 
-void DestroyFont()
+void QuitFont()
 {
     FreeImage(gfont.image);
 }

@@ -20,8 +20,8 @@ GLOBAL struct Font
     int column_amount = FONT_COL_COUNT;
 } gfont;
 
-void CreateFont();
-void RenderFont(std::string text, float x, float y);
-void DestroyFont();
+void InitFont();
+void DrawFont(std::string text, float x, float y);
+void QuitFont();
 
 #endif /* FONT_HPP */

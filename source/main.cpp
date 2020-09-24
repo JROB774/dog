@@ -3,6 +3,7 @@
 INTERNAL void QuitApplication ()
 {
     QuitGame();
+    QuitFont();
     QuitMixer();
     QuitWindow();
 
@@ -22,7 +23,7 @@ int main (int argc, char** argv)
 
     InitWindow();
     InitMixer();
-    CreateFont();
+    InitFont();
     InitGame();
 
     InitFrameTimer();
