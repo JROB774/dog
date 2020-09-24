@@ -11,7 +11,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-// ARGB
+//                                        AARRGGBB
 GLOBAL constexpr U32 TILE_EMPTY_COLOR = 0xFFFFFFFF;
 GLOBAL constexpr U32 TILE_BACKG_COLOR = 0xFF808080;
 GLOBAL constexpr U32 TILE_SOLID_COLOR = 0xFF000000;
@@ -24,7 +24,7 @@ GLOBAL constexpr int TILE_FLAG_N = 0x08;
 GLOBAL constexpr int TILE_CLIP_W = 32;
 GLOBAL constexpr int TILE_CLIP_H = 32;
 
-// ARGB
+//                                          AARRGGBB
 GLOBAL constexpr U32 ENTITY_SPIKE_COLOR = 0xFFFF0000;
 
 INTERNAL bool TileEntityCollision (Vec2 pos, Rect bounds, int tx, int ty, Rect& intersection)

@@ -1,7 +1,7 @@
 #ifndef WORLD_HPP
 #define WORLD_HPP
 
-#if 1
+#if 0
 GLOBAL constexpr const char* START_MAP = "main-test.bmp";
 GLOBAL constexpr int         START_X   = (int)(3.5f * (float)TILE_W);
 GLOBAL constexpr int         START_Y   = (int)(6.5f * (float)TILE_H);
