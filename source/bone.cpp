@@ -56,11 +56,13 @@ void RenderSmallBone(SmallBone& _bone)
 	DrawImage(small_bone_image, _bone.x, _bone.y);
 }
 
+/*
 void RenderBoneCounter(int _x, int _y, BoneCounter _bonecounter)
 {
 	DrawFont(std::to_string(_bonecounter.small_bones_left),10, 10);
 	DrawFont(std::to_string(_bonecounter.large_bones_left),10, 52);
 }
+*/
 
 void DeleteBones()
 {

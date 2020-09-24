@@ -36,6 +36,7 @@
 #include "utility.hpp"
 #include "error.hpp"
 #include "image.hpp"
+#include "font.hpp"
 #include "window.hpp"
 #include "renderer.hpp"
 #include "timer.hpp"
@@ -48,7 +49,6 @@
 #include "dog.hpp"
 #include "world.hpp"
 #include "camera.hpp"
-#include "font.hpp"
 #include "game.hpp"
 
 
@@ -56,6 +56,7 @@
 #include "utility.cpp"
 #include "error.cpp"
 #include "image.cpp"
+#include "font.cpp"
 #include "window.cpp"
 #include "renderer.cpp"
 #include "timer.cpp"
@@ -68,7 +69,6 @@
 #include "dog.cpp"
 #include "world.cpp"
 #include "camera.cpp"
-#include "font.cpp"
 #include "game.cpp"
 
 

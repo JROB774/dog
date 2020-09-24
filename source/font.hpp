@@ -3,25 +3,15 @@
 
 GLOBAL constexpr int FONT_CHAR_COUNT = 256;
 
-GLOBAL constexpr int FONT_CHAR_W = 24;
-GLOBAL constexpr int FONT_CHAR_H = 24;
-
-GLOBAL constexpr int FONT_ROW_COUNT = 3;
-GLOBAL constexpr int FONT_COL_COUNT = 32;
-
-GLOBAL struct Font
+struct Font
 {
-    Image image;
-
     SDL_Rect bounds[FONT_CHAR_COUNT];
-    SDL_Rect base = {0,0,FONT_CHAR_W,FONT_CHAR_H};
+    Image image;
+    float charw;
+    float charh;
+};
 
-    int row_amount = FONT_ROW_COUNT;
-    int column_amount = FONT_COL_COUNT;
-} gfont;
-
-void InitFont();
-void DrawFont(std::string text, float x, float y);
-void QuitFont();
+INTERNAL void LoadFont (Font& font, float cw, float ch, std::string file_name);
+INTERNAL void FreeFont (Font& font);
 
 #endif /* FONT_HPP */

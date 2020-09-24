@@ -1,23 +1,22 @@
-void InitFont()
-{
-    LoadImage(gfont.image, "font.bmp");
+GLOBAL constexpr int FONT_ROW_COUNT = 3;
+GLOBAL constexpr int FONT_COL_COUNT = 32;
 
-    for(int iy = 0; iy < gfont.row_amount; iy++){
-        for(int ix = 0; ix < gfont.column_amount; ix++){
-            gfont.bounds[ix + (iy * gfont.column_amount)] = {ix * gfont.base.w, iy * gfont.base.h, gfont.base.w, gfont.base.h};
+INTERNAL void LoadFont (Font& font, float cw, float ch, std::string file_name)
+{
+    file_name = "assets/fonts/" + file_name;
+    LoadImage(font.image, file_name);
+
+    for(int iy = 0; iy < FONT_ROW_COUNT; iy++){
+        for(int ix = 0; ix < FONT_COL_COUNT; ix++){
+            font.bounds[ix + (iy * FONT_COL_COUNT)] = {ix * (int)cw, iy * (int)ch, (int)cw, (int)ch};
         }
     }
+
+    font.charw = cw;
+    font.charh = ch;
 }
 
-void DrawFont(std::string text, float x, float y)
+INTERNAL void FreeFont (Font& font)
 {
-    for(int i = 0; i < text.length(); i++){
-        DrawImage(gfont.image, x, y, FLIP_NONE, &gfont.bounds[static_cast<U8>(text.at(i))]);
-        x += gfont.base.w;
-    }
-}
-
-void QuitFont()
-{
-    FreeImage(gfont.image);
+    FreeImage(font.image);
 }

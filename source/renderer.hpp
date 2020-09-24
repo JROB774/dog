@@ -15,5 +15,6 @@ INTERNAL void DrawRect  (Rect rect,                              Color color);
 INTERNAL void DrawFill  (Rect rect,                              Color color);
 
 INTERNAL void DrawImage (Image& image, float x, float y, Flip flip = FLIP_NONE, const SDL_Rect* clip = NULL);
+INTERNAL void DrawText  (Font& font, std::string text, float x, float y);
 
 #endif /* RENDERER_HPP */
