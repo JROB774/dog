@@ -32,10 +32,14 @@ struct Dog
 
     float ledge_buffer;
     float jump_height;
+
+    bool dead;
 };
 
 INTERNAL void CreateDog (Dog& dog, float x, float y);
 INTERNAL void UpdateDog (Dog& dog, float dt);
 INTERNAL void DrawDog   (Dog& dog, float dt);
+
+INTERNAL bool DogCollideWithEntity (Dog& dog, float ex, float ey, Rect ebounds);
 
 #endif /* DOG_HPP */

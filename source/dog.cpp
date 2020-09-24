@@ -35,10 +35,14 @@ INTERNAL void CreateDog (Dog& dog, float x, float y)
     dog.right = false;
 
     dog.grounded = false;
+
+    dog.dead = false;
 }
 
 INTERNAL void UpdateDog (Dog& dog, float dt)
 {
+    if (dog.dead) return;
+
     dog.right = (IsKeyDown(SDL_SCANCODE_RIGHT) || IsKeyDown(SDL_SCANCODE_D));
     dog.left  = (IsKeyDown(SDL_SCANCODE_LEFT)  || IsKeyDown(SDL_SCANCODE_A));
 
@@ -216,12 +220,41 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
     float cy = roundf(dog.pos.y + (DOG_CLIP_H/2) - (WINDOW_SCREEN_H/2));
 
     SetCamera(cx,cy);
+
+    // Check dog collision with entities and perform the appropriate actions!
+
+    for (auto& spike: gWorld.current_map.spikes)
+    {
+        if (DogCollideWithEntity(dog, spike.x, spike.y, spike.bounds))
+        {
+            dog.dead = true;
+        }
+    }
 }
 
 INTERNAL void DrawDog (Dog& dog, float dt)
 {
+    if (dog.dead) return;
+
     UpdateAnimation(dog.anim[dog.state], dt);
 
     SDL_Rect clip = { 0,0,DOG_CLIP_W,DOG_CLIP_H };
     DrawImage(dog.image, dog.pos.x, dog.pos.y, dog.flip, GetAnimationClip(dog.anim[dog.state]));
+}
+
+INTERNAL bool DogCollideWithEntity (Dog& dog, float ex, float ey, Rect ebounds)
+{
+    Rect a,b;
+
+    a.x = dog.pos.x + dog.bounds.x;
+    a.y = dog.pos.y + dog.bounds.y;
+    a.w =             dog.bounds.w;
+    a.h =             dog.bounds.h;
+    b.x = ex        +    ebounds.x;
+    b.y = ey        +    ebounds.y;
+    b.w =                ebounds.w;
+    b.h =                ebounds.h;
+
+    return ((a.x + a.w > b.x) && (a.y + a.h > b.y) &&
+            (a.x < b.x + b.w) && (a.y < b.y + b.h));
 }
