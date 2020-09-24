@@ -19,7 +19,9 @@ INTERNAL void RenderGame (float dt)
 {
     BeginCamera();
     DrawMapBackg(gWorld.current_map);
+    DrawMapEntities(gWorld.current_map);
     DrawDog(gGameState.dog, dt);
+    DrawMapSpikes(gWorld.current_map);
     DrawMapFront(gWorld.current_map);
     EndCamera();
 }

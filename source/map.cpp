@@ -11,6 +11,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+// ARGB
 GLOBAL constexpr U32 TILE_EMPTY_COLOR = 0xFFFFFFFF;
 GLOBAL constexpr U32 TILE_BACKG_COLOR = 0xFF808080;
 GLOBAL constexpr U32 TILE_SOLID_COLOR = 0xFF000000;
@@ -22,6 +23,9 @@ GLOBAL constexpr int TILE_FLAG_N = 0x08;
 
 GLOBAL constexpr int TILE_CLIP_W = 32;
 GLOBAL constexpr int TILE_CLIP_H = 32;
+
+// ARGB
+GLOBAL constexpr U32 ENTITY_SPIKE_COLOR = 0xFFFF0000;
 
 INTERNAL bool TileEntityCollision (Vec2 pos, Rect bounds, int tx, int ty, Rect& intersection)
 {
@@ -138,6 +142,31 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
         }
     }
 
+    // Handle loading all the different entities in the game.
+    for (int iy=0; iy<map.h; ++iy)
+    {
+        for (int ix=0; ix<map.w; ++ix)
+        {
+            int index = (iy*map.w+ix);
+            U32 pixel = pixels[index];
+
+            switch (pixel)
+            {
+                case (ENTITY_SPIKE_COLOR): // SPIKES!
+                {
+                    // Determine what way the spike should face based on the surrounding tiles.
+                    SpikeDir sdir = SPIKE_DIR_U;
+                    if      ((iy == (map.h-1)) || (pixels[(iy+1)*map.w+(ix)] == TILE_SOLID_COLOR)) sdir = SPIKE_DIR_U;
+                    else if ((iy == (      0)) || (pixels[(iy-1)*map.w+(ix)] == TILE_SOLID_COLOR)) sdir = SPIKE_DIR_D;
+                    else if ((ix == (      0)) || (pixels[(iy)*map.w+(ix-1)] == TILE_SOLID_COLOR)) sdir = SPIKE_DIR_R;
+                    else if ((ix == (map.w-1)) || (pixels[(iy)*map.w+(ix+1)] == TILE_SOLID_COLOR)) sdir = SPIKE_DIR_L;
+                    map.spikes.push_back(Spike());
+                    CreateSpike(map.spikes.back(), (float)(ix*TILE_W), (float)(iy*TILE_H), sdir);
+                } break;
+            }
+        }
+    }
+
     SDL_FreeSurface(surface);
 }
 
@@ -146,6 +175,9 @@ INTERNAL void FreeMap (Map& map)
     FreeImage(map.tileset);
     map.tiles.clear();
     map.w = 0, map.h = 0;
+    // Entities
+    for (auto& spike: map.spikes) DeleteSpike(spike);
+    map.spikes.clear();
 }
 
 INTERNAL void DrawMapBackg (Map& map)
@@ -165,6 +197,18 @@ INTERNAL void DrawMapBackg (Map& map)
             }
         }
     }
+}
+
+INTERNAL void DrawMapEntities (Map& map)
+{
+    // ...
+}
+
+// Special exception becuase it seems better for spikes to draw in front
+// of the player whilst the rest of the entities draw behind the player.
+INTERNAL void DrawMapSpikes (Map& map)
+{
+    for (auto& spike: map.spikes) DrawSpike(spike);
 }
 
 INTERNAL void DrawMapFront (Map& map)

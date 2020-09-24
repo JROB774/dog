@@ -17,6 +17,8 @@ struct Map
     Image tileset;
     int w,h;
     std::vector<Tile> tiles;
+    // Entities
+    std::vector<Spike> spikes;
 };
 
 INTERNAL bool TileEntityCollision (Vec2 pos, Rect bounds, int tx, int ty, Rect& intersection);
@@ -24,7 +26,9 @@ INTERNAL bool TileEntityCollision (Vec2 pos, Rect bounds, int tx, int ty, Rect& 
 INTERNAL void LoadMap (Map& map, std::string file_name);
 INTERNAL void FreeMap (Map& map);
 
-INTERNAL void DrawMapBackg (Map& map);
-INTERNAL void DrawMapFront (Map& map);
+INTERNAL void DrawMapBackg    (Map& map);
+INTERNAL void DrawMapEntities (Map& map);
+INTERNAL void DrawMapSpikes   (Map& map);
+INTERNAL void DrawMapFront    (Map& map);
 
 #endif /* MAP_HPP */
