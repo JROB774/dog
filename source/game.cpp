@@ -23,5 +23,5 @@ INTERNAL void RenderGame (float dt)
     DrawMapFront(gWorld.current_map);
     EndCamera();
 
-    RenderFont("TESTINGS", 100, 100);
+    // RenderFont("TESTINGS", 100, 100);
 }

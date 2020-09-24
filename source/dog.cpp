@@ -61,7 +61,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
             dog.vel.y = (-DOG_JUMP_FORCE/2);
             dog.grounded = false;
             dog.ledge_buffer = 0;
-            dog.jump_height = 0.18;
+            dog.jump_height = 0.18f;
         }
     }
 
@@ -72,7 +72,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
     // Apply a gravity force to the dog.
     if (!dog.grounded){
         if(dog.jump_height <= 0){
-            dog.vel.y += DOG_WEIGHT * GRAVITY;   
+            dog.vel.y += DOG_WEIGHT * GRAVITY;
         }
         dog.ledge_buffer -= dt;
         dog.jump_height -= dt;
