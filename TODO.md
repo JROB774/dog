@@ -16,6 +16,7 @@
 ## TiKo
 
 * [x] Player control + input handling.
+* [x] Bitmap font drawing.
 
 ## Unassigned
 
