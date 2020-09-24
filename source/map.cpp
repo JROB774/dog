@@ -26,6 +26,8 @@ GLOBAL constexpr int TILE_CLIP_H = 32;
 
 //                                          AARRGGBB
 GLOBAL constexpr U32 ENTITY_SPIKE_COLOR = 0xFFFF0000;
+GLOBAL constexpr U32 ENTITY_SBONE_COLOR = 0xFFFFFF00;
+GLOBAL constexpr U32 ENTITY_LBONE_COLOR = 0xFF00FF00;
 
 INTERNAL bool TileEntityCollision (Vec2 pos, Rect bounds, int tx, int ty, Rect& intersection)
 {
@@ -162,6 +164,14 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
                     else if ((ix == (map.w-1)) || (pixels[(iy)*map.w+(ix+1)] == TILE_SOLID_COLOR)) sdir = SPIKE_DIR_L;
                     map.spikes.push_back(Spike());
                     CreateSpike(map.spikes.back(), (float)(ix*TILE_W), (float)(iy*TILE_H), sdir);
+                } break;
+                case (ENTITY_SBONE_COLOR): // SMALL BONES!
+                {
+                    // @Incomplete: ...
+                } break;
+                case (ENTITY_LBONE_COLOR): // LARGE BONES!
+                {
+                    // @Incomplete: ...
                 } break;
             }
         }
