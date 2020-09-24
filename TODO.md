@@ -12,26 +12,27 @@
   * [ ] Music
 * [x] Animation system (simple frame-based animation playback).
 * [x] Map navigation (move from room to room).
+* [x] Spikes.
+* [ ] GUI for collectible bone count.
+* [ ] Particle effect system.
+* [ ] Bones should remember they've been collected when transitioning maps, etc.
 
 ## TiKo
 
 * [x] Player control + input handling.
 * [x] Bitmap font drawing.
+* [x] Implement collectible bones:
+  * [x] Small bones.
+  * [x] Large bones.
+* [ ] Breakable blocks.
 
 ## Unassigned
 
 * [ ] Main menu / title screen.
 * [ ] Pause menu.
 * [ ] Implement the dig system with breakable blocks.
-* [ ] Implement collectible bones:
-  * [ ] Small bones.
-  * [ ] Large bones.
-  * [ ] GUI for collectible count.
-* [ ] Hazards:
-  * [ ] Spikes
-  * [ ] Enemies:
-    * ???
-* [ ] Particle effect system.
+* [ ] Enemies:
+  * ???
 * [ ] Win and lose states.
 
 *Flesh out these and add more as needed...*
