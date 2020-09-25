@@ -2,12 +2,14 @@ GLOBAL struct ParticleSystem
 {
     std::vector<Particle> particles;
     Image image;
+    float clear_timer;
 
 } gParticleSystem;
 
 INTERNAL void InitParticleSystem ()
 {
     LoadImage(gParticleSystem.image, "effect.bmp");
+    gParticleSystem.clear_timer = 0.0f;
 }
 
 INTERNAL void QuitParticleSystem ()
@@ -60,6 +62,17 @@ INTERNAL void UpdateParticles (float dt)
                 particle.dead = true;
             }
         }
+    }
+
+    // Every few seconds we remove dead particles from the array to keep memory usage low.
+    gParticleSystem.clear_timer += dt;
+    if (gParticleSystem.clear_timer >= 5.0f)
+    {
+        gParticleSystem.particles.erase(std::remove_if(
+            gParticleSystem.particles.begin(), gParticleSystem.particles.end(),
+            [](const Particle& p) { return p.dead; }),
+            gParticleSystem.particles.end()
+        );
     }
 }
 
