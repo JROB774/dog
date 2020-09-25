@@ -238,7 +238,9 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
         {
             if (DogCollideWithEntity(dog, sbone.x, sbone.y, sbone.bounds))
             {
+                gWorld.current_map.bone_counter.small_bones_collected++;
                 sbone.dead = true;
+                DisplayGui();
             }
         }
     }
@@ -248,7 +250,9 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
         {
             if (DogCollideWithEntity(dog, lbone.x, lbone.y, lbone.bounds))
             {
+                gWorld.current_map.bone_counter.large_bones_collected++;
                 lbone.dead = true;
+                DisplayGui();
             }
         }
     }

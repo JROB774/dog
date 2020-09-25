@@ -87,6 +87,11 @@ INTERNAL std::string FormatTime (const char* format)
     return time_str;
 }
 
+INTERNAL float Lerp (float a, float b, float t)
+{
+    return a + t * (b - a);
+}
+
 GLOBAL std::random_device gRandomDevice;
 GLOBAL std::mt19937 gRandomGenerator(gRandomDevice());
 

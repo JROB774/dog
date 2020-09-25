@@ -3,8 +3,10 @@
 
 struct BoneCounter
 {
-	int small_bones_left;
-	int large_bones_left;
+	int small_bones_collected;
+    int small_bones_total;
+	int large_bones_collected;
+    int large_bones_total;
 };
 
 struct SmallBone
@@ -29,7 +31,7 @@ void CreateSmallBone(SmallBone& _bone, float _x, float _y);
 void CreateBigBone(BigBone& _bone, float _x, float _y);
 // bool SmallBoneCollision(Rect _bounds, SmallBone _bone);
 // bool BigBoneCollision(Rect _bounds, BigBone _bone);
-void RenderBoneCounter(int _x, int _y, BoneCounter _bonecounter);
+// void RenderBoneCounter(int _x, int _y, BoneCounter _bonecounter);
 void DeleteBones();
 void RenderBigBone(BigBone& _bone);
 void RenderSmallBone(SmallBone& _bone);

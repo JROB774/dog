@@ -36,6 +36,16 @@ INTERNAL void DrawFill (float x, float y, float w, float h, Color color)
     SDL_RenderFillRectF(gWindow.renderer, &rect);
 }
 
+INTERNAL void DrawRect (Rect rect, Color color)
+{
+    DrawRect(rect.x, rect.y, rect.w, rect.h, color);
+}
+
+INTERNAL void DrawFill (Rect rect, Color color)
+{
+    DrawFill(rect.x, rect.y, rect.w, rect.h, color);
+}
+
 INTERNAL void DrawImage (Image& image, float x, float y, Flip flip, const SDL_Rect* clip)
 {
     SDL_Color c = ColorToSDLColor(image.color);
@@ -50,12 +60,11 @@ INTERNAL void DrawImage (Image& image, float x, float y, Flip flip, const SDL_Re
     SDL_RenderCopyExF(gWindow.renderer, image.texture, clip, &rect, 0.0f, NULL, flip);
 }
 
-INTERNAL void DrawRect (Rect rect, Color color)
+INTERNAL void DrawText (Font& font, std::string text, float x, float y, Color color)
 {
-    DrawRect(rect.x, rect.y, rect.w, rect.h, color);
-}
-
-INTERNAL void DrawFill (Rect rect, Color color)
-{
-    DrawFill(rect.x, rect.y, rect.w, rect.h, color);
+    font.image.color = color;
+    for(int i = 0; i < text.length(); i++){
+        DrawImage(font.image, x, y, FLIP_NONE, &font.bounds[static_cast<U8>(text.at(i))]);
+        x += font.charw;
+    }
 }
