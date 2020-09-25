@@ -111,3 +111,14 @@ INTERNAL int Random ()
 {
     return RandomRange(0, RAND_MAX);
 }
+
+INTERNAL float RandomFloatRange (float min, float max)
+{
+    std::uniform_real_distribution<float> distribution(min, max);
+    return distribution(gRandomGenerator);
+}
+
+INTERNAL float RandomFloat ()
+{
+    return RandomFloatRange(0, RAND_MAX);
+}

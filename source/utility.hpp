@@ -68,8 +68,10 @@ INTERNAL float Lerp (float a, float b, float t);
 
 // Random functions.
 
-INTERNAL void RandomSeed  (int seed = -1);
-INTERNAL int  RandomRange (int min, int max); // Inclusive!
-INTERNAL int  Random      ();
+INTERNAL void  RandomSeed       (int seed = -1);
+INTERNAL int   RandomRange      (int min, int max); // Inclusive!
+INTERNAL int   Random           ();
+INTERNAL float RandomFloatRange (float min, float max); // Inclusive!
+INTERNAL float RandomFloat      ();
 
 #endif /* UTILITY_HPP */
