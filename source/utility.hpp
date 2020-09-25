@@ -66,6 +66,11 @@ INTERNAL std::string FormatTime     (const char* format);
 
 INTERNAL float Lerp (float a, float b, float t);
 
+INTERNAL float DegToRad (float deg);
+INTERNAL float RadToDeg (float rad);
+
+INTERNAL Vec2 RotateVec2 (Vec2 vec, float rad);
+
 // Random functions.
 
 INTERNAL void  RandomSeed       (int seed = -1);

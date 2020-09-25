@@ -88,3 +88,13 @@ INTERNAL const SDL_Rect* GetAnimationClip (Animation& animation)
 {
     return &animation.frames.at(animation.state.frame).clip;
 }
+
+INTERNAL int GetAnimationFrameWidth (Animation& animation)
+{
+    return GetAnimationClip(animation)->w;
+}
+
+INTERNAL int GetAnimationFrameHeight (Animation& animation)
+{
+    return GetAnimationClip(animation)->h;
+}

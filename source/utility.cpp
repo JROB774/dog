@@ -92,6 +92,22 @@ INTERNAL float Lerp (float a, float b, float t)
     return a + t * (b - a);
 }
 
+INTERNAL float DegToRad (float deg)
+{
+    return (deg * (float)M_PI) / 180.0f;
+}
+INTERNAL float RadToDeg (float rad)
+{
+    return (rad * 180.0f) / (float)M_PI;
+}
+
+INTERNAL Vec2 RotateVec2 (Vec2 vec, float rad)
+{
+    float x = vec.x * cosf(rad) - vec.y * sinf(rad);
+    float y = vec.x * sinf(rad) + vec.y * cosf(rad);
+    return { x, y };
+}
+
 GLOBAL std::random_device gRandomDevice;
 GLOBAL std::mt19937 gRandomGenerator(gRandomDevice());
 

@@ -28,4 +28,7 @@ INTERNAL bool IsAnimationDone (Animation& animation);
 
 INTERNAL const SDL_Rect* GetAnimationClip (Animation& animation);
 
+INTERNAL int GetAnimationFrameWidth  (Animation& animation);
+INTERNAL int GetAnimationFrameHeight (Animation& animation);
+
 #endif /* ANIMATION_HPP */

@@ -44,7 +44,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 {
     if (dog.dead) return;
 
-    // CreateParticles(PARTICLE_TYPE_TEST0, (int)gGameState.dog.pos.x,(int)gGameState.dog.pos.y,(int)gGameState.dog.pos.x+24,(int)gGameState.dog.pos.y+24, 4,10);
+    // CreateParticles(PARTICLE_TYPE_TEST, (int)gGameState.dog.pos.x,(int)gGameState.dog.pos.y,(int)gGameState.dog.pos.x+24,(int)gGameState.dog.pos.y+24, 4,10);
 
     dog.right = (IsKeyDown(SDL_SCANCODE_RIGHT) || IsKeyDown(SDL_SCANCODE_D));
     dog.left  = (IsKeyDown(SDL_SCANCODE_LEFT)  || IsKeyDown(SDL_SCANCODE_A));
@@ -242,6 +242,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
         {
             if (DogCollideWithEntity(dog, sbone.x, sbone.y, sbone.bounds))
             {
+                CreateParticles(PARTICLE_TYPE_SPEC, (int)sbone.x+8,(int)sbone.y+8,(int)sbone.x+8,(int)sbone.y+8, 8,18);
                 gWorld.current_map.bone_counter.small_bones_collected++;
                 sbone.dead = true;
                 // DisplayGui();
@@ -254,6 +255,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
         {
             if (DogCollideWithEntity(dog, lbone.x, lbone.y, lbone.bounds))
             {
+                CreateParticles(PARTICLE_TYPE_SPEC, (int)lbone.x+12,(int)lbone.y+12,(int)lbone.x+12,(int)lbone.y+12, 40,72, 1.5f);
                 gWorld.current_map.bone_counter.large_bones_collected++;
                 lbone.dead = true;
                 // DisplayGui();
