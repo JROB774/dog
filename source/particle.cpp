@@ -33,7 +33,7 @@ INTERNAL void CreateParticles (ParticleType type, int minx, int miny, int maxx, 
         particle.pos.x = (float)RandomRange(minx, maxx);
         particle.pos.y = (float)RandomRange(miny, maxy);
         particle.vel = { 0,0 };
-        LoadAnimation(particle.anim, base.animation);
+        LoadAnimation(particle.anim, base.anims[RandomRange(0, (int)base.anims.size()-1)]);
         particle.dead = false;
         particle.visible = true;
         particle.lifetime = 0;

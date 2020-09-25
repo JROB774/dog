@@ -44,12 +44,12 @@ struct ParticleBase
 {
     ParticleCreate create;
     ParticleUpdate update;
-    std::string animation;
+    std::vector<std::string> anims;
 };
 
 GLOBAL const ParticleBase PARTICLE_BASE[PARTICLE_TYPE_TOTAL]
 {
-    { ParticleCreateTest0, ParticleUpdateTest0, "effect-test0.anim" }, // PARTIICLE_TYPE_TEST0
+    { ParticleCreateTest0, ParticleUpdateTest0, { "effect-test0-0.anim", "effect-test0-1.anim", "effect-test0-2.anim", "effect-test0-3.anim" } }, // PARTIICLE_TYPE_TEST0
 };
 
 #endif /* PARTICLE_HPP */
