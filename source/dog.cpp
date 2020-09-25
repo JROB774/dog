@@ -240,7 +240,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
             {
                 gWorld.current_map.bone_counter.small_bones_collected++;
                 sbone.dead = true;
-                DisplayGui();
+                // DisplayGui();
             }
         }
     }
@@ -252,7 +252,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
             {
                 gWorld.current_map.bone_counter.large_bones_collected++;
                 lbone.dead = true;
-                DisplayGui();
+                // DisplayGui();
             }
         }
     }
