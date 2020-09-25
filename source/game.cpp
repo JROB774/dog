@@ -3,6 +3,8 @@ INTERNAL void InitGame ()
     LoadFont(gGameState.lfont, 24, 24, "lfont.bmp");
     LoadFont(gGameState.sfont, 12, 12, "sfont.bmp");
 
+    InitBones();
+    InitBreakableBlock();
     LoadWorld();
     InitGui();
     InitBones();
