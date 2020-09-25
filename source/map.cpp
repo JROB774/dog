@@ -61,7 +61,7 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
     auto tokens = TokenizeString(file_name, '-');
     ASSERT(tokens.size() == 2); // Tileset and map name.
 
-    std::string tileset_file = "tile" + tokens[0] + ".bmp";
+    std::string tileset_file = "t" + tokens[0] + ".bmp";
     LoadImage(map.tileset, tileset_file.c_str());
 
     file_name = "assets/maps/" + file_name;
