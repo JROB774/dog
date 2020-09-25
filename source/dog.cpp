@@ -44,6 +44,9 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 {
     if (dog.dead) return;
 
+    bool old_grounded = dog.grounded;
+    Vec2 old_vel = dog.vel;
+
     // CreateParticles(PARTICLE_TYPE_TEST, (int)gGameState.dog.pos.x,(int)gGameState.dog.pos.y,(int)gGameState.dog.pos.x+24,(int)gGameState.dog.pos.y+24, 4,10);
 
     dog.right = (IsKeyDown(SDL_SCANCODE_RIGHT) || IsKeyDown(SDL_SCANCODE_D));
@@ -160,10 +163,35 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
                 Rect intersection;
                 if (TileEntityCollision(tpos,dog.bounds, ix,iy, intersection))
                 {
-                    if (dog.vel.y >= 0) dog.grounded = true;
+                    if (dog.vel.y >= 0)
+                    {
+                        dog.grounded = true;
+                    }
                 }
             }
         }
+    }
+
+    // If the dog goes from still to moving on the ground create some dust puff particles.
+    if (dog.grounded)
+    {
+        if (old_vel.x != dog.vel.x)
+        {
+            if (dog.vel.x < 0.0f) // Left!
+            {
+                CreateParticles(PARTICLE_TYPE_PUFF, (int)dog.pos.x+16,(int)dog.pos.y+18,(int)dog.pos.x+DOG_CLIP_W,(int)dog.pos.y+DOG_CLIP_H, 2,5);
+            }
+            else if (dog.vel.x > 0.0f) // Right!
+            {
+                CreateParticles(PARTICLE_TYPE_PUFF, (int)dog.pos.x,(int)dog.pos.y+18,(int)dog.pos.x+DOG_CLIP_W-16,(int)dog.pos.y+DOG_CLIP_H, 2,5);
+            }
+        }
+    }
+
+    // If the dog landed on the ground spawn some dust puff particles.
+    if ((old_grounded != dog.grounded) && (dog.grounded))
+    {
+        CreateParticles(PARTICLE_TYPE_PUFF, (int)dog.pos.x+4,(int)dog.pos.y+18,(int)dog.pos.x+DOG_CLIP_W-4,(int)dog.pos.y+DOG_CLIP_H, 2,5);
     }
 
     // Apply velocity to the dog.

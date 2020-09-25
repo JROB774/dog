@@ -123,3 +123,26 @@ INTERNAL void ParticleUpdateSpec (Particle& particle, float dt)
     particle.pos.x += particle.vel.x * dt;
     particle.pos.y += particle.vel.y * dt;
 }
+
+// PARTICLE_TYPE_PUFF
+
+GLOBAL constexpr float PARTICLE_PUFF_FORCE = 15.0f;
+GLOBAL constexpr float PARTICLE_PUFF_RAISE =  4.0f;
+
+INTERNAL void ParticleCreatePuff (Particle& particle)
+{
+    particle.vel = { -PARTICLE_PUFF_FORCE, 0.0f };
+    particle.vel = RotateVec2(particle.vel, RandomFloatRange(DegToRad(30), DegToRad(150)));
+}
+
+INTERNAL void ParticleUpdatePuff (Particle& particle, float dt)
+{
+    if (IsAnimationDone(particle.anim)) particle.dead = true;
+    if (Random() % 2 == 0) UpdateAnimation(particle.anim, dt); // Randomly update some frames faster to add variance.
+
+    particle.vel.y -= PARTICLE_PUFF_RAISE;
+
+    particle.pos.x += particle.vel.x * dt;
+    particle.pos.y += particle.vel.y * dt;
+    // particle.pos.y -= PARTICLE_PUFF_RAISE * dt;
+}
