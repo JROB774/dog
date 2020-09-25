@@ -13,7 +13,7 @@
 * [x] Animation system (simple frame-based animation playback).
 * [x] Map navigation (move from room to room).
 * [x] Spikes.
-* [ ] GUI for collectible bone count.
+* [x] GUI for collectible bone count.
 * [ ] Particle effect system.
 * [ ] Bones should remember they've been collected when transitioning maps, etc.
 
@@ -28,6 +28,15 @@
 
 ## Unassigned
 
+* [ ] Add sound effects:
+  * [ ] Player:
+    * [ ] Footsteps
+    * [ ] Jump
+    * [ ] Land on Ground
+    * [ ] Bark (Retroify!)
+    * [ ] Death / Explode
+  * [ ] Collect Bone
+  * [ ] Break Block
 * [ ] Main menu / title screen.
 * [ ] Pause menu.
 * [ ] Implement the dig system with breakable blocks.
