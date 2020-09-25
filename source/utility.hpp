@@ -64,6 +64,8 @@ INTERNAL std::string FixPathSlashes (std::string path_name);
 INTERNAL std::string FormatStringV  (const char* format, va_list args);
 INTERNAL std::string FormatTime     (const char* format);
 
+INTERNAL float Lerp (float a, float b, float t);
+
 // Random functions.
 
 INTERNAL void RandomSeed  (int seed = -1);

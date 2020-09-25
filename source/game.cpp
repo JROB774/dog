@@ -35,5 +35,5 @@ INTERNAL void RenderGame (float dt)
     DrawMapSpikes(gWorld.current_map);
     DrawMapFront(gWorld.current_map);
     EndCamera();
-    DrawGui();
+    DrawGui(dt);
 }

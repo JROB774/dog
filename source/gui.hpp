@@ -4,11 +4,16 @@
 GLOBAL struct Gui
 {
     Image splat;
+    float current_x;
+    float target_x;
+    float timer;
 
 } gGui;
 
 INTERNAL void InitGui ();
 INTERNAL void QuitGui ();
-INTERNAL void DrawGui ();
+INTERNAL void DrawGui (float dt);
+
+INTERNAL void DisplayGui ();
 
 #endif /* GUI_HPP */
