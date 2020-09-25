@@ -173,4 +173,9 @@ INTERNAL void WorldTransitionIfOutOfBounds ()
 
     // Clear the current particles when we go to a new map.
     gParticleSystem.particles.clear();
+
+    // Move the camera to the dog's new position in the world.
+    float cx = roundf(gGameState.dog.pos.x + (DOG_CLIP_W/2) - (WINDOW_SCREEN_W/2));
+    float cy = roundf(gGameState.dog.pos.y + (DOG_CLIP_H/2) - (WINDOW_SCREEN_H/2));
+    SetCamera(cx,cy);
 }

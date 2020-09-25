@@ -27,6 +27,7 @@ INTERNAL void UpdateGame (float dt)
     WorldTransitionIfOutOfBounds();
 	UpdateDog(gGameState.dog, dt);
     UpdateParticles(dt);
+    UpdateCamera(dt);
 }
 
 INTERNAL void RenderGame (float dt)

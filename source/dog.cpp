@@ -255,7 +255,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
     float cx = roundf(dog.pos.x + (DOG_CLIP_W/2) - (WINDOW_SCREEN_W/2));
     float cy = roundf(dog.pos.y + (DOG_CLIP_H/2) - (WINDOW_SCREEN_H/2));
 
-    SetCamera(cx,cy);
+    SetCameraTarget(cx,cy);
 
     // Check dog collision with entities and perform the appropriate actions!
 
