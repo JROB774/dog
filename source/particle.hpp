@@ -6,6 +6,7 @@ enum ParticleType
     PARTICLE_TYPE_TEST,
     PARTICLE_TYPE_SPEC,
     PARTICLE_TYPE_PUFF,
+    PARTICLE_TYPE_BASH,
     PARTICLE_TYPE_TOTAL
 };
 
@@ -41,6 +42,8 @@ INTERNAL void ParticleCreateSpec (Particle& particle);
 INTERNAL void ParticleUpdateSpec (Particle& particle, float dt);
 INTERNAL void ParticleCreatePuff (Particle& particle);
 INTERNAL void ParticleUpdatePuff (Particle& particle, float dt);
+INTERNAL void ParticleCreateBash (Particle& particle);
+INTERNAL void ParticleUpdateBash (Particle& particle, float dt);
 
 // Base information for each type of particle.
 
@@ -61,6 +64,7 @@ GLOBAL const ParticleBase PARTICLE_BASE[PARTICLE_TYPE_TOTAL]
     { ParticleCreateTest, ParticleUpdateTest, { "effect-test0.anim", "effect-test1.anim", "effect-test2.anim", "effect-test3.anim" }, 0.5f, 2.5f }, // PARTICLE_TYPE_TEST
     { ParticleCreateSpec, ParticleUpdateSpec, { "effect-spec0.anim", "effect-spec1.anim", "effect-spec2.anim", "effect-spec3.anim", "effect-spec4.anim", "effect-spec5.anim", "effect-spec6.anim", "effect-spec7.anim" }, 0.05f, 0.2f }, // PARTICLE_TYPE_SPEC
     { ParticleCreatePuff, ParticleUpdatePuff, { "effect-puff0.anim", "effect-puff1.anim", "effect-puff2.anim" }, -1, -1 }, // PARTICLE_TYPE_SPEC
+    { ParticleCreateBash, ParticleUpdateBash, { "effect-spec4.anim", "effect-spec5.anim", "effect-spec6.anim", "effect-spec7.anim" }, 0.1f, 0.3f }, // PARTICLE_TYPE_BASH
 };
 
 #endif /* PARTICLE_HPP */

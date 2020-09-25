@@ -146,3 +146,19 @@ INTERNAL void ParticleUpdatePuff (Particle& particle, float dt)
     particle.pos.y += particle.vel.y * dt;
     // particle.pos.y -= PARTICLE_PUFF_RAISE * dt;
 }
+
+// PARTICLE_BASH_FORCE
+
+GLOBAL constexpr float PARTICLE_BASH_FORCE = 90.0f;
+
+INTERNAL void ParticleCreateBash (Particle& particle)
+{
+    particle.vel = { PARTICLE_BASH_FORCE, 0.0f };
+    particle.vel = RotateVec2(particle.vel, RandomFloatRange(DegToRad(30), DegToRad(150)));
+}
+
+INTERNAL void ParticleUpdateBash (Particle& particle, float dt)
+{
+    particle.pos.x += particle.vel.x * dt;
+    particle.pos.y += particle.vel.y * dt;
+}

@@ -134,8 +134,10 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 
                 if (TileEntityCollision(test,dog.bounds, ix,iy, intersection))
                 {
+                    // Hit head!
                     if(dog.vel.y < 0){
                         //dog.pos.y += intersection.h;
+                        CreateParticles(PARTICLE_TYPE_BASH, (int)dog.pos.x+12,(int)dog.pos.y+12,(int)dog.pos.x+12,(int)dog.pos.y+12, 4,8);
                         dog.vel.y = 0;
                         dog.jump_height = 0;
                         //dog.grounded = true;
