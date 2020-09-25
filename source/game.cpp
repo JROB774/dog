@@ -1,5 +1,6 @@
 INTERNAL void InitGame ()
 {
+    InitBones();
     LoadWorld();
     CreateDog(gGameState.dog, START_X, START_Y);
 }
@@ -8,6 +9,7 @@ INTERNAL void QuitGame ()
 {
     DeleteDog(gGameState.dog);
     FreeWorld();
+    DeleteBones();
 }
 
 INTERNAL void UpdateGame (float dt)

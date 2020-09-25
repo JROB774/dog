@@ -167,11 +167,13 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
                 } break;
                 case (ENTITY_SBONE_COLOR): // SMALL BONES!
                 {
-                    // @Incomplete: ...
+                    map.sbones.push_back(SmallBone());
+                    CreateSmallBone(map.sbones.back(), (float)(ix*TILE_W), (float)(iy*TILE_H));
                 } break;
                 case (ENTITY_LBONE_COLOR): // LARGE BONES!
                 {
-                    // @Incomplete: ...
+                    map.lbones.push_back(BigBone());
+                    CreateBigBone(map.lbones.back(), (float)(ix*TILE_W), (float)(iy*TILE_H));
                 } break;
             }
         }
@@ -188,6 +190,8 @@ INTERNAL void FreeMap (Map& map)
     // Entities
     for (auto& spike: map.spikes) DeleteSpike(spike);
     map.spikes.clear();
+    map.sbones.clear();
+    map.lbones.clear();
 }
 
 INTERNAL void DrawMapBackg (Map& map)
@@ -211,7 +215,8 @@ INTERNAL void DrawMapBackg (Map& map)
 
 INTERNAL void DrawMapEntities (Map& map)
 {
-    // ...
+    for (auto& sbone: map.sbones) RenderSmallBone(sbone);
+    for (auto& lbone: map.lbones) RenderBigBone(lbone);
 }
 
 // Special exception becuase it seems better for spikes to draw in front
