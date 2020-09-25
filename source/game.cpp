@@ -4,6 +4,7 @@ INTERNAL void InitGame ()
     LoadFont(gGameState.sfont, 12, 12, "sfont.bmp");
 
     LoadWorld();
+    InitGui();
     InitBones();
 
     CreateDog(gGameState.dog, START_X, START_Y);
@@ -13,6 +14,7 @@ INTERNAL void QuitGame ()
 {
     DeleteDog(gGameState.dog);
     DeleteBones();
+    QuitGui();
     FreeWorld();
     FreeFont(gGameState.sfont);
     FreeFont(gGameState.lfont);
@@ -33,4 +35,5 @@ INTERNAL void RenderGame (float dt)
     DrawMapSpikes(gWorld.current_map);
     DrawMapFront(gWorld.current_map);
     EndCamera();
+    DrawGui();
 }

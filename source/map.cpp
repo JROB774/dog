@@ -144,6 +144,11 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
         }
     }
 
+    map.bone_counter.small_bones_collected = 0;
+    map.bone_counter.small_bones_total = 0;
+    map.bone_counter.large_bones_collected = 0;
+    map.bone_counter.large_bones_total = 0;
+
     // Handle loading all the different entities in the game.
     for (int iy=0; iy<map.h; ++iy)
     {
@@ -169,11 +174,13 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
                 {
                     map.sbones.push_back(SmallBone());
                     CreateSmallBone(map.sbones.back(), (float)(ix*TILE_W), (float)(iy*TILE_H));
+                    map.bone_counter.small_bones_total++;
                 } break;
                 case (ENTITY_LBONE_COLOR): // LARGE BONES!
                 {
                     map.lbones.push_back(BigBone());
                     CreateBigBone(map.lbones.back(), (float)(ix*TILE_W), (float)(iy*TILE_H));
+                    map.bone_counter.large_bones_total++;
                 } break;
             }
         }

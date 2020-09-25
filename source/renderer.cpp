@@ -60,8 +60,9 @@ INTERNAL void DrawImage (Image& image, float x, float y, Flip flip, const SDL_Re
     SDL_RenderCopyExF(gWindow.renderer, image.texture, clip, &rect, 0.0f, NULL, flip);
 }
 
-INTERNAL void DrawText (Font& font, std::string text, float x, float y)
+INTERNAL void DrawText (Font& font, std::string text, float x, float y, Color color)
 {
+    font.image.color = color;
     for(int i = 0; i < text.length(); i++){
         DrawImage(font.image, x, y, FLIP_NONE, &font.bounds[static_cast<U8>(text.at(i))]);
         x += font.charw;
