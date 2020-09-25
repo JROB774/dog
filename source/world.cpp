@@ -3,7 +3,7 @@ INTERNAL void LoadWorld ()
 {
     enum class CSVState { UnquotedField, QuotedField, QuotedQuote };
 
-    std::ifstream csv("assets/world.csv");
+    std::ifstream csv("assets/maps/world.csv");
     if (!csv.is_open())
     {
         LOG_ERROR(ERR_MAX, "Failed to load world!");
