@@ -36,7 +36,7 @@ INTERNAL void CreateParticles (ParticleType type, int minx, int miny, int maxx, 
         LoadAnimation(particle.anim, base.anims[RandomRange(0, (int)base.anims.size()-1)]);
         particle.dead = false;
         particle.visible = true;
-        particle.lifetime = 0;
+        particle.lifetime = RandomFloatRange(base.min_lifetime, base.max_lifetime);
 
         base.create(particle);
     }
@@ -79,7 +79,7 @@ INTERNAL void DrawParticles (float dt)
 
 INTERNAL void ParticleCreateTest0 (Particle& particle)
 {
-    particle.lifetime = (float)RandomRange(30, 120) / 60.0f;
+    // Nothing...
 }
 
 INTERNAL void ParticleUpdateTest0 (Particle& particle, float dt)

@@ -45,11 +45,13 @@ struct ParticleBase
     ParticleCreate create;
     ParticleUpdate update;
     std::vector<std::string> anims;
+    float min_lifetime;
+    float max_lifetime;
 };
 
 GLOBAL const ParticleBase PARTICLE_BASE[PARTICLE_TYPE_TOTAL]
 {
-    { ParticleCreateTest0, ParticleUpdateTest0, { "effect-test0-0.anim", "effect-test0-1.anim", "effect-test0-2.anim", "effect-test0-3.anim" } }, // PARTIICLE_TYPE_TEST0
+    { ParticleCreateTest0, ParticleUpdateTest0, { "effect-test0-0.anim", "effect-test0-1.anim", "effect-test0-2.anim", "effect-test0-3.anim" }, 0.5f, 2.5f }, // PARTIICLE_TYPE_TEST0
 };
 
 #endif /* PARTICLE_HPP */
