@@ -26,12 +26,6 @@ INTERNAL void UpdateGame (float dt)
 {
     WorldTransitionIfOutOfBounds();
 	UpdateDog(gGameState.dog, dt);
-
-    if (IsKeyPressed(SDL_SCANCODE_RETURN))
-    {
-        CreateParticles(PARTICLE_TYPE_TEST0, (int)gGameState.dog.pos.x,(int)gGameState.dog.pos.y,(int)gGameState.dog.pos.x+24,(int)gGameState.dog.pos.y+24, 4,10);
-    }
-
     UpdateParticles(dt);
 }
 

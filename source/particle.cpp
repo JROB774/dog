@@ -40,8 +40,6 @@ INTERNAL void CreateParticles (ParticleType type, int minx, int miny, int maxx, 
 
         base.create(particle);
     }
-
-    printf("Create %d particles!\n", count);
 }
 
 INTERNAL void CreateParticles (ParticleType type, int minx, int miny, int maxx, int maxy, int count)
@@ -51,7 +49,18 @@ INTERNAL void CreateParticles (ParticleType type, int minx, int miny, int maxx, 
 
 INTERNAL void UpdateParticles (float dt)
 {
-    // @Incomplete: ...
+    for (auto& particle: gParticleSystem.particles)
+    {
+        if (!particle.dead)
+        {
+            PARTICLE_BASE[particle.type].update(particle, dt);
+            particle.lifetime -= dt;
+            if (particle.lifetime <= 0.0f)
+            {
+                particle.dead = true;
+            }
+        }
+    }
 }
 
 INTERNAL void DrawParticles (float dt)
@@ -70,10 +79,10 @@ INTERNAL void DrawParticles (float dt)
 
 INTERNAL void ParticleCreateTest0 (Particle& particle)
 {
-    // @Incomplete: ...
+    particle.lifetime = (float)RandomRange(30, 120) / 60.0f;
 }
 
 INTERNAL void ParticleUpdateTest0 (Particle& particle, float dt)
 {
-    // @Incomplete: ...
+    // Nothing...
 }

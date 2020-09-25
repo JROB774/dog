@@ -44,6 +44,8 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 {
     if (dog.dead) return;
 
+    CreateParticles(PARTICLE_TYPE_TEST0, (int)gGameState.dog.pos.x,(int)gGameState.dog.pos.y,(int)gGameState.dog.pos.x+24,(int)gGameState.dog.pos.y+24, 4,10);
+
     dog.right = (IsKeyDown(SDL_SCANCODE_RIGHT) || IsKeyDown(SDL_SCANCODE_D));
     dog.left  = (IsKeyDown(SDL_SCANCODE_LEFT)  || IsKeyDown(SDL_SCANCODE_A));
 
