@@ -19,6 +19,12 @@ struct Map
     std::vector<Tile> tiles;
     // Entities
     std::vector<Spike> spikes;
+<<<<<<< Updated upstream
+=======
+    std::vector<SmallBone> sbones;
+    std::vector<BigBone> lbones;
+    std::vector<BreakableBlocks> bblocks;
+>>>>>>> Stashed changes
 };
 
 INTERNAL bool TileEntityCollision (Vec2 pos, Rect bounds, int tx, int ty, Rect& intersection);
