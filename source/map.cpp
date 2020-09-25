@@ -28,6 +28,7 @@ GLOBAL constexpr int TILE_CLIP_H = 32;
 GLOBAL constexpr U32 ENTITY_SPIKE_COLOR = 0xFFFF0000;
 GLOBAL constexpr U32 ENTITY_SBONE_COLOR = 0xFFFFFF00;
 GLOBAL constexpr U32 ENTITY_LBONE_COLOR = 0xFF00FF00;
+GLOBAL constexpr U32 ENTITY_BBLOC_COLOR = 0xFF00FFFF;
 
 INTERNAL bool TileEntityCollision (Vec2 pos, Rect bounds, int tx, int ty, Rect& intersection)
 {
@@ -175,6 +176,13 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
                     map.lbones.push_back(BigBone());
                     CreateBigBone(map.lbones.back(), (float)(ix*TILE_W), (float)(iy*TILE_H));
                 } break;
+                case (ENTITY_BBLOC_COLOR): // BREAKABLE BLOCKS!
+                {
+                    map.bblocks.push_back(BreakableBlock());
+                    CreateBreakableBlock(map.bblocks.back(), (float)(ix*TILE_W), (float)(iy*TILE_H));
+                    map.tiles.at(iy*map.w+ix).type = TILE_SOLID;
+                    map.tiles.at(iy*map.w+ix).invis = true;
+                } break;
             }
         }
     }
@@ -192,6 +200,7 @@ INTERNAL void FreeMap (Map& map)
     map.spikes.clear();
     map.sbones.clear();
     map.lbones.clear();
+    map.bblocks.clear();
 }
 
 INTERNAL void DrawMapBackg (Map& map)
@@ -217,6 +226,7 @@ INTERNAL void DrawMapEntities (Map& map)
 {
     for (auto& sbone: map.sbones) RenderSmallBone(sbone);
     for (auto& lbone: map.lbones) RenderBigBone(lbone);
+    for (auto& bblocks: map.bblocks) RenderBreakableBlock(bblocks);
 }
 
 // Special exception becuase it seems better for spikes to draw in front

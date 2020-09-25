@@ -190,12 +190,14 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
         {
             if (dog.state != DOG_STATE_BARK)
             {
-                if (IsKeyPressed(SDL_SCANCODE_X))
-                {
-                    ResetAnimation(dog.anim[DOG_STATE_BARK]);
-                    dog.state = DOG_STATE_BARK;
-                    PlaySound(dog.bark);
-                }
+            	if(!IsKeyDown(SDL_SCANCODE_W) && !IsKeyDown(SDL_SCANCODE_D) && !IsKeyDown(SDL_SCANCODE_S) && !IsKeyDown(SDL_SCANCODE_A)){
+	                if (IsKeyPressed(SDL_SCANCODE_X))
+	                {
+	                    ResetAnimation(dog.anim[DOG_STATE_BARK]);
+	                    dog.state = DOG_STATE_BARK;
+	                    PlaySound(dog.bark);
+	                }
+	            }
             }
 
             if (dog.state == DOG_STATE_BARK || dog.state == DOG_STATE_BLNK)
@@ -251,6 +253,12 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
                 lbone.dead = true;
             }
         }
+    }
+    for (auto& bblocks: gWorld.current_map.bblocks)
+    {
+    	if(!bblocks.dead){
+    		BreakbleBlockCollision(dog.bounds, bblocks);
+    	}
     }
 }
 

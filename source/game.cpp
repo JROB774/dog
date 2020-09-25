@@ -1,6 +1,7 @@
 INTERNAL void InitGame ()
 {
     InitBones();
+    InitBreakableBlock();
     LoadWorld();
     CreateDog(gGameState.dog, START_X, START_Y);
 }

@@ -10,6 +10,7 @@ struct Tile
 {
     TileType type;
     int xoff,yoff; // In tiles!
+    bool invis = false;
 };
 
 struct Map
@@ -21,7 +22,7 @@ struct Map
     std::vector<Spike> spikes;
     std::vector<SmallBone> sbones;
     std::vector<BigBone> lbones;
-    std::vector<BreakableBlocks> bblocks;
+    std::vector<BreakableBlock> bblocks;
 };
 
 INTERNAL bool TileEntityCollision (Vec2 pos, Rect bounds, int tx, int ty, Rect& intersection);
