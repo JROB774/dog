@@ -170,4 +170,7 @@ INTERNAL void WorldTransitionIfOutOfBounds ()
 
     gGameState.dog.pos.x = (float)px;
     gGameState.dog.pos.y = (float)py;
+
+    // Clear the current particles when we go to a new map.
+    gParticleSystem.particles.clear();
 }
