@@ -14,7 +14,7 @@
 * [x] Map navigation (move from room to room).
 * [x] Spikes.
 * [x] GUI for collectible bone count.
-* [ ] Particle effect system.
+* x ] Particle effect system.
 * [ ] Bones should remember they've been collected when transitioning maps, etc.
 
 ## TiKo
