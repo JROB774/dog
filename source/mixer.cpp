@@ -13,6 +13,9 @@ INTERNAL bool InitMixer ()
 
     Mix_AllocateChannels(32);
 
+    SetSound(gSettings.sound);
+    SetMusic(gSettings.music);
+
     return true;
 }
 

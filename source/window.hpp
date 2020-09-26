@@ -13,20 +13,25 @@ GLOBAL struct Window
 {
     SDL_Renderer* renderer;
     SDL_Window*   window;
+    int           width; // Used to cache size when in fullscreen!!!
+    int           height; // Used to cache size when in fullscreen!!!
     bool          fullscreen;
     bool          running;
     bool          reset;
 
 } gWindow;
 
-INTERNAL bool InitWindow    ();
-INTERNAL void QuitWindow    ();
-INTERNAL void ClearWindow   (Color color);
-INTERNAL void RefreshWindow ();
-INTERNAL void ShowWindow    ();
-INTERNAL void HideWindow    ();
-INTERNAL void SetViewport   ();
-INTERNAL void SetFullscreen (bool enable);
-INTERNAL bool IsFullscreen  ();
+INTERNAL bool InitWindow      ();
+INTERNAL void QuitWindow      ();
+INTERNAL void ClearWindow     (Color color);
+INTERNAL void RefreshWindow   ();
+INTERNAL void ShowWindow      ();
+INTERNAL void HideWindow      ();
+INTERNAL void SetViewport     ();
+INTERNAL void SetFullscreen   (bool enable);
+INTERNAL bool IsFullscreen    ();
+INTERNAL void SetWindowSize   (int width, int height);
+INTERNAL int  GetWindowWidth  ();
+INTERNAL int  GetWindowHeight ();
 
 #endif /* WINDOW_HPP */

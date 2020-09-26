@@ -11,6 +11,8 @@ INTERNAL void InitApplication ()
 
 INTERNAL void QuitApplication ()
 {
+    SaveSettings();
+
     QuitGame();
     QuitMenu();
 
