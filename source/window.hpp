@@ -14,6 +14,7 @@ GLOBAL struct Window
     SDL_Renderer* renderer;
     SDL_Window*   window;
     bool          running;
+    bool          reset;
 
 } gWindow;
 

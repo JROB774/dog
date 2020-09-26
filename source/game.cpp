@@ -24,6 +24,15 @@ INTERNAL void QuitGame ()
 
 INTERNAL void UpdateGame (float dt)
 {
+    // Debug reset for the game if either F5 on keyboard or both shoulder buttons on gamepad are pressed.
+    #if defined(BUILD_DEBUG)
+    if (IsKeyPressed(SDL_SCANCODE_F5) || (IsButtonDown(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) && IsButtonDown(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)))
+    {
+        gWindow.running = false;
+        gWindow.reset = true;
+    }
+    #endif
+
     WorldTransitionIfOutOfBounds();
 	UpdateDog(gGameState.dog, dt);
     UpdateParticles(dt);

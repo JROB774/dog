@@ -24,11 +24,11 @@ int main (int argc, char** argv)
 
     if (gWindow.running)
     {
-        bool reset = true;
-        while (reset)
+        gWindow.reset = true;
+        while (gWindow.reset)
         {
             gWindow.running = true;
-            reset = false;
+            gWindow.reset = false;
 
             RandomSeed();
             InitGame();
@@ -44,16 +44,6 @@ int main (int argc, char** argv)
                     HandleInputEvents(event);
                     switch (event.type)
                     {
-                        #if defined(BUILD_DEBUG)
-                        case (SDL_KEYDOWN):
-                        {
-                            if (event.key.keysym.sym == SDLK_F5)
-                            {
-                                gWindow.running = false;
-                                reset = true;
-                            }
-                        } break;
-                        #endif
                         case (SDL_QUIT):
                         {
                             gWindow.running = false;
