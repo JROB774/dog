@@ -15,6 +15,18 @@
 * [x] Spikes.
 * [x] GUI for collectible bone count.
 * [x] Particle effect system.
+* [ ] Add sound effects:
+  * [ ] Player:
+    * [x] Footsteps
+    * [x] Jump
+    * [x] Land on Ground
+    * [x] Hit Head
+    * [ ] Bark (Retroify!)
+    * [ ] Death / Explode
+  * [x] Collect Bone:
+    * [x] Small
+    * [x] Large
+  * [ ] Break Block
 * [ ] Bones should remember they've been collected when transitioning maps, etc.
 
 ## TiKo
@@ -28,15 +40,6 @@
 
 ## Unassigned
 
-* [ ] Add sound effects:
-  * [ ] Player:
-    * [ ] Footsteps
-    * [ ] Jump
-    * [ ] Land on Ground
-    * [ ] Bark (Retroify!)
-    * [ ] Death / Explode
-  * [ ] Collect Bone
-  * [ ] Break Block
 * [ ] Main menu / title screen.
 * [ ] Pause menu.
 * [ ] Implement the dig system with breakable blocks.

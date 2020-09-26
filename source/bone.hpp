@@ -25,6 +25,8 @@ struct BigBone
 
 GLOBAL Image small_bone_image;
 GLOBAL Image big_bone_image;
+GLOBAL Sound small_bone_sound;
+GLOBAL Sound big_bone_sound;
 
 void InitBones();
 void CreateSmallBone(SmallBone& _bone, float _x, float _y);

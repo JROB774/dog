@@ -11,6 +11,8 @@ INTERNAL bool InitMixer ()
         return false;
     }
 
+    Mix_AllocateChannels(32);
+
     return true;
 }
 

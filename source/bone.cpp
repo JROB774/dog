@@ -2,6 +2,8 @@ void InitBones()
 {
 	LoadImage(small_bone_image, "sbone.bmp");
 	LoadImage(big_bone_image, "lbone.bmp");
+	LoadSound(small_bone_sound, "sbone.wav");
+	LoadSound(big_bone_sound, "lbone.wav");
 }
 
 /*
@@ -68,4 +70,6 @@ void DeleteBones()
 {
 	FreeImage(small_bone_image);
 	FreeImage(big_bone_image);
+	FreeSound(small_bone_sound);
+	FreeSound(big_bone_sound);
 }

@@ -23,7 +23,12 @@ INTERNAL void CreateDog (Dog& dog, float x, float y)
 
     LoadImage(dog.image, "dog.bmp");
     dog.flip = FLIP_NONE;
-    LoadSound(dog.bark, "bark.wav");
+
+    LoadSound(dog.snd_footstep, "footstep.wav");
+    LoadSound(dog.snd_land, "land.wav");
+    LoadSound(dog.snd_hithead, "hithead.wav");
+    LoadSound(dog.snd_jump, "jump.wav");
+    LoadSound(dog.snd_bark, "bark.wav");
 
     LoadAnimation(dog.anim[DOG_STATE_IDLE], "dog-idle.anim");
     LoadAnimation(dog.anim[DOG_STATE_BLNK], "dog-blnk.anim");
@@ -72,6 +77,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
             dog.grounded = false;
             dog.ledge_buffer = 0;
             dog.jump_height = 0.18f;
+            PlaySound(dog.snd_jump);
         }
     }
 
@@ -140,6 +146,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
                         CreateParticles(PARTICLE_TYPE_BASH, (int)dog.pos.x+12,(int)dog.pos.y+12,(int)dog.pos.x+12,(int)dog.pos.y+12, 4,8);
                         dog.vel.y = 0;
                         dog.jump_height = 0;
+                        PlaySound(dog.snd_hithead);
                         //dog.grounded = true;
                     }
                     else{
@@ -190,10 +197,11 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
         }
     }
 
-    // If the dog landed on the ground spawn some dust puff particles.
+    // If the dog landed on the ground spawn some dust puff particles and play the landing sound.
     if ((old_grounded != dog.grounded) && (dog.grounded))
     {
         CreateParticles(PARTICLE_TYPE_PUFF, (int)dog.pos.x+4,(int)dog.pos.y+18,(int)dog.pos.x+DOG_CLIP_W-4,(int)dog.pos.y+DOG_CLIP_H, 2,5);
+        PlaySound(dog.snd_land);
     }
 
     // Apply velocity to the dog.
@@ -227,7 +235,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 	                {
 	                    ResetAnimation(dog.anim[DOG_STATE_BARK]);
 	                    dog.state = DOG_STATE_BARK;
-	                    PlaySound(dog.bark);
+	                    PlaySound(dog.snd_bark);
 	                }
 	            }
             }
@@ -248,6 +256,17 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
                     dog.state = DOG_STATE_BLNK;
                 }
             }
+        }
+    }
+
+    // Play the footstep sound periodically whilst moving.
+    if (dog.grounded && dog.state == DOG_STATE_MOVE)
+    {
+        dog.footstep_timer += dt;
+        if (dog.footstep_timer >= 0.2f)
+        {
+            PlaySound(dog.snd_footstep);
+            dog.footstep_timer -= 0.2f;
         }
     }
 
@@ -275,6 +294,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
                 CreateParticles(PARTICLE_TYPE_SPEC, (int)sbone.x+8,(int)sbone.y+8,(int)sbone.x+8,(int)sbone.y+8, 8,18);
                 gWorld.current_map.bone_counter.small_bones_collected++;
                 sbone.dead = true;
+                PlaySound(small_bone_sound);
                 // DisplayGui();
             }
         }
@@ -288,6 +308,8 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
                 CreateParticles(PARTICLE_TYPE_SPEC, (int)lbone.x+12,(int)lbone.y+12,(int)lbone.x+12,(int)lbone.y+12, 40,72, 1.5f);
                 gWorld.current_map.bone_counter.large_bones_collected++;
                 lbone.dead = true;
+                PlaySound(small_bone_sound);
+                PlaySound(big_bone_sound);
                 // DisplayGui();
             }
         }
@@ -313,7 +335,12 @@ INTERNAL void DrawDog (Dog& dog, float dt)
 INTERNAL void DeleteDog (Dog& dog)
 {
     FreeImage(dog.image);
-    FreeSound(dog.bark);
+
+    FreeSound(dog.snd_footstep);
+    FreeSound(dog.snd_land);
+    FreeSound(dog.snd_hithead);
+    FreeSound(dog.snd_jump);
+    FreeSound(dog.snd_bark);
 }
 
 INTERNAL bool DogCollideWithEntity (Dog& dog, float ex, float ey, Rect ebounds)

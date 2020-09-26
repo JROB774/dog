@@ -22,7 +22,14 @@ struct Dog
 
     Image image;
     Flip flip;
-    Sound bark;
+
+    float footstep_timer;
+
+    Sound snd_footstep;
+    Sound snd_land;
+    Sound snd_hithead;
+    Sound snd_jump;
+    Sound snd_bark;
 
     Animation anim[DOG_STATE_TOTAL];
 
