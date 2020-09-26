@@ -46,14 +46,12 @@
 * [x] Implement collectible bones:
   * [x] Small bones.
   * [x] Large bones.
-* [ ] Breakable blocks.
+* [ ] Implement the dig system with breakable blocks.
 
 ## Unassigned
 
 * [ ] Pause menu.
-* [ ] Implement the dig system with breakable blocks.
-* [ ] Enemies:
-  * ???
 * [ ] Win and lose states.
+* [ ] Add game content.
 
 *Flesh out these and add more as needed...*
