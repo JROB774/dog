@@ -35,10 +35,10 @@ INTERNAL void DrawGui (float dt)
 
     std::string stext = scollected + "/" + stotal;
     if (gWorld.current_map.bone_counter.small_bones_collected == gWorld.current_map.bone_counter.small_bones_total) stext += "!";
-    DrawText(gGameState.sfont, stext, gGui.current_x+2, 0, MakeColor(1,1,1));
+    DrawText(gAppState.sfont, stext, gGui.current_x+2, 0, MakeColor(1,1,1));
 
     // std::string ltext = std::to_string(gWorld.current_map.bone_counter.large_bones_collected) + "/" + std::to_string(gWorld.current_map.bone_counter.large_bones_total);
-    // DrawText(gGameState.lfont, ltext, gGui.current_x+0, 14, MakeColor(1,1,1));
+    // DrawText(gAppState.lfont, ltext, gGui.current_x+0, 14, MakeColor(1,1,1));
 }
 
 /*

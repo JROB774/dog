@@ -1,7 +1,5 @@
 INTERNAL void InitGame ()
 {
-    LoadFont(gGameState.lfont, 24, 24, "lfont.bmp");
-    LoadFont(gGameState.sfont, 12, 12, "sfont.bmp");
     InitBones();
     InitBreakableBlock();
     InitGui();
@@ -18,8 +16,6 @@ INTERNAL void QuitGame ()
     DeleteBones();
     QuitGui();
     FreeWorld();
-    FreeFont(gGameState.sfont);
-    FreeFont(gGameState.lfont);
 }
 
 INTERNAL void UpdateGame (float dt)

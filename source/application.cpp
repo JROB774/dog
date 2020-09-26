@@ -1,6 +1,9 @@
 INTERNAL void InitApplication ()
 {
-    gAppState = APP_STATE_GAME;
+    gAppState.state = APP_STATE_MENU;
+
+    LoadFont(gAppState.lfont, 24, 24, "lfont.bmp");
+    LoadFont(gAppState.sfont, 12, 12, "sfont.bmp");
 
     InitMenu();
     InitGame();
@@ -10,6 +13,9 @@ INTERNAL void QuitApplication ()
 {
     QuitGame();
     QuitMenu();
+
+    FreeFont(gAppState.sfont);
+    FreeFont(gAppState.lfont);
 }
 
 INTERNAL void UpdateApplication (float dt)
@@ -23,7 +29,7 @@ INTERNAL void UpdateApplication (float dt)
     }
     #endif
 
-    switch (gAppState)
+    switch (gAppState.state)
     {
         case (APP_STATE_MENU): UpdateMenu(dt); break;
         case (APP_STATE_GAME): UpdateGame(dt); break;
@@ -32,7 +38,7 @@ INTERNAL void UpdateApplication (float dt)
 
 INTERNAL void RenderApplication (float dt)
 {
-    switch (gAppState)
+    switch (gAppState.state)
     {
         case (APP_STATE_MENU): RenderMenu(dt); break;
         case (APP_STATE_GAME): RenderGame(dt); break;

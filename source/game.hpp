@@ -5,9 +5,6 @@ GLOBAL constexpr float GRAVITY = 32.0f;
 
 GLOBAL struct GameState
 {
-    Font lfont;
-    Font sfont;
-
     Dog dog;
 
 } gGameState;
