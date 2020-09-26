@@ -5,6 +5,7 @@ INTERNAL void InitApplication ()
     LoadFont(gAppState.lfont, 24, 24, "lfont.bmp");
     LoadFont(gAppState.sfont, 12, 12, "sfont.bmp");
 
+    InitFade();
     InitMenu();
     InitGame();
 }
@@ -15,6 +16,7 @@ INTERNAL void QuitApplication ()
 
     QuitGame();
     QuitMenu();
+    QuitFade();
 
     FreeFont(gAppState.sfont);
     FreeFont(gAppState.lfont);
@@ -31,10 +33,13 @@ INTERNAL void UpdateApplication (float dt)
     }
     #endif
 
-    switch (gAppState.state)
+    if (!IsFading())
     {
-        case (APP_STATE_MENU): UpdateMenu(dt); break;
-        case (APP_STATE_GAME): UpdateGame(dt); break;
+        switch (gAppState.state)
+        {
+            case (APP_STATE_MENU): UpdateMenu(dt); break;
+            case (APP_STATE_GAME): UpdateGame(dt); break;
+        }
     }
 }
 
@@ -45,4 +50,6 @@ INTERNAL void RenderApplication (float dt)
         case (APP_STATE_MENU): RenderMenu(dt); break;
         case (APP_STATE_GAME): RenderGame(dt); break;
     }
+
+    RenderFade(dt);
 }

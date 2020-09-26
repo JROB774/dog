@@ -49,7 +49,7 @@ INTERNAL void CreateDog (Dog& dog, float x, float y)
     dog.jump_release = false;
     dog.action       = false;
 
-    dog.grounded = false;
+    dog.grounded = true;
 
     dog.ledge_buffer = 0.0f;
     dog.jump_height = 0.0f;

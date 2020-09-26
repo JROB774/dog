@@ -74,7 +74,7 @@ INTERNAL void UpdateMenu (float dt)
                 PlaySound(gMenuState.snd_select);
                 switch (gMenuState.selected)
                 {
-                    case (MENU_ITEM_PLAYGAME): gAppState.state = APP_STATE_GAME; break;
+                    case (MENU_ITEM_PLAYGAME): StartFade(FADE_SPECIAL, [](){ gAppState.state = APP_STATE_GAME; }); break;
                     case (MENU_ITEM_CONTROLS): gMenuState.mode = MENU_MODE_CONTROLS; break;
                     case (MENU_ITEM_SETTINGS): gMenuState.mode = MENU_MODE_SETTINGS; gMenuState.selected = 0; break;
                     case (MENU_ITEM_EXITGAME): gWindow.running = false; break;
