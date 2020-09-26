@@ -202,10 +202,12 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
             if (dog.vel.x < 0.0f) // Left!
             {
                 CreateParticles(PARTICLE_TYPE_PUFF, (int)dog.pos.x+16,(int)dog.pos.y+18,(int)dog.pos.x+DOG_CLIP_W,(int)dog.pos.y+DOG_CLIP_H, 2,5);
+                dog.footstep_timer = 0.2f;
             }
             else if (dog.vel.x > 0.0f) // Right!
             {
                 CreateParticles(PARTICLE_TYPE_PUFF, (int)dog.pos.x,(int)dog.pos.y+18,(int)dog.pos.x+DOG_CLIP_W-16,(int)dog.pos.y+DOG_CLIP_H, 2,5);
+                dog.footstep_timer = 0.2f;
             }
         }
     }
