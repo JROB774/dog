@@ -28,9 +28,19 @@ INTERNAL bool IsRightStickRight ();
 INTERNAL bool IsRightStickDown  ();
 INTERNAL bool IsRightStickLeft  ();
 
+INTERNAL bool IsRightStickUpPressed    ();
+INTERNAL bool IsRightStickRightPressed ();
+INTERNAL bool IsRightStickDownPressed  ();
+INTERNAL bool IsRightStickLeftPressed  ();
+
 INTERNAL bool IsLeftStickUp    ();
 INTERNAL bool IsLeftStickRight ();
 INTERNAL bool IsLeftStickDown  ();
 INTERNAL bool IsLeftStickLeft  ();
+
+INTERNAL bool IsLeftStickUpPressed    ();
+INTERNAL bool IsLeftStickRightPressed ();
+INTERNAL bool IsLeftStickDownPressed  ();
+INTERNAL bool IsLeftStickLeftPressed  ();
 
 #endif /* INPUT_HPP */
