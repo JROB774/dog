@@ -1,4 +1,4 @@
-GLOBAL constexpr float FADE_SPEED = 600.0f;
+GLOBAL constexpr float FADE_SPEED = 450.0f;
 
 enum FadeState { FADE_OUT, FADE_BLACK, FADE_IN };
 
@@ -80,7 +80,7 @@ INTERNAL void DoFadeSpecial (float dt)
         DrawImage(gFade.down, gFade.x1,gFade.y1);
         DrawImage(gFade.up, gFade.x2,gFade.y2);
 
-        if (gFade.y1 + gFade.down.h/2 > 0)
+        if (gFade.y1 >= 0)
         {
             gFade.state = FADE_BLACK;
             // Setup for the fade in.
