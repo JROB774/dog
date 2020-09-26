@@ -27,6 +27,13 @@
     * [x] Small
     * [x] Large
   * [ ] Break Block
+* [ ] Main menu / title screen:
+  * [x] Sections:
+    * [x] Play Game
+    * [x] Controls
+    * [x] Exit Game
+  * [ ] Fix gamepad stick issues.
+  * [ ] Add sound effects.
 * [ ] Bones should remember they've been collected when transitioning maps, etc.
 * [ ] Bone counter should be global for an entire zone, not just per room.
 * [ ] Save game data to a file.
@@ -43,10 +50,6 @@
 
 ## Unassigned
 
-* [ ] Main menu / title screen:
-  * [ ] Play Game
-  * [ ] Controls
-  * [ ] Exit Game
 * [ ] Pause menu.
 * [ ] Implement the dig system with breakable blocks.
 * [ ] Enemies:
