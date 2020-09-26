@@ -35,8 +35,13 @@ struct Dog
 
     Animation anim[DOG_STATE_TOTAL];
 
-    bool left;
+    bool up;
     bool right;
+    bool left;
+    bool down;
+    bool jump_press;
+    bool jump_release;
+    bool action;
 
     bool grounded;
 

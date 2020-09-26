@@ -39,8 +39,13 @@ INTERNAL void CreateDog (Dog& dog, float x, float y)
     LoadAnimation(dog.anim[DOG_STATE_FALL], "dog-fall.anim");
     LoadAnimation(dog.anim[DOG_STATE_BARK], "dog-bark.anim");
 
-    dog.left = false;
-    dog.right = false;
+    dog.up           = false;
+    dog.right        = false;
+    dog.down         = false;
+    dog.left         = false;
+    dog.jump_press   = false;
+    dog.jump_release = false;
+    dog.action       = false;
 
     dog.grounded = false;
 
@@ -56,8 +61,14 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 
     // CreateParticles(PARTICLE_TYPE_TEST, (int)gGameState.dog.pos.x,(int)gGameState.dog.pos.y,(int)gGameState.dog.pos.x+24,(int)gGameState.dog.pos.y+24, 4,10);
 
-    dog.right = (IsKeyDown(SDL_SCANCODE_RIGHT) || IsKeyDown(SDL_SCANCODE_D));
-    dog.left  = (IsKeyDown(SDL_SCANCODE_LEFT)  || IsKeyDown(SDL_SCANCODE_A));
+    // Handle controls!!!
+    dog.up           = (IsKeyDown(SDL_SCANCODE_UP)    || IsKeyDown(SDL_SCANCODE_W)         || IsButtonDown(SDL_CONTROLLER_BUTTON_DPAD_UP)    || IsLeftStickUp());
+    dog.right        = (IsKeyDown(SDL_SCANCODE_RIGHT) || IsKeyDown(SDL_SCANCODE_D)         || IsButtonDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT) || IsLeftStickRight());
+    dog.down         = (IsKeyDown(SDL_SCANCODE_DOWN)  || IsKeyDown(SDL_SCANCODE_S)         || IsButtonDown(SDL_CONTROLLER_BUTTON_DPAD_DOWN)  || IsLeftStickDown());
+    dog.left         = (IsKeyDown(SDL_SCANCODE_LEFT)  || IsKeyDown(SDL_SCANCODE_A)         || IsButtonDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT)  || IsLeftStickLeft());
+    dog.jump_press   = (IsKeyPressed(SDL_SCANCODE_Z)  || IsKeyPressed(SDL_SCANCODE_SPACE)  || IsButtonPressed(SDL_CONTROLLER_BUTTON_A));
+    dog.jump_release = (IsKeyReleased(SDL_SCANCODE_Z) || IsKeyReleased(SDL_SCANCODE_SPACE) || IsButtonReleased(SDL_CONTROLLER_BUTTON_A));
+    dog.action       = (IsKeyPressed(SDL_SCANCODE_X)  || IsButtonPressed(SDL_CONTROLLER_BUTTON_X));
 
     // Only if one direction is being pressed will we move the dog.
     if (dog.right != dog.left)
@@ -73,7 +84,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
     // Apply a jump force if the key is presed.
     if (dog.grounded || dog.ledge_buffer > 0)
     {
-        if (IsKeyPressed(SDL_SCANCODE_Z) || IsKeyPressed(SDL_SCANCODE_SPACE))
+        if (dog.jump_press)
         {
             dog.vel.y = (-DOG_JUMP_FORCE/2);
             dog.grounded = false;
@@ -83,7 +94,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
         }
     }
 
-    if(IsKeyReleased(SDL_SCANCODE_Z) || IsKeyReleased(SDL_SCANCODE_SPACE)){
+    if(dog.jump_release){
         dog.jump_height = 0;
     }
 
@@ -232,8 +243,8 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
         {
             if (dog.state != DOG_STATE_BARK)
             {
-            	if(!IsKeyDown(SDL_SCANCODE_W) && !IsKeyDown(SDL_SCANCODE_D) && !IsKeyDown(SDL_SCANCODE_S) && !IsKeyDown(SDL_SCANCODE_A)){
-	                if (IsKeyPressed(SDL_SCANCODE_X))
+            	if(!dog.up && !dog.right && !dog.left && !dog.down){
+	                if (dog.action)
 	                {
 	                    ResetAnimation(dog.anim[DOG_STATE_BARK]);
 	                    dog.state = DOG_STATE_BARK;

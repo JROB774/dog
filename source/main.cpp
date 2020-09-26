@@ -4,6 +4,7 @@ INTERNAL void QuitApplication ()
 {
     QuitGame();
     QuitMixer();
+    QuitInput();
     QuitWindow();
 
     QuitErrorSystem();
@@ -18,6 +19,7 @@ int main (int argc, char** argv)
     InitErrorSystem();
     InitWindow();
     InitMixer();
+    InitInput();
     InitFrameTimer();
 
     if (gWindow.running)
@@ -34,11 +36,12 @@ int main (int argc, char** argv)
 
             while (gWindow.running)
             {
-                UpdateKeyboardState();
+                UpdateInputState();
 
                 SDL_Event event;
                 while (SDL_PollEvent(&event))
                 {
+                    HandleInputEvents(event);
                     switch (event.type)
                     {
                         #if defined(BUILD_DEBUG)
