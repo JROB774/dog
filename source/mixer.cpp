@@ -54,3 +54,13 @@ INTERNAL bool IsSoundOn ()
 {
     return Mix_Volume(-1,-1);
 }
+
+INTERNAL void SetMusic (bool enable)
+{
+    Mix_VolumeMusic((enable) ? MIX_MAX_VOLUME : 0);
+}
+
+INTERNAL bool IsMusicOn ()
+{
+    return Mix_VolumeMusic(-1);
+}

@@ -16,4 +16,7 @@ INTERNAL void PlaySound (Sound& sound, int loops = 0);
 INTERNAL void SetSound  (bool enable);
 INTERNAL bool IsSoundOn ();
 
+INTERNAL void SetMusic  (bool enable);
+INTERNAL bool IsMusicOn ();
+
 #endif /* MIXER_HPP */

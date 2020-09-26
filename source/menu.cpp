@@ -11,6 +11,7 @@ enum MenuSettingsItem
 {
     MENU_ITEM_SETTINGS_FULLSCREEN,
     MENU_ITEM_SETTINGS_SOUND,
+    MENU_ITEM_SETTINGS_MUSIC,
     MENU_ITEM_SETTINGS_BACK,
     MENU_ITEM_SETTINGS_TOTAL
 };
@@ -105,6 +106,7 @@ INTERNAL void UpdateMenu (float dt)
                 {
                     case (MENU_ITEM_SETTINGS_FULLSCREEN): SetFullscreen((IsFullscreen()) ? false : true); break;
                     case (MENU_ITEM_SETTINGS_SOUND): SetSound((IsSoundOn()) ? false : true); break;
+                    case (MENU_ITEM_SETTINGS_MUSIC): SetMusic((IsMusicOn()) ? false : true); break;
                     case (MENU_ITEM_SETTINGS_BACK): gMenuState.mode = MENU_MODE_MAINMENU; gMenuState.selected = MENU_ITEM_SETTINGS; break;
                 }
             }
@@ -172,6 +174,7 @@ INTERNAL void RenderMenu (float dt)
 
             std::string fullscreen_text = std::string("FULLSCREEN ") + std::string((IsFullscreen()) ? "ON" : "OFF");
             std::string sound_text = std::string("SOUND ") + std::string((IsSoundOn()) ? "ON" : "OFF");
+            std::string music_text = std::string("MUSIC ") + std::string((IsMusicOn()) ? "ON" : "OFF");
             std::string back_text = "BACK";
 
             ty = WINDOW_SCREEN_H - 48;
@@ -179,6 +182,11 @@ INTERNAL void RenderMenu (float dt)
             tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, back_text)) / 2;
             if (gMenuState.selected == MENU_ITEM_SETTINGS_BACK) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
             DrawText(gAppState.sfont, back_text, tx,ty, MakeColor(0,0,0));
+            ty -= 16;
+
+            tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, music_text)) / 2;
+            if (gMenuState.selected == MENU_ITEM_SETTINGS_MUSIC) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
+            DrawText(gAppState.sfont, music_text, tx,ty, MakeColor(0,0,0));
             ty -= 16;
 
             tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, sound_text)) / 2;
