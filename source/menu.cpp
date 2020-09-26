@@ -51,15 +51,17 @@ INTERNAL void UpdateMenu (float dt)
     {
         case (MENU_MODE_MAINMENU):
         {
-            if (up && gMenuState.selected > 0)
+            if (up)
             {
-                gMenuState.selected--;
+                if (gMenuState.selected == 0) gMenuState.selected = MENU_ITEM_TOTAL-1;
+                else gMenuState.selected--;
                 ResetAnimation(gMenuState.caret_anim);
                 PlaySound(gMenuState.snd_change);
             }
-            if (down && gMenuState.selected < MENU_ITEM_TOTAL-1)
+            if (down)
             {
-                gMenuState.selected++;
+                if (gMenuState.selected == MENU_ITEM_TOTAL-1) gMenuState.selected = 0;
+                else gMenuState.selected++;
                 ResetAnimation(gMenuState.caret_anim);
                 PlaySound(gMenuState.snd_change);
             }
@@ -81,15 +83,17 @@ INTERNAL void UpdateMenu (float dt)
         } break;
         case (MENU_MODE_SETTINGS):
         {
-            if (up && gMenuState.selected > 0)
+            if (up)
             {
-                gMenuState.selected--;
+                if (gMenuState.selected == 0) gMenuState.selected = MENU_ITEM_SETTINGS_TOTAL-1;
+                else gMenuState.selected--;
                 ResetAnimation(gMenuState.caret_anim);
                 PlaySound(gMenuState.snd_change);
             }
-            if (down && gMenuState.selected < MENU_ITEM_SETTINGS_TOTAL-1)
+            if (down)
             {
-                gMenuState.selected++;
+                if (gMenuState.selected == MENU_ITEM_SETTINGS_TOTAL-1) gMenuState.selected = 0;
+                else gMenuState.selected++;
                 ResetAnimation(gMenuState.caret_anim);
                 PlaySound(gMenuState.snd_change);
             }
