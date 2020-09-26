@@ -307,7 +307,8 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
         {
             if (DogCollideWithEntity(dog, sbone.x, sbone.y, sbone.bounds))
             {
-                CreateParticles(PARTICLE_TYPE_SPEC, (int)sbone.x+8,(int)sbone.y+8,(int)sbone.x+8,(int)sbone.y+8, 8,18);
+                // CreateParticles(PARTICLE_TYPE_SPEC, (int)sbone.x+8,(int)sbone.y+8,(int)sbone.x+8,(int)sbone.y+8, 8,18);
+                CreateParticles(PARTICLE_TYPE_SBONE, (int)sbone.x+8,(int)sbone.y+8,(int)sbone.x+8,(int)sbone.y+8, 1);
                 gWorld.current_map.bone_counter.small_bones_collected++;
                 sbone.dead = true;
                 PlaySound(small_bone_sound);

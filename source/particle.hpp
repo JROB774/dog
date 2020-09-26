@@ -9,6 +9,7 @@ enum ParticleType
     PARTICLE_TYPE_BASH,
     PARTICLE_TYPE_EXPLODE1,
     PARTICLE_TYPE_SMOKE,
+    PARTICLE_TYPE_SBONE,
     PARTICLE_TYPE_TOTAL
 };
 
@@ -50,6 +51,8 @@ INTERNAL void ParticleCreateExplode1 (Particle& particle);
 INTERNAL void ParticleUpdateExplode1 (Particle& particle, float dt);
 INTERNAL void ParticleCreateSmoke    (Particle& particle);
 INTERNAL void ParticleUpdateSmoke    (Particle& particle, float dt);
+INTERNAL void ParticleCreateSBone    (Particle& particle);
+INTERNAL void ParticleUpdateSBone    (Particle& particle, float dt);
 
 // Base information for each type of particle.
 
@@ -73,6 +76,7 @@ GLOBAL const ParticleBase PARTICLE_BASE[PARTICLE_TYPE_TOTAL]
     { ParticleCreateBash,     ParticleUpdateBash,     { "effect-spec4.anim", "effect-spec5.anim", "effect-spec6.anim", "effect-spec7.anim" }, 0.1f, 0.3f }, // PARTICLE_TYPE_BASH
     { ParticleCreateExplode1, ParticleUpdateExplode1, { "effect-explode0.anim", "effect-explode1.anim", "effect-explode2.anim", "effect-explode3.anim" }, -1, -1 }, // PARTICLE_TYPE_EXPLODE1
     { ParticleCreateSmoke,    ParticleUpdateSmoke,    { "effect-smoke0.anim", "effect-smoke1.anim" }, -1, -1 }, // PARTICLE_TYPE_SMOKE
+    { ParticleCreateSBone,    ParticleUpdateSBone,    { "effect-sbone.anim" }, -1, -1 }, // PARTICLE_TYPE_SBONE
 };
 
 #endif /* PARTICLE_HPP */
