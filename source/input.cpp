@@ -23,7 +23,7 @@ INTERNAL void RemoveGamepad ()
     {
         SDL_GameControllerClose(gInput.gamepad);
         gInput.gamepad = NULL;
-        printf("Controller removed!\n");
+        // printf("Controller removed!\n");
     }
 }
 
@@ -38,7 +38,7 @@ INTERNAL void AddGamepad ()
             gInput.gamepad = SDL_GameControllerOpen(i);
             if (gInput.gamepad)
             {
-                printf("Controller added!\n");
+                // printf("Controller added!\n");
                 break;
             }
         }

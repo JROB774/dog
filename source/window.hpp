@@ -13,6 +13,7 @@ GLOBAL struct Window
 {
     SDL_Renderer* renderer;
     SDL_Window*   window;
+    bool          fullscreen;
     bool          running;
     bool          reset;
 
@@ -25,5 +26,7 @@ INTERNAL void RefreshWindow ();
 INTERNAL void ShowWindow    ();
 INTERNAL void HideWindow    ();
 INTERNAL void SetViewport   ();
+INTERNAL void SetFullscreen (bool enable);
+INTERNAL bool IsFullscreen  ();
 
 #endif /* WINDOW_HPP */

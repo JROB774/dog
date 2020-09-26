@@ -21,6 +21,8 @@ INTERNAL bool InitWindow ()
         return false;
     }
 
+    gWindow.fullscreen = false;
+
     SDL_SetRenderDrawBlendMode(gWindow.renderer, SDL_BLENDMODE_BLEND);
     SDL_SetWindowMinimumSize(gWindow.window, WINDOW_SCREEN_W,WINDOW_SCREEN_H);
 
@@ -61,8 +63,10 @@ INTERNAL void SetViewport ()
     int windoww,windowh;
     SDL_GetWindowSize(gWindow.window, &windoww,&windowh);
 
-    int sx = (int)roundf(((float)windoww / (float)WINDOW_SCREEN_W));
-    int sy = (int)roundf(((float)windowh / (float)WINDOW_SCREEN_H));
+    // printf("Window Size: %d %d\n", windoww,windowh);
+
+    int sx = (int)floorf(((float)windoww / (float)WINDOW_SCREEN_W));
+    int sy = (int)floorf(((float)windowh / (float)WINDOW_SCREEN_H));
 
     // Determine the smallest scale and use that.
     float scale = (float)((sx < sy) ? sx : sy);
@@ -76,5 +80,18 @@ INTERNAL void SetViewport ()
     viewport.w = WINDOW_SCREEN_W;
     viewport.h = WINDOW_SCREEN_H;
 
+    // printf("Viewport: %d %d %d %d\n", viewport.x,viewport.y,viewport.w,viewport.h);
+
     SDL_RenderSetViewport(gWindow.renderer, &viewport);
+}
+
+INTERNAL void SetFullscreen (bool enable)
+{
+    gWindow.fullscreen = enable;
+    SDL_SetWindowFullscreen(gWindow.window, (gWindow.fullscreen) ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
+}
+
+INTERNAL bool IsFullscreen ()
+{
+    return gWindow.fullscreen;
 }

@@ -2,14 +2,22 @@ enum MenuItem
 {
     MENU_ITEM_PLAYGAME,
     MENU_ITEM_CONTROLS,
+    MENU_ITEM_SETTINGS,
     MENU_ITEM_EXITGAME,
     MENU_ITEM_TOTAL
 };
 
+enum MenuSettingsItem
+{
+    MENU_ITEM_SETTINGS_FULLSCREEN,
+    MENU_ITEM_SETTINGS_BACK,
+    MENU_ITEM_SETTINGS_TOTAL
+};
+
 INTERNAL void InitMenu ()
 {
-    gMenuState.mode = MENU_MODE_MAIN;
-    gMenuState.selected = MENU_ITEM_PLAYGAME;
+    gMenuState.mode = MENU_MODE_MAINMENU;
+    gMenuState.selected = 0;
 
     LoadImage(gMenuState.title, "title.bmp");
     LoadImage(gMenuState.help, "help.bmp");
@@ -41,7 +49,7 @@ INTERNAL void UpdateMenu (float dt)
 
     switch (gMenuState.mode)
     {
-        case (MENU_MODE_MAIN):
+        case (MENU_MODE_MAINMENU):
         {
             if (up && gMenuState.selected > 0)
             {
@@ -62,13 +70,38 @@ INTERNAL void UpdateMenu (float dt)
                 {
                     case (MENU_ITEM_PLAYGAME): gAppState.state = APP_STATE_GAME; break;
                     case (MENU_ITEM_CONTROLS): gMenuState.mode = MENU_MODE_CONTROLS; break;
+                    case (MENU_ITEM_SETTINGS): gMenuState.mode = MENU_MODE_SETTINGS; gMenuState.selected = 0; break;
                     case (MENU_ITEM_EXITGAME): gWindow.running = false; break;
                 }
             }
         } break;
         case (MENU_MODE_CONTROLS):
         {
-            if (action) gMenuState.mode = MENU_MODE_MAIN;
+            if (action) gMenuState.mode = MENU_MODE_MAINMENU;
+        } break;
+        case (MENU_MODE_SETTINGS):
+        {
+            if (up && gMenuState.selected > 0)
+            {
+                gMenuState.selected--;
+                ResetAnimation(gMenuState.caret_anim);
+                PlaySound(gMenuState.snd_change);
+            }
+            if (down && gMenuState.selected < MENU_ITEM_SETTINGS_TOTAL-1)
+            {
+                gMenuState.selected++;
+                ResetAnimation(gMenuState.caret_anim);
+                PlaySound(gMenuState.snd_change);
+            }
+            if (action)
+            {
+                PlaySound(gMenuState.snd_select);
+                switch (gMenuState.selected)
+                {
+                    case (MENU_ITEM_SETTINGS_FULLSCREEN): SetFullscreen((IsFullscreen()) ? false : true); break;
+                    case (MENU_ITEM_SETTINGS_BACK): gMenuState.mode = MENU_MODE_MAINMENU; gMenuState.selected = MENU_ITEM_SETTINGS; break;
+                }
+            }
         } break;
     }
 }
@@ -83,7 +116,7 @@ INTERNAL void RenderMenu (float dt)
 
     switch (gMenuState.mode)
     {
-        case (MENU_MODE_MAIN):
+        case (MENU_MODE_MAINMENU):
         {
             tx = roundf((float)WINDOW_SCREEN_W - gMenuState.title.w) / 2;
             ty = 64;
@@ -92,6 +125,7 @@ INTERNAL void RenderMenu (float dt)
 
             std::string play_text = "PLAY GAME";
             std::string controls_text = "CONTROLS";
+            std::string options_text = "OPTIONS";
             std::string exit_text = "EXIT GAME";
 
             ty = WINDOW_SCREEN_H - 48;
@@ -99,6 +133,11 @@ INTERNAL void RenderMenu (float dt)
             tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, exit_text)) / 2;
             if (gMenuState.selected == MENU_ITEM_EXITGAME) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
             DrawText(gAppState.sfont, exit_text, tx,ty, MakeColor(0,0,0));
+            ty -= 16;
+
+            tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, options_text)) / 2;
+            if (gMenuState.selected == MENU_ITEM_SETTINGS) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
+            DrawText(gAppState.sfont, options_text, tx,ty, MakeColor(0,0,0));
             ty -= 16;
 
             tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, controls_text)) / 2;
@@ -117,6 +156,28 @@ INTERNAL void RenderMenu (float dt)
             ty = roundf((float)WINDOW_SCREEN_H - gMenuState.help.h) / 2;
 
             DrawImage(gMenuState.help, tx,ty);
+        } break;
+        case (MENU_MODE_SETTINGS):
+        {
+            tx = roundf((float)WINDOW_SCREEN_W - gMenuState.title.w) / 2;
+            ty = 64;
+
+            DrawImage(gMenuState.title, tx,ty);
+
+            std::string fullscreen_text = std::string("FULLSCREEN ") + std::string((IsFullscreen()) ? "ON" : "OFF");
+            std::string back_text = "BACK";
+
+            ty = WINDOW_SCREEN_H - 48;
+
+            tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, back_text)) / 2;
+            if (gMenuState.selected == MENU_ITEM_SETTINGS_BACK) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
+            DrawText(gAppState.sfont, back_text, tx,ty, MakeColor(0,0,0));
+            ty -= 16;
+
+            tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, fullscreen_text)) / 2;
+            if (gMenuState.selected == MENU_ITEM_SETTINGS_FULLSCREEN) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
+            DrawText(gAppState.sfont, fullscreen_text, tx,ty, MakeColor(0,0,0));
+            ty -= 16;
         } break;
     }
 }

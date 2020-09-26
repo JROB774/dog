@@ -3,8 +3,9 @@
 
 enum MenuMode
 {
-    MENU_MODE_MAIN,
+    MENU_MODE_MAINMENU,
     MENU_MODE_CONTROLS,
+    MENU_MODE_SETTINGS,
 };
 
 GLOBAL struct MenuState
