@@ -30,6 +30,8 @@ struct Dog
     Sound snd_hithead;
     Sound snd_jump;
     Sound snd_bark;
+    Sound snd_explode0;
+    Sound snd_explode1;
 
     Animation anim[DOG_STATE_TOTAL];
 

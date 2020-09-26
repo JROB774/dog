@@ -29,6 +29,8 @@ INTERNAL void CreateDog (Dog& dog, float x, float y)
     LoadSound(dog.snd_hithead, "hithead.wav");
     LoadSound(dog.snd_jump, "jump.wav");
     LoadSound(dog.snd_bark, "bark.wav");
+    LoadSound(dog.snd_explode0, "explode0.wav");
+    LoadSound(dog.snd_explode1, "explode1.wav");
 
     LoadAnimation(dog.anim[DOG_STATE_IDLE], "dog-idle.anim");
     LoadAnimation(dog.anim[DOG_STATE_BLNK], "dog-blnk.anim");
@@ -282,7 +284,10 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
     {
         if (DogCollideWithEntity(dog, spike.x, spike.y, spike.bounds))
         {
+            PlaySound(dog.snd_explode0);
             dog.dead = true;
+            CreateParticles(PARTICLE_TYPE_EXPLODE1, (int)dog.pos.x-16,(int)dog.pos.y-16,(int)dog.pos.x+DOG_CLIP_W+16,(int)dog.pos.y+DOG_CLIP_H+16, 4,8);
+            CreateParticles(PARTICLE_TYPE_SMOKE, (int)dog.pos.x,(int)dog.pos.y,(int)dog.pos.x+DOG_CLIP_W,(int)dog.pos.y+DOG_CLIP_H, 4,8);
         }
     }
     for (auto& sbone: gWorld.current_map.sbones)
@@ -341,6 +346,8 @@ INTERNAL void DeleteDog (Dog& dog)
     FreeSound(dog.snd_hithead);
     FreeSound(dog.snd_jump);
     FreeSound(dog.snd_bark);
+    FreeSound(dog.snd_explode0);
+    FreeSound(dog.snd_explode1);
 }
 
 INTERNAL bool DogCollideWithEntity (Dog& dog, float ex, float ey, Rect ebounds)
