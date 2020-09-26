@@ -24,6 +24,8 @@ INTERNAL void CreateDog (Dog& dog, float x, float y)
     LoadImage(dog.image, "dog.bmp");
     dog.flip = FLIP_NONE;
 
+    dog.footstep_timer = 0.0f;
+
     LoadSound(dog.snd_footstep, "footstep.wav");
     LoadSound(dog.snd_land, "land.wav");
     LoadSound(dog.snd_hithead, "hithead.wav");
@@ -48,6 +50,9 @@ INTERNAL void CreateDog (Dog& dog, float x, float y)
     dog.action       = false;
 
     dog.grounded = false;
+
+    dog.ledge_buffer = 0.0f;
+    dog.jump_height = 0.0f;
 
     dog.dead = false;
 }
