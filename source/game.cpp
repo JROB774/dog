@@ -34,7 +34,7 @@ INTERNAL void RenderGame (float dt)
 {
     BeginCamera();
     DrawMapBackg(gWorld.current_map);
-    DrawMapEntities(gWorld.current_map);
+    DrawMapEntities(gWorld.current_map, dt);
     DrawDog(gGameState.dog, dt);
     DrawParticles(dt);
     DrawMapSpikes(gWorld.current_map);

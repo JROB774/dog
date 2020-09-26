@@ -32,7 +32,7 @@ INTERNAL void LoadMap (Map& map, std::string file_name);
 INTERNAL void FreeMap (Map& map);
 
 INTERNAL void DrawMapBackg    (Map& map);
-INTERNAL void DrawMapEntities (Map& map);
+INTERNAL void DrawMapEntities (Map& map, float dt);
 INTERNAL void DrawMapSpikes   (Map& map);
 INTERNAL void DrawMapFront    (Map& map);
 

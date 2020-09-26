@@ -34,28 +34,36 @@ void CreateSmallBone(SmallBone& _bone, float _x, float _y)
 {
 	_bone.x = _x;
 	_bone.y = _y;
+	_bone.yoff = 0;
 	// _bone.bounds = {_x, _y, 10, 10};
 	_bone.dead = false;
+	_bone.timer = 0.0f;
 }
 
 void CreateBigBone(BigBone& _bone, float _x, float _y)
 {
 	_bone.x = _x - 4;
 	_bone.y = _y - 4;
+	_bone.yoff = 0;
 	// _bone.bounds = {_x, _y, 16, 16};
 	_bone.dead = false;
+	_bone.timer = 0.0f;
 }
 
-void RenderBigBone(BigBone& _bone)
+void RenderBigBone(BigBone& _bone, float dt)
 {
 	if (_bone.dead) return;
-	DrawImage(big_bone_image, _bone.x, _bone.y);
+	_bone.timer += dt;
+	_bone.yoff = SinRange(0, 4, _bone.timer*5);
+	DrawImage(big_bone_image, _bone.x, _bone.y-_bone.yoff);
 }
 
-void RenderSmallBone(SmallBone& _bone)
+void RenderSmallBone(SmallBone& _bone, float dt)
 {
 	if (_bone.dead) return;
-	DrawImage(small_bone_image, _bone.x, _bone.y);
+	_bone.timer += dt;
+	_bone.yoff = SinRange(0, 2, _bone.timer*5);
+	DrawImage(small_bone_image, _bone.x, _bone.y-_bone.yoff);
 }
 
 /*

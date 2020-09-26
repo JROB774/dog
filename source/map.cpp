@@ -229,10 +229,10 @@ INTERNAL void DrawMapBackg (Map& map)
     }
 }
 
-INTERNAL void DrawMapEntities (Map& map)
+INTERNAL void DrawMapEntities (Map& map, float dt)
 {
-    for (auto& sbone: map.sbones) RenderSmallBone(sbone);
-    for (auto& lbone: map.lbones) RenderBigBone(lbone);
+    for (auto& sbone: map.sbones) RenderSmallBone(sbone, dt);
+    for (auto& lbone: map.lbones) RenderBigBone(lbone, dt);
     for (auto& bblocks: map.bblocks) RenderBreakableBlock(bblocks);
 }
 

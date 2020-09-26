@@ -108,6 +108,12 @@ INTERNAL Vec2 RotateVec2 (Vec2 vec, float rad)
     return { x, y };
 }
 
+INTERNAL float SinRange (float min, float max, float t)
+{
+    float half_range = (max - min) / 2;
+    return min + half_range + sinf(t) * half_range;
+}
+
 GLOBAL std::random_device gRandomDevice;
 GLOBAL std::mt19937 gRandomGenerator(gRandomDevice());
 

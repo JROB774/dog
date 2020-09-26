@@ -71,6 +71,8 @@ INTERNAL float RadToDeg (float rad);
 
 INTERNAL Vec2 RotateVec2 (Vec2 vec, float rad);
 
+INTERNAL float SinRange (float min, float max, float t);
+
 // Random functions.
 
 INTERNAL void  RandomSeed       (int seed = -1);

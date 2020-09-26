@@ -12,15 +12,19 @@ struct BoneCounter
 struct SmallBone
 {
     float x, y;
+    float yoff;
 	Rect bounds = {3,3,10,10};
 	bool dead = false;
+    float timer;
 };
 
 struct BigBone
 {
     float x, y;
+    float yoff;
 	Rect bounds = {4,4,16,16};
 	bool dead = false;
+    float timer;
 };
 
 GLOBAL Image small_bone_image;
@@ -35,7 +39,7 @@ void CreateBigBone(BigBone& _bone, float _x, float _y);
 // bool BigBoneCollision(Rect _bounds, BigBone _bone);
 // void RenderBoneCounter(int _x, int _y, BoneCounter _bonecounter);
 void DeleteBones();
-void RenderBigBone(BigBone& _bone);
-void RenderSmallBone(SmallBone& _bone);
+void RenderBigBone(BigBone& _bone, float dt);
+void RenderSmallBone(SmallBone& _bone, float dt);
 
 #endif
