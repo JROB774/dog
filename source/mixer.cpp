@@ -44,3 +44,13 @@ INTERNAL void PlaySound (Sound& sound, int loops)
         LOG_ERROR(ERR_MIN, "Failed to play sound effect! (%s)", Mix_GetError());
     }
 }
+
+INTERNAL void SetSound (bool enable)
+{
+    Mix_Volume(-1, (enable) ? MIX_MAX_VOLUME : 0);
+}
+
+INTERNAL bool IsSoundOn ()
+{
+    return Mix_Volume(-1,-1);
+}
