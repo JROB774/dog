@@ -80,6 +80,11 @@ INTERNAL void LoadWorld ()
     }
 
     // printf("World: %s (%d %d)\n", START_MAP, gWorld.current_map_x, gWorld.current_map_y);
+
+    // Move the camera to the dog's new position in the world.
+    float cx = roundf(gGameState.dog.pos.x + (DOG_CLIP_W/2) - (WINDOW_SCREEN_W/2));
+    float cy = roundf(gGameState.dog.pos.y + (DOG_CLIP_H/2) - (WINDOW_SCREEN_H/2));
+    SetCamera(cx,cy);
 }
 
 INTERNAL void FreeWorld ()

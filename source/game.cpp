@@ -4,11 +4,11 @@ INTERNAL void InitGame ()
     LoadFont(gGameState.sfont, 12, 12, "sfont.bmp");
     InitBones();
     InitBreakableBlock();
-    LoadWorld();
     InitGui();
     InitBones();
     InitParticleSystem();
     CreateDog(gGameState.dog, START_X, START_Y);
+    LoadWorld();
 }
 
 INTERNAL void QuitGame ()
