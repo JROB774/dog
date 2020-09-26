@@ -16,10 +16,16 @@ INTERNAL void InitMenu ()
     LoadImage(gMenuState.caret, "caret.bmp");
 
     LoadAnimation(gMenuState.caret_anim, "caret.anim");
+
+    LoadSound(gMenuState.snd_change, "change.wav");
+    LoadSound(gMenuState.snd_select, "select.wav");
 }
 
 INTERNAL void QuitMenu ()
 {
+    FreeSound(gMenuState.snd_change);
+    FreeSound(gMenuState.snd_select);
+
     FreeAnimation(gMenuState.caret_anim);
 
     FreeImage(gMenuState.title);
@@ -37,10 +43,21 @@ INTERNAL void UpdateMenu (float dt)
     {
         case (MENU_MODE_MAIN):
         {
-            if (up   && gMenuState.selected > 0)                 { gMenuState.selected--; ResetAnimation(gMenuState.caret_anim); }
-            if (down && gMenuState.selected < MENU_ITEM_TOTAL-1) { gMenuState.selected++; ResetAnimation(gMenuState.caret_anim); }
+            if (up && gMenuState.selected > 0)
+            {
+                gMenuState.selected--;
+                ResetAnimation(gMenuState.caret_anim);
+                PlaySound(gMenuState.snd_change);
+            }
+            if (down && gMenuState.selected < MENU_ITEM_TOTAL-1)
+            {
+                gMenuState.selected++;
+                ResetAnimation(gMenuState.caret_anim);
+                PlaySound(gMenuState.snd_change);
+            }
             if (action)
             {
+                PlaySound(gMenuState.snd_select);
                 switch (gMenuState.selected)
                 {
                     case (MENU_ITEM_PLAYGAME): gAppState.state = APP_STATE_GAME; break;

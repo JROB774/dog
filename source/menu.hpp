@@ -18,6 +18,9 @@ GLOBAL struct MenuState
 
     Animation caret_anim;
 
+    Sound snd_change;
+    Sound snd_select;
+
 } gMenuState;
 
 INTERNAL void InitMenu   ();
