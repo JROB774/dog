@@ -15,14 +15,14 @@
 * [x] Spikes.
 * [x] GUI for collectible bone count.
 * [x] Particle effect system.
-* [ ] Add sound effects:
-  * [ ] Player:
+* [x] Add sound effects:
+  * [x] Player:
     * [x] Footsteps
     * [x] Jump
     * [x] Land on Ground
     * [x] Hit Head
-    * [ ] Bark (Retroify!)
-    * [ ] Death / Explode
+    * [x] Bark (Retroify!)
+    * [x] Death / Explode
   * [x] Collect Bone:
     * [x] Small
     * [x] Large
@@ -40,7 +40,10 @@
 
 ## Unassigned
 
-* [ ] Main menu / title screen.
+* [ ] Main menu / title screen:
+  * [ ] Play Game
+  * [ ] Controls
+  * [ ] Exit Game
 * [ ] Pause menu.
 * [ ] Implement the dig system with breakable blocks.
 * [ ] Enemies:
