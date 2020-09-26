@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-INTERNAL void QuitApplication ()
+INTERNAL void QuitSystems ()
 {
     QuitGame();
     QuitMixer();
@@ -12,7 +12,7 @@ INTERNAL void QuitApplication ()
 
 int main (int argc, char** argv)
 {
-    ErrorTerminateCallback = QuitApplication;
+    ErrorTerminateCallback = QuitSystems;
 
     gWindow.running = true;
 
@@ -31,7 +31,7 @@ int main (int argc, char** argv)
             gWindow.reset = false;
 
             RandomSeed();
-            InitGame();
+            InitApplication();
             ShowWindow();
 
             while (gWindow.running)
@@ -54,19 +54,19 @@ int main (int argc, char** argv)
                 ClearWindow(MakeColor(0,0,0));
                 SetViewport();
 
-                UpdateGame(gTimer.delta_time);
-                RenderGame(gTimer.delta_time);
+                UpdateApplication(gTimer.delta_time);
+                RenderApplication(gTimer.delta_time);
 
                 CapFramerate();
 
                 RefreshWindow();
             }
 
-            QuitGame();
+            QuitApplication();
         }
     }
 
-    QuitApplication();
+    QuitSystems();
 
     return 0;
 }

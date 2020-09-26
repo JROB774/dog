@@ -52,8 +52,9 @@
 #include "gui.hpp"
 #include "world.hpp"
 #include "camera.hpp"
+#include "menu.hpp"
 #include "game.hpp"
-
+#include "application.hpp"
 
 // Source includes.
 #include "utility.cpp"
@@ -75,7 +76,8 @@
 #include "gui.cpp"
 #include "world.cpp"
 #include "camera.cpp"
+#include "menu.cpp"
 #include "game.cpp"
-
+#include "application.cpp"
 
 #endif /* MAIN_HPP */

@@ -28,6 +28,9 @@
     * [x] Large
   * [ ] Break Block
 * [ ] Bones should remember they've been collected when transitioning maps, etc.
+* [ ] Bone counter should be global for an entire zone, not just per room.
+* [ ] Save game data to a file.
+* [ ] Implement sone enemies.
 
 ## TiKo
 
