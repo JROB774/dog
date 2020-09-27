@@ -60,6 +60,8 @@ INTERNAL void LoadWorld ()
 
     csv.close();
 
+    /////////////////////////////////////////////////
+
     LoadMap(gWorld.current_map, START_MAP);
 
     // Find the location of the start room on the map.
@@ -79,7 +81,43 @@ INTERNAL void LoadWorld ()
         if (done) break;
     }
 
+    // Extract the current zone.
+    {
+        auto tokens = TokenizeString(START_MAP, '-');
+        ASSERT(tokens.size() == 3); // Tileset-Zone-Map
+        gWorld.current_zone = tokens[1];
+    }
+
+    // Load all the bones in the current zone for the counter.
+    std::vector<std::string> rooms_done;
+    Map temp_room_map;
+    for (int ry=0; ry<gWorld.rooms.size(); ++ry)
+    {
+        for (int rx=0; rx<gWorld.rooms[ry].size(); ++rx)
+        {
+            std::string room = gWorld.rooms[ry][rx];
+            if (!room.empty())
+            {
+                auto tokens = TokenizeString(room, '-');
+                ASSERT(tokens.size() == 3); // Tileset-Zone-Map
+                if (tokens[1] == gWorld.current_zone)
+                {
+                    if (std::find(rooms_done.begin(), rooms_done.end(), room) == rooms_done.end())
+                    {
+                        LoadMap(temp_room_map, room);
+                        gWorld.bones[gWorld.current_zone].small_bones_total += (int)temp_room_map.sbones.size();
+                        gWorld.bones[gWorld.current_zone].large_bones_total += (int)temp_room_map.lbones.size();
+                        FreeMap(temp_room_map);
+                        rooms_done.push_back(room);
+                    }
+                }
+            }
+        }
+    }
+
     // printf("World: %s (%d %d)\n", START_MAP, gWorld.current_map_x, gWorld.current_map_y);
+
+    /////////////////////////////////////////////////
 
     // Move the camera to the dog's new position in the world.
     float cx = roundf(gGameState.dog.pos.x + (DOG_CLIP_W/2) - (WINDOW_SCREEN_W/2));
@@ -91,6 +129,9 @@ INTERNAL void FreeWorld ()
 {
     gWorld.rooms.clear();
     FreeMap(gWorld.current_map);
+    gWorld.current_zone.clear();
+    for (auto& it: gWorld.bones) it.second = {};
+    gWorld.bones.clear();
 }
 
 INTERNAL void WorldTransitionIfOutOfBounds ()
@@ -183,4 +224,9 @@ INTERNAL void WorldTransitionIfOutOfBounds ()
     float cx = roundf(gGameState.dog.pos.x + (DOG_CLIP_W/2) - (WINDOW_SCREEN_W/2));
     float cy = roundf(gGameState.dog.pos.y + (DOG_CLIP_H/2) - (WINDOW_SCREEN_H/2));
     SetCamera(cx,cy);
+}
+
+INTERNAL BoneCounter& GetWorldBoneCounter ()
+{
+    return gWorld.bones[gWorld.current_zone];
 }

@@ -59,7 +59,7 @@ INTERNAL bool TileEntityCollision (Vec2 pos, Rect bounds, int tx, int ty, Rect& 
 INTERNAL void LoadMap (Map& map, std::string file_name)
 {
     auto tokens = TokenizeString(file_name, '-');
-    ASSERT(tokens.size() == 2); // Tileset and map name.
+    ASSERT(tokens.size() == 3); // Tileset-Zone-Map
 
     std::string tileset_file = "t" + tokens[0] + ".bmp";
     LoadImage(map.tileset, tileset_file.c_str());

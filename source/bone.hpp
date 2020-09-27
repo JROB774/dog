@@ -3,10 +3,10 @@
 
 struct BoneCounter
 {
-	int small_bones_collected;
-    int small_bones_total;
-	int large_bones_collected;
-    int large_bones_total;
+	int small_bones_collected = 0;
+    int small_bones_total = 0;
+	int large_bones_collected = 0;
+    int large_bones_total = 0;
 };
 
 struct SmallBone

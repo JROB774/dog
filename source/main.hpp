@@ -23,6 +23,7 @@
 #include <string>
 #include <algorithm>
 #include <random>
+#include <map>
 #include <vector>
 
 #include <SDL2/SDL.h>
