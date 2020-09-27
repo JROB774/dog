@@ -42,3 +42,8 @@ INTERNAL void LoadData ()
         LoadWorld(save["current_map"].String());
     }
 }
+
+INTERNAL void DeleteData ()
+{
+    std::filesystem::remove(SAVE_FILE);
+}

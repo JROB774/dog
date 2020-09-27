@@ -13,6 +13,7 @@ enum MenuSettingsItem
     MENU_ITEM_SETTINGS_SOUND,
     MENU_ITEM_SETTINGS_MUSIC,
     MENU_ITEM_SETTINGS_RESET,
+    MENU_ITEM_SETTINGS_DELETE,
     MENU_ITEM_SETTINGS_BACK,
     MENU_ITEM_SETTINGS_TOTAL
 };
@@ -119,6 +120,7 @@ INTERNAL void UpdateMenu (float dt)
                     case (MENU_ITEM_SETTINGS_SOUND): SetSound((IsSoundOn()) ? false : true); break;
                     case (MENU_ITEM_SETTINGS_MUSIC): SetMusic((IsMusicOn()) ? false : true); break;
                     case (MENU_ITEM_SETTINGS_RESET): ResetSettings(); break;
+                    case (MENU_ITEM_SETTINGS_DELETE): DeleteData(); break;
                     case (MENU_ITEM_SETTINGS_BACK):
                     {
                         SaveSettings();
@@ -151,7 +153,7 @@ INTERNAL void RenderMenu (float dt)
         case (MENU_MODE_MAINMENU):
         {
             tx = roundf((float)WINDOW_SCREEN_W - gMenuState.title.w) / 2;
-            ty = 48;
+            ty = 24;
 
             DrawImage(gMenuState.title, tx,ty);
 
@@ -192,7 +194,7 @@ INTERNAL void RenderMenu (float dt)
         case (MENU_MODE_SETTINGS):
         {
             tx = roundf((float)WINDOW_SCREEN_W - gMenuState.title.w) / 2;
-            ty = 48;
+            ty = 24;
 
             DrawImage(gMenuState.title, tx,ty);
 
@@ -200,6 +202,7 @@ INTERNAL void RenderMenu (float dt)
             std::string sound_text = std::string("SOUND ") + std::string((IsSoundOn()) ? "ON" : "OFF");
             std::string music_text = std::string("MUSIC ") + std::string((IsMusicOn()) ? "ON" : "OFF");
             std::string reset_text = "RESET OPTIONS";
+            std::string delete_text = "DELETE SAVE GAME";
             std::string back_text = "BACK";
 
             ty = WINDOW_SCREEN_H - 48;
@@ -207,6 +210,11 @@ INTERNAL void RenderMenu (float dt)
             tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, back_text)) / 2;
             if (gMenuState.selected == MENU_ITEM_SETTINGS_BACK) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
             DrawText(gAppState.sfont, back_text, tx,ty, MakeColor(0,0,0));
+            ty -= 16;
+
+            tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, delete_text)) / 2;
+            if (gMenuState.selected == MENU_ITEM_SETTINGS_DELETE) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
+            DrawText(gAppState.sfont, delete_text, tx,ty, MakeColor(0,0,0));
             ty -= 16;
 
             tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, reset_text)) / 2;

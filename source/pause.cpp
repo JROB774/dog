@@ -55,17 +55,15 @@ INTERNAL void UpdatePause (float dt)
     }
     if (action)
     {
-        PlaySound(gPauseState.snd_select);
         switch (gPauseState.selected)
         {
             case (PAUSE_ITEM_RETURN  ): Unpause(); break;
-            case (PAUSE_ITEM_MENU    ): StartFade(FADE_SPECIAL, [](){ EndGame(); }); break;
-            case (PAUSE_ITEM_EXITGAME): gWindow.running = false; break;
+            case (PAUSE_ITEM_MENU    ): PlaySound(gPauseState.snd_select); StartFade(FADE_SPECIAL, [](){ EndGame(); }); break;
+            case (PAUSE_ITEM_EXITGAME): PlaySound(gPauseState.snd_select); gWindow.running = false; break;
         }
     }
     if (back)
     {
-        PlaySound(gPauseState.snd_select);
         Unpause();
     }
 }
@@ -105,12 +103,14 @@ INTERNAL void RenderPause (float dt)
 
 INTERNAL void Unpause ()
 {
+    PlaySound(gPauseState.snd_select);
     gAppState.state = APP_STATE_GAME;
     // printf("UNPAUSE!\n");
 }
 
 INTERNAL void Pause ()
 {
+    PlaySound(gPauseState.snd_select);
     gAppState.state = APP_STATE_PAUSE;
     gPauseState.selected = 0;
     // printf("PAUSE!\n");
