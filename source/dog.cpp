@@ -335,7 +335,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
             {
                 // CreateParticles(PARTICLE_TYPE_SPEC, (int)sbone.x+8,(int)sbone.y+8,(int)sbone.x+8,(int)sbone.y+8, 8,18);
                 CreateParticles(PARTICLE_TYPE_SBONE, (int)sbone.x+8,(int)sbone.y+8,(int)sbone.x+8,(int)sbone.y+8, 1);
-                GetWorldBoneCounter().small_bones_collected++;
+                GetWorldBoneCounter().collected++;
                 sbone.dead = true;
                 PlaySound(small_bone_sound);
                 // DisplayGui();
@@ -349,7 +349,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
             if (DogCollideWithEntity(dog, lbone.x, lbone.y, lbone.bounds))
             {
                 CreateParticles(PARTICLE_TYPE_SPEC, (int)lbone.x+12,(int)lbone.y+12,(int)lbone.x+12,(int)lbone.y+12, 40,72, 1.5f);
-                GetWorldBoneCounter().large_bones_collected++;
+                GetWorldBoneCounter().collected += LARGE_BONE_WORTH;
                 lbone.dead = true;
                 PlaySound(small_bone_sound);
                 PlaySound(big_bone_sound);

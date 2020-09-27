@@ -1,12 +1,12 @@
 #ifndef BONE_HPP
 #define BONE_HPP
 
+GLOBAL constexpr int LARGE_BONE_WORTH = 10; // Large bones are worth 10 bones!
+
 struct BoneCounter
 {
-	int small_bones_collected = 0;
-    int small_bones_total = 0;
-	int large_bones_collected = 0;
-    int large_bones_total = 0;
+	int collected = 0;
+    int total = 0;
 };
 
 struct SmallBone

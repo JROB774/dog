@@ -106,8 +106,8 @@ INTERNAL void LoadWorld (std::string start_map)
                     if (std::find(rooms_done.begin(), rooms_done.end(), room) == rooms_done.end())
                     {
                         LoadMap(temp_room_map, room);
-                        gWorld.bones[gWorld.current_zone].small_bones_total += (int)temp_room_map.sbones.size();
-                        gWorld.bones[gWorld.current_zone].large_bones_total += (int)temp_room_map.lbones.size();
+                        gWorld.bones[gWorld.current_zone].total += (int)temp_room_map.sbones.size();
+                        gWorld.bones[gWorld.current_zone].total += (int)temp_room_map.lbones.size() * LARGE_BONE_WORTH;
                         FreeMap(temp_room_map);
                         rooms_done.push_back(room);
                     }

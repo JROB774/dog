@@ -15,7 +15,6 @@ struct Tile
 
 struct Map
 {
-    BoneCounter bone_counter;
     Image tileset;
     int w,h;
     std::vector<Tile> tiles;

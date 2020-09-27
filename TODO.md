@@ -36,8 +36,9 @@
   * [x] Add sound effects.
 * [x] Bone counter should be global for an entire zone, not just per room.
 * [x] Add death state and respawn.
-* [ ] Bones should remember they've been collected when transitioning maps, etc.
-* [ ] Save game data to a file.
+* [x] Save game data to a file.
+* [x] Pause menu.
+* [ ] Bones should remember they've been collected when transitioning maps, between sessions, etc.
 * [ ] Implement sone enemies.
 
 ## TiKo
@@ -51,8 +52,7 @@
 
 ## Unassigned
 
-* [ ] Pause menu.
-* [ ] Win and lose states.
+* [ ] Win state.
 * [ ] Add game content.
 
 *Flesh out these and add more as needed...*

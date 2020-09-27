@@ -1,12 +1,6 @@
 INTERNAL void InitGui ()
 {
     LoadImage(gGui.splat, "splat.bmp");
-
-    // gGui.current_x = -128.0f;
-    // gGui.target_x = -128.0f;
-
-    // gGui.timer = 0.0f;
-
     gGui.current_x = 0.0f;
 }
 
@@ -17,30 +11,18 @@ INTERNAL void QuitGui ()
 
 INTERNAL void DrawGui (float dt)
 {
-    /*
-    gGui.timer -= dt;
-    if (gGui.timer <= 0.0f) gGui.target_x = -128.0f;
-    else gGui.target_x = 0.0f;
-
-    gGui.current_x = Lerp(gGui.current_x, gGui.target_x, dt*10);
-    */
-
     DrawImage(gGui.splat, gGui.current_x,0);
 
     BoneCounter& bones = GetWorldBoneCounter();
 
     // Pad the values with zeroes so that they are always three digits long.
-    std::string scollected = std::to_string(bones.small_bones_collected);
-    while (scollected.length() < 3) scollected = "0" + scollected;
-    std::string stotal = std::to_string(bones.small_bones_total);
-    while (stotal.length() < 3) stotal = "0" + stotal;
-
-    std::string stext = scollected + "/" + stotal;
-    if (bones.small_bones_collected >= bones.small_bones_total) stext += "!";
-    DrawText(gAppState.sfont, stext, gGui.current_x+2, 0, MakeColor(1,1,1));
-
-    // std::string ltext = std::to_string(bones.large_bones_collected) + "/" + std::to_string(bones.large_bones_total);
-    // DrawText(gAppState.lfont, ltext, gGui.current_x+0, 14, MakeColor(1,1,1));
+    std::string collected = std::to_string(bones.collected);
+    while (collected.length() < 3) collected = "0" + collected;
+    std::string total = std::to_string(bones.total);
+    while (total.length() < 3) total = "0" + total;
+    std::string text = collected + "/" + total;
+    if (bones.collected >= bones.total) text += "!";
+    DrawText(gAppState.sfont, text, gGui.current_x+2, 0, MakeColor(1,1,1));
 }
 
 /*
