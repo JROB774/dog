@@ -89,7 +89,7 @@ INTERNAL void UpdateMenu (float dt)
         } break;
         case (MENU_MODE_CONTROLS):
         {
-            if (action)
+            if (action || back)
             {
                 gMenuState.mode = MENU_MODE_MAINMENU;
                 PlaySound(gMenuState.snd_select);
