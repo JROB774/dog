@@ -22,24 +22,23 @@ INTERNAL void CreateBigBone(BigBone& bone, float x, float y)
 	bone.x = x-4;
 	bone.y = y-4;
 	bone.yoff = 0;
-	// _bone.bounds = {_x, _y, 16, 16};
 	bone.dead = false;
 	bone.timer = 0.0f;
 }
 
 INTERNAL void RenderBigBone(BigBone& bone, float dt)
 {
-	if (bone.dead) return;
 	bone.timer += dt;
 	bone.yoff = SinRange(0, 4, bone.timer*5);
+	if (bone.dead) return; // Important it goes here so the bone doesn't go out of sync if it gets respawned!
 	DrawImage(big_bone_image, bone.x, bone.y-bone.yoff);
 }
 
 INTERNAL void RenderSmallBone(SmallBone& bone, float dt)
 {
-	if (bone.dead) return;
 	bone.timer += dt;
 	bone.yoff = SinRange(0, 2, bone.timer*5);
+	if (bone.dead) return; // Important it goes here so the bone doesn't go out of sync if it gets respawned!
 	DrawImage(small_bone_image, bone.x, bone.y-bone.yoff);
 }
 
@@ -49,4 +48,46 @@ INTERNAL void DeleteBones()
 	FreeImage(big_bone_image);
 	FreeSound(small_bone_sound);
 	FreeSound(big_bone_sound);
+}
+
+// COUNTER STUFF
+
+INTERNAL int GetBoneCollectedCount ()
+{
+	int collected = 0;
+	for (auto& id: gBoneCollectedIds) {
+		if (id.back() == 's') collected++;
+		else if (id.back() == 'l') collected += LARGE_BONE_WORTH;
+	}
+	for (auto& id: gTempBoneCollectedIds) {
+		if (id.back() == 's') collected++;
+		else if (id.back() == 'l') collected += LARGE_BONE_WORTH;
+	}
+	return collected;
+}
+INTERNAL int GetBoneTotalCount ()
+{
+	return gCurrentZoneBoneTotal;
+}
+
+INTERNAL void CacheMapBones ()
+{
+    gBoneCollectedIds.insert(gBoneCollectedIds.end(), gTempBoneCollectedIds.begin(), gTempBoneCollectedIds.end());
+    gTempBoneCollectedIds.clear();
+}
+
+INTERNAL void RespawnMapBones ()
+{
+	// If a bone hasn't been collected and cached then it can be respawned.
+	gTempBoneCollectedIds.clear();
+    for (auto& sbone: gWorld.current_map.sbones) {
+        if (std::find(gBoneCollectedIds.begin(), gBoneCollectedIds.end(), sbone.id) == gBoneCollectedIds.end()) {
+            sbone.dead = false;
+        }
+    }
+    for (auto& lbone: gWorld.current_map.lbones) {
+        if (std::find(gBoneCollectedIds.begin(), gBoneCollectedIds.end(), lbone.id) == gBoneCollectedIds.end()) {
+            lbone.dead = false;
+        }
+    }
 }

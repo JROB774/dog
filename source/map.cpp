@@ -168,13 +168,27 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
                 } break;
                 case (ENTITY_SBONE_COLOR): // SMALL BONES!
                 {
+                    float x = (float)(ix*TILE_W);
+                    float y = (float)(iy*TILE_H);
                     map.sbones.push_back(SmallBone());
-                    CreateSmallBone(map.sbones.back(), (float)(ix*TILE_W), (float)(iy*TILE_H));
+                    CreateSmallBone(map.sbones.back(), x, y);
+                    // Kill bones that have already been collected.
+                    if (std::find(gBoneCollectedIds.begin(), gBoneCollectedIds.end(), map.sbones.back().id) != gBoneCollectedIds.end())
+                    {
+                        map.sbones.back().dead = true;
+                    }
                 } break;
                 case (ENTITY_LBONE_COLOR): // LARGE BONES!
                 {
+                    float x = (float)(ix*TILE_W);
+                    float y = (float)(iy*TILE_H);
                     map.lbones.push_back(BigBone());
-                    CreateBigBone(map.lbones.back(), (float)(ix*TILE_W), (float)(iy*TILE_H));
+                    CreateBigBone(map.lbones.back(), x, y);
+                    // Kill bones that have already been collected.
+                    if (std::find(gBoneCollectedIds.begin(), gBoneCollectedIds.end(), map.lbones.back().id) != gBoneCollectedIds.end())
+                    {
+                        map.lbones.back().dead = true;
+                    }
                 } break;
                 case (ENTITY_BBLOC_COLOR): // BREAKABLE BLOCKS!
                 {

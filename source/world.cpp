@@ -62,8 +62,8 @@ INTERNAL void LoadWorld (std::string start_map)
 
     /////////////////////////////////////////////////
 
-    LoadMap(gWorld.current_map, start_map);
     gWorld.current_map_name = start_map;
+    LoadMap(gWorld.current_map, start_map);
 
     // Find the location of the start room on the map.
     bool done = false;
@@ -90,6 +90,7 @@ INTERNAL void LoadWorld (std::string start_map)
     }
 
     // Load all the bones in the current zone for the counter.
+    gCurrentZoneBoneTotal = 0;
     std::vector<std::string> rooms_done;
     Map temp_room_map;
     for (int ry=0; ry<gWorld.rooms.size(); ++ry)
@@ -106,8 +107,8 @@ INTERNAL void LoadWorld (std::string start_map)
                     if (std::find(rooms_done.begin(), rooms_done.end(), room) == rooms_done.end())
                     {
                         LoadMap(temp_room_map, room);
-                        gWorld.bones[gWorld.current_zone].total += (int)temp_room_map.sbones.size();
-                        gWorld.bones[gWorld.current_zone].total += (int)temp_room_map.lbones.size() * LARGE_BONE_WORTH;
+                        gCurrentZoneBoneTotal += (int)temp_room_map.sbones.size();
+                        gCurrentZoneBoneTotal += (int)temp_room_map.lbones.size() * LARGE_BONE_WORTH;
                         FreeMap(temp_room_map);
                         rooms_done.push_back(room);
                     }
@@ -132,8 +133,6 @@ INTERNAL void FreeWorld ()
     FreeMap(gWorld.current_map);
     gWorld.current_map_name.clear();
     gWorld.current_zone.clear();
-    for (auto& it: gWorld.bones) it.second = {};
-    gWorld.bones.clear();
 }
 
 INTERNAL void WorldTransitionIfOutOfBounds ()
@@ -155,6 +154,9 @@ INTERNAL void WorldTransitionIfOutOfBounds ()
 
     if (!need_to_transition) return;
 
+    // Cache the collected bones.
+    CacheMapBones();
+
     // Rooms aren't all single screen so add the player's offset to get the correct room grid-space.
     if (px > WINDOW_SCREEN_W) wx += (int)floor(px / WINDOW_SCREEN_W);
     if (py > WINDOW_SCREEN_H) wy += (int)floor(py / WINDOW_SCREEN_H);
@@ -172,9 +174,11 @@ INTERNAL void WorldTransitionIfOutOfBounds ()
 
     std::string new_map = gWorld.rooms[wy][wx];
 
+    gWorld.current_zone = TokenizeString(new_map, '-')[1];
+    gWorld.current_map_name = new_map;
+
     FreeMap(gWorld.current_map);
     LoadMap(gWorld.current_map, new_map);
-    gWorld.current_map_name = new_map;
 
     // Find the location of the start room on the map.
     bool done = false;
@@ -235,9 +239,4 @@ INTERNAL void WorldTransitionIfOutOfBounds ()
     float cx = roundf(gGameState.dog.pos.x + (DOG_CLIP_W/2) - (WINDOW_SCREEN_W/2));
     float cy = roundf(gGameState.dog.pos.y + (DOG_CLIP_H/2) - (WINDOW_SCREEN_H/2));
     SetCamera(cx,cy);
-}
-
-INTERNAL BoneCounter& GetWorldBoneCounter ()
-{
-    return gWorld.bones[gWorld.current_zone];
 }

@@ -3,12 +3,6 @@
 
 GLOBAL constexpr int LARGE_BONE_WORTH = 10; // Large bones are worth 10 bones!
 
-struct BoneCounter
-{
-	int collected = 0;
-    int total = 0;
-};
-
 struct SmallBone
 {
     std::string id;
@@ -40,5 +34,17 @@ INTERNAL void CreateBigBone(BigBone& bone, float x, float y);
 INTERNAL void DeleteBones();
 INTERNAL void RenderBigBone(BigBone& bone, float dt);
 INTERNAL void RenderSmallBone(SmallBone& bone, float dt);
+
+// COUNTER STUFF
+
+std::vector<std::string> gBoneCollectedIds;
+std::vector<std::string> gTempBoneCollectedIds;
+
+int gCurrentZoneBoneTotal;
+
+INTERNAL int  GetBoneCollectedCount ();
+INTERNAL int  GetBoneTotalCount     ();
+INTERNAL void CacheMapBones         ();
+INTERNAL void RespawnMapBones       ();
 
 #endif

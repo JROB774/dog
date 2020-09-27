@@ -38,7 +38,7 @@
 * [x] Add death state and respawn.
 * [x] Save game data to a file.
 * [x] Pause menu.
-* [ ] Bones should remember they've been collected when transitioning maps, between sessions, etc.
+* [x] Bones should remember they've been collected when transitioning maps, between sessions, etc.
 * [ ] Implement sone enemies.
 
 ## TiKo

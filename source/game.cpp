@@ -43,6 +43,7 @@ INTERNAL void RenderGame (float dt)
 
 INTERNAL void StartGame ()
 {
+    LoadData();
     LoadWorld(START_MAP);
 
     gGameState.dog.state    = DOG_STATE_IDLE;

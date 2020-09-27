@@ -14,6 +14,11 @@ INTERNAL void SaveData ()
         fprintf(save, "player_flip %d\n",      gGameState.dog.start_flip                        );
         fprintf(save, "player_grounded %s\n", (gGameState.dog.start_grounded) ? "true" : "false");
         fprintf(save, "current_map \"%s\"\n",  gWorld.current_map_name.c_str()                  );
+
+        fprintf(save, "bones [\n");
+        for (auto& id: gBoneCollectedIds) fprintf(save, "    \"%s\"\n", id.c_str());
+        fprintf(save, "]\n");
+
         fclose(save);
     }
 }
@@ -40,6 +45,12 @@ INTERNAL void LoadData ()
 
         FreeWorld();
         LoadWorld(save["current_map"].String());
+
+        gBoneCollectedIds.clear();
+        gTempBoneCollectedIds.clear();
+        for (int i=0; i<save["bones"].Size(); ++i) {
+            gBoneCollectedIds.push_back(save["bones"][i].String());
+        }
     }
 }
 
