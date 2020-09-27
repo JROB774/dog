@@ -48,13 +48,21 @@ struct Dog
     float ledge_buffer;
     float jump_height;
 
+    float dead_timer;
     bool dead;
+
+    DogState start_state;
+    Vec2 start_pos,start_vel;
+    Flip start_flip;
+    bool start_grounded;
 };
 
-INTERNAL void CreateDog (Dog& dog, float x, float y);
-INTERNAL void UpdateDog (Dog& dog, float dt);
-INTERNAL void DrawDog   (Dog& dog, float dt);
-INTERNAL void DeleteDog (Dog& dog);
+INTERNAL void CreateDog  (Dog& dog, float x, float y);
+INTERNAL void UpdateDog  (Dog& dog, float dt);
+INTERNAL void DrawDog    (Dog& dog, float dt);
+INTERNAL void KillDog    (Dog& dog);
+INTERNAL void RespawnDog (Dog& dog);
+INTERNAL void DeleteDog  (Dog& dog);
 
 INTERNAL bool DogCollideWithEntity (Dog& dog, float ex, float ey, Rect ebounds);
 

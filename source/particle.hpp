@@ -36,6 +36,7 @@ INTERNAL void CreateParticles (ParticleType type, int minx, int miny, int maxx, 
 
 INTERNAL void UpdateParticles (float dt);
 INTERNAL void DrawParticles   (float dt);
+INTERNAL void ClearParticles  ();
 
 // Create and update functions for the different particle types.
 

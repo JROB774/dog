@@ -12,6 +12,8 @@ GLOBAL constexpr float DOG_BOUNDS_Y = 13;
 GLOBAL constexpr float DOG_BOUNDS_W = 14;
 GLOBAL constexpr float DOG_BOUNDS_H =  7;
 
+GLOBAL constexpr float DOG_DEAD_TIME = 2.0f;
+
 INTERNAL void CreateDog (Dog& dog, float x, float y)
 {
     dog.state = DOG_STATE_IDLE;
@@ -54,13 +56,19 @@ INTERNAL void CreateDog (Dog& dog, float x, float y)
     dog.ledge_buffer = 0.0f;
     dog.jump_height = 0.0f;
 
+    dog.dead_timer = 0.0f;
     dog.dead = false;
+
+    // This gets updated whenever the dog transitions from room-to-room and acts as the respawn point.
+    dog.start_state    = dog.state;
+    dog.start_pos      = dog.pos;
+    dog.start_vel      = dog.vel;
+    dog.start_flip     = dog.flip;
+    dog.start_grounded = dog.grounded;
 }
 
 INTERNAL void UpdateDog (Dog& dog, float dt)
 {
-    if (dog.dead) return;
-
     bool old_grounded = dog.grounded;
     Vec2 old_vel = dog.vel;
 
@@ -74,6 +82,17 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
     dog.jump_press   = (IsKeyPressed(SDL_SCANCODE_Z)  || IsKeyPressed(SDL_SCANCODE_SPACE)  || IsButtonPressed(SDL_CONTROLLER_BUTTON_A));
     dog.jump_release = (IsKeyReleased(SDL_SCANCODE_Z) || IsKeyReleased(SDL_SCANCODE_SPACE) || IsButtonReleased(SDL_CONTROLLER_BUTTON_A));
     dog.action       = (IsKeyPressed(SDL_SCANCODE_X)  || IsButtonPressed(SDL_CONTROLLER_BUTTON_X));
+
+    // If the dog is dead respawn when a button is pressed or after some time.
+    if (dog.dead)
+    {
+        dog.dead_timer -= dt;
+        if (dog.jump_press || dog.action || dog.dead_timer <= 0.0f)
+        {
+            StartFade(FADE_SPECIAL, [](){ RespawnDog(gGameState.dog); });
+        }
+        return;
+    }
 
     // Only if one direction is being pressed will we move the dog.
     if (dog.right != dog.left)
@@ -303,7 +322,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
         if (DogCollideWithEntity(dog, spike.x, spike.y, spike.bounds))
         {
             PlaySound(dog.snd_explode0);
-            dog.dead = true;
+            KillDog(dog);
             CreateParticles(PARTICLE_TYPE_EXPLODE1, (int)dog.pos.x-16,(int)dog.pos.y-16,(int)dog.pos.x+DOG_CLIP_W+16,(int)dog.pos.y+DOG_CLIP_H+16, 4,8);
             CreateParticles(PARTICLE_TYPE_SMOKE, (int)dog.pos.x,(int)dog.pos.y,(int)dog.pos.x+DOG_CLIP_W,(int)dog.pos.y+DOG_CLIP_H, 4,8);
         }
@@ -354,6 +373,28 @@ INTERNAL void DrawDog (Dog& dog, float dt)
 
     SDL_Rect clip = { 0,0,DOG_CLIP_W,DOG_CLIP_H };
     DrawImage(dog.image, dog.pos.x, dog.pos.y, dog.flip, GetAnimationClip(dog.anim[dog.state]));
+}
+
+INTERNAL void KillDog (Dog& dog)
+{
+    dog.dead_timer = DOG_DEAD_TIME;
+    dog.dead = true;
+}
+
+INTERNAL void RespawnDog (Dog& dog)
+{
+    dog.dead     = false;
+    dog.state    = dog.start_state;
+    dog.pos      = dog.start_pos;
+    dog.vel      = dog.start_vel;
+    dog.flip     = dog.start_flip;
+    dog.grounded = dog.start_grounded;
+    // Update camera.
+    float cx = roundf(dog.pos.x + (DOG_CLIP_W/2) - (WINDOW_SCREEN_W/2));
+    float cy = roundf(dog.pos.y + (DOG_CLIP_H/2) - (WINDOW_SCREEN_H/2));
+    SetCamera(cx,cy);
+    // Clear particles.
+    ClearParticles();
 }
 
 INTERNAL void DeleteDog (Dog& dog)

@@ -24,6 +24,7 @@ INTERNAL void QuitApplication ()
 
 INTERNAL void UpdateApplication (float dt)
 {
+    /*
     // Debug reset for the game if either F5 on keyboard or both shoulder buttons on gamepad are pressed.
     #if defined(BUILD_DEBUG)
     if (IsKeyPressed(SDL_SCANCODE_F5) || (IsButtonDown(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) && IsButtonDown(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)))
@@ -32,6 +33,7 @@ INTERNAL void UpdateApplication (float dt)
         gWindow.reset = true;
     }
     #endif
+    */
 
     if (!IsFading())
     {

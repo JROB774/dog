@@ -97,6 +97,11 @@ INTERNAL void DrawParticles (float dt)
     }
 }
 
+INTERNAL void ClearParticles ()
+{
+    gParticleSystem.particles.clear();
+}
+
 // PARTICLE_TYPE_TEST
 
 INTERNAL void ParticleCreateTest (Particle& particle)

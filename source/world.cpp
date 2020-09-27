@@ -214,11 +214,16 @@ INTERNAL void WorldTransitionIfOutOfBounds ()
         py = 0;
     }
 
-    gGameState.dog.pos.x = (float)px;
-    gGameState.dog.pos.y = (float)py;
+    gGameState.dog.pos = { (float)px, (float)py };
+
+    gGameState.dog.start_state    = gGameState.dog.state;
+    gGameState.dog.start_pos      = gGameState.dog.pos;
+    gGameState.dog.start_vel      = gGameState.dog.vel;
+    gGameState.dog.start_flip     = gGameState.dog.flip;
+    gGameState.dog.start_grounded = gGameState.dog.grounded;
 
     // Clear the current particles when we go to a new map.
-    gParticleSystem.particles.clear();
+    ClearParticles();
 
     // Move the camera to the dog's new position in the world.
     float cx = roundf(gGameState.dog.pos.x + (DOG_CLIP_W/2) - (WINDOW_SCREEN_W/2));
