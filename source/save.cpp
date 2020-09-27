@@ -57,4 +57,8 @@ INTERNAL void LoadData ()
 INTERNAL void DeleteData ()
 {
     std::filesystem::remove(SAVE_FILE);
+
+    gBoneCollectedIds.clear();
+    gTempBoneCollectedIds.clear();
+    gCurrentZoneBoneTotal = 0;
 }
