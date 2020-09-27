@@ -6,7 +6,7 @@ INTERNAL void InitGame ()
     InitBones();
     InitParticleSystem();
     CreateDog(gGameState.dog, START_X, START_Y);
-    LoadWorld();
+    LoadWorld(START_MAP);
 }
 
 INTERNAL void QuitGame ()
@@ -44,9 +44,11 @@ INTERNAL void RenderGame (float dt)
 INTERNAL void StartGame ()
 {
     gAppState.state = APP_STATE_GAME;
+    LoadData();
 }
 
 INTERNAL void EndGame ()
 {
     gAppState.state = APP_STATE_MENU;
+    SaveData();
 }

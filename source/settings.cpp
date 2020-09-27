@@ -17,12 +17,15 @@ INTERNAL void SaveSettings ()
 
 INTERNAL void LoadSettings ()
 {
-    GonObject settings = GonObject::Load(SETTINGS_FILE);
-    gSettings.window_width = settings["window_width"].Int(640);
-    gSettings.window_height = settings["window_height"].Int(480);
-    gSettings.fullscreen = settings["fullscreen"].Bool(false);
-    gSettings.sound = settings["sound"].Bool(true);
-    gSettings.music = settings["music"].Bool(true);
+    if (std::filesystem::exists(SETTINGS_FILE))
+    {
+        GonObject settings = GonObject::Load(SETTINGS_FILE);
+        gSettings.window_width = settings["window_width"].Int(640);
+        gSettings.window_height = settings["window_height"].Int(480);
+        gSettings.fullscreen = settings["fullscreen"].Bool(false);
+        gSettings.sound = settings["sound"].Bool(true);
+        gSettings.music = settings["music"].Bool(true);
+    }
 }
 
 INTERNAL void ResetSettings ()

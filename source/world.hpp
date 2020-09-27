@@ -21,12 +21,13 @@ GLOBAL struct World
     int current_map_x; // In screens!
     int current_map_y; // In screens!
     // Maps bone counters to the different zones.
+    std::string current_map_name;
     std::string current_zone;
     std::map<std::string, BoneCounter> bones;
 
 } gWorld;
 
-INTERNAL void LoadWorld ();
+INTERNAL void LoadWorld (std::string start_map);
 INTERNAL void FreeWorld ();
 
 INTERNAL void WorldTransitionIfOutOfBounds ();

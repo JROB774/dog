@@ -1,5 +1,5 @@
 // CSV parsing taken from here <https://stackoverflow.com/a/30338543>
-INTERNAL void LoadWorld ()
+INTERNAL void LoadWorld (std::string start_map)
 {
     enum class CSVState { UnquotedField, QuotedField, QuotedQuote };
 
@@ -62,7 +62,8 @@ INTERNAL void LoadWorld ()
 
     /////////////////////////////////////////////////
 
-    LoadMap(gWorld.current_map, START_MAP);
+    LoadMap(gWorld.current_map, start_map);
+    gWorld.current_map_name = start_map;
 
     // Find the location of the start room on the map.
     bool done = false;
@@ -70,7 +71,7 @@ INTERNAL void LoadWorld ()
     {
         for (int rx=0; rx<gWorld.rooms[ry].size(); ++rx)
         {
-            if (gWorld.rooms[ry][rx] == START_MAP)
+            if (gWorld.rooms[ry][rx] == start_map)
             {
                 gWorld.current_map_x = rx;
                 gWorld.current_map_y = ry;
@@ -83,7 +84,7 @@ INTERNAL void LoadWorld ()
 
     // Extract the current zone.
     {
-        auto tokens = TokenizeString(START_MAP, '-');
+        auto tokens = TokenizeString(start_map, '-');
         ASSERT(tokens.size() == 3); // Tileset-Zone-Map
         gWorld.current_zone = tokens[1];
     }
@@ -115,7 +116,7 @@ INTERNAL void LoadWorld ()
         }
     }
 
-    // printf("World: %s (%d %d)\n", START_MAP, gWorld.current_map_x, gWorld.current_map_y);
+    // printf("World: %s (%d %d)\n", start_map, gWorld.current_map_x, gWorld.current_map_y);
 
     /////////////////////////////////////////////////
 
@@ -129,6 +130,7 @@ INTERNAL void FreeWorld ()
 {
     gWorld.rooms.clear();
     FreeMap(gWorld.current_map);
+    gWorld.current_map_name.clear();
     gWorld.current_zone.clear();
     for (auto& it: gWorld.bones) it.second = {};
     gWorld.bones.clear();
@@ -172,6 +174,7 @@ INTERNAL void WorldTransitionIfOutOfBounds ()
 
     FreeMap(gWorld.current_map);
     LoadMap(gWorld.current_map, new_map);
+    gWorld.current_map_name = new_map;
 
     // Find the location of the start room on the map.
     bool done = false;
@@ -224,6 +227,9 @@ INTERNAL void WorldTransitionIfOutOfBounds ()
 
     // Clear the current particles when we go to a new map.
     ClearParticles();
+
+    // Auto-save game data whenever there's a room transition.
+    SaveData();
 
     // Move the camera to the dog's new position in the world.
     float cx = roundf(gGameState.dog.pos.x + (DOG_CLIP_W/2) - (WINDOW_SCREEN_W/2));

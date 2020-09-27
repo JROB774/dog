@@ -18,6 +18,7 @@
 #include <cstring>
 #include <ctime>
 
+#include <filesystem>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -45,6 +46,7 @@
 #include "input.hpp"
 #include "mixer.hpp"
 #include "fade.hpp"
+#include "save.hpp"
 #include "animation.hpp"
 #include "particle.hpp"
 #include "spike.hpp"
@@ -72,6 +74,7 @@
 #include "input.cpp"
 #include "mixer.cpp"
 #include "fade.cpp"
+#include "save.cpp"
 #include "animation.cpp"
 #include "particle.cpp"
 #include "spike.cpp"
