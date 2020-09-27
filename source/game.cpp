@@ -20,6 +20,8 @@ INTERNAL void QuitGame ()
 
 INTERNAL void UpdateGame (float dt)
 {
+    if (IsKeyPressed(SDL_SCANCODE_ESCAPE) || IsButtonPressed(SDL_CONTROLLER_BUTTON_START)) Pause();
+
     WorldTransitionIfOutOfBounds();
 	UpdateDog(gGameState.dog, dt);
     UpdateParticles(dt);
@@ -37,4 +39,14 @@ INTERNAL void RenderGame (float dt)
     DrawMapFront(gWorld.current_map);
     EndCamera();
     DrawGui(dt);
+}
+
+INTERNAL void StartGame ()
+{
+    gAppState.state = APP_STATE_GAME;
+}
+
+INTERNAL void EndGame ()
+{
+    gAppState.state = APP_STATE_MENU;
 }

@@ -57,6 +57,7 @@
 #include "camera.hpp"
 #include "menu.hpp"
 #include "game.hpp"
+#include "pause.hpp"
 #include "application.hpp"
 
 // Source includes.
@@ -83,6 +84,7 @@
 #include "camera.cpp"
 #include "menu.cpp"
 #include "game.cpp"
+#include "pause.cpp"
 #include "application.cpp"
 
 #endif /* MAIN_HPP */

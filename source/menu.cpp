@@ -74,7 +74,7 @@ INTERNAL void UpdateMenu (float dt)
                 PlaySound(gMenuState.snd_select);
                 switch (gMenuState.selected)
                 {
-                    case (MENU_ITEM_PLAYGAME): StartFade(FADE_SPECIAL, [](){ gAppState.state = APP_STATE_GAME; }); break;
+                    case (MENU_ITEM_PLAYGAME): StartFade(FADE_SPECIAL, [](){ StartGame(); }); break;
                     case (MENU_ITEM_CONTROLS): gMenuState.mode = MENU_MODE_CONTROLS; break;
                     case (MENU_ITEM_SETTINGS): gMenuState.mode = MENU_MODE_SETTINGS; gMenuState.selected = 0; break;
                     case (MENU_ITEM_EXITGAME): gWindow.running = false; break;
@@ -85,7 +85,6 @@ INTERNAL void UpdateMenu (float dt)
                 PlaySound(gMenuState.snd_select);
                 gWindow.running = false;
             }
-
         } break;
         case (MENU_MODE_CONTROLS):
         {
@@ -156,10 +155,10 @@ INTERNAL void RenderMenu (float dt)
 
             DrawImage(gMenuState.title, tx,ty);
 
-            std::string play_text = "PLAY GAME";
+            std::string play_text     = "PLAY GAME";
             std::string controls_text = "CONTROLS";
-            std::string options_text = "OPTIONS";
-            std::string exit_text = "EXIT GAME";
+            std::string options_text  = "OPTIONS";
+            std::string exit_text     = "EXIT GAME";
 
             ty = WINDOW_SCREEN_H - 48;
 
