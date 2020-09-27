@@ -11,6 +11,7 @@ struct BoneCounter
 
 struct SmallBone
 {
+    std::string id;
     float x, y;
     float yoff;
 	Rect bounds = {3,3,10,10};
@@ -20,6 +21,7 @@ struct SmallBone
 
 struct BigBone
 {
+    std::string id;
     float x, y;
     float yoff;
 	Rect bounds = {4,4,16,16};
@@ -32,14 +34,11 @@ GLOBAL Image big_bone_image;
 GLOBAL Sound small_bone_sound;
 GLOBAL Sound big_bone_sound;
 
-void InitBones();
-void CreateSmallBone(SmallBone& _bone, float _x, float _y);
-void CreateBigBone(BigBone& _bone, float _x, float _y);
-// bool SmallBoneCollision(Rect _bounds, SmallBone _bone);
-// bool BigBoneCollision(Rect _bounds, BigBone _bone);
-// void RenderBoneCounter(int _x, int _y, BoneCounter _bonecounter);
-void DeleteBones();
-void RenderBigBone(BigBone& _bone, float dt);
-void RenderSmallBone(SmallBone& _bone, float dt);
+INTERNAL void InitBones();
+INTERNAL void CreateSmallBone(SmallBone& bone, float x, float y);
+INTERNAL void CreateBigBone(BigBone& bone, float x, float y);
+INTERNAL void DeleteBones();
+INTERNAL void RenderBigBone(BigBone& bone, float dt);
+INTERNAL void RenderSmallBone(SmallBone& bone, float dt);
 
 #endif

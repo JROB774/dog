@@ -1,4 +1,4 @@
-void InitBones()
+INTERNAL void InitBones()
 {
 	LoadImage(small_bone_image, "sbone.bmp");
 	LoadImage(big_bone_image, "lbone.bmp");
@@ -6,75 +6,44 @@ void InitBones()
 	LoadSound(big_bone_sound, "lbone.wav");
 }
 
-/*
-bool SmallBoneCollision(Rect _bounds, SmallBone _bone)
+INTERNAL void CreateSmallBone(SmallBone& bone, float x, float y)
 {
-	if(!_bone.dead){
-		if((_bounds.x + _bounds.w > _bone.bounds.x) && (_bounds.y +_bounds.h > _bone.bounds.y) &&
-			(_bounds.x < _bone.x + _bone.bounds.x + _bone.bounds.w) && (_bounds.y < _bone.y + _bone.bounds.y + _bone.bounds.h)){
-				return true;
-		}
-	}
-	return false;
+	bone.id = gWorld.current_map_name + "-" + std::to_string((int)x) + "-" + std::to_string((int)y) + "-s";
+	bone.x = x;
+	bone.y = y;
+	bone.yoff = 0;
+	bone.dead = false;
+	bone.timer = 0.0f;
 }
 
-bool BigBoneCollision(Rect _bounds, BigBone _bone)
+INTERNAL void CreateBigBone(BigBone& bone, float x, float y)
 {
-	if(!_bone.dead){
-		if((_bounds.x + _bounds.w > _bone.bounds.x) && (_bounds.y +_bounds.h > _bone.bounds.y) &&
-			(_bounds.x < _bone.x + _bone.bounds.x + _bone.bounds.w) && (_bounds.y < _bone.y + _bone.bounds.y + _bone.bounds.h)){
-				return true;
-		}
-	}
-	return false;
-}
-*/
-
-void CreateSmallBone(SmallBone& _bone, float _x, float _y)
-{
-	_bone.x = _x;
-	_bone.y = _y;
-	_bone.yoff = 0;
-	// _bone.bounds = {_x, _y, 10, 10};
-	_bone.dead = false;
-	_bone.timer = 0.0f;
-}
-
-void CreateBigBone(BigBone& _bone, float _x, float _y)
-{
-	_bone.x = _x - 4;
-	_bone.y = _y - 4;
-	_bone.yoff = 0;
+	bone.id = gWorld.current_map_name + "-" + std::to_string((int)x) + "-" + std::to_string((int)y) + "-l";
+	bone.x = x-4;
+	bone.y = y-4;
+	bone.yoff = 0;
 	// _bone.bounds = {_x, _y, 16, 16};
-	_bone.dead = false;
-	_bone.timer = 0.0f;
+	bone.dead = false;
+	bone.timer = 0.0f;
 }
 
-void RenderBigBone(BigBone& _bone, float dt)
+INTERNAL void RenderBigBone(BigBone& bone, float dt)
 {
-	if (_bone.dead) return;
-	_bone.timer += dt;
-	_bone.yoff = SinRange(0, 4, _bone.timer*5);
-	DrawImage(big_bone_image, _bone.x, _bone.y-_bone.yoff);
+	if (bone.dead) return;
+	bone.timer += dt;
+	bone.yoff = SinRange(0, 4, bone.timer*5);
+	DrawImage(big_bone_image, bone.x, bone.y-bone.yoff);
 }
 
-void RenderSmallBone(SmallBone& _bone, float dt)
+INTERNAL void RenderSmallBone(SmallBone& bone, float dt)
 {
-	if (_bone.dead) return;
-	_bone.timer += dt;
-	_bone.yoff = SinRange(0, 2, _bone.timer*5);
-	DrawImage(small_bone_image, _bone.x, _bone.y-_bone.yoff);
+	if (bone.dead) return;
+	bone.timer += dt;
+	bone.yoff = SinRange(0, 2, bone.timer*5);
+	DrawImage(small_bone_image, bone.x, bone.y-bone.yoff);
 }
 
-/*
-void RenderBoneCounter(int _x, int _y, BoneCounter _bonecounter)
-{
-	DrawFont(std::to_string(_bonecounter.small_bones_left),10, 10);
-	DrawFont(std::to_string(_bonecounter.large_bones_left),10, 52);
-}
-*/
-
-void DeleteBones()
+INTERNAL void DeleteBones()
 {
 	FreeImage(small_bone_image);
 	FreeImage(big_bone_image);
