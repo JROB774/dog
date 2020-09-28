@@ -294,6 +294,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
         {
             if (DogCollideWithEntity(dog, lbone.x, lbone.y, lbone.bounds))
             {
+                CreateParticles(PARTICLE_TYPE_LBONE, (int)lbone.x+12,(int)lbone.y+12,(int)lbone.x+12,(int)lbone.y+12, 1);
                 CreateParticles(PARTICLE_TYPE_SPEC, (int)lbone.x+12,(int)lbone.y+12,(int)lbone.x+12,(int)lbone.y+12, 40,72, 1.5f);
                 gTempBoneCollectedIds.push_back(lbone.id);
                 lbone.dead = true;

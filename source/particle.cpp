@@ -226,3 +226,15 @@ INTERNAL void ParticleUpdateSBone (Particle& particle, float dt)
 {
     if (IsAnimationDone(particle.anim)) particle.dead = true;
 }
+
+// PARTICLE_TYPE_LBONE
+
+INTERNAL void ParticleCreateLBone (Particle& particle)
+{
+    // Nothing...
+}
+
+INTERNAL void ParticleUpdateLBone (Particle& particle, float dt)
+{
+    if (IsAnimationDone(particle.anim)) particle.dead = true;
+}
