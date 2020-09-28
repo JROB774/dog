@@ -17,6 +17,7 @@ GLOBAL struct MenuState
     Image help;
     Image caret;
 
+    Animation help_anim;
     Animation caret_anim;
 
     Sound snd_change;

@@ -27,6 +27,7 @@ INTERNAL void InitMenu ()
     LoadImage(gMenuState.help, "help.bmp");
     LoadImage(gMenuState.caret, "caret.bmp");
 
+    LoadAnimation(gMenuState.help_anim, "help.anim");
     LoadAnimation(gMenuState.caret_anim, "caret.anim");
 
     LoadSound(gMenuState.snd_change, "change.wav");
@@ -38,6 +39,7 @@ INTERNAL void QuitMenu ()
     FreeSound(gMenuState.snd_change);
     FreeSound(gMenuState.snd_select);
 
+    FreeAnimation(gMenuState.help_anim);
     FreeAnimation(gMenuState.caret_anim);
 
     FreeImage(gMenuState.title);
@@ -145,6 +147,7 @@ INTERNAL void RenderMenu (float dt)
     DrawFill(0.0f,0.0f,WINDOW_SCREEN_W,WINDOW_SCREEN_H, MakeColor(1,1,1));
 
     UpdateAnimation(gMenuState.caret_anim, dt);
+    UpdateAnimation(gMenuState.help_anim, dt);
 
     float tx,ty;
 
@@ -186,10 +189,10 @@ INTERNAL void RenderMenu (float dt)
         } break;
         case (MENU_MODE_CONTROLS):
         {
-            tx = roundf((float)WINDOW_SCREEN_W - gMenuState.help.w) / 2;
-            ty = roundf((float)WINDOW_SCREEN_H - gMenuState.help.h) / 2;
+            tx = roundf((float)WINDOW_SCREEN_W - (gMenuState.help.w/2)) / 2;
+            ty = roundf((float)WINDOW_SCREEN_H - (gMenuState.help.h  )) / 2;
 
-            DrawImage(gMenuState.help, tx,ty);
+            DrawImage(gMenuState.help, tx,ty, FLIP_NONE, GetAnimationClip(gMenuState.help_anim));
         } break;
         case (MENU_MODE_SETTINGS):
         {
