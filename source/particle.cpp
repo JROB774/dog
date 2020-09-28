@@ -286,7 +286,7 @@ INTERNAL void ParticleUpdateSBreak (Particle& particle, float dt)
     particle.vel.y += GRAVITY * 0.5f;
 
     Vec2 contact_normal = { 0,0 };
-    if (ParticleAndMapCollision(particle.pos,{ 3,3,2,2 },particle.vel, gWorld.current_map, contact_normal, dt))
+    if (ParticleAndMapCollision(particle.pos,{ 4,4,1,1 },particle.vel, gWorld.current_map, contact_normal, dt))
     {
         if (contact_normal.x != 0) { particle.vel.x *= contact_normal.x; particle.vel.x *= 0.6f; particle.extra1--; }
         if (contact_normal.y != 0) { particle.vel.y *= contact_normal.y; particle.vel.y *= 0.6f; particle.extra1--; }
@@ -314,7 +314,7 @@ INTERNAL void ParticleUpdateMBreak (Particle& particle, float dt)
     particle.vel.y += GRAVITY * 0.5f;
 
     Vec2 contact_normal = { 0,0 };
-    if (ParticleAndMapCollision(particle.pos,{ 3,3,2,2 },particle.vel, gWorld.current_map, contact_normal, dt))
+    if (ParticleAndMapCollision(particle.pos,{ 4,4,1,1 },particle.vel, gWorld.current_map, contact_normal, dt))
     {
         if (contact_normal.x != 0) { particle.vel.x *= contact_normal.x; particle.vel.x *= 0.6f; particle.extra1--; }
         if (contact_normal.y != 0) { particle.vel.y *= contact_normal.y; particle.vel.y *= 0.6f; particle.extra1--; }
@@ -339,7 +339,7 @@ INTERNAL void ParticleUpdateLBreak (Particle& particle, float dt)
     particle.vel.y += GRAVITY * 0.5f;
 
     Vec2 contact_normal = { 0,0 };
-    if (ParticleAndMapCollision(particle.pos,{ 3,3,2,2 },particle.vel, gWorld.current_map, contact_normal, dt))
+    if (ParticleAndMapCollision(particle.pos,{ 4,4,1,1 },particle.vel, gWorld.current_map, contact_normal, dt))
     {
         CreateParticles(PARTICLE_TYPE_SBREAK, (int)particle.pos.x+4,(int)particle.pos.y+4,(int)particle.pos.x+4,(int)particle.pos.y+4, 2,3);
         particle.dead = true;
