@@ -86,7 +86,7 @@ INTERNAL void LoadWorld (std::string start_map)
     {
         auto tokens = TokenizeString(start_map, '-');
         ASSERT(tokens.size() == 3); // Tileset-Zone-Map
-        gWorld.current_zone = tokens[1];
+        gWorld.current_zone = tokens[0];
     }
 
     // Load all the bones in the current zone for the counter.
@@ -102,7 +102,7 @@ INTERNAL void LoadWorld (std::string start_map)
             {
                 auto tokens = TokenizeString(room, '-');
                 ASSERT(tokens.size() == 3); // Tileset-Zone-Map
-                if (tokens[1] == gWorld.current_zone)
+                if (tokens[0] == gWorld.current_zone)
                 {
                     if (std::find(rooms_done.begin(), rooms_done.end(), room) == rooms_done.end())
                     {

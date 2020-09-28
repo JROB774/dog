@@ -36,7 +36,7 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
     map.has_background = std::filesystem::exists("assets/" + background_file);
     if (map.has_background) LoadImage(map.background, background_file.c_str());
 
-    std::string tileset_file = "t" + tokens[0] + ".bmp";
+    std::string tileset_file = "t" + tokens[1] + ".bmp";
     LoadImage(map.tileset, tileset_file.c_str());
 
     file_name = "assets/maps/" + file_name;
