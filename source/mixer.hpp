@@ -13,4 +13,10 @@ INTERNAL void LoadSound (Sound& sound, std::string file_name);
 INTERNAL void FreeSound (Sound& sound);
 INTERNAL void PlaySound (Sound& sound, int loops = 0);
 
+INTERNAL void SetSound  (bool enable);
+INTERNAL bool IsSoundOn ();
+
+INTERNAL void SetMusic  (bool enable);
+INTERNAL bool IsMusicOn ();
+
 #endif /* MIXER_HPP */

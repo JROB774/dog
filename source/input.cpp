@@ -10,6 +10,11 @@ GLOBAL struct InputState
     U8 previous_button_state[SDL_CONTROLLER_BUTTON_MAX];
     U8 current_button_state[SDL_CONTROLLER_BUTTON_MAX];
 
+    S16 previous_left_stick_x, previous_left_stick_y;
+    S16 current_left_stick_x, current_left_stick_y;
+    S16 previous_right_stick_x, previous_right_stick_y;
+    S16 current_right_stick_x, current_right_stick_y;
+
 } gInput;
 
 INTERNAL void RemoveGamepad ()
@@ -18,7 +23,7 @@ INTERNAL void RemoveGamepad ()
     {
         SDL_GameControllerClose(gInput.gamepad);
         gInput.gamepad = NULL;
-        printf("Controller removed!\n");
+        // printf("Controller removed!\n");
     }
 }
 
@@ -33,7 +38,7 @@ INTERNAL void AddGamepad ()
             gInput.gamepad = SDL_GameControllerOpen(i);
             if (gInput.gamepad)
             {
-                printf("Controller added!\n");
+                // printf("Controller added!\n");
                 break;
             }
         }
@@ -64,11 +69,21 @@ INTERNAL void UpdateInputState ()
         {
             gInput.current_button_state[i] = SDL_GameControllerGetButton(gInput.gamepad, (SDL_GameControllerButton)i);
         }
+
+        gInput.previous_left_stick_x = gInput.current_left_stick_x, gInput.previous_left_stick_y = gInput.current_left_stick_y;
+        gInput.current_left_stick_x = GetAxis(SDL_CONTROLLER_AXIS_LEFTX), gInput.current_left_stick_y = GetAxis(SDL_CONTROLLER_AXIS_LEFTY);
+        gInput.previous_right_stick_x = gInput.current_right_stick_x, gInput.previous_right_stick_y = gInput.current_right_stick_y;
+        gInput.current_right_stick_x = GetAxis(SDL_CONTROLLER_AXIS_RIGHTX), gInput.current_right_stick_y = GetAxis(SDL_CONTROLLER_AXIS_RIGHTY);
     }
     else
     {
         memset(gInput.previous_button_state, 0, sizeof(gInput.previous_button_state));
         memset(gInput.current_button_state, 0, sizeof(gInput.current_button_state));
+
+        gInput.previous_left_stick_x = 0, gInput.previous_left_stick_y = 0;
+        gInput.current_left_stick_x = 0, gInput.current_left_stick_y = 0;
+        gInput.previous_right_stick_x = 0, gInput.previous_right_stick_y = 0;
+        gInput.current_right_stick_x = 0, gInput.current_right_stick_y = 0;
     }
 }
 
@@ -85,24 +100,28 @@ INTERNAL void HandleInputEvents (SDL_Event event)
 
 INTERNAL bool IsKeyDown (SDL_Scancode code)
 {
+    if (IsFading()) return false;
     if (code < 0 || code > SDL_NUM_SCANCODES) return false;
     return (gInput.current_key_state[code] != 0);
 }
 
 INTERNAL bool IsKeyUp (SDL_Scancode code)
 {
+    if (IsFading()) return false;
     if (code < 0 || code > SDL_NUM_SCANCODES) return false;
     return (gInput.current_key_state[code] == 0);
 }
 
 INTERNAL bool IsKeyPressed (SDL_Scancode code)
 {
+    if (IsFading()) return false;
     if (code < 0 || code > SDL_NUM_SCANCODES) return false;
     return (gInput.current_key_state[code] == 1 && gInput.previous_key_state[code] == 0);
 }
 
 INTERNAL bool IsKeyReleased (SDL_Scancode code)
 {
+    if (IsFading()) return false;
     if(code < 0 || code > SDL_NUM_SCANCODES) return false;
     return (gInput.current_key_state[code] == 0 && gInput.previous_key_state[code] == 1);
 }
@@ -111,6 +130,7 @@ INTERNAL bool IsKeyReleased (SDL_Scancode code)
 
 INTERNAL bool IsButtonDown (SDL_GameControllerButton button)
 {
+    if (IsFading()) return false;
     if (button == SDL_CONTROLLER_BUTTON_INVALID) return false;
     if (button < 0 || button > SDL_CONTROLLER_BUTTON_MAX) return false;
     if (!gInput.gamepad) return false;
@@ -119,6 +139,7 @@ INTERNAL bool IsButtonDown (SDL_GameControllerButton button)
 
 INTERNAL bool IsButtonUp (SDL_GameControllerButton button)
 {
+    if (IsFading()) return false;
     if (button == SDL_CONTROLLER_BUTTON_INVALID) return false;
     if (button < 0 || button > SDL_CONTROLLER_BUTTON_MAX) return false;
     if (!gInput.gamepad) return false;
@@ -127,6 +148,7 @@ INTERNAL bool IsButtonUp (SDL_GameControllerButton button)
 
 INTERNAL bool IsButtonPressed (SDL_GameControllerButton button)
 {
+    if (IsFading()) return false;
     if (button == SDL_CONTROLLER_BUTTON_INVALID) return false;
     if (button < 0 || button > SDL_CONTROLLER_BUTTON_MAX) return false;
     if (!gInput.gamepad) return false;
@@ -135,6 +157,7 @@ INTERNAL bool IsButtonPressed (SDL_GameControllerButton button)
 
 INTERNAL bool IsButtonReleased (SDL_GameControllerButton button)
 {
+    if (IsFading()) return false;
     if (button == SDL_CONTROLLER_BUTTON_INVALID) return false;
     if (button < 0 || button > SDL_CONTROLLER_BUTTON_MAX) return false;
     if (!gInput.gamepad) return false;
@@ -143,6 +166,7 @@ INTERNAL bool IsButtonReleased (SDL_GameControllerButton button)
 
 INTERNAL S16 GetAxis (SDL_GameControllerAxis axis)
 {
+    if (IsFading()) return 0;
     if (axis == SDL_CONTROLLER_AXIS_INVALID) return 0;
     if (axis < 0 || axis > SDL_CONTROLLER_AXIS_MAX) return 0;
     if (!gInput.gamepad) return 0;
@@ -151,50 +175,116 @@ INTERNAL S16 GetAxis (SDL_GameControllerAxis axis)
 
 INTERNAL bool IsRightStickUp ()
 {
+    if (IsFading()) return false;
     if (!gInput.gamepad) return false;
     S16 y = GetAxis(SDL_CONTROLLER_AXIS_RIGHTY);
     return (y < -INPUT_GAMEPAD_STICK_DEADZONE);
 }
 INTERNAL bool IsRightStickRight ()
 {
+    if (IsFading()) return false;
     if (!gInput.gamepad) return false;
     S16 x = GetAxis(SDL_CONTROLLER_AXIS_RIGHTX);
     return (x > INPUT_GAMEPAD_STICK_DEADZONE);
 }
 INTERNAL bool IsRightStickDown ()
 {
+    if (IsFading()) return false;
     if (!gInput.gamepad) return false;
     S16 y = GetAxis(SDL_CONTROLLER_AXIS_RIGHTY);
     return (y > INPUT_GAMEPAD_STICK_DEADZONE);
 }
 INTERNAL bool IsRightStickLeft ()
 {
+    if (IsFading()) return false;
     if (!gInput.gamepad) return false;
     S16 x = GetAxis(SDL_CONTROLLER_AXIS_RIGHTX);
     return (x < -INPUT_GAMEPAD_STICK_DEADZONE);
 }
 
+INTERNAL bool IsRightStickUpPressed ()
+{
+    if (IsFading()) return false;
+    if (!gInput.gamepad) return false;
+    return (gInput.previous_right_stick_y >= -INPUT_GAMEPAD_STICK_DEADZONE &&
+            gInput.current_right_stick_y < -INPUT_GAMEPAD_STICK_DEADZONE);
+}
+INTERNAL bool IsRightStickRightPressed ()
+{
+    if (IsFading()) return false;
+    if (!gInput.gamepad) return false;
+    return (gInput.previous_right_stick_x <= INPUT_GAMEPAD_STICK_DEADZONE &&
+            gInput.current_right_stick_x > INPUT_GAMEPAD_STICK_DEADZONE);
+}
+INTERNAL bool IsRightStickDownPressed ()
+{
+    if (IsFading()) return false;
+    if (!gInput.gamepad) return false;
+    return (gInput.previous_right_stick_y <= INPUT_GAMEPAD_STICK_DEADZONE &&
+            gInput.current_right_stick_y > INPUT_GAMEPAD_STICK_DEADZONE);
+}
+INTERNAL bool IsRightStickLeftPressed ()
+{
+    if (IsFading()) return false;
+    if (!gInput.gamepad) return false;
+    return (gInput.previous_right_stick_x >= -INPUT_GAMEPAD_STICK_DEADZONE &&
+            gInput.current_right_stick_x < -INPUT_GAMEPAD_STICK_DEADZONE);
+}
+
 INTERNAL bool IsLeftStickUp ()
 {
+    if (IsFading()) return false;
     if (!gInput.gamepad) return false;
     S16 y = GetAxis(SDL_CONTROLLER_AXIS_LEFTY);
     return (y < -INPUT_GAMEPAD_STICK_DEADZONE);
 }
 INTERNAL bool IsLeftStickRight ()
 {
+    if (IsFading()) return false;
     if (!gInput.gamepad) return false;
     S16 x = GetAxis(SDL_CONTROLLER_AXIS_LEFTX);
     return (x > INPUT_GAMEPAD_STICK_DEADZONE);
 }
 INTERNAL bool IsLeftStickDown ()
 {
+    if (IsFading()) return false;
     if (!gInput.gamepad) return false;
     S16 y = GetAxis(SDL_CONTROLLER_AXIS_LEFTY);
     return (y > INPUT_GAMEPAD_STICK_DEADZONE);
 }
 INTERNAL bool IsLeftStickLeft ()
 {
+    if (IsFading()) return false;
     if (!gInput.gamepad) return false;
     S16 x = GetAxis(SDL_CONTROLLER_AXIS_LEFTX);
     return (x < -INPUT_GAMEPAD_STICK_DEADZONE);
+}
+
+INTERNAL bool IsLeftStickUpPressed ()
+{
+    if (IsFading()) return false;
+    if (!gInput.gamepad) return false;
+    return (gInput.previous_left_stick_y >= -INPUT_GAMEPAD_STICK_DEADZONE &&
+            gInput.current_left_stick_y < -INPUT_GAMEPAD_STICK_DEADZONE);
+}
+INTERNAL bool IsLeftStickRightPressed ()
+{
+    if (IsFading()) return false;
+    if (!gInput.gamepad) return false;
+    return (gInput.previous_left_stick_x <= INPUT_GAMEPAD_STICK_DEADZONE &&
+            gInput.current_left_stick_x > INPUT_GAMEPAD_STICK_DEADZONE);
+}
+INTERNAL bool IsLeftStickDownPressed ()
+{
+    if (IsFading()) return false;
+    if (!gInput.gamepad) return false;
+    return (gInput.previous_left_stick_y <= INPUT_GAMEPAD_STICK_DEADZONE &&
+            gInput.current_left_stick_y > INPUT_GAMEPAD_STICK_DEADZONE);
+}
+INTERNAL bool IsLeftStickLeftPressed ()
+{
+    if (IsFading()) return false;
+    if (!gInput.gamepad) return false;
+    return (gInput.previous_left_stick_x >= -INPUT_GAMEPAD_STICK_DEADZONE &&
+            gInput.current_left_stick_x < -INPUT_GAMEPAD_STICK_DEADZONE);
 }

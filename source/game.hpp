@@ -5,9 +5,6 @@ GLOBAL constexpr float GRAVITY = 32.0f;
 
 GLOBAL struct GameState
 {
-    Font lfont;
-    Font sfont;
-
     Dog dog;
 
 } gGameState;
@@ -16,5 +13,7 @@ INTERNAL void InitGame   ();
 INTERNAL void QuitGame   ();
 INTERNAL void UpdateGame (float dt);
 INTERNAL void RenderGame (float dt);
+INTERNAL void StartGame  ();
+INTERNAL void EndGame    ();
 
 #endif /* GAME_HPP */

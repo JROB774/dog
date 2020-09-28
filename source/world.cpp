@@ -1,5 +1,5 @@
 // CSV parsing taken from here <https://stackoverflow.com/a/30338543>
-INTERNAL void LoadWorld ()
+INTERNAL void LoadWorld (std::string start_map)
 {
     enum class CSVState { UnquotedField, QuotedField, QuotedQuote };
 
@@ -60,7 +60,10 @@ INTERNAL void LoadWorld ()
 
     csv.close();
 
-    LoadMap(gWorld.current_map, START_MAP);
+    /////////////////////////////////////////////////
+
+    gWorld.current_map_name = start_map;
+    LoadMap(gWorld.current_map, start_map);
 
     // Find the location of the start room on the map.
     bool done = false;
@@ -68,7 +71,7 @@ INTERNAL void LoadWorld ()
     {
         for (int rx=0; rx<gWorld.rooms[ry].size(); ++rx)
         {
-            if (gWorld.rooms[ry][rx] == START_MAP)
+            if (gWorld.rooms[ry][rx] == start_map)
             {
                 gWorld.current_map_x = rx;
                 gWorld.current_map_y = ry;
@@ -79,7 +82,44 @@ INTERNAL void LoadWorld ()
         if (done) break;
     }
 
-    // printf("World: %s (%d %d)\n", START_MAP, gWorld.current_map_x, gWorld.current_map_y);
+    // Extract the current zone.
+    {
+        auto tokens = TokenizeString(start_map, '-');
+        ASSERT(tokens.size() == 3); // Tileset-Zone-Map
+        gWorld.current_zone = tokens[1];
+    }
+
+    // Load all the bones in the current zone for the counter.
+    gCurrentZoneBoneTotal = 0;
+    std::vector<std::string> rooms_done;
+    Map temp_room_map;
+    for (int ry=0; ry<gWorld.rooms.size(); ++ry)
+    {
+        for (int rx=0; rx<gWorld.rooms[ry].size(); ++rx)
+        {
+            std::string room = gWorld.rooms[ry][rx];
+            if (!room.empty())
+            {
+                auto tokens = TokenizeString(room, '-');
+                ASSERT(tokens.size() == 3); // Tileset-Zone-Map
+                if (tokens[1] == gWorld.current_zone)
+                {
+                    if (std::find(rooms_done.begin(), rooms_done.end(), room) == rooms_done.end())
+                    {
+                        LoadMap(temp_room_map, room);
+                        gCurrentZoneBoneTotal += (int)temp_room_map.sbones.size();
+                        gCurrentZoneBoneTotal += (int)temp_room_map.lbones.size() * LARGE_BONE_WORTH;
+                        FreeMap(temp_room_map);
+                        rooms_done.push_back(room);
+                    }
+                }
+            }
+        }
+    }
+
+    // printf("World: %s (%d %d)\n", start_map, gWorld.current_map_x, gWorld.current_map_y);
+
+    /////////////////////////////////////////////////
 
     // Move the camera to the dog's new position in the world.
     float cx = roundf(gGameState.dog.pos.x + (DOG_CLIP_W/2) - (WINDOW_SCREEN_W/2));
@@ -91,6 +131,8 @@ INTERNAL void FreeWorld ()
 {
     gWorld.rooms.clear();
     FreeMap(gWorld.current_map);
+    gWorld.current_map_name.clear();
+    gWorld.current_zone.clear();
 }
 
 INTERNAL void WorldTransitionIfOutOfBounds ()
@@ -112,6 +154,9 @@ INTERNAL void WorldTransitionIfOutOfBounds ()
 
     if (!need_to_transition) return;
 
+    // Cache the collected bones.
+    CacheMapBones();
+
     // Rooms aren't all single screen so add the player's offset to get the correct room grid-space.
     if (px > WINDOW_SCREEN_W) wx += (int)floor(px / WINDOW_SCREEN_W);
     if (py > WINDOW_SCREEN_H) wy += (int)floor(py / WINDOW_SCREEN_H);
@@ -128,6 +173,9 @@ INTERNAL void WorldTransitionIfOutOfBounds ()
     if (py + (ph/2) > gWorld.current_map.h * TILE_H) { wy++; down  = true; }
 
     std::string new_map = gWorld.rooms[wy][wx];
+
+    gWorld.current_zone = TokenizeString(new_map, '-')[1];
+    gWorld.current_map_name = new_map;
 
     FreeMap(gWorld.current_map);
     LoadMap(gWorld.current_map, new_map);
@@ -173,11 +221,19 @@ INTERNAL void WorldTransitionIfOutOfBounds ()
         py = 0;
     }
 
-    gGameState.dog.pos.x = (float)px;
-    gGameState.dog.pos.y = (float)py;
+    gGameState.dog.pos = { (float)px, (float)py };
+
+    gGameState.dog.start_state    = gGameState.dog.state;
+    gGameState.dog.start_pos      = gGameState.dog.pos;
+    gGameState.dog.start_vel      = gGameState.dog.vel;
+    gGameState.dog.start_flip     = gGameState.dog.flip;
+    gGameState.dog.start_grounded = gGameState.dog.grounded;
 
     // Clear the current particles when we go to a new map.
-    gParticleSystem.particles.clear();
+    ClearParticles();
+
+    // Auto-save game data whenever there's a room transition.
+    SaveData();
 
     // Move the camera to the dog's new position in the world.
     float cx = roundf(gGameState.dog.pos.x + (DOG_CLIP_W/2) - (WINDOW_SCREEN_W/2));

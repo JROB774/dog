@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-INTERNAL void QuitApplication ()
+INTERNAL void QuitSystems ()
 {
     QuitGame();
     QuitMixer();
@@ -12,11 +12,12 @@ INTERNAL void QuitApplication ()
 
 int main (int argc, char** argv)
 {
-    ErrorTerminateCallback = QuitApplication;
+    ErrorTerminateCallback = QuitSystems;
 
     gWindow.running = true;
 
     InitErrorSystem();
+    LoadSettings();
     InitWindow();
     InitMixer();
     InitInput();
@@ -24,14 +25,14 @@ int main (int argc, char** argv)
 
     if (gWindow.running)
     {
-        bool reset = true;
-        while (reset)
+        gWindow.reset = true;
+        while (gWindow.reset)
         {
             gWindow.running = true;
-            reset = false;
+            gWindow.reset = false;
 
             RandomSeed();
-            InitGame();
+            InitApplication();
             ShowWindow();
 
             while (gWindow.running)
@@ -44,16 +45,6 @@ int main (int argc, char** argv)
                     HandleInputEvents(event);
                     switch (event.type)
                     {
-                        #if defined(BUILD_DEBUG)
-                        case (SDL_KEYDOWN):
-                        {
-                            if (event.key.keysym.sym == SDLK_F5)
-                            {
-                                gWindow.running = false;
-                                reset = true;
-                            }
-                        } break;
-                        #endif
                         case (SDL_QUIT):
                         {
                             gWindow.running = false;
@@ -64,19 +55,19 @@ int main (int argc, char** argv)
                 ClearWindow(MakeColor(0,0,0));
                 SetViewport();
 
-                UpdateGame(gTimer.delta_time);
-                RenderGame(gTimer.delta_time);
+                UpdateApplication(gTimer.delta_time);
+                RenderApplication(gTimer.delta_time);
 
                 CapFramerate();
 
                 RefreshWindow();
             }
 
-            QuitGame();
+            QuitApplication();
         }
     }
 
-    QuitApplication();
+    QuitSystems();
 
     return 0;
 }

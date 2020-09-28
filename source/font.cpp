@@ -19,3 +19,13 @@ INTERNAL void FreeFont (Font& font)
 {
     FreeImage(font.image);
 }
+
+INTERNAL float GetTextWidth (Font& font, std::string text)
+{
+    return (font.charw * text.length());
+}
+
+INTERNAL float GetTextHeight (Font& font, std::string text)
+{
+    return (font.charh); // We don't handle multiple lines right now...
+}

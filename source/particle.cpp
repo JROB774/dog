@@ -97,6 +97,11 @@ INTERNAL void DrawParticles (float dt)
     }
 }
 
+INTERNAL void ClearParticles ()
+{
+    gParticleSystem.particles.clear();
+}
+
 // PARTICLE_TYPE_TEST
 
 INTERNAL void ParticleCreateTest (Particle& particle)
@@ -208,4 +213,16 @@ INTERNAL void ParticleUpdateSmoke (Particle& particle, float dt)
 
     particle.pos.x += particle.vel.x * dt;
     particle.pos.y += particle.vel.y * dt;
+}
+
+// PARTICLE_TYPE_SBONE
+
+INTERNAL void ParticleCreateSBone (Particle& particle)
+{
+    // Nothing...
+}
+
+INTERNAL void ParticleUpdateSBone (Particle& particle, float dt)
+{
+    if (IsAnimationDone(particle.anim)) particle.dead = true;
 }

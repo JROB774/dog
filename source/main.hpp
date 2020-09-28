@@ -18,11 +18,13 @@
 #include <cstring>
 #include <ctime>
 
+#include <filesystem>
 #include <fstream>
 #include <sstream>
 #include <string>
 #include <algorithm>
 #include <random>
+#include <map>
 #include <vector>
 
 #include <SDL2/SDL.h>
@@ -37,11 +39,14 @@
 #include "error.hpp"
 #include "image.hpp"
 #include "font.hpp"
+#include "settings.hpp"
 #include "window.hpp"
 #include "renderer.hpp"
 #include "timer.hpp"
 #include "input.hpp"
 #include "mixer.hpp"
+#include "fade.hpp"
+#include "save.hpp"
 #include "animation.hpp"
 #include "particle.hpp"
 #include "spike.hpp"
@@ -52,19 +57,24 @@
 #include "gui.hpp"
 #include "world.hpp"
 #include "camera.hpp"
+#include "menu.hpp"
 #include "game.hpp"
-
+#include "pause.hpp"
+#include "application.hpp"
 
 // Source includes.
 #include "utility.cpp"
 #include "error.cpp"
 #include "image.cpp"
 #include "font.cpp"
+#include "settings.cpp"
 #include "window.cpp"
 #include "renderer.cpp"
 #include "timer.cpp"
 #include "input.cpp"
 #include "mixer.cpp"
+#include "fade.cpp"
+#include "save.cpp"
 #include "animation.cpp"
 #include "particle.cpp"
 #include "spike.cpp"
@@ -75,7 +85,9 @@
 #include "gui.cpp"
 #include "world.cpp"
 #include "camera.cpp"
+#include "menu.cpp"
 #include "game.cpp"
-
+#include "pause.cpp"
+#include "application.cpp"
 
 #endif /* MAIN_HPP */

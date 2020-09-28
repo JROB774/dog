@@ -15,19 +15,31 @@
 * [x] Spikes.
 * [x] GUI for collectible bone count.
 * [x] Particle effect system.
-* [ ] Add sound effects:
-  * [ ] Player:
+* [x] Add sound effects:
+  * [x] Player:
     * [x] Footsteps
     * [x] Jump
     * [x] Land on Ground
     * [x] Hit Head
-    * [ ] Bark (Retroify!)
-    * [ ] Death / Explode
+    * [x] Bark (Retroify!)
+    * [x] Death / Explode
   * [x] Collect Bone:
     * [x] Small
     * [x] Large
   * [ ] Break Block
-* [ ] Bones should remember they've been collected when transitioning maps, etc.
+* [x] Main menu / title screen:
+  * [x] Sections:
+    * [x] Play Game
+    * [x] Controls
+    * [x] Exit Game
+  * [x] Fix gamepad stick issues.
+  * [x] Add sound effects.
+* [x] Bone counter should be global for an entire zone, not just per room.
+* [x] Add death state and respawn.
+* [x] Save game data to a file.
+* [x] Pause menu.
+* [x] Bones should remember they've been collected when transitioning maps, between sessions, etc.
+* [ ] Implement sone enemies.
 
 ## TiKo
 
@@ -36,15 +48,11 @@
 * [x] Implement collectible bones:
   * [x] Small bones.
   * [x] Large bones.
-* [ ] Breakable blocks.
+* [ ] Implement the dig system with breakable blocks.
 
 ## Unassigned
 
-* [ ] Main menu / title screen.
-* [ ] Pause menu.
-* [ ] Implement the dig system with breakable blocks.
-* [ ] Enemies:
-  * ???
-* [ ] Win and lose states.
+* [ ] Win state.
+* [ ] Add game content.
 
 *Flesh out these and add more as needed...*

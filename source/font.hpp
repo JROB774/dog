@@ -14,4 +14,7 @@ struct Font
 INTERNAL void LoadFont (Font& font, float cw, float ch, std::string file_name);
 INTERNAL void FreeFont (Font& font);
 
+INTERNAL float GetTextWidth  (Font& font, std::string text);
+INTERNAL float GetTextHeight (Font& font, std::string text);
+
 #endif /* FONT_HPP */
