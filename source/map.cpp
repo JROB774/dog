@@ -13,8 +13,11 @@
 
 //                                        AARRGGBB
 GLOBAL constexpr U32 TILE_EMPTY_COLOR = 0xFFFFFFFF;
-GLOBAL constexpr U32 TILE_BACKG_COLOR = 0xFF808080;
 GLOBAL constexpr U32 TILE_SOLID_COLOR = 0xFF000000;
+GLOBAL constexpr U32 TILE_SPIKE_COLOR = 0xFFFF0000;
+GLOBAL constexpr U32 TILE_SBONE_COLOR = 0xFFFFFF00;
+GLOBAL constexpr U32 TILE_LBONE_COLOR = 0xFF00FF00;
+GLOBAL constexpr U32 TILE_BBLOC_COLOR = 0xFF00FFFF;
 
 GLOBAL constexpr int TILE_FLAG_W = 0x01;
 GLOBAL constexpr int TILE_FLAG_S = 0x02;
@@ -24,16 +27,14 @@ GLOBAL constexpr int TILE_FLAG_N = 0x08;
 GLOBAL constexpr int TILE_CLIP_W = 32;
 GLOBAL constexpr int TILE_CLIP_H = 32;
 
-//                                          AARRGGBB
-GLOBAL constexpr U32 ENTITY_SPIKE_COLOR = 0xFFFF0000;
-GLOBAL constexpr U32 ENTITY_SBONE_COLOR = 0xFFFFFF00;
-GLOBAL constexpr U32 ENTITY_LBONE_COLOR = 0xFF00FF00;
-GLOBAL constexpr U32 ENTITY_BBLOC_COLOR = 0xFF00FFFF;
-
 INTERNAL void LoadMap (Map& map, std::string file_name)
 {
     auto tokens = TokenizeString(file_name, '-');
     ASSERT(tokens.size() == 3); // Tileset-Zone-Map
+
+    std::string background_file = "backs/" + file_name;
+    map.has_background = std::filesystem::exists("assets/" + background_file);
+    if (map.has_background) LoadImage(map.background, background_file.c_str());
 
     std::string tileset_file = "t" + tokens[0] + ".bmp";
     LoadImage(map.tileset, tileset_file.c_str());
@@ -71,7 +72,6 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
             switch (pixel)
             {
                 case (TILE_EMPTY_COLOR): tile->type = TILE_EMPTY; break;
-                case (TILE_BACKG_COLOR): tile->type = TILE_BACKG; break;
                 case (TILE_SOLID_COLOR): tile->type = TILE_SOLID; break;
             }
 
@@ -84,7 +84,6 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
                 switch (tile->type)
                 {
                     case (TILE_SOLID): tile->yoff = RandomRange(0, 1); break;
-                    case (TILE_BACKG): tile->yoff = 3;                 break;
                 }
 
                 // Set the direction for solid and background tiles.
@@ -96,13 +95,6 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
                         if ((iy == (map.h-1)) || (pixels[(iy+1)*map.w+(ix)] == TILE_SOLID_COLOR)) tile->xoff |= TILE_FLAG_S;
                         if ((ix == (map.w-1)) || (pixels[(iy)*map.w+(ix+1)] == TILE_SOLID_COLOR)) tile->xoff |= TILE_FLAG_E;
                         if ((iy == (      0)) || (pixels[(iy-1)*map.w+(ix)] == TILE_SOLID_COLOR)) tile->xoff |= TILE_FLAG_N;
-                    } break;
-                    case (TILE_BACKG):
-                    {
-                        if ((ix == (      0)) || (pixels[(iy)*map.w+(ix-1)] == TILE_BACKG_COLOR) || (pixels[(iy)*map.w+(ix-1)] == TILE_SOLID_COLOR)) tile->xoff |= TILE_FLAG_W;
-                        if ((iy == (map.h-1)) || (pixels[(iy+1)*map.w+(ix)] == TILE_BACKG_COLOR) || (pixels[(iy+1)*map.w+(ix)] == TILE_SOLID_COLOR)) tile->xoff |= TILE_FLAG_S;
-                        if ((ix == (map.w-1)) || (pixels[(iy)*map.w+(ix+1)] == TILE_BACKG_COLOR) || (pixels[(iy)*map.w+(ix+1)] == TILE_SOLID_COLOR)) tile->xoff |= TILE_FLAG_E;
-                        if ((iy == (      0)) || (pixels[(iy-1)*map.w+(ix)] == TILE_BACKG_COLOR) || (pixels[(iy-1)*map.w+(ix)] == TILE_SOLID_COLOR)) tile->xoff |= TILE_FLAG_N;
                     } break;
                 }
 
@@ -129,7 +121,7 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
 
             switch (pixel)
             {
-                case (ENTITY_SPIKE_COLOR): // SPIKES!
+                case (TILE_SPIKE_COLOR): // SPIKES!
                 {
                     // Determine what way the spike should face based on the surrounding tiles.
                     SpikeDir sdir = SPIKE_DIR_U;
@@ -140,7 +132,7 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
                     map.spikes.push_back(Spike());
                     CreateSpike(map.spikes.back(), (float)(ix*TILE_W), (float)(iy*TILE_H), sdir);
                 } break;
-                case (ENTITY_SBONE_COLOR): // SMALL BONES!
+                case (TILE_SBONE_COLOR): // SMALL BONES!
                 {
                     float x = (float)(ix*TILE_W);
                     float y = (float)(iy*TILE_H);
@@ -152,7 +144,7 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
                         map.sbones.back().dead = true;
                     }
                 } break;
-                case (ENTITY_LBONE_COLOR): // LARGE BONES!
+                case (TILE_LBONE_COLOR): // LARGE BONES!
                 {
                     float x = (float)(ix*TILE_W);
                     float y = (float)(iy*TILE_H);
@@ -164,7 +156,7 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
                         map.lbones.back().dead = true;
                     }
                 } break;
-                case (ENTITY_BBLOC_COLOR): // BREAKABLE BLOCKS!
+                case (TILE_BBLOC_COLOR): // BREAKABLE BLOCKS!
                 {
                     map.bblocks.push_back(BreakableBlock());
                     CreateBreakableBlock(map.bblocks.back(), (float)(ix*TILE_W), (float)(iy*TILE_H));
@@ -180,9 +172,11 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
 
 INTERNAL void FreeMap (Map& map)
 {
+    if (map.has_background) FreeImage(map.background);
     FreeImage(map.tileset);
     map.tiles.clear();
     map.w = 0, map.h = 0;
+    map.has_background = false;
     // Entities
     for (auto& spike: map.spikes) DeleteSpike(spike);
     map.spikes.clear();
@@ -191,23 +185,10 @@ INTERNAL void FreeMap (Map& map)
     map.bblocks.clear();
 }
 
-INTERNAL void DrawMapBackTiles (Map& map)
+INTERNAL void DrawMapBackground (Map& map)
 {
-    // Draw the background tiles.
-    DrawFill(0.0f,0.0f, (float)(map.w*TILE_W),(float)(map.h*TILE_H), MakeColor(1,1,1));
-    SDL_Rect clip = { 0,0,TILE_CLIP_W,TILE_CLIP_H };
-    for (int iy=0; iy<map.h; ++iy)
-    {
-        for (int ix=0; ix<map.w; ++ix)
-        {
-            Tile* tile = &map.tiles[iy*map.w+ix];
-            if (tile->type == TILE_BACKG)
-            {
-                clip.x = tile->xoff * TILE_CLIP_W, clip.y = tile->yoff * TILE_CLIP_H;
-                DrawImage(map.tileset, (float)((ix*TILE_W)+(TILE_W/2)-(TILE_CLIP_W/2)), (float)((iy*TILE_H)+(TILE_H/2)-(TILE_CLIP_H/2)), FLIP_NONE, &clip);
-            }
-        }
-    }
+    if (map.has_background) DrawImage(map.background, 0,0);
+    else DrawFill(0.0f,0.0f, (float)(map.w*TILE_W),(float)(map.h*TILE_H), MakeColor(1,1,1));
 }
 
 INTERNAL void DrawMapBackEntities (Map& map, float dt)

@@ -32,7 +32,7 @@ INTERNAL void UpdateGame (float dt)
 INTERNAL void RenderGame (float dt)
 {
     BeginCamera();
-    DrawMapBackTiles(gWorld.current_map);
+    DrawMapBackground(gWorld.current_map);
     DrawMapBackEntities(gWorld.current_map, dt);
     DrawDog(gGameState.dog, dt);
     DrawParticles(dt);
