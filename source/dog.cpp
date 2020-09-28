@@ -69,6 +69,19 @@ INTERNAL void CreateDog (Dog& dog, float x, float y)
     dog.start_grounded = dog.grounded;
 }
 
+INTERNAL void DeleteDog (Dog& dog)
+{
+    FreeImage(dog.image);
+
+    FreeSound(dog.snd_footstep);
+    FreeSound(dog.snd_land);
+    FreeSound(dog.snd_hithead);
+    FreeSound(dog.snd_jump);
+    FreeSound(dog.snd_bark);
+    FreeSound(dog.snd_explode0);
+    FreeSound(dog.snd_explode1);
+}
+
 INTERNAL void UpdateDog (Dog& dog, float dt)
 {
     bool old_grounded = dog.grounded;
@@ -267,7 +280,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 
     for (auto& spike: gWorld.current_map.spikes)
     {
-        if (DogCollideWithEntity(dog, spike.x, spike.y, spike.bounds))
+        if (EntityAndEntityCollision(dog.pos,dog.bounds, { spike.x,spike.y },spike.bounds))
         {
             PlaySound(dog.snd_explode0);
             KillDog(dog);
@@ -279,7 +292,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
     {
         if (!sbone.dead)
         {
-            if (DogCollideWithEntity(dog, sbone.x, sbone.y, sbone.bounds))
+            if (EntityAndEntityCollision(dog.pos,dog.bounds, { sbone.x,sbone.y },sbone.bounds))
             {
                 CreateParticles(PARTICLE_TYPE_SBONE, (int)sbone.x+8,(int)sbone.y+8,(int)sbone.x+8,(int)sbone.y+8, 1);
                 gTempBoneCollectedIds.push_back(sbone.id);
@@ -292,7 +305,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
     {
         if (!lbone.dead)
         {
-            if (DogCollideWithEntity(dog, lbone.x, lbone.y, lbone.bounds))
+            if (EntityAndEntityCollision(dog.pos,dog.bounds, { lbone.x,lbone.y },lbone.bounds))
             {
                 CreateParticles(PARTICLE_TYPE_LBONE, (int)lbone.x+12,(int)lbone.y+12,(int)lbone.x+12,(int)lbone.y+12, 1);
                 CreateParticles(PARTICLE_TYPE_SPEC, (int)lbone.x+12,(int)lbone.y+12,(int)lbone.x+12,(int)lbone.y+12, 40,72, 1.5f);
@@ -344,34 +357,4 @@ INTERNAL void RespawnDog (Dog& dog)
     ClearParticles();
     // Respawn bones.
     RespawnMapBones();
-}
-
-INTERNAL void DeleteDog (Dog& dog)
-{
-    FreeImage(dog.image);
-
-    FreeSound(dog.snd_footstep);
-    FreeSound(dog.snd_land);
-    FreeSound(dog.snd_hithead);
-    FreeSound(dog.snd_jump);
-    FreeSound(dog.snd_bark);
-    FreeSound(dog.snd_explode0);
-    FreeSound(dog.snd_explode1);
-}
-
-INTERNAL bool DogCollideWithEntity (Dog& dog, float ex, float ey, Rect ebounds)
-{
-    Rect a,b;
-
-    a.x = dog.pos.x + dog.bounds.x;
-    a.y = dog.pos.y + dog.bounds.y;
-    a.w =             dog.bounds.w;
-    a.h =             dog.bounds.h;
-    b.x = ex        +    ebounds.x;
-    b.y = ey        +    ebounds.y;
-    b.w =                ebounds.w;
-    b.h =                ebounds.h;
-
-    return ((a.x + a.w > b.x) && (a.y + a.h > b.y) &&
-            (a.x < b.x + b.w) && (a.y < b.y + b.h));
 }

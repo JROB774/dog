@@ -122,3 +122,20 @@ INTERNAL bool EntityAndMapCollision (Vec2 pos, Rect bounds, Vec2& vel, Map& map,
 
     return collided;
 }
+
+INTERNAL bool EntityAndEntityCollision (Vec2 apos, Rect abounds, Vec2 bpos, Rect bbounds)
+{
+    Rect a,b;
+
+    a.x = apos.x + abounds.x;
+    a.y = apos.y + abounds.y;
+    a.w =          abounds.w;
+    a.h =          abounds.h;
+    b.x = bpos.x + bbounds.x;
+    b.y = bpos.y + bbounds.y;
+    b.w =          bbounds.w;
+    b.h =          bbounds.h;
+
+    return ((a.x + a.w > b.x) && (a.y + a.h > b.y) &&
+            (a.x < b.x + b.w) && (a.y < b.y + b.h));
+}

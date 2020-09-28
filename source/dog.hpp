@@ -60,12 +60,10 @@ struct Dog
 };
 
 INTERNAL void CreateDog  (Dog& dog, float x, float y);
+INTERNAL void DeleteDog  (Dog& dog);
 INTERNAL void UpdateDog  (Dog& dog, float dt);
 INTERNAL void DrawDog    (Dog& dog, float dt);
 INTERNAL void KillDog    (Dog& dog);
 INTERNAL void RespawnDog (Dog& dog);
-INTERNAL void DeleteDog  (Dog& dog);
-
-INTERNAL bool DogCollideWithEntity (Dog& dog, float ex, float ey, Rect ebounds);
 
 #endif /* DOG_HPP */
