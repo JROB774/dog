@@ -252,7 +252,7 @@ INTERNAL void DrawMapFront (Map& map)
         for (int ix=0; ix<map.w; ++ix)
         {
             Tile* tile = &map.tiles[iy*map.w+ix];
-            if (tile->type == TILE_SOLID)
+            if (tile->type == TILE_SOLID && !tile->invis)
             {
                 clip.x = tile->xoff * TILE_CLIP_W, clip.y = tile->yoff * TILE_CLIP_H;
                 DrawImage(map.tileset, (float)((ix*TILE_W)+(TILE_W/2)-(TILE_CLIP_W/2)), (float)((iy*TILE_H)+(TILE_H/2)-(TILE_CLIP_H/2)), FLIP_NONE, &clip);
