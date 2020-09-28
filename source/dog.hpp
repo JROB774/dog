@@ -52,6 +52,7 @@ struct Dog
 
     float dead_timer;
     bool dead;
+    int deaths;
 
     DogState start_state;
     Vec2 start_pos,start_vel;

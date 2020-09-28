@@ -60,6 +60,7 @@ INTERNAL void CreateDog (Dog& dog, float x, float y)
 
     dog.dead_timer = 0.0f;
     dog.dead = false;
+    dog.deaths = 0;
 
     // This gets updated whenever the dog transitions from room-to-room and acts as the respawn point.
     dog.start_state    = dog.state;
@@ -295,6 +296,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
             KillDog(dog);
             CreateParticles(PARTICLE_TYPE_EXPLODE1, (int)dog.pos.x-16,(int)dog.pos.y-16,(int)dog.pos.x+DOG_CLIP_W+16,(int)dog.pos.y+DOG_CLIP_H+16, 4,8);
             CreateParticles(PARTICLE_TYPE_SMOKE, (int)dog.pos.x,(int)dog.pos.y,(int)dog.pos.x+DOG_CLIP_W,(int)dog.pos.y+DOG_CLIP_H, 4,8);
+            break;
         }
     }
     for (auto& sbone: gWorld.current_map.sbones)
@@ -346,8 +348,10 @@ INTERNAL void DrawDog (Dog& dog, float dt)
 
 INTERNAL void KillDog (Dog& dog)
 {
+    if (dog.dead) return;
     dog.dead_timer = DOG_DEAD_TIME;
     dog.dead = true;
+    dog.deaths++;
 }
 
 INTERNAL void RespawnDog (Dog& dog)

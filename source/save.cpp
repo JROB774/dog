@@ -12,6 +12,7 @@ INTERNAL void SaveData ()
         fprintf(save, "player_vel_x %f\n",     gGameState.dog.start_vel.x                       );
         fprintf(save, "player_vel_y %f\n",     gGameState.dog.start_vel.y                       );
         fprintf(save, "player_flip %d\n",      gGameState.dog.start_flip                        );
+        fprintf(save, "player_deaths %d\n",    gGameState.dog.deaths                            );
         fprintf(save, "player_grounded %s\n", (gGameState.dog.start_grounded) ? "true" : "false");
         fprintf(save, "current_map \"%s\"\n",  gWorld.current_map_name.c_str()                  );
 
@@ -35,6 +36,7 @@ INTERNAL void LoadData ()
         gGameState.dog.vel.x    = (float   )save["player_vel_x"   ].Number();
         gGameState.dog.vel.y    = (float   )save["player_vel_y"   ].Number();
         gGameState.dog.flip     = (Flip    )save["player_flip"    ].Int   ();
+        gGameState.dog.deaths   =           save["player_deaths"  ].Int   ();
         gGameState.dog.grounded =           save["player_grounded"].Bool  ();
 
         gGameState.dog.start_state    = gGameState.dog.state;
