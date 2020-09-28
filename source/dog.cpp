@@ -42,6 +42,8 @@ INTERNAL void CreateDog (Dog& dog, float x, float y)
     LoadAnimation(dog.anim[DOG_STATE_JUMP], "dog-jump.anim");
     LoadAnimation(dog.anim[DOG_STATE_FALL], "dog-fall.anim");
     LoadAnimation(dog.anim[DOG_STATE_BARK], "dog-bark.anim");
+    LoadAnimation(dog.anim[DOG_STATE_LKDN], "dog-lkdn.anim");
+    LoadAnimation(dog.anim[DOG_STATE_LKUP], "dog-lkup.anim");
 
     dog.up           = false;
     dog.right        = false;
@@ -222,10 +224,23 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
             else
             {
                 dog.state = DOG_STATE_IDLE;
-                if (RandomRange(0, 1000) <= 10)
+
+                if (dog.down)
                 {
-                    ResetAnimation(dog.anim[DOG_STATE_BLNK]);
-                    dog.state = DOG_STATE_BLNK;
+                    dog.state = DOG_STATE_LKDN;
+                }
+                if (dog.up)
+                {
+                    dog.state = DOG_STATE_LKUP;
+                }
+
+                if (dog.state == DOG_STATE_IDLE)
+                {
+                    if (RandomRange(0, 1000) <= 10)
+                    {
+                        ResetAnimation(dog.anim[DOG_STATE_BLNK]);
+                        dog.state = DOG_STATE_BLNK;
+                    }
                 }
             }
         }

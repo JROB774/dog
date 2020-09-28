@@ -9,6 +9,8 @@ enum DogState
     DOG_STATE_JUMP,
     DOG_STATE_FALL,
     DOG_STATE_BARK,
+    DOG_STATE_LKDN,
+    DOG_STATE_LKUP,
     DOG_STATE_TOTAL
 };
 

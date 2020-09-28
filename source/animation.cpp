@@ -16,6 +16,7 @@ INTERNAL void LoadAnimation (Animation& animation, std::string file_name)
     int h = gon["frame_size"    ][1].Int();
 
     int frame_count = gon["frame_count"].Int();
+    animation.frames.clear();
     for (int i=0; i<frame_count; ++i)
     {
         float duration = (float)gon["frame_durations"][i].Number();
