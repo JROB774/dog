@@ -11,6 +11,9 @@ INTERNAL void QuitGui ()
 
 INTERNAL void DrawGui (float dt)
 {
+    // Hard-coded that the bone counter doesn't display in the tutorial zone as there's no bones.
+    if (gWorld.current_zone == "tutorial") return;
+
     DrawImage(gGui.splat, gGui.current_x,0);
 
     // Pad the values with zeroes so that they are always three digits long.
