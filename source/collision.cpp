@@ -86,14 +86,17 @@ INTERNAL bool EntityAndMapCollision (Vec2 pos, Rect bounds, Vec2& vel, Map& map,
         {
             int index = iy*map.w+ix;
             Tile* tile = &map.tiles[index];
-            if (tile->type == TILE_SOLID)
+            if (!tile->invis)
             {
-                Vec2 cp,cn;
-                float ct=0;
-
-                if (EntityAndTileCollision(pos,bounds,vel, ix,iy, cp,cn,ct, dt))
+                if (tile->type == TILE_SOLID)
                 {
-                    collisions.push_back({ ix,iy, ct });
+                    Vec2 cp,cn;
+                    float ct=0;
+
+                    if (EntityAndTileCollision(pos,bounds,vel, ix,iy, cp,cn,ct, dt))
+                    {
+                        collisions.push_back({ ix,iy, ct });
+                    }
                 }
             }
         }
@@ -138,14 +141,17 @@ INTERNAL bool ParticleAndMapCollision (Vec2 pos, Rect bounds, Vec2& vel, Map& ma
         {
             int index = iy*map.w+ix;
             Tile* tile = &map.tiles[index];
-            if (tile->type == TILE_SOLID)
+            if (!tile->invis)
             {
-                Vec2 cp,cn;
-                float ct=0;
-
-                if (EntityAndTileCollision(pos,bounds,vel, ix,iy, cp,cn,ct, dt))
+                if (tile->type == TILE_SOLID)
                 {
-                    collisions.push_back({ ix,iy, ct });
+                    Vec2 cp,cn;
+                    float ct=0;
+
+                    if (EntityAndTileCollision(pos,bounds,vel, ix,iy, cp,cn,ct, dt))
+                    {
+                        collisions.push_back({ ix,iy, ct });
+                    }
                 }
             }
         }

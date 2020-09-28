@@ -15,16 +15,23 @@ void BreakbleBlockCollision(Rect _bounds, BreakableBlock& _block)
 	else if(IsKeyDown(SDL_SCANCODE_D)){temp.w += 5;}
 	else if(IsKeyDown(SDL_SCANCODE_S)){temp.h += 5;}
 	else if(IsKeyDown(SDL_SCANCODE_A)){temp.x -= 5;}
+	printf("boundsx: %f, boundsy: %f, boundsw: %f, boundsh: %f\n",_bounds.x,_bounds.y,_bounds.w,_bounds.h);
+	printf("tempx: %f, tempy: %f, tempw: %f, temph: %f\n",temp.x,temp.y,temp.w,temp.h);
+	printf("_block: %f, _blocky: %f, _blockw: %f, _blockh: %f\n",_block.posistion.x,_block.posistion.y,_block.posistion.w,_block.posistion.h);
 
-	if((temp.x + temp.w > _block.posistion.x) && (temp.y +temp.h > _block.posistion.y) &&
-        (temp.x < _block.posistion.x + _block.posistion.w) && (temp.y < _block.posistion.y + _block.posistion.h)){
-            BreakBlock(_block);
+
+
+	if((temp.x < _block.posistion.x + _block.posistion.w) && (temp.x + temp.w > _block.posistion.x) &&
+        (temp.y < _block.posistion.y + _block.posistion.h) && (temp.y + temp.h > _block.posistion.y)){
+			printf("COMMAND");
+            _block.dead = true;
     }
 }
 
 void BreakBlock(BreakableBlock& _block)
 {
 	_block.dead = true;
+	printf("NOM\n");
 }
 
 void RenderBreakableBlock(BreakableBlock& _block)

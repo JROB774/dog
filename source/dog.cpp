@@ -227,14 +227,23 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
         {
             if (dog.state != DOG_STATE_BARK)
             {
-            	if(!dog.up && !dog.right && !dog.left && !dog.down){
-	                if (dog.action)
-	                {
+                if (dog.action)
+                {
+	            	if(!dog.up && !dog.right && !dog.left && !dog.down){
 	                    ResetAnimation(dog.anim[DOG_STATE_BARK]);
 	                    dog.state = DOG_STATE_BARK;
 	                    PlaySound(dog.snd_bark);
-	                }
-	            }
+                	}
+		            else{
+	            	    for (auto& bblocks: gWorld.current_map.bblocks)
+					    {
+					    	if(!bblocks.dead){
+					    		Rect temp = {dog.pos.x + dog.bounds.x, dog.pos.y + dog.bounds.y, dog.bounds.w, dog.bounds.h};
+					    		BreakbleBlockCollision(temp, bblocks);
+					    	}
+					    }
+		            }
+			    }
             }
 
             if (dog.state == DOG_STATE_BARK || dog.state == DOG_STATE_BLNK)
@@ -326,13 +335,6 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
                 PlaySound(big_bone_sound);
             }
         }
-    }
-    for (auto& bblocks: gWorld.current_map.bblocks)
-    {
-    	if (!bblocks.dead)
-        {
-    		BreakbleBlockCollision(dog.bounds, bblocks);
-    	}
     }
 }
 
