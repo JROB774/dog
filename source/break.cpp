@@ -44,7 +44,6 @@ INTERNAL void BreakBlock (BreakableBlock& block)
     int ty = (int)block.pos.y / TILE_H;
     gWorld.current_map.tiles[ty*gWorld.current_map.w+tx].type = TILE_EMPTY;
     block.dead = true;
-    PlaySound(gBreakableBlockSound);
     CreateParticles(PARTICLE_TYPE_LBREAK, (int)block.pos.x+8,(int)block.pos.y+8,(int)block.pos.x+8,(int)block.pos.y+8, 1,1);
     CreateParticles(PARTICLE_TYPE_MBREAK, (int)block.pos.x+8,(int)block.pos.y+8,(int)block.pos.x+8,(int)block.pos.y+8, 1,2);
     CreateParticles(PARTICLE_TYPE_SBREAK, (int)block.pos.x+8,(int)block.pos.y+8,(int)block.pos.x+8,(int)block.pos.y+8, 1,3);

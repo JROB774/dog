@@ -211,6 +211,10 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
             }
         }
     }
+    if (block_broken) // Do this out here so the sound only plays once and doesn't layer.
+    {
+        PlaySound(gBreakableBlockSound);
+    }
 
     // Handle setting the dog's current animation state.
     if (!dog.grounded)
