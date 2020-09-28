@@ -174,7 +174,7 @@ INTERNAL void WorldTransitionIfOutOfBounds ()
 
     std::string new_map = gWorld.rooms[wy][wx];
 
-    gWorld.current_zone = TokenizeString(new_map, '-')[1];
+    gWorld.current_zone = TokenizeString(new_map, '-')[0];
     gWorld.current_map_name = new_map;
 
     FreeMap(gWorld.current_map);

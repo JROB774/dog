@@ -14,7 +14,7 @@ GLOBAL constexpr float DOG_BOUNDS_H =  7;
 
 GLOBAL constexpr float DOG_DEAD_TIME = 2.0f;
 
-INTERNAL void CreateDog (Dog& dog, float x, float y)
+INTERNAL void CreateDog (Dog& dog, float x, float y, Flip flip)
 {
     dog.state = DOG_STATE_IDLE;
 
@@ -24,7 +24,7 @@ INTERNAL void CreateDog (Dog& dog, float x, float y)
     dog.bounds = { DOG_BOUNDS_X,DOG_BOUNDS_Y,DOG_BOUNDS_W,DOG_BOUNDS_H };
 
     LoadImage(dog.image, "dog.bmp");
-    dog.flip = FLIP_NONE;
+    dog.flip = flip;
 
     dog.footstep_timer = 0.0f;
 
