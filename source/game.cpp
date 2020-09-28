@@ -13,6 +13,7 @@ INTERNAL void QuitGame ()
 {
     DeleteDog(gGameState.dog);
     QuitParticleSystem();
+    DeleteBreakableBlock();
     DeleteBones();
     QuitGui();
     FreeWorld();
@@ -31,12 +32,12 @@ INTERNAL void UpdateGame (float dt)
 INTERNAL void RenderGame (float dt)
 {
     BeginCamera();
-    DrawMapBackg(gWorld.current_map);
-    DrawMapEntities(gWorld.current_map, dt);
+    DrawMapBackTiles(gWorld.current_map);
+    DrawMapBackEntities(gWorld.current_map, dt);
     DrawDog(gGameState.dog, dt);
     DrawParticles(dt);
-    DrawMapSpikes(gWorld.current_map);
-    DrawMapFront(gWorld.current_map);
+    DrawMapFrontEntities(gWorld.current_map, dt);
+    DrawMapFrontTiles(gWorld.current_map);
     EndCamera();
     DrawGui(dt);
 }

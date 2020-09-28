@@ -28,9 +28,9 @@ struct Map
 INTERNAL void LoadMap (Map& map, std::string file_name);
 INTERNAL void FreeMap (Map& map);
 
-INTERNAL void DrawMapBackg    (Map& map);
-INTERNAL void DrawMapEntities (Map& map, float dt);
-INTERNAL void DrawMapSpikes   (Map& map);
-INTERNAL void DrawMapFront    (Map& map);
+INTERNAL void DrawMapBackTiles     (Map& map);
+INTERNAL void DrawMapBackEntities  (Map& map, float dt);
+INTERNAL void DrawMapFrontEntities (Map& map, float dt);
+INTERNAL void DrawMapFrontTiles    (Map& map);
 
 #endif /* MAP_HPP */

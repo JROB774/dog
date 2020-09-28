@@ -181,22 +181,51 @@ INTERNAL void ParticleUpdateExplode1 (Particle& particle, float dt)
     if (Random() % 2 == 0) UpdateAnimation(particle.anim, dt); // Randomly update some frames faster to add variance.
 }
 
-// PARTICLE_TYPE_SMOKE
+// PARTICLE_TYPE_SMOKE1
 
 GLOBAL constexpr float PARTICLE_SMOKE_FORCE_MIN = 30.0f;
 GLOBAL constexpr float PARTICLE_SMOKE_FORCE_MAX = 90.0f;
 GLOBAL constexpr float PARTICLE_SMOKE_RAISE     =  1.0f;
 GLOBAL constexpr float PARTICLE_SMOKE_DRAG      =  1.0f;
 
-INTERNAL void ParticleCreateSmoke (Particle& particle)
+INTERNAL void ParticleCreateSmoke1 (Particle& particle)
 {
     particle.vel = RotateVec2({ RandomFloatRange(PARTICLE_SMOKE_FORCE_MIN, PARTICLE_SMOKE_FORCE_MAX), 0.0f }, RandomFloatRange(0, (float)M_PI*2));
 }
 
-INTERNAL void ParticleUpdateSmoke (Particle& particle, float dt)
+INTERNAL void ParticleUpdateSmoke1 (Particle& particle, float dt)
 {
     if (Random() % 2 == 0) UpdateAnimation(particle.anim, dt); // Randomly update some frames faster to add variance.
     if (IsAnimationDone(particle.anim)) particle.lifetime = RandomFloatRange(0.0f, 0.8f);
+
+    particle.vel.y -= PARTICLE_SMOKE_RAISE;
+
+    if (particle.vel.x < 0.0f)
+    {
+        particle.vel.x += PARTICLE_SMOKE_DRAG;
+        if (particle.vel.x > 0.0f) particle.vel.x = 0.0f;
+    }
+    else if (particle.vel.x > 0.0f)
+    {
+        particle.vel.x -= PARTICLE_SMOKE_DRAG;
+        if (particle.vel.x < 0.0f) particle.vel.x = 0.0f;
+    }
+
+    particle.pos.x += particle.vel.x * dt;
+    particle.pos.y += particle.vel.y * dt;
+}
+
+// PARTICLE_TYPE_SMOKE2
+
+INTERNAL void ParticleCreateSmoke2 (Particle& particle)
+{
+    particle.vel = RotateVec2({ RandomFloatRange(PARTICLE_SMOKE_FORCE_MIN, PARTICLE_SMOKE_FORCE_MAX), 0.0f }, RandomFloatRange(0, (float)M_PI*2));
+}
+
+INTERNAL void ParticleUpdateSmoke2 (Particle& particle, float dt)
+{
+    if (Random() % 2 == 0) UpdateAnimation(particle.anim, dt); // Randomly update some frames faster to add variance.
+    if (IsAnimationDone(particle.anim)) particle.dead = true;
 
     particle.vel.y -= PARTICLE_SMOKE_RAISE;
 
@@ -241,13 +270,13 @@ INTERNAL void ParticleUpdateLBone (Particle& particle, float dt)
 
 // PARTICLE_TYPE_SBREAK
 
-GLOBAL constexpr float PARTICLE_SBREAK_FORCE_MIN = 150.0f;
-GLOBAL constexpr float PARTICLE_SBREAK_FORCE_MAX = 200.0f;
+GLOBAL constexpr float PARTICLE_SBREAK_FORCE_MIN = 120.0f;
+GLOBAL constexpr float PARTICLE_SBREAK_FORCE_MAX = 180.0f;
 
 INTERNAL void ParticleCreateSBreak (Particle& particle)
 {
     particle.vel = RotateVec2({ RandomFloatRange(PARTICLE_SBREAK_FORCE_MIN, PARTICLE_SBREAK_FORCE_MAX), 0.0f }, RandomFloatRange(0, (float)M_PI*2));
-    particle.extra1 = RandomRange(2, 8); // Number of bounces before death.
+    particle.extra1 = RandomRange(2, 7); // Number of bounces before death.
 }
 
 INTERNAL void ParticleUpdateSBreak (Particle& particle, float dt)
@@ -269,13 +298,13 @@ INTERNAL void ParticleUpdateSBreak (Particle& particle, float dt)
 
 // PARTICLE_TYPE_MBREAK
 
-GLOBAL constexpr float PARTICLE_MBREAK_FORCE_MIN = 150.0f;
-GLOBAL constexpr float PARTICLE_MBREAK_FORCE_MAX = 200.0f;
+GLOBAL constexpr float PARTICLE_MBREAK_FORCE_MIN = 120.0f;
+GLOBAL constexpr float PARTICLE_MBREAK_FORCE_MAX = 180.0f;
 
 INTERNAL void ParticleCreateMBreak (Particle& particle)
 {
     particle.vel = RotateVec2({ RandomFloatRange(PARTICLE_MBREAK_FORCE_MIN, PARTICLE_MBREAK_FORCE_MAX), 0.0f }, RandomFloatRange(0, (float)M_PI*2));
-    particle.extra1 = RandomRange(1, 6); // Number of bounces before death.
+    particle.extra1 = RandomRange(1, 4); // Number of bounces before death.
 }
 
 INTERNAL void ParticleUpdateMBreak (Particle& particle, float dt)
@@ -297,8 +326,8 @@ INTERNAL void ParticleUpdateMBreak (Particle& particle, float dt)
 
 // PARTICLE_TYPE_LBREAK
 
-GLOBAL constexpr float PARTICLE_LBREAK_FORCE_MIN = 150.0f;
-GLOBAL constexpr float PARTICLE_LBREAK_FORCE_MAX = 200.0f;
+GLOBAL constexpr float PARTICLE_LBREAK_FORCE_MIN = 120.0f;
+GLOBAL constexpr float PARTICLE_LBREAK_FORCE_MAX = 180.0f;
 
 INTERNAL void ParticleCreateLBreak (Particle& particle)
 {

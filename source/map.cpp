@@ -191,7 +191,7 @@ INTERNAL void FreeMap (Map& map)
     map.bblocks.clear();
 }
 
-INTERNAL void DrawMapBackg (Map& map)
+INTERNAL void DrawMapBackTiles (Map& map)
 {
     // Draw the background tiles.
     DrawFill(0.0f,0.0f, (float)(map.w*TILE_W),(float)(map.h*TILE_H), MakeColor(1,1,1));
@@ -210,21 +210,19 @@ INTERNAL void DrawMapBackg (Map& map)
     }
 }
 
-INTERNAL void DrawMapEntities (Map& map, float dt)
+INTERNAL void DrawMapBackEntities (Map& map, float dt)
 {
     for (auto& sbone: map.sbones) RenderSmallBone(sbone, dt);
     for (auto& lbone: map.lbones) RenderBigBone(lbone, dt);
+}
+
+INTERNAL void DrawMapFrontEntities (Map& map, float dt)
+{
+    for (auto& spike  : map.spikes ) DrawSpike(spike);
     for (auto& bblocks: map.bblocks) RenderBreakableBlock(bblocks);
 }
 
-// Special exception becuase it seems better for spikes to draw in front
-// of the player whilst the rest of the entities draw behind the player.
-INTERNAL void DrawMapSpikes (Map& map)
-{
-    for (auto& spike: map.spikes) DrawSpike(spike);
-}
-
-INTERNAL void DrawMapFront (Map& map)
+INTERNAL void DrawMapFrontTiles (Map& map)
 {
     // Draw the solid tiles.
     SDL_Rect clip = { 0,0,TILE_CLIP_W,TILE_CLIP_H };

@@ -86,17 +86,14 @@ INTERNAL bool EntityAndMapCollision (Vec2 pos, Rect bounds, Vec2& vel, Map& map,
         {
             int index = iy*map.w+ix;
             Tile* tile = &map.tiles[index];
-            if (!tile->invis)
+            if (tile->type == TILE_SOLID)
             {
-                if (tile->type == TILE_SOLID)
-                {
-                    Vec2 cp,cn;
-                    float ct=0;
+                Vec2 cp,cn;
+                float ct=0;
 
-                    if (EntityAndTileCollision(pos,bounds,vel, ix,iy, cp,cn,ct, dt))
-                    {
-                        collisions.push_back({ ix,iy, ct });
-                    }
+                if (EntityAndTileCollision(pos,bounds,vel, ix,iy, cp,cn,ct, dt))
+                {
+                    collisions.push_back({ ix,iy, ct });
                 }
             }
         }
@@ -117,8 +114,8 @@ INTERNAL bool EntityAndMapCollision (Vec2 pos, Rect bounds, Vec2& vel, Map& map,
         if (EntityAndTileCollision(pos,bounds,vel, c.ix,c.iy, cp,cn,ct, dt))
         {
             contact_normal = cn;
-            vel.x += cn.x * abs(vel.x) * (1-ct);
-            vel.y += cn.y * abs(vel.y) * (1-ct);
+            vel.x += cn.x * abs(vel.x) * (1-c.t);
+            vel.y += cn.y * abs(vel.y) * (1-c.t);
             collided = true;
         }
     }
@@ -141,17 +138,14 @@ INTERNAL bool ParticleAndMapCollision (Vec2 pos, Rect bounds, Vec2& vel, Map& ma
         {
             int index = iy*map.w+ix;
             Tile* tile = &map.tiles[index];
-            if (!tile->invis)
+            if (tile->type == TILE_SOLID)
             {
-                if (tile->type == TILE_SOLID)
-                {
-                    Vec2 cp,cn;
-                    float ct=0;
+                Vec2 cp,cn;
+                float ct=0;
 
-                    if (EntityAndTileCollision(pos,bounds,vel, ix,iy, cp,cn,ct, dt))
-                    {
-                        collisions.push_back({ ix,iy, ct });
-                    }
+                if (EntityAndTileCollision(pos,bounds,vel, ix,iy, cp,cn,ct, dt))
+                {
+                    collisions.push_back({ ix,iy, ct });
                 }
             }
         }

@@ -26,7 +26,7 @@
   * [x] Collect Bone:
     * [x] Small
     * [x] Large
-  * [ ] Break Block
+  * [x] Break Block
 * [x] Main menu / title screen:
   * [x] Sections:
     * [x] Play Game
@@ -50,7 +50,7 @@
 * [x] Implement collectible bones:
   * [x] Small bones.
   * [x] Large bones.
-* [ ] Implement the dig system with breakable blocks.
+* [x] Implement the dig system with breakable blocks.
 
 ## Unassigned
 
