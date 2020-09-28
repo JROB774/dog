@@ -39,6 +39,8 @@
 * [x] Save game data to a file.
 * [x] Pause menu.
 * [x] Bones should remember they've been collected when transitioning maps, between sessions, etc.
+* [x] Improve the player's collision with tiles.
+
 * [ ] Implement sone enemies.
 
 ## TiKo

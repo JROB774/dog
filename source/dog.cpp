@@ -123,100 +123,37 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
     }
 
     // Apply a gravity force to the dog.
+    if(dog.jump_height <= 0){
+        dog.vel.y += DOG_WEIGHT * GRAVITY;
+    }
+
     if (!dog.grounded){
-        if(dog.jump_height <= 0){
-            dog.vel.y += DOG_WEIGHT * GRAVITY;
-        }
         dog.ledge_buffer -= dt;
         dog.jump_height -= dt;
     }
     else{
-        dog.vel.y = 0.0f;
+        // dog.vel.y = 0.0f;
         dog.ledge_buffer = 0.08f;
     }
 
-    // Clamp the velocity in range.
-    // if (dog.vel.y < -DOG_MAX_VEL) dog.vel.y = -DOG_MAX_VEL;
-    // if (dog.vel.y >  DOG_MAX_VEL) dog.vel.y =  DOG_MAX_VEL;
-    // if (dog.vel.x < -DOG_MAX_VEL) dog.vel.x = -DOG_MAX_VEL;
-    // if (dog.vel.x >  DOG_MAX_VEL) dog.vel.x =  DOG_MAX_VEL;
-
-    Vec2 test = dog.pos;
-    Vec2 output = {0,0};
-
-    // Perform simple tile collision on the dog to correct the player's position.
-    // It works but its a pretty bad solution... it should cover all game scenarios.
-    for (int iy=0; iy<gWorld.current_map.h; ++iy)
-    {
-        for (int ix=0; ix<gWorld.current_map.w; ++ix)
-        {
-            Tile* tile = &gWorld.current_map.tiles[iy*gWorld.current_map.w+ix];
-            if (tile->type == TILE_SOLID)
-            {
-                //Testing X Posistion
-                test.x = dog.pos.x + (dog.vel.x * dt);
-                test.y = dog.pos.y;
-
-                Rect intersection;
-                if (TileEntityCollision(test,dog.bounds, ix,iy, intersection))
-                {
-                    if(dog.vel.x < 0){
-                        dog.vel.x = 0;
-                    }
-                    if(dog.vel.x > 0){
-                        //dog.pos.x -= intersection.w;
-                        dog.vel.x = 0;
-                    }
-                }
-
-                test.x = dog.pos.x;
-                test.y = dog.pos.y + (dog.vel.y * dt);
-
-                //Testing Y Posistion
-
-
-                if (TileEntityCollision(test,dog.bounds, ix,iy, intersection))
-                {
-                    // Hit head!
-                    if(dog.vel.y < 0){
-                        //dog.pos.y += intersection.h;
-                        CreateParticles(PARTICLE_TYPE_BASH, (int)dog.pos.x+12,(int)dog.pos.y+12,(int)dog.pos.x+12,(int)dog.pos.y+12, 4,8);
-                        dog.vel.y = 0;
-                        dog.jump_height = 0;
-                        PlaySound(dog.snd_hithead);
-                        //dog.grounded = true;
-                    }
-                    else{
-                        //dog.pos.y -= intersection.h;
-                        dog.vel.y = 0;
-                    }
-                }
-            }
-        }
-    }
-
-    // Check if the dog is grounded or not after correcting position.
-    Vec2 tpos = dog.pos;
-    tpos.y++;
+    // Handle collision detection and correction!
+    Vec2 contact_normal = { 0,0 };
     dog.grounded = false;
-    for (int iy=0; iy<gWorld.current_map.h; ++iy)
+    if (EntityAndMapCollision(dog.pos,dog.bounds,dog.vel, gWorld.current_map, contact_normal, dt))
     {
-        for (int ix=0; ix<gWorld.current_map.w; ++ix)
+        if (contact_normal.y < 0) dog.grounded = true; // Hit the ground.
+        if (contact_normal.y > 0) // Hit the ceiling.
         {
-            Tile* tile = &gWorld.current_map.tiles[iy*gWorld.current_map.w+ix];
-            if (tile->type == TILE_SOLID)
-            {
-                Rect intersection;
-                if (TileEntityCollision(tpos,dog.bounds, ix,iy, intersection))
-                {
-                    if (dog.vel.y >= 0)
-                    {
-                        dog.grounded = true;
-                    }
-                }
-            }
+            CreateParticles(PARTICLE_TYPE_BASH, (int)dog.pos.x+12,(int)dog.pos.y+12,(int)dog.pos.x+12,(int)dog.pos.y+12, 4,8);
+            dog.vel.y = 0;
+            dog.jump_height = 0;
+            PlaySound(dog.snd_hithead);
         }
     }
+
+    // Apply velocity to the dog.
+    dog.pos.x += (dog.vel.x * dt);
+    dog.pos.y += (dog.vel.y * dt);
 
     // If the dog goes from still to moving on the ground create some dust puff particles.
     if (dog.grounded)
@@ -242,10 +179,6 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
         CreateParticles(PARTICLE_TYPE_PUFF, (int)dog.pos.x+4,(int)dog.pos.y+18,(int)dog.pos.x+DOG_CLIP_W-4,(int)dog.pos.y+DOG_CLIP_H, 2,5);
         PlaySound(dog.snd_land);
     }
-
-    // Apply velocity to the dog.
-    dog.pos.x += (dog.vel.x * dt);
-    dog.pos.y += (dog.vel.y * dt);
 
     // Handle setting the dog's current animation state.
     if (!dog.grounded)
@@ -356,7 +289,8 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
     }
     for (auto& bblocks: gWorld.current_map.bblocks)
     {
-    	if(!bblocks.dead){
+    	if (!bblocks.dead)
+        {
     		BreakbleBlockCollision(dog.bounds, bblocks);
     	}
     }
