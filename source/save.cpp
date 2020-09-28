@@ -25,7 +25,7 @@ INTERNAL void SaveData ()
 
 INTERNAL void LoadData ()
 {
-    if (std::filesystem::exists(SAVE_FILE))
+    if (IsThereSaveData())
     {
         GonObject save = GonObject::Load(SAVE_FILE);
 
@@ -61,4 +61,9 @@ INTERNAL void DeleteData ()
     gBoneCollectedIds.clear();
     gTempBoneCollectedIds.clear();
     gCurrentZoneBoneTotal = 0;
+}
+
+INTERNAL bool IsThereSaveData ()
+{
+    return std::filesystem::exists(SAVE_FILE);
 }

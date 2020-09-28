@@ -157,7 +157,7 @@ INTERNAL void RenderMenu (float dt)
 
             DrawImage(gMenuState.title, tx,ty);
 
-            std::string play_text     = "PLAY GAME";
+            std::string play_text     = (IsThereSaveData()) ? "CONTINUE" : "NEW GAME";
             std::string controls_text = "CONTROLS";
             std::string options_text  = "OPTIONS";
             std::string exit_text     = "EXIT GAME";
