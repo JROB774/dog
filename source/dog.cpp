@@ -98,6 +98,15 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
     dog.jump_release = (IsKeyReleased(SDL_SCANCODE_Z) || IsKeyReleased(SDL_SCANCODE_SPACE) || IsButtonReleased(SDL_CONTROLLER_BUTTON_A));
     dog.action       = (IsKeyPressed(SDL_SCANCODE_X)  || IsButtonPressed(SDL_CONTROLLER_BUTTON_X));
 
+    /*
+    if (dog.jump_press)
+    {
+        CreateParticles(PARTICLE_TYPE_LBREAK, dog.pos.x+12,dog.pos.y+12,dog.pos.x+12,dog.pos.y+12, 0,1);
+        CreateParticles(PARTICLE_TYPE_MBREAK, dog.pos.x+12,dog.pos.y+12,dog.pos.x+12,dog.pos.y+12, 1,2);
+        CreateParticles(PARTICLE_TYPE_SBREAK, dog.pos.x+12,dog.pos.y+12,dog.pos.x+12,dog.pos.y+12, 3,7);
+    }
+    */
+
     // If the dog is dead respawn when a button is pressed or after some time.
     if (dog.dead)
     {

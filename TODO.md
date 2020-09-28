@@ -41,7 +41,6 @@
 * [x] Bones should remember they've been collected when transitioning maps, between sessions, etc.
 * [x] Improve the player's collision with tiles.
 * [x] Fix issues with updward map transitions.
-
 * [ ] Implement sone enemies.
 
 ## TiKo

@@ -238,3 +238,84 @@ INTERNAL void ParticleUpdateLBone (Particle& particle, float dt)
 {
     if (IsAnimationDone(particle.anim)) particle.dead = true;
 }
+
+// PARTICLE_TYPE_SBREAK
+
+GLOBAL constexpr float PARTICLE_SBREAK_FORCE_MIN = 150.0f;
+GLOBAL constexpr float PARTICLE_SBREAK_FORCE_MAX = 200.0f;
+
+INTERNAL void ParticleCreateSBreak (Particle& particle)
+{
+    particle.vel = RotateVec2({ RandomFloatRange(PARTICLE_SBREAK_FORCE_MIN, PARTICLE_SBREAK_FORCE_MAX), 0.0f }, RandomFloatRange(0, (float)M_PI*2));
+    particle.extra1 = RandomRange(2, 8); // Number of bounces before death.
+}
+
+INTERNAL void ParticleUpdateSBreak (Particle& particle, float dt)
+{
+    if (particle.extra1 <= 0) particle.dead = true;
+
+    particle.vel.y += GRAVITY * 0.5f;
+
+    Vec2 contact_normal = { 0,0 };
+    if (ParticleAndMapCollision(particle.pos,{ 3,3,2,2 },particle.vel, gWorld.current_map, contact_normal, dt))
+    {
+        if (contact_normal.x != 0) { particle.vel.x *= contact_normal.x; particle.vel.x *= 0.6f; particle.extra1--; }
+        if (contact_normal.y != 0) { particle.vel.y *= contact_normal.y; particle.vel.y *= 0.6f; particle.extra1--; }
+    }
+
+    particle.pos.x += particle.vel.x * dt;
+    particle.pos.y += particle.vel.y * dt;
+}
+
+// PARTICLE_TYPE_MBREAK
+
+GLOBAL constexpr float PARTICLE_MBREAK_FORCE_MIN = 150.0f;
+GLOBAL constexpr float PARTICLE_MBREAK_FORCE_MAX = 200.0f;
+
+INTERNAL void ParticleCreateMBreak (Particle& particle)
+{
+    particle.vel = RotateVec2({ RandomFloatRange(PARTICLE_MBREAK_FORCE_MIN, PARTICLE_MBREAK_FORCE_MAX), 0.0f }, RandomFloatRange(0, (float)M_PI*2));
+    particle.extra1 = RandomRange(1, 6); // Number of bounces before death.
+}
+
+INTERNAL void ParticleUpdateMBreak (Particle& particle, float dt)
+{
+    if (particle.extra1 <= 0) particle.dead = true;
+
+    particle.vel.y += GRAVITY * 0.5f;
+
+    Vec2 contact_normal = { 0,0 };
+    if (ParticleAndMapCollision(particle.pos,{ 3,3,2,2 },particle.vel, gWorld.current_map, contact_normal, dt))
+    {
+        if (contact_normal.x != 0) { particle.vel.x *= contact_normal.x; particle.vel.x *= 0.6f; particle.extra1--; }
+        if (contact_normal.y != 0) { particle.vel.y *= contact_normal.y; particle.vel.y *= 0.6f; particle.extra1--; }
+    }
+
+    particle.pos.x += particle.vel.x * dt;
+    particle.pos.y += particle.vel.y * dt;
+}
+
+// PARTICLE_TYPE_LBREAK
+
+GLOBAL constexpr float PARTICLE_LBREAK_FORCE_MIN = 150.0f;
+GLOBAL constexpr float PARTICLE_LBREAK_FORCE_MAX = 200.0f;
+
+INTERNAL void ParticleCreateLBreak (Particle& particle)
+{
+    particle.vel = RotateVec2({ RandomFloatRange(PARTICLE_LBREAK_FORCE_MIN, PARTICLE_LBREAK_FORCE_MAX), 0.0f }, RandomFloatRange(0, (float)M_PI*2));
+}
+
+INTERNAL void ParticleUpdateLBreak (Particle& particle, float dt)
+{
+    particle.vel.y += GRAVITY * 0.5f;
+
+    Vec2 contact_normal = { 0,0 };
+    if (ParticleAndMapCollision(particle.pos,{ 3,3,2,2 },particle.vel, gWorld.current_map, contact_normal, dt))
+    {
+        CreateParticles(PARTICLE_TYPE_SBREAK, (int)particle.pos.x+4,(int)particle.pos.y+4,(int)particle.pos.x+4,(int)particle.pos.y+4, 2,3);
+        particle.dead = true;
+    }
+
+    particle.pos.x += particle.vel.x * dt;
+    particle.pos.y += particle.vel.y * dt;
+}

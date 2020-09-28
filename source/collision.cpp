@@ -123,6 +123,56 @@ INTERNAL bool EntityAndMapCollision (Vec2 pos, Rect bounds, Vec2& vel, Map& map,
     return collided;
 }
 
+INTERNAL bool ParticleAndMapCollision (Vec2 pos, Rect bounds, Vec2& vel, Map& map, Vec2& contact_normal, float dt)
+{
+    struct Collision
+    {
+        int ix,iy;
+        float t;
+    };
+
+    std::vector<Collision> collisions;
+    for (int iy=0; iy<map.h; ++iy)
+    {
+        for (int ix=0; ix<map.w; ++ix)
+        {
+            int index = iy*map.w+ix;
+            Tile* tile = &map.tiles[index];
+            if (tile->type == TILE_SOLID)
+            {
+                Vec2 cp,cn;
+                float ct=0;
+
+                if (EntityAndTileCollision(pos,bounds,vel, ix,iy, cp,cn,ct, dt))
+                {
+                    collisions.push_back({ ix,iy, ct });
+                }
+            }
+        }
+    }
+
+    std::sort(collisions.begin(), collisions.end(),
+    [](const Collision& a, const Collision& b)
+    {
+        return (a.t < b.t);
+    });
+
+    bool collided = false;
+
+    for (auto c: collisions)
+    {
+        Vec2 cp,cn;
+        float ct=0;
+        if (EntityAndTileCollision(pos,bounds,vel, c.ix,c.iy, cp,cn,ct, dt))
+        {
+            contact_normal = cn;
+            collided = true;
+        }
+    }
+
+    return collided;
+}
+
 INTERNAL bool EntityAndEntityCollision (Vec2 apos, Rect abounds, Vec2 bpos, Rect bbounds)
 {
     Rect a,b;
