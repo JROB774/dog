@@ -1,9 +1,10 @@
 #ifndef WORLD_HPP
 #define WORLD_HPP
 
-GLOBAL constexpr const char* START_MAP = "tutorial-main-start.bmp";
-GLOBAL constexpr int         START_X   = 188;
-GLOBAL constexpr int         START_Y   = 140;
+GLOBAL constexpr const char* START_MAP  = "tutorial-main-start.bmp";
+GLOBAL constexpr int         START_X    = 188;
+GLOBAL constexpr int         START_Y    = 140;
+GLOBAL constexpr Flip        START_FLIP = FLIP_HORZ;
 
 GLOBAL constexpr int ROOM_W = 20;
 GLOBAL constexpr int ROOM_H = 15;

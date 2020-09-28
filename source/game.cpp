@@ -5,7 +5,7 @@ INTERNAL void InitGame ()
     InitGui();
     InitBones();
     InitParticleSystem();
-    CreateDog(gGameState.dog, START_X, START_Y);
+    CreateDog(gGameState.dog, START_X, START_Y, START_FLIP);
     // LoadWorld(START_MAP);
 }
 
@@ -52,7 +52,7 @@ INTERNAL void StartGame ()
     gGameState.dog.pos.y    = START_Y;
     gGameState.dog.vel.x    = 0;
     gGameState.dog.vel.y    = 0;
-    gGameState.dog.flip     = FLIP_NONE;
+    gGameState.dog.flip     = START_FLIP;
     gGameState.dog.grounded = true;
 
     gGameState.dog.start_state    = gGameState.dog.state;

@@ -60,7 +60,7 @@ struct Dog
     bool start_grounded;
 };
 
-INTERNAL void CreateDog  (Dog& dog, float x, float y);
+INTERNAL void CreateDog  (Dog& dog, float x, float y, Flip flip);
 INTERNAL void DeleteDog  (Dog& dog);
 INTERNAL void UpdateDog  (Dog& dog, float dt);
 INTERNAL void DrawDog    (Dog& dog, float dt);
