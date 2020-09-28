@@ -221,6 +221,9 @@ INTERNAL void WorldTransitionIfOutOfBounds ()
         py = 0;
     }
 
+    // Apply some extra upward velocity so the player can go upwsrd nicely.
+    if (up) gGameState.dog.vel.y -= (DOG_JUMP_FORCE / 2);
+
     gGameState.dog.pos = { (float)px, (float)py };
 
     gGameState.dog.start_state    = gGameState.dog.state;

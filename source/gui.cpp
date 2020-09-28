@@ -20,7 +20,7 @@ INTERNAL void DrawGui (float dt)
     while (total.length() < 3) total = "0" + total;
     std::string text = collected + "/" + total;
     if (GetBoneCollectedCount() >= GetBoneTotalCount()) text += "!";
-    DrawText(gAppState.sfont, text, gGui.current_x+2, 0, MakeColor(1,1,1));
+    DrawText(gAppState.sfont, text, gGui.current_x+15, 1, MakeColor(1,1,1));
 }
 
 /*
