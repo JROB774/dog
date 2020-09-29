@@ -13,6 +13,7 @@ INTERNAL void DrawGui (float dt)
 {
     // Hard-coded that the bone counter doesn't display in the tutorial zone as there's no bones.
     if (gWorld.current_zone == "tutorial") return;
+    if (IsFading() && gFade.state == FADE_OUT) return;
 
     DrawImage(gGui.splat, gGui.current_x,0);
 

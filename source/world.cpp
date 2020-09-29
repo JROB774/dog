@@ -173,8 +173,21 @@ INTERNAL void WorldTransitionIfOutOfBounds ()
     if (py + (ph/2) > gWorld.current_map.h * TILE_H) { wy++; down  = true; }
 
     std::string new_map = gWorld.rooms[wy][wx];
+    std::string new_zone = TokenizeString(new_map, '-')[0];;
 
-    gWorld.current_zone = TokenizeString(new_map, '-')[0];
+    // Perform the appropriate fade out when transitioninig.
+    if (new_zone != gWorld.current_zone)
+    {
+        gWorld.current_zone = new_zone; // We need to set this so we won't trigger this if again on the fade callback.
+        FadeType   fade_type = FADE_NONE;
+        if (up   ) fade_type = FADE_UP;
+        if (right) fade_type = FADE_RIGHT;
+        if (down ) fade_type = FADE_DOWN;
+        if (left ) fade_type = FADE_LEFT;
+        StartFade(fade_type, [](){ WorldTransitionIfOutOfBounds(); });
+        return;
+    }
+
     gWorld.current_map_name = new_map;
 
     FreeMap(gWorld.current_map);

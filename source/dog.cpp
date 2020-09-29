@@ -85,6 +85,8 @@ INTERNAL void DeleteDog (Dog& dog)
 
 INTERNAL void UpdateDog (Dog& dog, float dt)
 {
+    if (IsFading()) return; // Prevents crashes from transitioning too far in the map!
+
     bool old_grounded = dog.grounded;
     Vec2 old_vel = dog.vel;
 

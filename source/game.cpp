@@ -23,7 +23,8 @@ INTERNAL void UpdateGame (float dt)
 {
     if (IsKeyPressed(SDL_SCANCODE_ESCAPE) || IsButtonPressed(SDL_CONTROLLER_BUTTON_START)) Pause();
 
-    WorldTransitionIfOutOfBounds();
+    if (!IsFading()) WorldTransitionIfOutOfBounds();
+
 	UpdateDog(gGameState.dog, dt);
     UpdateParticles(dt);
     UpdateCamera(dt);
