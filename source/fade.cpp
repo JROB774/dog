@@ -21,44 +21,128 @@ GLOBAL struct Fade
 
 INTERNAL void StartFadeUp ()
 {
-    // @Incomplete: ...
+    gFade.x1 = 0.0f;
+    gFade.y1 = WINDOW_SCREEN_H;
 }
 INTERNAL void DoFadeUp (float dt)
 {
-    // @Incomplete: ...
+    if (gFade.state == FADE_OUT)
+    {
+        gFade.y1 -= FADE_SPEED * dt;
+        DrawImage(gFade.up, gFade.x1,gFade.y1);
+        if (gFade.y1 <= -16)
+        {
+            gFade.state = FADE_BLACK;
+            // Setup for the fade in.
+            gFade.x1 = 0.0f;
+            gFade.y1 = 0.0f;
+        }
+    }
+    else if (gFade.state == FADE_IN)
+    {
+        gFade.y1 -= FADE_SPEED * dt;
+        DrawImage(gFade.down, gFade.x1,gFade.y1);
+        if (gFade.y1 <= -gFade.down.h)
+        {
+            gFade.type = FADE_NONE;
+        }
+    }
 }
 
 // FADE_RIGHT
 
 INTERNAL void StartFadeRight ()
 {
-    // @Incomplete: ...
+    gFade.x1 = -gFade.right.w;
+    gFade.y1 = 0.0f;
 }
 INTERNAL void DoFadeRight (float dt)
 {
-    // @Incomplete: ...
+    if (gFade.state == FADE_OUT)
+    {
+        gFade.x1 += FADE_SPEED * dt;
+        DrawImage(gFade.right, gFade.x1,gFade.y1);
+        if (gFade.x1 >= 0.0f)
+        {
+            gFade.state = FADE_BLACK;
+            // Setup for the fade in.
+            gFade.x1 = -16.0f;
+            gFade.y1 = 0.0f;
+        }
+    }
+    else if (gFade.state == FADE_IN)
+    {
+        gFade.x1 += FADE_SPEED * dt;
+        DrawImage(gFade.left, gFade.x1,gFade.y1);
+        if (gFade.x1 >= WINDOW_SCREEN_W)
+        {
+            gFade.type = FADE_NONE;
+        }
+    }
 }
 
 // FADE_DOWN
 
 INTERNAL void StartFadeDown ()
 {
-    // @Incomplete: ...
+    gFade.x1 = 0.0f;
+    gFade.y1 = -gFade.down.h;
 }
 INTERNAL void DoFadeDown (float dt)
 {
-    // @Incomplete: ...
+    if (gFade.state == FADE_OUT)
+    {
+        gFade.y1 += FADE_SPEED * dt;
+        DrawImage(gFade.down, gFade.x1,gFade.y1);
+        if (gFade.y1 >= 0.0f)
+        {
+            gFade.state = FADE_BLACK;
+            // Setup for the fade in.
+            gFade.x1 = 0.0f;
+            gFade.y1 = -16.0f;
+        }
+    }
+    else if (gFade.state == FADE_IN)
+    {
+        gFade.y1 += FADE_SPEED * dt;
+        DrawImage(gFade.up, gFade.x1,gFade.y1);
+        if (gFade.y1 >= WINDOW_SCREEN_H)
+        {
+            gFade.type = FADE_NONE;
+        }
+    }
 }
 
 // FADE_LEFT
 
 INTERNAL void StartFadeLeft ()
 {
-    // @Incomplete: ...
+    gFade.x1 = WINDOW_SCREEN_W;
+    gFade.y1 = 0.0f;
 }
 INTERNAL void DoFadeLeft (float dt)
 {
-    // @Incomplete: ...
+    if (gFade.state == FADE_OUT)
+    {
+        gFade.x1 -= FADE_SPEED * dt;
+        DrawImage(gFade.left, gFade.x1,gFade.y1);
+        if (gFade.x1 <= -16)
+        {
+            gFade.state = FADE_BLACK;
+            // Setup for the fade in.
+            gFade.x1 = 0.0f;
+            gFade.y1 = 0.0f;
+        }
+    }
+    else if (gFade.state == FADE_IN)
+    {
+        gFade.x1 -= FADE_SPEED * dt;
+        DrawImage(gFade.right, gFade.x1,gFade.y1);
+        if (gFade.x1 <= -gFade.right.w)
+        {
+            gFade.type = FADE_NONE;
+        }
+    }
 }
 
 // FADE_SPECIAL
