@@ -78,7 +78,7 @@ INTERNAL void UpdateMenu (float dt)
                 switch (gMenuState.selected)
                 {
                     case (MENU_ITEM_PLAYGAME): StartFade(FADE_SPECIAL, [](){ StartGame(); }); break;
-                    case (MENU_ITEM_CONTROLS): gMenuState.mode = MENU_MODE_CONTROLS; break;
+                    case (MENU_ITEM_CONTROLS): ResetAnimation(gMenuState.help_anim); gMenuState.mode = MENU_MODE_CONTROLS; break;
                     case (MENU_ITEM_SETTINGS): gMenuState.mode = MENU_MODE_SETTINGS; gMenuState.selected = 0; break;
                     case (MENU_ITEM_EXITGAME): gWindow.running = false; break;
                 }
