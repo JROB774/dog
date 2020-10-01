@@ -11,8 +11,9 @@ INTERNAL void QuitGui ()
 
 INTERNAL void DrawGui (float dt)
 {
-    // Hard-coded that the bone counter doesn't display in the tutorial zone as there's no bones.
-    if (gWorld.current_zone == "tutorial") return;
+    // Hard-coded that the bone counter doesn't display in the tutorial or hub zones as there's no bones.
+    if (gWorld.current_zone == "tutorial" || gWorld.current_zone == "hub") return;
+
     if (IsFading() && gFade.state == FADE_OUT) return;
 
     DrawImage(gGui.splat, gGui.current_x,0);
@@ -26,11 +27,3 @@ INTERNAL void DrawGui (float dt)
     if (GetBoneCollectedCount() >= GetBoneTotalCount()) text += "!";
     DrawText(gAppState.sfont, text, gGui.current_x+15, 1, MakeColor(1,1,1));
 }
-
-/*
-INTERNAL void DisplayGui ()
-{
-    gGui.target_x = 0;
-    gGui.timer = 2.5; // Seconds!
-}
-*/
