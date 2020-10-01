@@ -41,7 +41,6 @@
 * [x] Bones should remember they've been collected when transitioning maps, between sessions, etc.
 * [x] Improve the player's collision with tiles.
 * [x] Fix issues with updward map transitions.
-* [ ] Implement sone enemies.
 
 ## TiKo
 
@@ -54,8 +53,16 @@
 
 ## Unassigned
 
-* [ ] Add intro splash screen.
-* [ ] Add game content.
-* [ ] Win state.
+* [ ] Add Music?
+* [ ] Add Splash Screen
+* [ ] Add Abilities:
+  * [ ] Double Jump
+  * [ ] Jump Dash
+* [ ] Add Zones:
+  * [ ] Zone 1
+  * [ ] Zone 2
+  * [ ] Zone 3
+  * [ ] Zone 4
+* [ ] Add Ending
 
 *Flesh out these and add more as needed...*
