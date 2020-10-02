@@ -6,8 +6,8 @@ GLOBAL struct Settings
     int window_width;
     int window_height;
     bool fullscreen;
-    bool sound;
-    bool music;
+    float sound_volume;
+    float music_volume;
 
 } gSettings;
 

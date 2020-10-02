@@ -1,6 +1,13 @@
 #ifndef MIXER_HPP
 #define MIXER_HPP
 
+static struct Mixer
+{
+    float sound_volume;
+    float music_volume;
+
+} gMixer;
+
 struct Sound
 {
     Mix_Chunk* data;
@@ -13,10 +20,13 @@ INTERNAL void LoadSound (Sound& sound, std::string file_name);
 INTERNAL void FreeSound (Sound& sound);
 INTERNAL void PlaySound (Sound& sound, int loops = 0);
 
-INTERNAL void SetSound  (bool enable);
-INTERNAL bool IsSoundOn ();
+INTERNAL void SetSoundVolume (float volume); // [0-1]
+INTERNAL void SetMusicVolume (float volume); // [0-1]
 
-INTERNAL void SetMusic  (bool enable);
+INTERNAL float GetSoundVolume ();
+INTERNAL float GetMusicVolume ();
+
+INTERNAL bool IsSoundOn ();
 INTERNAL bool IsMusicOn ();
 
 #endif /* MIXER_HPP */

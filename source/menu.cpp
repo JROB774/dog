@@ -49,10 +49,12 @@ INTERNAL void QuitMenu ()
 
 INTERNAL void UpdateMenu (float dt)
 {
-    bool up     = (IsKeyPressed(SDL_SCANCODE_UP)   || IsKeyPressed(SDL_SCANCODE_W)      || IsButtonPressed(SDL_CONTROLLER_BUTTON_DPAD_UP)   || IsLeftStickUpPressed());
-    bool down   = (IsKeyPressed(SDL_SCANCODE_DOWN) || IsKeyPressed(SDL_SCANCODE_S)      || IsButtonPressed(SDL_CONTROLLER_BUTTON_DPAD_DOWN) || IsLeftStickDownPressed());
-    bool action = (IsKeyPressed(SDL_SCANCODE_Z)    || IsKeyPressed(SDL_SCANCODE_SPACE)  || IsButtonPressed(SDL_CONTROLLER_BUTTON_A)         || IsButtonPressed(SDL_CONTROLLER_BUTTON_X));
-    bool back   = (IsKeyPressed(SDL_SCANCODE_X)    || IsKeyPressed(SDL_SCANCODE_ESCAPE) || IsButtonPressed(SDL_CONTROLLER_BUTTON_B));
+    bool up     = (IsKeyPressed(SDL_SCANCODE_UP)    || IsKeyPressed(SDL_SCANCODE_W)      || IsButtonPressed(SDL_CONTROLLER_BUTTON_DPAD_UP)    || IsLeftStickUpPressed());
+    bool down   = (IsKeyPressed(SDL_SCANCODE_DOWN)  || IsKeyPressed(SDL_SCANCODE_S)      || IsButtonPressed(SDL_CONTROLLER_BUTTON_DPAD_DOWN)  || IsLeftStickDownPressed());
+    bool right  = (IsKeyPressed(SDL_SCANCODE_RIGHT) || IsKeyPressed(SDL_SCANCODE_D)      || IsButtonPressed(SDL_CONTROLLER_BUTTON_DPAD_RIGHT) || IsLeftStickRightPressed());
+    bool left   = (IsKeyPressed(SDL_SCANCODE_LEFT)  || IsKeyPressed(SDL_SCANCODE_A)      || IsButtonPressed(SDL_CONTROLLER_BUTTON_DPAD_LEFT)  || IsLeftStickLeftPressed());
+    bool action = (IsKeyPressed(SDL_SCANCODE_Z)     || IsKeyPressed(SDL_SCANCODE_SPACE)  || IsButtonPressed(SDL_CONTROLLER_BUTTON_A)          || IsButtonPressed(SDL_CONTROLLER_BUTTON_X));
+    bool back   = (IsKeyPressed(SDL_SCANCODE_X)     || IsKeyPressed(SDL_SCANCODE_ESCAPE) || IsButtonPressed(SDL_CONTROLLER_BUTTON_B));
 
     switch (gMenuState.mode)
     {
@@ -113,14 +115,52 @@ INTERNAL void UpdateMenu (float dt)
                 ResetAnimation(gMenuState.caret_anim);
                 PlaySound(gMenuState.snd_change);
             }
+            if (left)
+            {
+                if (gMenuState.selected == MENU_ITEM_SETTINGS_SOUND)
+                {
+                    if (GetSoundVolume() > 0.0f)
+                    {
+                        SetSoundVolume(GetSoundVolume()-0.1f);
+                        PlaySound(gMenuState.snd_select);
+                    }
+                }
+                if (gMenuState.selected == MENU_ITEM_SETTINGS_MUSIC)
+                {
+                    if (GetMusicVolume() > 0.0f)
+                    {
+                        SetMusicVolume(GetMusicVolume()-0.1f);
+                        PlaySound(gMenuState.snd_select);
+                    }
+                }
+            }
+            if (right)
+            {
+                if (gMenuState.selected == MENU_ITEM_SETTINGS_SOUND)
+                {
+                    if (GetSoundVolume() < 1.0f)
+                    {
+                        SetSoundVolume(GetSoundVolume()+0.1f);
+                        PlaySound(gMenuState.snd_select);
+                    }
+                }
+                if (gMenuState.selected == MENU_ITEM_SETTINGS_MUSIC)
+                {
+                    if (GetMusicVolume() < 1.0f)
+                    {
+                        SetMusicVolume(GetMusicVolume()+0.1f);
+                        PlaySound(gMenuState.snd_select);
+                    }
+                }
+            }
             if (action)
             {
                 PlaySound(gMenuState.snd_select);
                 switch (gMenuState.selected)
                 {
                     case (MENU_ITEM_SETTINGS_FULLSCREEN): SetFullscreen((IsFullscreen()) ? false : true); break;
-                    case (MENU_ITEM_SETTINGS_SOUND): SetSound((IsSoundOn()) ? false : true); break;
-                    case (MENU_ITEM_SETTINGS_MUSIC): SetMusic((IsMusicOn()) ? false : true); break;
+                    // case (MENU_ITEM_SETTINGS_SOUND): SetSound((IsSoundOn()) ? false : true); break;
+                    // case (MENU_ITEM_SETTINGS_MUSIC): SetMusic((IsMusicOn()) ? false : true); break;
                     case (MENU_ITEM_SETTINGS_RESET): ResetSettings(); break;
                     case (MENU_ITEM_SETTINGS_DELETE): DeleteData(); break;
                     case (MENU_ITEM_SETTINGS_BACK):
@@ -202,8 +242,8 @@ INTERNAL void RenderMenu (float dt)
             DrawImage(gMenuState.title, tx,ty);
 
             std::string fullscreen_text = std::string("FULLSCREEN ") + std::string((IsFullscreen()) ? "ON" : "OFF");
-            std::string sound_text = std::string("SOUND ") + std::string((IsSoundOn()) ? "ON" : "OFF");
-            std::string music_text = std::string("MUSIC ") + std::string((IsMusicOn()) ? "ON" : "OFF");
+            std::string sound_text = std::string("SOUND ") + std::to_string(GetSoundVolume());
+            std::string music_text = std::string("MUSIC ") + std::to_string(GetMusicVolume());
             std::string reset_text = "RESET OPTIONS";
             std::string delete_text = "DELETE SAVE GAME";
             std::string back_text = "BACK";
