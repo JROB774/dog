@@ -25,6 +25,7 @@ INTERNAL void InitMenu ()
 
     LoadImage(gMenuState.title, "title.bmp");
     LoadImage(gMenuState.help, "help.bmp");
+    LoadImage(gMenuState.bar, "bar.bmp");
     LoadImage(gMenuState.caret, "caret.bmp");
 
     LoadAnimation(gMenuState.help_anim, "help.anim");
@@ -44,6 +45,7 @@ INTERNAL void QuitMenu ()
 
     FreeImage(gMenuState.title);
     FreeImage(gMenuState.help);
+    FreeImage(gMenuState.bar);
     FreeImage(gMenuState.caret);
 }
 
@@ -159,8 +161,6 @@ INTERNAL void UpdateMenu (float dt)
                 switch (gMenuState.selected)
                 {
                     case (MENU_ITEM_SETTINGS_FULLSCREEN): SetFullscreen((IsFullscreen()) ? false : true); break;
-                    // case (MENU_ITEM_SETTINGS_SOUND): SetSound((IsSoundOn()) ? false : true); break;
-                    // case (MENU_ITEM_SETTINGS_MUSIC): SetMusic((IsMusicOn()) ? false : true); break;
                     case (MENU_ITEM_SETTINGS_RESET): ResetSettings(); break;
                     case (MENU_ITEM_SETTINGS_DELETE): DeleteData(); break;
                     case (MENU_ITEM_SETTINGS_BACK):
@@ -242,8 +242,8 @@ INTERNAL void RenderMenu (float dt)
             DrawImage(gMenuState.title, tx,ty);
 
             std::string fullscreen_text = std::string("FULLSCREEN ") + std::string((IsFullscreen()) ? "ON" : "OFF");
-            std::string sound_text = std::string("SOUND ") + std::to_string(GetSoundVolume());
-            std::string music_text = std::string("MUSIC ") + std::to_string(GetMusicVolume());
+            std::string sound_text = "SOUND ";
+            std::string music_text = "MUSIC ";
             std::string reset_text = "RESET OPTIONS";
             std::string delete_text = "DELETE SAVE GAME";
             std::string back_text = "BACK";
@@ -265,14 +265,22 @@ INTERNAL void RenderMenu (float dt)
             DrawText(gAppState.sfont, reset_text, tx,ty, MakeColor(0,0,0));
             ty -= 16;
 
-            tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, music_text)) / 2;
+            tx = roundf((float)WINDOW_SCREEN_W - (GetTextWidth(gAppState.sfont, music_text) + gMenuState.bar.w)) / 2;
             if (gMenuState.selected == MENU_ITEM_SETTINGS_MUSIC) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
             DrawText(gAppState.sfont, music_text, tx,ty, MakeColor(0,0,0));
+            tx += GetTextWidth(gAppState.sfont, music_text);
+            SDL_Rect music_bar_clip = { 0, 0, (int)gMenuState.bar.w, 12 };
+            music_bar_clip.y = (int)roundf((gMenuState.bar.h-12) * GetMusicVolume());
+            DrawImage(gMenuState.bar, tx,ty, FLIP_NONE, &music_bar_clip);
             ty -= 16;
 
-            tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, sound_text)) / 2;
+            tx = roundf((float)WINDOW_SCREEN_W - (GetTextWidth(gAppState.sfont, sound_text) + gMenuState.bar.w)) / 2;
             if (gMenuState.selected == MENU_ITEM_SETTINGS_SOUND) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
             DrawText(gAppState.sfont, sound_text, tx,ty, MakeColor(0,0,0));
+            tx += GetTextWidth(gAppState.sfont, sound_text);
+            SDL_Rect sound_bar_clip = { 0, 0, (int)gMenuState.bar.w, 12 };
+            sound_bar_clip.y = (int)roundf((gMenuState.bar.h-12) * GetSoundVolume());
+            DrawImage(gMenuState.bar, tx,ty, FLIP_NONE, &sound_bar_clip);
             ty -= 16;
 
             tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, fullscreen_text)) / 2;
