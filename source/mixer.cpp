@@ -48,6 +48,30 @@ INTERNAL void PlaySound (Sound& sound, int loops)
     }
 }
 
+INTERNAL void LoadMusic (Music& music, std::string file_name)
+{
+    file_name = "assets/music/" + file_name;
+    music.data = Mix_LoadMUS(file_name.c_str());
+    if (!music.data)
+    {
+        LOG_ERROR(ERR_MAX, "Failed to load music '%s'! (%s)", file_name.c_str(), Mix_GetError());
+    }
+}
+
+INTERNAL void FreeMusic (Music& music)
+{
+    Mix_FreeMusic(music.data);
+    music.data = NULL;
+}
+
+INTERNAL void PlayMusic (Music& music, int loops)
+{
+    if (Mix_PlayMusic(music.data, loops) == -1)
+    {
+        LOG_ERROR(ERR_MIN, "Failed to play music! (%s)", Mix_GetError());
+    }
+}
+
 INTERNAL void SetSoundVolume (float volume)
 {
     gMixer.sound_volume = std::clamp(volume, 0.0f, 1.0f);
