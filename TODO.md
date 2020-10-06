@@ -65,5 +65,6 @@
 * [ ] Add Content
 * [ ] Add Splash Screen
 * [ ] Add Ending
+* [ ] Screen shake for crushboi
 
 *Flesh out these and add more as needed...*

@@ -4,6 +4,7 @@ INTERNAL void InitGame ()
     InitBreakableBlock();
     InitGui();
     InitBones();
+    InitCrushBoi();
     InitParticleSystem();
     CreateDog(gGameState.dog, 0, 0, FLIP_NONE);
 

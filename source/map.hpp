@@ -25,6 +25,7 @@ struct Map
     std::vector<SmallBone> sbones;
     std::vector<BigBone> lbones;
     std::vector<BreakableBlock> bblocks;
+    std::vector<CrushBoi> cboi;
 };
 
 INTERNAL void LoadMap (Map& map, std::string file_name);
