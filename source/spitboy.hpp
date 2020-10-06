@@ -14,6 +14,7 @@ struct SpitBoy
     float angle;
     Rect bounds;
     std::vector<Spit> spit;
+    bool sight;
     float timer;
 };
 

@@ -8,5 +8,6 @@ INTERNAL bool EntityAndTileCollision   (Vec2 pos, Rect bounds, Vec2 vel, int tx,
 INTERNAL bool EntityAndMapCollision    (Vec2 pos, Rect bounds, Vec2& vel, Map& map, Vec2& contact_normal, float dt); // Also performs collision correction.
 INTERNAL bool ParticleAndMapCollision  (Vec2 pos, Rect bounds, Vec2& vel, Map& map, Vec2& contact_normal, float dt); // No collision correction!
 INTERNAL bool EntityAndEntityCollision (Vec2 apos, Rect abounds, Vec2 bpos, Rect bbounds);
+INTERNAL bool EntityLineOfSight        (Vec2 apos, Rect abounds, Vec2 bpos, Rect bbounds, Map& map);
 
 #endif /* COLLISION_HPP */

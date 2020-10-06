@@ -189,3 +189,36 @@ INTERNAL bool EntityAndEntityCollision (Vec2 apos, Rect abounds, Vec2 bpos, Rect
     return ((a.x + a.w > b.x) && (a.y + a.h > b.y) &&
             (a.x < b.x + b.w) && (a.y < b.y + b.h));
 }
+
+INTERNAL bool EntityLineOfSight (Vec2 apos, Rect abounds, Vec2 bpos, Rect bbounds, Map& map)
+{
+    float ax = apos.x + abounds.x + (abounds.w/2);
+    float ay = apos.y + abounds.y + (abounds.h/2);
+    float bx = bpos.x + bbounds.x + (bbounds.w/2);
+    float by = bpos.y + bbounds.y + (bbounds.h/2);
+
+    // float distance = sqrtf(powf(bx - ax, 2) + pow(by - ay, 2) * 1.0);
+
+    Vec2 delta = { bx-ax, by-ay };
+
+    for (int iy=0; iy<map.h; ++iy)
+    {
+        for (int ix=0; ix<map.w; ++ix)
+        {
+            int index = iy*map.w+ix;
+            Tile* tile = &map.tiles[index];
+            if (tile->type == TILE_SOLID)
+            {
+                Vec2 cp,cn;
+                float ct=0;
+
+                if (EntityAndTileCollision({ ax,ay },{ 0,0,1,1 },delta, ix,iy, cp,cn,ct, 1.0f))
+                {
+                    return false;
+                }
+            }
+        }
+    }
+
+    return true;
+}

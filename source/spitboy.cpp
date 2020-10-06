@@ -30,21 +30,27 @@ INTERNAL void UpdateSpitBoy (SpitBoy& spitboy, float dt)
     float bx = gGameState.dog.pos.x + gGameState.dog.bounds.x + (gGameState.dog.bounds.w/2);
     float by = gGameState.dog.pos.y + gGameState.dog.bounds.y + (gGameState.dog.bounds.h/2);
 
-    spitboy.angle = atan2(ay - by, ax - bx);
+    float angle = atan2(ay - by, ax - bx);
+
+    spitboy.sight = EntityLineOfSight(spitboy.pos,spitboy.bounds, gGameState.dog.pos,gGameState.dog.bounds, gWorld.current_map);
+    if (spitboy.sight) spitboy.angle = angle;
 
     if (spitboy.timer > 0.0f) spitboy.timer -= dt;
     else
     {
-        Vec2 pos = { ax-(8/2)-2, ay-(8/2)-2 };
-        Vec2 vel = { -SPITBOY_SPIT_FORCE, 0.0f }, nvel;
+        if (spitboy.sight)
+        {
+            Vec2 pos = { ax-(8/2)-2, ay-(8/2)-2 };
+            Vec2 vel = { -SPITBOY_SPIT_FORCE, 0.0f }, nvel;
 
-        float angle = spitboy.angle + DegToRad(RandomFloatRange(-3.0f, 3.0f));
+            float spit_angle = spitboy.angle + DegToRad(RandomFloatRange(-3.0f, 3.0f));
 
-        nvel.x = vel.x * cos(angle) - vel.y * sin(angle);
-        nvel.y = vel.x * sin(angle) + vel.y * cos(angle);
+            nvel.x = vel.x * cos(spit_angle) - vel.y * sin(spit_angle);
+            nvel.y = vel.x * sin(spit_angle) + vel.y * cos(spit_angle);
 
-        spitboy.timer = SPITBOY_SPIT_COOLDOWN;
-        spitboy.spit.push_back({ pos, nvel, { 2,2,4,4 }, false });
+            spitboy.timer = SPITBOY_SPIT_COOLDOWN;
+            spitboy.spit.push_back({ pos, nvel, { 2,2,4,4 }, false });
+        }
     }
 
     for (auto& spit: spitboy.spit)
