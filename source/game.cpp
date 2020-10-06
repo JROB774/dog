@@ -6,10 +6,18 @@ INTERNAL void InitGame ()
     InitBones();
     InitParticleSystem();
     CreateDog(gGameState.dog, 0, 0, FLIP_NONE);
+
+    LoadMusic(gGameState.mus_game,      "skate.wav");
+    LoadMusic(gGameState.mus_tutorial,  "school.wav");
+    LoadMusic(gGameState.mus_challenge, "battle.wav");
 }
 
 INTERNAL void QuitGame ()
 {
+    FreeMusic(gGameState.mus_game);
+    FreeMusic(gGameState.mus_tutorial);
+    FreeMusic(gGameState.mus_challenge);
+
     DeleteDog(gGameState.dog);
     QuitParticleSystem();
     DeleteBreakableBlock();
@@ -42,7 +50,7 @@ INTERNAL void RenderGame (float dt)
     DrawGui(dt);
 }
 
-INTERNAL void StartGame (std::string start_map, float start_x, float start_y, Flip start_flip)
+INTERNAL void StartGame (std::string start_map, float start_x, float start_y, Flip start_flip, Music& music)
 {
     LoadWorld(start_map);
 
@@ -61,6 +69,8 @@ INTERNAL void StartGame (std::string start_map, float start_x, float start_y, Fl
     gGameState.dog.start_grounded = gGameState.dog.grounded;
 
     gAppState.state = APP_STATE_GAME;
+
+    PlayMusic(music);
 }
 
 INTERNAL void EndGame ()

@@ -34,7 +34,7 @@ INTERNAL void InitMenu ()
     LoadSound(gMenuState.snd_change, "change.wav");
     LoadSound(gMenuState.snd_select, "select.wav");
 
-    LoadMusic(gMenuState.music, "school.wav");
+    LoadMusic(gMenuState.music, "mushroom.wav");
 }
 
 INTERNAL void QuitMenu ()
@@ -85,8 +85,8 @@ INTERNAL void UpdateMenu (float dt)
                 PlaySound(gMenuState.snd_select);
                 switch (gMenuState.selected)
                 {
-                    case (MENU_ITEM_PLAYGAME): StartFade(FADE_SPECIAL, [](){ StartGame(START_GAME_MAP, START_GAME_X, START_GAME_Y, START_GAME_FLIP); }); break;
-                    case (MENU_ITEM_PLAYTUT ): StartFade(FADE_SPECIAL, [](){ StartGame(START_TUTORIAL_MAP, START_TUTORIAL_X, START_TUTORIAL_Y, START_TUTORIAL_FLIP); }); break;
+                    case (MENU_ITEM_PLAYGAME): StartFade(FADE_SPECIAL, [](){ StartGame(START_GAME_MAP, START_GAME_X, START_GAME_Y, START_GAME_FLIP, gGameState.mus_game); }); break;
+                    case (MENU_ITEM_PLAYTUT ): StartFade(FADE_SPECIAL, [](){ StartGame(START_TUTORIAL_MAP, START_TUTORIAL_X, START_TUTORIAL_Y, START_TUTORIAL_FLIP, gGameState.mus_tutorial); }); break;
                     case (MENU_ITEM_CONTROLS): ResetAnimation(gMenuState.help_anim); gMenuState.mode = MENU_MODE_CONTROLS; break;
                     case (MENU_ITEM_SETTINGS): gMenuState.mode = MENU_MODE_SETTINGS; gMenuState.selected = 0; break;
                     case (MENU_ITEM_EXITGAME): gWindow.running = false; break;

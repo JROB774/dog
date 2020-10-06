@@ -14,6 +14,10 @@ GLOBAL constexpr float GRAVITY = 32.0f;
 
 GLOBAL struct GameState
 {
+    Music mus_game;
+    Music mus_tutorial;
+    Music mus_challenge;
+
     Dog dog;
 
 } gGameState;
@@ -23,7 +27,7 @@ INTERNAL void QuitGame   ();
 INTERNAL void UpdateGame (float dt);
 INTERNAL void RenderGame (float dt);
 
-INTERNAL void StartGame (std::string start_map, float start_x, float start_y, Flip start_flip);
+INTERNAL void StartGame (std::string start_map, float start_x, float start_y, Flip start_flip, Music& music);
 INTERNAL void EndGame   ();
 
 #endif /* GAME_HPP */
