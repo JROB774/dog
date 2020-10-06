@@ -7,14 +7,14 @@ GLOBAL constexpr float DOG_WEIGHT = 0.75f;
 GLOBAL constexpr int DOG_CLIP_W = 24;
 GLOBAL constexpr int DOG_CLIP_H = 24;
 
-GLOBAL constexpr float DOG_BOUNDS_X =  5;
+GLOBAL constexpr float DOG_BOUNDS_X =  6;
 GLOBAL constexpr float DOG_BOUNDS_Y = 13;
-GLOBAL constexpr float DOG_BOUNDS_W = 14;
+GLOBAL constexpr float DOG_BOUNDS_W = 12;
 GLOBAL constexpr float DOG_BOUNDS_H =  7;
 
 GLOBAL constexpr float DOG_DEAD_TIME = 2.0f;
 
-INTERNAL void CreateDog (Dog& dog, float x, float y)
+INTERNAL void CreateDog (Dog& dog, float x, float y, Flip flip)
 {
     dog.state = DOG_STATE_IDLE;
 
@@ -24,7 +24,7 @@ INTERNAL void CreateDog (Dog& dog, float x, float y)
     dog.bounds = { DOG_BOUNDS_X,DOG_BOUNDS_Y,DOG_BOUNDS_W,DOG_BOUNDS_H };
 
     LoadImage(dog.image, "dog.bmp");
-    dog.flip = FLIP_NONE;
+    dog.flip = flip;
 
     dog.footstep_timer = 0.0f;
 
@@ -60,6 +60,7 @@ INTERNAL void CreateDog (Dog& dog, float x, float y)
 
     dog.dead_timer = 0.0f;
     dog.dead = false;
+    dog.deaths = 0;
 
     // This gets updated whenever the dog transitions from room-to-room and acts as the respawn point.
     dog.start_state    = dog.state;
@@ -84,6 +85,8 @@ INTERNAL void DeleteDog (Dog& dog)
 
 INTERNAL void UpdateDog (Dog& dog, float dt)
 {
+    if (IsFading()) return; // Prevents crashes from transitioning too far in the map!
+
     bool old_grounded = dog.grounded;
     Vec2 old_vel = dog.vel;
 
@@ -97,15 +100,6 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
     dog.jump_press   = (IsKeyPressed(SDL_SCANCODE_Z)  || IsKeyPressed(SDL_SCANCODE_SPACE)  || IsButtonPressed(SDL_CONTROLLER_BUTTON_A));
     dog.jump_release = (IsKeyReleased(SDL_SCANCODE_Z) || IsKeyReleased(SDL_SCANCODE_SPACE) || IsButtonReleased(SDL_CONTROLLER_BUTTON_A));
     dog.action       = (IsKeyPressed(SDL_SCANCODE_X)  || IsButtonPressed(SDL_CONTROLLER_BUTTON_X));
-
-    /*
-    if (dog.jump_press)
-    {
-        CreateParticles(PARTICLE_TYPE_LBREAK, dog.pos.x+12,dog.pos.y+12,dog.pos.x+12,dog.pos.y+12, 0,1);
-        CreateParticles(PARTICLE_TYPE_MBREAK, dog.pos.x+12,dog.pos.y+12,dog.pos.x+12,dog.pos.y+12, 1,2);
-        CreateParticles(PARTICLE_TYPE_SBREAK, dog.pos.x+12,dog.pos.y+12,dog.pos.x+12,dog.pos.y+12, 3,7);
-    }
-    */
 
     // If the dog is dead respawn when a button is pressed or after some time.
     if (dog.dead)
@@ -204,6 +198,26 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
         PlaySound(dog.snd_land);
     }
 
+    // Try and break blocks if the action button was pressed.
+    bool block_broken = false;
+    if (dog.action)
+    {
+        for (auto& bblock: gWorld.current_map.bblocks)
+        {
+            if (!bblock.dead)
+            {
+                if (TryBreakABlock(dog, bblock))
+                {
+                    block_broken = true;
+                }
+            }
+        }
+    }
+    if (block_broken) // Do this out here so the sound only plays once and doesn't layer.
+    {
+        PlaySound(gBreakableBlockSound);
+    }
+
     // Handle setting the dog's current animation state.
     if (!dog.grounded)
     {
@@ -226,22 +240,14 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
         {
             if (dog.state != DOG_STATE_BARK)
             {
-                if (dog.action)
+                if (dog.action && !block_broken)
                 {
-	            	if(!dog.up && !dog.right && !dog.left && !dog.down){
-	                    ResetAnimation(dog.anim[DOG_STATE_BARK]);
-	                    dog.state = DOG_STATE_BARK;
-	                    PlaySound(dog.snd_bark);
-                	}
-		            else{
-	            	    for (auto& bblocks: gWorld.current_map.bblocks)
-					    {
-					    	if(!bblocks.dead){
-					    		Rect temp = {dog.pos.x + dog.bounds.x, dog.pos.y + dog.bounds.y, dog.bounds.w, dog.bounds.h};
-					    		BreakbleBlockCollision(temp, bblocks);
-					    	}
-					    }
-		            }
+	            	// if (!dog.up && !dog.right && !dog.left && !dog.down)
+                    // {
+                    ResetAnimation(dog.anim[DOG_STATE_BARK]);
+                    dog.state = DOG_STATE_BARK;
+                    PlaySound(dog.snd_bark);
+                	// }
 			    }
             }
 
@@ -303,7 +309,8 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
             PlaySound(dog.snd_explode0);
             KillDog(dog);
             CreateParticles(PARTICLE_TYPE_EXPLODE1, (int)dog.pos.x-16,(int)dog.pos.y-16,(int)dog.pos.x+DOG_CLIP_W+16,(int)dog.pos.y+DOG_CLIP_H+16, 4,8);
-            CreateParticles(PARTICLE_TYPE_SMOKE, (int)dog.pos.x,(int)dog.pos.y,(int)dog.pos.x+DOG_CLIP_W,(int)dog.pos.y+DOG_CLIP_H, 4,8);
+            CreateParticles(PARTICLE_TYPE_SMOKE1, (int)dog.pos.x,(int)dog.pos.y,(int)dog.pos.x+DOG_CLIP_W,(int)dog.pos.y+DOG_CLIP_H, 4,8);
+            break;
         }
     }
     for (auto& sbone: gWorld.current_map.sbones)
@@ -357,8 +364,10 @@ INTERNAL void DrawDog (Dog& dog, float dt)
 
 INTERNAL void KillDog (Dog& dog)
 {
+    if (dog.dead) return;
     dog.dead_timer = DOG_DEAD_TIME;
     dog.dead = true;
+    dog.deaths++;
 }
 
 INTERNAL void RespawnDog (Dog& dog)
@@ -377,4 +386,5 @@ INTERNAL void RespawnDog (Dog& dog)
     ClearParticles();
     // Respawn bones.
     RespawnMapBones();
+    RespawnMapBlocks();
 }

@@ -5,7 +5,7 @@ INTERNAL void InitGame ()
     InitGui();
     InitBones();
     InitParticleSystem();
-    CreateDog(gGameState.dog, START_X, START_Y);
+    CreateDog(gGameState.dog, START_X, START_Y, START_FLIP);
     // LoadWorld(START_MAP);
 }
 
@@ -13,6 +13,7 @@ INTERNAL void QuitGame ()
 {
     DeleteDog(gGameState.dog);
     QuitParticleSystem();
+    DeleteBreakableBlock();
     DeleteBones();
     QuitGui();
     FreeWorld();
@@ -22,7 +23,8 @@ INTERNAL void UpdateGame (float dt)
 {
     if (IsKeyPressed(SDL_SCANCODE_ESCAPE) || IsButtonPressed(SDL_CONTROLLER_BUTTON_START)) Pause();
 
-    WorldTransitionIfOutOfBounds();
+    if (!IsFading()) WorldTransitionIfOutOfBounds();
+
 	UpdateDog(gGameState.dog, dt);
     UpdateParticles(dt);
     UpdateCamera(dt);
@@ -31,12 +33,12 @@ INTERNAL void UpdateGame (float dt)
 INTERNAL void RenderGame (float dt)
 {
     BeginCamera();
-    DrawMapBackg(gWorld.current_map);
-    DrawMapEntities(gWorld.current_map, dt);
+    DrawMapBackground(gWorld.current_map);
+    DrawMapBackEntities(gWorld.current_map, dt);
     DrawDog(gGameState.dog, dt);
     DrawParticles(dt);
-    DrawMapSpikes(gWorld.current_map);
-    DrawMapFront(gWorld.current_map);
+    DrawMapFrontEntities(gWorld.current_map, dt);
+    DrawMapFrontTiles(gWorld.current_map);
     EndCamera();
     DrawGui(dt);
 }
@@ -51,7 +53,7 @@ INTERNAL void StartGame ()
     gGameState.dog.pos.y    = START_Y;
     gGameState.dog.vel.x    = 0;
     gGameState.dog.vel.y    = 0;
-    gGameState.dog.flip     = FLIP_NONE;
+    gGameState.dog.flip     = START_FLIP;
     gGameState.dog.grounded = true;
 
     gGameState.dog.start_state    = gGameState.dog.state;

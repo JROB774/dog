@@ -8,7 +8,8 @@ enum ParticleType
     PARTICLE_TYPE_PUFF,
     PARTICLE_TYPE_BASH,
     PARTICLE_TYPE_EXPLODE1,
-    PARTICLE_TYPE_SMOKE,
+    PARTICLE_TYPE_SMOKE1,
+    PARTICLE_TYPE_SMOKE2,
     PARTICLE_TYPE_SBONE,
     PARTICLE_TYPE_LBONE,
     PARTICLE_TYPE_SBREAK,
@@ -58,8 +59,10 @@ INTERNAL void ParticleCreateBash     (Particle& particle);
 INTERNAL void ParticleUpdateBash     (Particle& particle, float dt);
 INTERNAL void ParticleCreateExplode1 (Particle& particle);
 INTERNAL void ParticleUpdateExplode1 (Particle& particle, float dt);
-INTERNAL void ParticleCreateSmoke    (Particle& particle);
-INTERNAL void ParticleUpdateSmoke    (Particle& particle, float dt);
+INTERNAL void ParticleCreateSmoke1   (Particle& particle);
+INTERNAL void ParticleUpdateSmoke1   (Particle& particle, float dt);
+INTERNAL void ParticleCreateSmoke2   (Particle& particle);
+INTERNAL void ParticleUpdateSmoke2   (Particle& particle, float dt);
 INTERNAL void ParticleCreateSBone    (Particle& particle);
 INTERNAL void ParticleUpdateSBone    (Particle& particle, float dt);
 INTERNAL void ParticleCreateLBone    (Particle& particle);
@@ -92,7 +95,8 @@ GLOBAL const ParticleBase PARTICLE_BASE[PARTICLE_TYPE_TOTAL]
     { ParticleCreatePuff,     ParticleUpdatePuff,     { "effect-puff0.anim", "effect-puff1.anim", "effect-puff2.anim" }, -1, -1 }, // PARTICLE_TYPE_SPEC
     { ParticleCreateBash,     ParticleUpdateBash,     { "effect-spec4.anim", "effect-spec5.anim", "effect-spec6.anim", "effect-spec7.anim" }, 0.1f, 0.3f }, // PARTICLE_TYPE_BASH
     { ParticleCreateExplode1, ParticleUpdateExplode1, { "effect-explode0.anim", "effect-explode1.anim", "effect-explode2.anim", "effect-explode3.anim" }, -1, -1 }, // PARTICLE_TYPE_EXPLODE1
-    { ParticleCreateSmoke,    ParticleUpdateSmoke,    { "effect-smoke0.anim", "effect-smoke1.anim" }, -1, -1 }, // PARTICLE_TYPE_SMOKE
+    { ParticleCreateSmoke1,   ParticleUpdateSmoke1,   { "effect-smoke0.anim", "effect-smoke1.anim" }, -1, -1 }, // PARTICLE_TYPE_SMOKE1
+    { ParticleCreateSmoke2,   ParticleUpdateSmoke2,   { "effect-smoke2.anim", "effect-smoke3.anim" }, -1, -1 }, // PARTICLE_TYPE_SMOKE2
     { ParticleCreateSBone,    ParticleUpdateSBone,    { "effect-sbone.anim" }, -1, -1 }, // PARTICLE_TYPE_SBONE
     { ParticleCreateLBone,    ParticleUpdateLBone,    { "effect-lbone.anim" }, -1, -1 }, // PARTICLE_TYPE_LBONE
     { ParticleCreateSBreak,   ParticleUpdateSBreak,   { "effect-sbreak0.anim", "effect-sbreak1.anim", "effect-sbreak2.anim", "effect-sbreak3.anim", "effect-sbreak4.anim", "effect-sbreak5.anim", "effect-sbreak6.anim", "effect-sbreak7.anim" }, 6,6 }, // PARTICLE_TYPE_SBREAK

@@ -13,8 +13,8 @@ INTERNAL bool InitMixer ()
 
     Mix_AllocateChannels(32);
 
-    SetSound(gSettings.sound);
-    SetMusic(gSettings.music);
+    SetSoundVolume(gSettings.sound_volume);
+    SetMusicVolume(gSettings.music_volume);
 
     return true;
 }
@@ -48,22 +48,36 @@ INTERNAL void PlaySound (Sound& sound, int loops)
     }
 }
 
-INTERNAL void SetSound (bool enable)
+INTERNAL void SetSoundVolume (float volume)
 {
-    Mix_Volume(-1, (enable) ? MIX_MAX_VOLUME : 0);
+    gMixer.sound_volume = std::clamp(volume, 0.0f, 1.0f);
+    int ivolume = (int)((float)MIX_MAX_VOLUME * gMixer.sound_volume);
+    Mix_Volume(-1, ivolume);
+}
+
+INTERNAL void SetMusicVolume (float volume)
+{
+    gMixer.music_volume = std::clamp(volume, 0.0f, 1.0f);
+    int ivolume = (int)((float)MIX_MAX_VOLUME * gMixer.music_volume);
+    Mix_VolumeMusic(ivolume);
+}
+
+INTERNAL float GetSoundVolume ()
+{
+    return gMixer.sound_volume;
+}
+
+INTERNAL float GetMusicVolume ()
+{
+    return gMixer.music_volume;
 }
 
 INTERNAL bool IsSoundOn ()
 {
-    return Mix_Volume(-1,-1);
-}
-
-INTERNAL void SetMusic (bool enable)
-{
-    Mix_VolumeMusic((enable) ? MIX_MAX_VOLUME : 0);
+    return (gMixer.sound_volume > 0.0f);
 }
 
 INTERNAL bool IsMusicOn ()
 {
-    return Mix_VolumeMusic(-1);
+    return (gMixer.music_volume > 0.0f);
 }

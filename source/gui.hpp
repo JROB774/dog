@@ -14,6 +14,4 @@ INTERNAL void InitGui ();
 INTERNAL void QuitGui ();
 INTERNAL void DrawGui (float dt);
 
-// INTERNAL void DisplayGui ();
-
 #endif /* GUI_HPP */

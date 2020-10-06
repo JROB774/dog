@@ -26,7 +26,7 @@
   * [x] Collect Bone:
     * [x] Small
     * [x] Large
-  * [ ] Break Block
+  * [x] Break Block
 * [x] Main menu / title screen:
   * [x] Sections:
     * [x] Play Game
@@ -41,7 +41,6 @@
 * [x] Bones should remember they've been collected when transitioning maps, between sessions, etc.
 * [x] Improve the player's collision with tiles.
 * [x] Fix issues with updward map transitions.
-* [ ] Implement sone enemies.
 
 ## TiKo
 
@@ -50,12 +49,14 @@
 * [x] Implement collectible bones:
   * [x] Small bones.
   * [x] Large bones.
-* [ ] Implement the dig system with breakable blocks.
+* [x] Implement the dig system with breakable blocks.
 
 ## Unassigned
 
-* [ ] Add intro splash screen.
-* [ ] Add game content.
-* [ ] Win state.
+* [ ] Add Music?
+* [ ] Add Enemies
+* [ ] Add Content
+* [ ] Add Splash Screen
+* [ ] Add Ending
 
 *Flesh out these and add more as needed...*

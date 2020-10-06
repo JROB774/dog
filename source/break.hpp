@@ -1,22 +1,26 @@
 #ifndef BREAK_HPP
 #define BREAK_HPP
 
-struct BreakableBlock{
+struct Dog; // Predeclare because this needs to know about it!
 
-	Rect posistion;
+struct BreakableBlock
+{
+    Vec2 pos;
+	Rect bounds;
 	bool dead;
 };
 
-GLOBAL Image breakable_block_image;
+GLOBAL Image gBreakableBlockImage;
+GLOBAL Sound gBreakableBlockSound;
 
-void InitBreakableBlock();
-void CreateBreakableBlock(BreakableBlock& _block, float _x, float _y);
+INTERNAL void InitBreakableBlock   ();
+INTERNAL void DeleteBreakableBlock ();
 
-void BreakbleBlockCollision(Rect _bounds, BreakableBlock& _block);
-void BreakBlock(BreakableBlock& _block);
+INTERNAL void CreateBreakableBlock (BreakableBlock& block, float x, float y);
+INTERNAL bool TryBreakABlock       (Dog& dog, BreakableBlock& block);
+INTERNAL void BreakBlock           (BreakableBlock& block);
+INTERNAL void RenderBreakableBlock (BreakableBlock& block);
 
-void RenderBreakableBlock(BreakableBlock& _block);
+INTERNAL void RespawnMapBlocks ();
 
-void DestroyBreakableBlock();
-
-#endif
+#endif /* BREAK_HPP */

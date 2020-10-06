@@ -114,8 +114,8 @@ INTERNAL bool EntityAndMapCollision (Vec2 pos, Rect bounds, Vec2& vel, Map& map,
         if (EntityAndTileCollision(pos,bounds,vel, c.ix,c.iy, cp,cn,ct, dt))
         {
             contact_normal = cn;
-            vel.x += cn.x * abs(vel.x) * (1-ct);
-            vel.y += cn.y * abs(vel.y) * (1-ct);
+            vel.x += cn.x * abs(vel.x) * (1-c.t);
+            vel.y += cn.y * abs(vel.y) * (1-c.t);
             collided = true;
         }
     }

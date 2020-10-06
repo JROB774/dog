@@ -86,7 +86,7 @@ INTERNAL void LoadWorld (std::string start_map)
     {
         auto tokens = TokenizeString(start_map, '-');
         ASSERT(tokens.size() == 3); // Tileset-Zone-Map
-        gWorld.current_zone = tokens[1];
+        gWorld.current_zone = tokens[0];
     }
 
     // Load all the bones in the current zone for the counter.
@@ -102,7 +102,7 @@ INTERNAL void LoadWorld (std::string start_map)
             {
                 auto tokens = TokenizeString(room, '-');
                 ASSERT(tokens.size() == 3); // Tileset-Zone-Map
-                if (tokens[1] == gWorld.current_zone)
+                if (tokens[0] == gWorld.current_zone)
                 {
                     if (std::find(rooms_done.begin(), rooms_done.end(), room) == rooms_done.end())
                     {
@@ -173,8 +173,21 @@ INTERNAL void WorldTransitionIfOutOfBounds ()
     if (py + (ph/2) > gWorld.current_map.h * TILE_H) { wy++; down  = true; }
 
     std::string new_map = gWorld.rooms[wy][wx];
+    std::string new_zone = TokenizeString(new_map, '-')[0];;
 
-    gWorld.current_zone = TokenizeString(new_map, '-')[1];
+    // Perform the appropriate fade out when transitioninig.
+    if (new_zone != gWorld.current_zone)
+    {
+        gWorld.current_zone = new_zone; // We need to set this so we won't trigger this if again on the fade callback.
+        FadeType   fade_type = FADE_NONE;
+        if (up   ) fade_type = FADE_UP;
+        if (right) fade_type = FADE_RIGHT;
+        if (down ) fade_type = FADE_DOWN;
+        if (left ) fade_type = FADE_LEFT;
+        StartFade(fade_type, [](){ WorldTransitionIfOutOfBounds(); });
+        return;
+    }
+
     gWorld.current_map_name = new_map;
 
     FreeMap(gWorld.current_map);

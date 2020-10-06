@@ -15,8 +15,10 @@ GLOBAL struct MenuState
 
     Image title;
     Image help;
+    Image bar;
     Image caret;
 
+    Animation help_anim;
     Animation caret_anim;
 
     Sound snd_change;

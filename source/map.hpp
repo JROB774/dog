@@ -4,7 +4,7 @@
 GLOBAL constexpr int TILE_W = 16;
 GLOBAL constexpr int TILE_H = 16;
 
-enum TileType { TILE_EMPTY, TILE_BACKG, TILE_SOLID };
+enum TileType { TILE_EMPTY, TILE_SOLID };
 
 struct Tile
 {
@@ -15,9 +15,11 @@ struct Tile
 
 struct Map
 {
+    Image background;
     Image tileset;
     int w,h;
     std::vector<Tile> tiles;
+    bool has_background;
     // Entities
     std::vector<Spike> spikes;
     std::vector<SmallBone> sbones;
@@ -28,9 +30,9 @@ struct Map
 INTERNAL void LoadMap (Map& map, std::string file_name);
 INTERNAL void FreeMap (Map& map);
 
-INTERNAL void DrawMapBackg    (Map& map);
-INTERNAL void DrawMapEntities (Map& map, float dt);
-INTERNAL void DrawMapSpikes   (Map& map);
-INTERNAL void DrawMapFront    (Map& map);
+INTERNAL void DrawMapBackground    (Map& map);
+INTERNAL void DrawMapBackEntities  (Map& map, float dt);
+INTERNAL void DrawMapFrontEntities (Map& map, float dt);
+INTERNAL void DrawMapFrontTiles    (Map& map);
 
 #endif /* MAP_HPP */

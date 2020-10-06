@@ -52,6 +52,7 @@ struct Dog
 
     float dead_timer;
     bool dead;
+    int deaths;
 
     DogState start_state;
     Vec2 start_pos,start_vel;
@@ -59,7 +60,7 @@ struct Dog
     bool start_grounded;
 };
 
-INTERNAL void CreateDog  (Dog& dog, float x, float y);
+INTERNAL void CreateDog  (Dog& dog, float x, float y, Flip flip);
 INTERNAL void DeleteDog  (Dog& dog);
 INTERNAL void UpdateDog  (Dog& dog, float dt);
 INTERNAL void DrawDog    (Dog& dog, float dt);
