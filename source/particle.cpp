@@ -168,6 +168,24 @@ INTERNAL void ParticleUpdateBash (Particle& particle, float dt)
     particle.pos.y += particle.vel.y * dt;
 }
 
+INTERNAL void ParticleCreateBashLeft (Particle& particle)
+{
+    particle.vel = { PARTICLE_BASH_FORCE, 0.0f };
+    particle.vel = RotateVec2(particle.vel, RandomFloatRange(DegToRad(30 + 90), DegToRad(150 + 90)));
+}
+
+INTERNAL void ParticleCreateBashRight (Particle& particle)
+{
+    particle.vel = { PARTICLE_BASH_FORCE, 0.0f };
+    particle.vel = RotateVec2(particle.vel, RandomFloatRange(DegToRad(30 + 270), DegToRad(150 + 270)));
+}
+
+INTERNAL void ParticleCreateBashUp (Particle& particle)
+{
+    particle.vel = { PARTICLE_BASH_FORCE, 0.0f };
+    particle.vel = RotateVec2(particle.vel, RandomFloatRange(DegToRad(30 + 180), DegToRad(150 + 180)));
+}
+
 // PARTICLE_BASH_EXPLODE1
 
 INTERNAL void ParticleCreateExplode1 (Particle& particle)

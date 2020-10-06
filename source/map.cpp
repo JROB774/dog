@@ -206,11 +206,13 @@ INTERNAL void FreeMap (Map& map)
     map.lbones.clear();
     map.bblocks.clear();
     map.spitboys.clear();
+    map.cboi.clear();
 }
 
 INTERNAL void UpdateMap (Map& map, float dt)
 {
     for (auto& spitb: map.spitboys) UpdateSpitBoy(spitb, dt);
+    for (auto& cboi: map.cboi) UpdateCrushBoi(cboi, dt);
 }
 
 INTERNAL void DrawMapBackground (Map& map)
@@ -259,4 +261,5 @@ INTERNAL void ResetMap ()
     RespawnMapBlocks();
 
     for (auto& spitboy: gWorld.current_map.spitboys) ResetSpitBoy(spitboy);
+    for (auto& cboi: gWorld.current_map.cboi) ResetCrushBoi(cboi);
 }

@@ -15,6 +15,9 @@ enum ParticleType
     PARTICLE_TYPE_SBREAK,
     PARTICLE_TYPE_MBREAK,
     PARTICLE_TYPE_LBREAK,
+    PARTICLE_TYPE_BASH_LEFT,
+    PARTICLE_TYPE_BASH_RIGHT,
+    PARTICLE_TYPE_BASH_UP,
     PARTICLE_TYPE_TOTAL
 };
 
@@ -73,6 +76,9 @@ INTERNAL void ParticleCreateMBreak   (Particle& particle);
 INTERNAL void ParticleUpdateMBreak   (Particle& particle, float dt);
 INTERNAL void ParticleCreateLBreak   (Particle& particle);
 INTERNAL void ParticleUpdateLBreak   (Particle& particle, float dt);
+INTERNAL void ParticleCreateBashLeft     (Particle& particle);
+INTERNAL void ParticleCreateBashRight     (Particle& particle);
+INTERNAL void ParticleCreateBashUp     (Particle& particle);
 
 // Base information for each type of particle.
 
@@ -102,6 +108,9 @@ GLOBAL const ParticleBase PARTICLE_BASE[PARTICLE_TYPE_TOTAL]
     { ParticleCreateSBreak,   ParticleUpdateSBreak,   { "effect-sbreak0.anim", "effect-sbreak1.anim", "effect-sbreak2.anim", "effect-sbreak3.anim", "effect-sbreak4.anim", "effect-sbreak5.anim", "effect-sbreak6.anim", "effect-sbreak7.anim" }, 6,6 }, // PARTICLE_TYPE_SBREAK
     { ParticleCreateMBreak,   ParticleUpdateMBreak,   { "effect-mbreak0.anim", "effect-mbreak1.anim" }, 6,6 }, // PARTICLE_TYPE_MBREAK
     { ParticleCreateLBreak,   ParticleUpdateLBreak,   { "effect-lbreak0.anim" }, 6,6 }, // PARTICLE_TYPE_LBREAK
+    { ParticleCreateBashLeft,     ParticleUpdateBash,     { "effect-spec4.anim", "effect-spec5.anim", "effect-spec6.anim", "effect-spec7.anim" }, 0.1f, 0.3f }, // PARTICLE_TYPE_BASH_LEFT
+    { ParticleCreateBashRight,     ParticleUpdateBash,     { "effect-spec4.anim", "effect-spec5.anim", "effect-spec6.anim", "effect-spec7.anim" }, 0.1f, 0.3f }, // PARTICLE_TYPE_BASH_RIGHT
+    { ParticleCreateBashUp,     ParticleUpdateBash,     { "effect-spec4.anim", "effect-spec5.anim", "effect-spec6.anim", "effect-spec7.anim" }, 0.1f, 0.3f }, // PARTICLE_TYPE_BASH_UP
 
 };
 

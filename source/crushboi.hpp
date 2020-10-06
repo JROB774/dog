@@ -9,11 +9,11 @@ struct CrushBoi
 	bool vertical;
 	bool active;
 
-	float x;
-	float y;
+	Vec2 pos;
+	Vec2 start_pos;
+	Vec2 vel;
 
-	float vel;
-	
+	Rect bounds;	
 };
 
 GLOBAL SDL_Rect gCrushBoiClip = {0, 0, 16, 16}; 
@@ -26,6 +26,7 @@ void DeinitCrushBoi();
 void CreateCrushBoi(CrushBoi& _boi, float _x, float _y, bool _vertical);
 void UpdateCrushBoi(CrushBoi& _boi);
 void RenderCrushBoi(CrushBoi& _boi);
+void ResetCrushBoi(CrushBoi& _boi);
 void DestroyCrushBoi(CrushBoi& _boi);
 
 #endif
