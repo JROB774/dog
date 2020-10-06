@@ -341,15 +341,6 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
             }
         }
     }
-
-    for (auto& bblocks: gWorld.current_map.bblocks)
-    {
-    	if (!bblocks.dead)
-        {
-    		BreakbleBlockCollision(dog.bounds, bblocks);
-    	}
-    }
-
 }
 
 INTERNAL void DrawDog (Dog& dog, float dt)
