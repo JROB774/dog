@@ -114,6 +114,17 @@ INTERNAL float SinRange (float min, float max, float t)
     return min + half_range + sinf(t) * half_range;
 }
 
+INTERNAL float RoundToMultiple (float num, float multiple)
+{
+    if (multiple == 0) return num;
+
+    float rem = fmod(abs(num), multiple);
+    if (rem == 0) return num;
+
+    if (num < 0) return -(abs(num) - rem);
+    else return num + multiple - rem;
+}
+
 GLOBAL std::random_device gRandomDevice;
 GLOBAL std::mt19937 gRandomGenerator(gRandomDevice());
 

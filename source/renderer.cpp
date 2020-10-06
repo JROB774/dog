@@ -60,6 +60,22 @@ INTERNAL void DrawImage (Image& image, float x, float y, Flip flip, const SDL_Re
     SDL_RenderCopyExF(gWindow.renderer, image.texture, clip, &rect, 0.0f, NULL, flip);
 }
 
+INTERNAL void DrawImageEx (Image& image, float x, float y, float angle, Flip flip, const SDL_Rect* clip)
+{
+    SDL_Color c = ColorToSDLColor(image.color);
+    SDL_SetTextureColorMod(image.texture, c.r,c.g,c.b);
+    SDL_SetTextureAlphaMod(image.texture, c.a);
+    SDL_FRect rect = { x,y,image.w,image.h };
+    if (clip) { rect.w = (float)clip->w, rect.h = (float)clip->h; }
+    rect.x = roundf(rect.x) - gRenderOffset.x;
+    rect.y = roundf(rect.y) - gRenderOffset.y;
+    rect.w = roundf(rect.w);
+    rect.h = roundf(rect.h);
+    SDL_FPoint center = { image.w/2, image.h/2 };
+    if (clip) { center.x = (float)clip->w/2, center.y = (float)clip->h/2; }
+    SDL_RenderCopyExF(gWindow.renderer, image.texture, clip, &rect, angle, &center, flip);
+}
+
 INTERNAL void DrawText (Font& font, std::string text, float x, float y, Color color)
 {
     font.image.color = color;

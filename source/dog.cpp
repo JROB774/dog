@@ -306,10 +306,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
     {
         if (EntityAndEntityCollision(dog.pos,dog.bounds, { spike.x,spike.y },spike.bounds))
         {
-            PlaySound(dog.snd_explode0);
             KillDog(dog);
-            CreateParticles(PARTICLE_TYPE_EXPLODE1, (int)dog.pos.x-16,(int)dog.pos.y-16,(int)dog.pos.x+DOG_CLIP_W+16,(int)dog.pos.y+DOG_CLIP_H+16, 4,8);
-            CreateParticles(PARTICLE_TYPE_SMOKE1, (int)dog.pos.x,(int)dog.pos.y,(int)dog.pos.x+DOG_CLIP_W,(int)dog.pos.y+DOG_CLIP_H, 4,8);
             break;
         }
     }
@@ -341,6 +338,21 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
             }
         }
     }
+    for (auto& spitboy: gWorld.current_map.spitboys)
+    {
+        for (auto& spit: spitboy.spit)
+        {
+            if (!spit.dead)
+            {
+                if (EntityAndEntityCollision(dog.pos,dog.bounds, spit.pos,spit.bounds))
+                {
+                    KillSpit(spit);
+                    KillDog(dog);
+                    break;
+                }
+            }
+        }
+    }
 }
 
 INTERNAL void DrawDog (Dog& dog, float dt)
@@ -356,9 +368,12 @@ INTERNAL void DrawDog (Dog& dog, float dt)
 INTERNAL void KillDog (Dog& dog)
 {
     if (dog.dead) return;
+    PlaySound(dog.snd_explode0);
     dog.dead_timer = DOG_DEAD_TIME;
     dog.dead = true;
     dog.deaths++;
+    CreateParticles(PARTICLE_TYPE_EXPLODE1, (int)dog.pos.x-16,(int)dog.pos.y-16,(int)dog.pos.x+DOG_CLIP_W+16,(int)dog.pos.y+DOG_CLIP_H+16, 4,8);
+    CreateParticles(PARTICLE_TYPE_SMOKE1, (int)dog.pos.x,(int)dog.pos.y,(int)dog.pos.x+DOG_CLIP_W,(int)dog.pos.y+DOG_CLIP_H, 4,8);
 }
 
 INTERNAL void RespawnDog (Dog& dog)
@@ -373,9 +388,6 @@ INTERNAL void RespawnDog (Dog& dog)
     float cx = roundf(dog.pos.x + (DOG_CLIP_W/2) - (WINDOW_SCREEN_W/2));
     float cy = roundf(dog.pos.y + (DOG_CLIP_H/2) - (WINDOW_SCREEN_H/2));
     SetCamera(cx,cy);
-    // Clear particles.
-    ClearParticles();
-    // Respawn bones.
-    RespawnMapBones();
-    RespawnMapBlocks();
+    // Reset the map.
+    ResetMap();
 }
