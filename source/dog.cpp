@@ -353,6 +353,13 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
             }
         }
     }
+    for (auto& cboi: gWorld.current_map.cboi)
+    {
+        if(EntityAndEntityCollision(dog.pos,dog.bounds, cboi.pos, cboi.bounds)){
+            KillDog(dog);
+            break;        
+        }
+    }
 }
 
 INTERNAL void DrawDog (Dog& dog, float dt)
