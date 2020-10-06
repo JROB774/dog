@@ -5,6 +5,7 @@ INTERNAL void InitGame ()
     InitGui();
     InitBones();
     InitCrushBoi();
+    InitSpitBoy();
     InitParticleSystem();
     CreateDog(gGameState.dog, 0, 0, FLIP_NONE);
 
@@ -21,6 +22,7 @@ INTERNAL void QuitGame ()
 
     DeleteDog(gGameState.dog);
     QuitParticleSystem();
+    QuitSpitBoy();
     DeleteBreakableBlock();
     DeleteBones();
     QuitGui();
@@ -33,6 +35,7 @@ INTERNAL void UpdateGame (float dt)
 
     if (!IsFading()) WorldTransitionIfOutOfBounds();
 
+    UpdateMap(gWorld.current_map, dt);
 	UpdateDog(gGameState.dog, dt);
     UpdateParticles(dt);
     UpdateCamera(dt);

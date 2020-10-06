@@ -26,14 +26,19 @@ struct Map
     std::vector<BigBone> lbones;
     std::vector<BreakableBlock> bblocks;
     std::vector<CrushBoi> cboi;
+    std::vector<SpitBoy> spitboys;
 };
 
 INTERNAL void LoadMap (Map& map, std::string file_name);
 INTERNAL void FreeMap (Map& map);
 
+INTERNAL void UpdateMap (Map& map, float dt);
+
 INTERNAL void DrawMapBackground    (Map& map);
 INTERNAL void DrawMapBackEntities  (Map& map, float dt);
 INTERNAL void DrawMapFrontEntities (Map& map, float dt);
 INTERNAL void DrawMapFrontTiles    (Map& map);
+
+INTERNAL void ResetMap ();
 
 #endif /* MAP_HPP */

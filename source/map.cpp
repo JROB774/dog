@@ -12,14 +12,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 //                                        AARRGGBB
-GLOBAL constexpr U32 TILE_EMPTY_COLOR = 0xFFFFFFFF;
-GLOBAL constexpr U32 TILE_SOLID_COLOR = 0xFF000000;
-GLOBAL constexpr U32 TILE_SPIKE_COLOR = 0xFFFF0000;
-GLOBAL constexpr U32 TILE_SBONE_COLOR = 0xFFFFFF00;
-GLOBAL constexpr U32 TILE_LBONE_COLOR = 0xFF00FF00;
-GLOBAL constexpr U32 TILE_BBLOC_COLOR = 0xFF00FFFF;
-GLOBAL constexpr U32 TILE_CBOIH_COLOR = 0xFFB6FF00;
-GLOBAL constexpr U32 TILE_CBOIV_COLOR = 0xFF5B7F00;
+GLOBAL constexpr U32 TILE_EMPTY_COLOR = 0xFFFFFFFF; // WHITE
+GLOBAL constexpr U32 TILE_SOLID_COLOR = 0xFF000000; // BLACK
+GLOBAL constexpr U32 TILE_SPIKE_COLOR = 0xFFFF0000; // RED
+GLOBAL constexpr U32 TILE_SBONE_COLOR = 0xFFFFFF00; // YELLOW
+GLOBAL constexpr U32 TILE_LBONE_COLOR = 0xFF00FF00; // GREEN
+GLOBAL constexpr U32 TILE_BBLOC_COLOR = 0xFF00FFFF; // CYAN
+GLOBAL constexpr U32 TILE_SPITB_COLOR = 0xFFFF00FF; // MAGENTA
+GLOBAL constexpr U32 TILE_CBOIH_COLOR = 0xFFB6FF00; // LIME
+GLOBAL constexpr U32 TILE_CBOIV_COLOR = 0xFF5B7F00; // DARK LIME
 
 GLOBAL constexpr int TILE_FLAG_W = 0x01;
 GLOBAL constexpr int TILE_FLAG_S = 0x02;
@@ -179,6 +180,11 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
                     map.cboi.push_back(CrushBoi());
                     CreateCrushBoi(map.cboi.back(),(float)(ix*TILE_W), (float)(iy*TILE_H), false);
                 } break;
+                case (TILE_SPITB_COLOR): // SPIT BOYS!
+                {
+                    map.spitboys.push_back(SpitBoy());
+                    CreateSpitBoy(map.spitboys.back(), (float)(ix*TILE_W), (float)(iy*TILE_H));
+                } break;
             }
         }
     }
@@ -199,6 +205,12 @@ INTERNAL void FreeMap (Map& map)
     map.sbones.clear();
     map.lbones.clear();
     map.bblocks.clear();
+    map.spitboys.clear();
+}
+
+INTERNAL void UpdateMap (Map& map, float dt)
+{
+    for (auto& spitb: map.spitboys) UpdateSpitBoy(spitb, dt);
 }
 
 INTERNAL void DrawMapBackground (Map& map)
@@ -209,8 +221,9 @@ INTERNAL void DrawMapBackground (Map& map)
 
 INTERNAL void DrawMapBackEntities (Map& map, float dt)
 {
-    for (auto& sbone: map.sbones) RenderSmallBone(sbone, dt);
-    for (auto& lbone: map.lbones) RenderBigBone(lbone, dt);
+    for (auto& sbone: map.sbones  ) RenderSmallBone(sbone, dt);
+    for (auto& lbone: map.lbones  ) RenderBigBone(lbone, dt);
+    for (auto& spitb: map.spitboys) RenderSpitBoy(spitb, dt);
     for (auto& cboi:  map.cboi  ) RenderCrushBoi(cboi);
 }
 
@@ -236,4 +249,14 @@ INTERNAL void DrawMapFrontTiles (Map& map)
             }
         }
     }
+}
+
+INTERNAL void ResetMap ()
+{
+    ClearParticles();
+
+    RespawnMapBones();
+    RespawnMapBlocks();
+
+    for (auto& spitboy: gWorld.current_map.spitboys) ResetSpitBoy(spitboy);
 }

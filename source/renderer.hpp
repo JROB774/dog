@@ -14,7 +14,8 @@ INTERNAL void DrawFill  (float x,  float y,  float w,  float h,  Color color);
 INTERNAL void DrawRect  (Rect rect,                              Color color);
 INTERNAL void DrawFill  (Rect rect,                              Color color);
 
-INTERNAL void DrawImage (Image& image, float x, float y, Flip flip = FLIP_NONE, const SDL_Rect* clip = NULL);
-INTERNAL void DrawText  (Font& font, std::string text, float x, float y, Color color = { 1,1,1,1 });
+INTERNAL void DrawImage   (Image& image, float x, float y,                     Flip flip = FLIP_NONE, const SDL_Rect* clip = NULL);
+INTERNAL void DrawImageEx (Image& image, float x, float y, float angle = 0.0f, Flip flip = FLIP_NONE, const SDL_Rect* clip = NULL); // Angle in radians!
+INTERNAL void DrawText    (Font& font, std::string text, float x, float y, Color color = { 1,1,1,1 });
 
 #endif /* RENDERER_HPP */
