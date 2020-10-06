@@ -65,6 +65,6 @@ INTERNAL void StartGame (std::string start_map, float start_x, float start_y, Fl
 
 INTERNAL void EndGame ()
 {
-    gAppState.state = APP_STATE_MENU;
+    GoToMenu();
     FreeWorld();
 }

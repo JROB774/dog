@@ -5,9 +5,17 @@ GLOBAL constexpr int MIXER_SAMPLE_SIZE   = 2048;
 
 INTERNAL bool InitMixer ()
 {
+    /*
+    if (Mix_Init(MIX_INIT_MP3) != MIX_INIT_MP3)
+    {
+        LOG_ERROR(ERR_MAX, "Failed to init mixer! (%s)", Mix_GetError());
+        return false;
+    }
+    */
+
     if (Mix_OpenAudio(MIXER_FREQUENCY, MIXER_SAMPLE_FORMAT, MIXER_CHANNELS, MIXER_SAMPLE_SIZE) != 0)
     {
-        LOG_ERROR(ERR_MAX, "Failed to initialize audio mixer! (%s)", Mix_GetError());
+        LOG_ERROR(ERR_MAX, "Failed to open audio device! (%s)", Mix_GetError());
         return false;
     }
 
@@ -22,6 +30,7 @@ INTERNAL bool InitMixer ()
 INTERNAL void QuitMixer ()
 {
     Mix_CloseAudio();
+    // Mix_Quit();
 }
 
 INTERNAL void LoadSound (Sound& sound, std::string file_name)

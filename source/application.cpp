@@ -1,7 +1,5 @@
 INTERNAL void InitApplication ()
 {
-    gAppState.state = APP_STATE_MENU;
-
     LoadFont(gAppState.lfont, 24, 24, "lfont.bmp");
     LoadFont(gAppState.sfont, 12, 12, "sfont.bmp");
 
@@ -9,6 +7,8 @@ INTERNAL void InitApplication ()
     InitMenu ();
     InitGame ();
     InitPause();
+
+    GoToMenu();
 }
 
 INTERNAL void QuitApplication ()

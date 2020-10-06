@@ -33,10 +33,14 @@ INTERNAL void InitMenu ()
 
     LoadSound(gMenuState.snd_change, "change.wav");
     LoadSound(gMenuState.snd_select, "select.wav");
+
+    LoadMusic(gMenuState.music, "school.wav");
 }
 
 INTERNAL void QuitMenu ()
 {
+    FreeMusic(gMenuState.music);
+
     FreeSound(gMenuState.snd_change);
     FreeSound(gMenuState.snd_select);
 
@@ -290,4 +294,10 @@ INTERNAL void RenderMenu (float dt)
             ty -= 16;
         } break;
     }
+}
+
+INTERNAL void GoToMenu ()
+{
+    gAppState.state = APP_STATE_MENU;
+    PlayMusic(gMenuState.music);
 }
