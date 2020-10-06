@@ -54,15 +54,9 @@
 ## Unassigned
 
 * [ ] Add Music?
+* [ ] Add Enemies
+* [ ] Add Content
 * [ ] Add Splash Screen
-* [ ] Add Abilities:
-  * [ ] Double Jump
-  * [ ] Jump Dash
-* [ ] Add Zones:
-  * [ ] Zone 1
-  * [ ] Zone 2
-  * [ ] Zone 3
-  * [ ] Zone 4
 * [ ] Add Ending
 
 *Flesh out these and add more as needed...*
