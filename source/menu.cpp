@@ -1,6 +1,7 @@
 enum MenuItem
 {
     MENU_ITEM_PLAYGAME,
+    MENU_ITEM_PLAYTUT,
     MENU_ITEM_CONTROLS,
     MENU_ITEM_SETTINGS,
     MENU_ITEM_EXITGAME,
@@ -13,7 +14,6 @@ enum MenuSettingsItem
     MENU_ITEM_SETTINGS_SOUND,
     MENU_ITEM_SETTINGS_MUSIC,
     MENU_ITEM_SETTINGS_RESET,
-    MENU_ITEM_SETTINGS_DELETE,
     MENU_ITEM_SETTINGS_BACK,
     MENU_ITEM_SETTINGS_TOTAL
 };
@@ -81,7 +81,8 @@ INTERNAL void UpdateMenu (float dt)
                 PlaySound(gMenuState.snd_select);
                 switch (gMenuState.selected)
                 {
-                    case (MENU_ITEM_PLAYGAME): StartFade(FADE_SPECIAL, [](){ StartGame(); }); break;
+                    case (MENU_ITEM_PLAYGAME): StartFade(FADE_SPECIAL, [](){ StartGame(START_GAME_MAP, START_GAME_X, START_GAME_Y, START_GAME_FLIP); }); break;
+                    case (MENU_ITEM_PLAYTUT ): StartFade(FADE_SPECIAL, [](){ StartGame(START_TUTORIAL_MAP, START_TUTORIAL_X, START_TUTORIAL_Y, START_TUTORIAL_FLIP); }); break;
                     case (MENU_ITEM_CONTROLS): ResetAnimation(gMenuState.help_anim); gMenuState.mode = MENU_MODE_CONTROLS; break;
                     case (MENU_ITEM_SETTINGS): gMenuState.mode = MENU_MODE_SETTINGS; gMenuState.selected = 0; break;
                     case (MENU_ITEM_EXITGAME): gWindow.running = false; break;
@@ -162,7 +163,6 @@ INTERNAL void UpdateMenu (float dt)
                 {
                     case (MENU_ITEM_SETTINGS_FULLSCREEN): SetFullscreen((IsFullscreen()) ? false : true); break;
                     case (MENU_ITEM_SETTINGS_RESET): ResetSettings(); break;
-                    case (MENU_ITEM_SETTINGS_DELETE): DeleteData(); break;
                     case (MENU_ITEM_SETTINGS_BACK):
                     {
                         SaveSettings();
@@ -200,7 +200,8 @@ INTERNAL void RenderMenu (float dt)
 
             DrawImage(gMenuState.title, tx,ty);
 
-            std::string play_text     = (IsThereSaveData()) ? "CONTINUE" : "NEW GAME";
+            std::string play_text     = "PLAY GAME";
+            std::string tutorial_text = "TUTORIAL";
             std::string controls_text = "CONTROLS";
             std::string options_text  = "OPTIONS";
             std::string exit_text     = "EXIT GAME";
@@ -220,6 +221,11 @@ INTERNAL void RenderMenu (float dt)
             tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, controls_text)) / 2;
             if (gMenuState.selected == MENU_ITEM_CONTROLS) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
             DrawText(gAppState.sfont, controls_text, tx,ty, MakeColor(0,0,0));
+            ty -= 16;
+
+            tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, tutorial_text)) / 2;
+            if (gMenuState.selected == MENU_ITEM_PLAYTUT) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
+            DrawText(gAppState.sfont, tutorial_text, tx,ty, MakeColor(0,0,0));
             ty -= 16;
 
             tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, play_text)) / 2;
@@ -253,11 +259,6 @@ INTERNAL void RenderMenu (float dt)
             tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, back_text)) / 2;
             if (gMenuState.selected == MENU_ITEM_SETTINGS_BACK) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
             DrawText(gAppState.sfont, back_text, tx,ty, MakeColor(0,0,0));
-            ty -= 16;
-
-            tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, delete_text)) / 2;
-            if (gMenuState.selected == MENU_ITEM_SETTINGS_DELETE) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
-            DrawText(gAppState.sfont, delete_text, tx,ty, MakeColor(0,0,0));
             ty -= 16;
 
             tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, reset_text)) / 2;

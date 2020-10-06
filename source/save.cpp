@@ -2,6 +2,7 @@ GLOBAL constexpr const char* SAVE_FILE = "save.data";
 
 INTERNAL void SaveData ()
 {
+    /*
     FILE* save = fopen(SAVE_FILE, "w");
     if (!save) LOG_ERROR(ERR_MED, "Failed to save data!\n");
     else
@@ -22,10 +23,12 @@ INTERNAL void SaveData ()
 
         fclose(save);
     }
+    */
 }
 
 INTERNAL void LoadData ()
 {
+    /*
     if (IsThereSaveData())
     {
         GonObject save = GonObject::Load(SAVE_FILE);
@@ -54,18 +57,5 @@ INTERNAL void LoadData ()
             gBoneCollectedIds.push_back(save["bones"][i].String());
         }
     }
-}
-
-INTERNAL void DeleteData ()
-{
-    std::filesystem::remove(SAVE_FILE);
-
-    gBoneCollectedIds.clear();
-    gTempBoneCollectedIds.clear();
-    gCurrentZoneBoneTotal = 0;
-}
-
-INTERNAL bool IsThereSaveData ()
-{
-    return std::filesystem::exists(SAVE_FILE);
+    */
 }

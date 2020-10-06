@@ -1,9 +1,7 @@
 #ifndef SAVE_HPP
 #define SAVE_HPP
 
-INTERNAL void SaveData        ();
-INTERNAL void LoadData        ();
-INTERNAL void DeleteData      ();
-INTERNAL bool IsThereSaveData ();
+INTERNAL void SaveData ();
+INTERNAL void LoadData ();
 
 #endif /* SAVE_HPP */

@@ -5,8 +5,7 @@ INTERNAL void InitGame ()
     InitGui();
     InitBones();
     InitParticleSystem();
-    CreateDog(gGameState.dog, START_X, START_Y, START_FLIP);
-    // LoadWorld(START_MAP);
+    CreateDog(gGameState.dog, 0, 0, FLIP_NONE);
 }
 
 INTERNAL void QuitGame ()
@@ -43,17 +42,16 @@ INTERNAL void RenderGame (float dt)
     DrawGui(dt);
 }
 
-INTERNAL void StartGame ()
+INTERNAL void StartGame (std::string start_map, float start_x, float start_y, Flip start_flip)
 {
-    LoadData();
-    LoadWorld(START_MAP);
+    LoadWorld(start_map);
 
     gGameState.dog.state    = DOG_STATE_IDLE;
-    gGameState.dog.pos.x    = START_X;
-    gGameState.dog.pos.y    = START_Y;
+    gGameState.dog.pos.x    = start_x;
+    gGameState.dog.pos.y    = start_y;
     gGameState.dog.vel.x    = 0;
     gGameState.dog.vel.y    = 0;
-    gGameState.dog.flip     = START_FLIP;
+    gGameState.dog.flip     = start_flip;
     gGameState.dog.grounded = true;
 
     gGameState.dog.start_state    = gGameState.dog.state;
@@ -63,12 +61,10 @@ INTERNAL void StartGame ()
     gGameState.dog.start_grounded = gGameState.dog.grounded;
 
     gAppState.state = APP_STATE_GAME;
-    LoadData();
 }
 
 INTERNAL void EndGame ()
 {
     gAppState.state = APP_STATE_MENU;
-    SaveData();
     FreeWorld();
 }
