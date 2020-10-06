@@ -19,7 +19,7 @@ struct CrushBoi
 GLOBAL SDL_Rect gCrushBoiClip = {0, 0, 16, 16}; 
 GLOBAL Image gCrushBoiImage;
 //GLOBAL Sound gCrushBoiMove;
-//GLOBAL Sound gCrushBoiCollision; to do later
+GLOBAL Sound gCrushBoiHitSound;
 
 void InitCrushBoi();
 void DeinitCrushBoi();
