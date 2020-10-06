@@ -24,11 +24,11 @@ void UpdateCrushBoi(CrushBoi& _boi, float _dt)
 				particle_pos.x =  _boi.pos.x + (_boi.bounds.w/2);
 				if(_boi.vel.y < 0){
 					particle_pos.y = _boi.pos.y;
-					CreateParticles(PARTICLE_TYPE_BASH_UP, (int)particle_pos.x,(int)particle_pos.y,(int)particle_pos.x,(int)particle_pos.y, 4,8);
+					CreateParticles(PARTICLE_TYPE_BASH, (int)particle_pos.x,(int)particle_pos.y,(int)particle_pos.x,(int)particle_pos.y, 4,8);
 				}
 				if(_boi.vel.y > 0){
 					particle_pos.y = _boi.pos.y + _boi.bounds.h;
-					CreateParticles(PARTICLE_TYPE_BASH, (int)particle_pos.x,(int)particle_pos.y,(int)particle_pos.x,(int)particle_pos.y, 4,8);
+					CreateParticles(PARTICLE_TYPE_BASH_UP, (int)particle_pos.x,(int)particle_pos.y,(int)particle_pos.x,(int)particle_pos.y, 4,8);
 				}	
 			}
 			
