@@ -7,9 +7,9 @@
 * [x] Change how map names are formatted: tileset-mapname
 * [x] Replace static SDL with dynamic SDL.
 * [x] Add in SDL_mixer library.
-* [ ] Implement a simple audio system:
+* [x] Implement a simple audio system:
   * [x] Sounds
-  * [ ] Music
+  * [x] Music
 * [x] Animation system (simple frame-based animation playback).
 * [x] Map navigation (move from room to room).
 * [x] Spikes.
@@ -50,10 +50,10 @@
   * [x] Small bones.
   * [x] Large bones.
 * [x] Implement the dig system with breakable blocks.
+* [x] Add Music
 
 ## Unassigned
 
-* [ ] Add Music?
 * [ ] Add Enemies
 * [ ] Add Content
 * [ ] Add Splash Screen
