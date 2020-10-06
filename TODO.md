@@ -41,6 +41,8 @@
 * [x] Bones should remember they've been collected when transitioning maps, between sessions, etc.
 * [x] Improve the player's collision with tiles.
 * [x] Fix issues with updward map transitions.
+* [ ] Add Enemies:
+  * [ ] Aiming Turret
 
 ## TiKo
 
@@ -51,10 +53,15 @@
   * [x] Large bones.
 * [x] Implement the dig system with breakable blocks.
 * [x] Add Music
+* [ ] Add Enemies:
+  * [ ] Horizontal Crushers
+  * [ ] Vertiical Crushers
 
 ## Unassigned
 
-* [ ] Add Enemies
+* [ ] Add Enemies:
+  * [ ] Walk Back-and-Forth
+  * [ ] Walk Back-and-Forth (Charges on Sight)
 * [ ] Add Content
 * [ ] Add Splash Screen
 * [ ] Add Ending
