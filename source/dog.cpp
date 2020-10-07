@@ -242,13 +242,13 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
             {
                 if (dog.action && !block_broken)
                 {
-	            	// if (!dog.up && !dog.right && !dog.left && !dog.down)
+                    // if (!dog.up && !dog.right && !dog.left && !dog.down)
                     // {
                     ResetAnimation(dog.anim[DOG_STATE_BARK]);
                     dog.state = DOG_STATE_BARK;
                     PlaySound(dog.snd_bark);
-                	// }
-			    }
+                    // }
+                }
             }
 
             if (dog.state == DOG_STATE_BARK || dog.state == DOG_STATE_BLNK)
@@ -357,7 +357,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
     {
         if(EntityAndEntityCollision(dog.pos,dog.bounds, cboi.pos, cboi.bounds)){
             KillDog(dog);
-            break;        
+            break;
         }
     }
 }

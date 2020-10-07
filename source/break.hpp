@@ -6,8 +6,8 @@ struct Dog; // Predeclare because this needs to know about it!
 struct BreakableBlock
 {
     Vec2 pos;
-	Rect bounds;
-	bool dead;
+    Rect bounds;
+    bool dead;
 };
 
 GLOBAL Image gBreakableBlockImage;

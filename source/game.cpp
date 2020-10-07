@@ -36,7 +36,7 @@ INTERNAL void UpdateGame (float dt)
     if (!IsFading()) WorldTransitionIfOutOfBounds();
 
     UpdateMap(gWorld.current_map, dt);
-	UpdateDog(gGameState.dog, dt);
+    UpdateDog(gGameState.dog, dt);
     UpdateParticles(dt);
     UpdateCamera(dt);
 }

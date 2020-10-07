@@ -6,17 +6,17 @@
 
 struct CrushBoi
 {
-	bool vertical;
-	bool active;
+    bool vertical;
+    bool active;
 
-	Vec2 pos;
-	Vec2 start_pos;
-	Vec2 vel;
+    Vec2 pos;
+    Vec2 start_pos;
+    Vec2 vel;
 
-	Rect bounds;	
+    Rect bounds;
 };
 
-GLOBAL SDL_Rect gCrushBoiClip = {0, 0, 16, 16}; 
+GLOBAL SDL_Rect gCrushBoiClip = {0, 0, 16, 16};
 GLOBAL Image gCrushBoiImage;
 //GLOBAL Sound gCrushBoiMove;
 GLOBAL Sound gCrushBoiHitSound;

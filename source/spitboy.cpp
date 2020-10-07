@@ -3,15 +3,18 @@ GLOBAL constexpr float SPITBOY_SPIT_FORCE = 225.0f;
 
 GLOBAL Image gSpitBoyImage;
 GLOBAL Image gSpitImage;
+GLOBAL Sound gSpitBoySound;
 
 INTERNAL void InitSpitBoy ()
 {
     LoadImage(gSpitBoyImage, "spitboy.bmp");
     LoadImage(gSpitImage, "spit.bmp");
+    LoadSound(gSpitBoySound, "spit.wav");
 }
 
 INTERNAL void QuitSpitBoy ()
 {
+    FreeSound(gSpitBoySound);
     FreeImage(gSpitBoyImage);
     FreeImage(gSpitImage);
 }

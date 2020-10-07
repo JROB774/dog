@@ -8,8 +8,8 @@ struct SmallBone
     std::string id;
     float x, y;
     float yoff;
-	Rect bounds = {3,3,10,10};
-	bool dead = false;
+    Rect bounds = {3,3,10,10};
+    bool dead = false;
     float timer;
 };
 
@@ -18,8 +18,8 @@ struct BigBone
     std::string id;
     float x, y;
     float yoff;
-	Rect bounds = {4,4,16,16};
-	bool dead = false;
+    Rect bounds = {4,4,16,16};
+    bool dead = false;
     float timer;
 };
 

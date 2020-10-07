@@ -2,6 +2,4 @@ Smoke particle effect created by KnoblePersona (with modifications) on OpenGameA
     https://opengameart.org/content/smoke-fire-animated-particle-16x16
 
 Music from Captain Glouglou's Incredible Week Soundtrack
-	https://loyaltyfreakmusic.com/music/
-
-
+    https://loyaltyfreakmusic.com/music/
