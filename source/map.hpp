@@ -27,6 +27,7 @@ struct Map
     std::vector<BreakableBlock> bblocks;
     std::vector<CrushBoi> cboi;
     std::vector<SpitBoy> spitboys;
+    std::vector<WalkBoy> walkboys;
 };
 
 INTERNAL void LoadMap (Map& map, std::string file_name);
@@ -40,5 +41,7 @@ INTERNAL void DrawMapFrontEntities (Map& map, float dt);
 INTERNAL void DrawMapFrontTiles    (Map& map);
 
 INTERNAL void ResetMap ();
+
+INTERNAL Tile& GetMapTile (Map& map, int x, int y);
 
 #endif /* MAP_HPP */

@@ -355,7 +355,16 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
     }
     for (auto& cboi: gWorld.current_map.cboi)
     {
-        if(EntityAndEntityCollision(dog.pos,dog.bounds, cboi.pos, cboi.bounds)){
+        if (EntityAndEntityCollision(dog.pos,dog.bounds, cboi.pos, cboi.bounds))
+        {
+            KillDog(dog);
+            break;
+        }
+    }
+    for (auto& walkboy: gWorld.current_map.walkboys)
+    {
+        if (EntityAndEntityCollision(dog.pos,dog.bounds, walkboy.pos,walkboy.bounds))
+        {
             KillDog(dog);
             break;
         }

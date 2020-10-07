@@ -1,10 +1,16 @@
-void InitCrushBoi()
+INTERNAL void InitCrushBoi()
 {
     LoadImage(gCrushBoiImage, "crushboi.bmp");
     LoadSound(gCrushBoiHitSound, "crush.wav");
 }
 
-void CreateCrushBoi(CrushBoi& _boi, float _x, float _y, bool _vertical)
+INTERNAL void QuitCrushBoi()
+{
+    FreeSound(gCrushBoiHitSound);
+    FreeImage(gCrushBoiImage);
+}
+
+INTERNAL void CreateCrushBoi(CrushBoi& _boi, float _x, float _y, bool _vertical)
 {
     _boi.pos = {_x,_y};
     _boi.start_pos = {_x, _y};
@@ -14,7 +20,7 @@ void CreateCrushBoi(CrushBoi& _boi, float _x, float _y, bool _vertical)
     _boi.bounds = {0,0,16,16};
 }
 
-void UpdateCrushBoi(CrushBoi& _boi, float _dt)
+INTERNAL void UpdateCrushBoi(CrushBoi& _boi, float _dt)
 {
     if(_boi.active){
         Vec2 we_arent_using_this = {0,0};
@@ -75,21 +81,15 @@ void UpdateCrushBoi(CrushBoi& _boi, float _dt)
     }
 }
 
-void RenderCrushBoi(CrushBoi& _boi)
+INTERNAL void RenderCrushBoi(CrushBoi& _boi)
 {
     SDL_Rect temp_clip = gCrushBoiClip;
     if(_boi.vertical){temp_clip.x += 16;}
     DrawImage(gCrushBoiImage, _boi.pos.x, _boi.pos.y, SDL_FLIP_NONE, &temp_clip);
 }
 
-void ResetCrushBoi(CrushBoi& _boi)
+INTERNAL void ResetCrushBoi(CrushBoi& _boi)
 {
     _boi.pos = _boi.start_pos;
     _boi.active = false;
-}
-
-void DestroyCrushBoi(CrushBoi& _boi)
-{
-    FreeSound(gCrushBoiHitSound);
-    FreeImage(gCrushBoiImage);
 }
