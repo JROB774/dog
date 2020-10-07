@@ -22,6 +22,7 @@ GLOBAL constexpr U32 TILE_SPITB_COLOR = 0xFFFF00FF; // MAGENTA
 GLOBAL constexpr U32 TILE_CBOIH_COLOR = 0xFFB6FF00; // LIME
 GLOBAL constexpr U32 TILE_CBOIV_COLOR = 0xFF5B7F00; // DARK LIME
 GLOBAL constexpr U32 TILE_WALKB_COLOR = 0xFF7F0037; // DARK PINK?? idk i am color blind...
+GLOBAL constexpr U32 TILE_CHRGB_COLOR = 0xFFFF006E; // PINK
 
 GLOBAL constexpr int TILE_FLAG_W = 0x01;
 GLOBAL constexpr int TILE_FLAG_S = 0x02;
@@ -191,6 +192,11 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
                     map.walkboys.push_back(WalkBoy());
                     CreateWalkBoy(map.walkboys.back(), (float)(ix*TILE_W), (float)(iy*TILE_H));
                 } break;
+                case (TILE_CHRGB_COLOR): // CHARGE BOYS!
+                {
+                    map.chargeboys.push_back(ChargeBoy());
+                    CreateChargeBoy(map.chargeboys.back(), (float)(ix*TILE_W), (float)(iy*TILE_H));
+                } break;
             }
         }
     }
@@ -214,13 +220,15 @@ INTERNAL void FreeMap (Map& map)
     map.spitboys.clear();
     map.cboi.clear();
     map.walkboys.clear();
+    map.chargeboys.clear();
 }
 
 INTERNAL void UpdateMap (Map& map, float dt)
 {
-    for (auto& spitb: map.spitboys) UpdateSpitBoy (spitb, dt);
-    for (auto& cboi : map.cboi    ) UpdateCrushBoi(cboi,  dt);
-    for (auto& walkb: map.walkboys) UpdateWalkBoy (walkb, dt);
+    for (auto& spitb: map.spitboys  ) UpdateSpitBoy  (spitb, dt);
+    for (auto& cboi : map.cboi      ) UpdateCrushBoi (cboi,  dt);
+    for (auto& walkb: map.walkboys  ) UpdateWalkBoy  (walkb, dt);
+    for (auto& chrgb: map.chargeboys) UpdateChargeBoy(chrgb, dt);
 }
 
 INTERNAL void DrawMapBackground (Map& map)
@@ -231,11 +239,12 @@ INTERNAL void DrawMapBackground (Map& map)
 
 INTERNAL void DrawMapBackEntities (Map& map, float dt)
 {
-    for (auto& sbone: map.sbones  ) RenderSmallBone(sbone, dt);
-    for (auto& lbone: map.lbones  ) RenderBigBone  (lbone, dt);
-    for (auto& spitb: map.spitboys) RenderSpitBoy  (spitb, dt);
-    for (auto& cboi : map.cboi    ) RenderCrushBoi (cboi     );
-    for (auto& walkb: map.walkboys) RenderWalkBoy  (walkb, dt);
+    for (auto& sbone: map.sbones    ) RenderSmallBone(sbone, dt);
+    for (auto& lbone: map.lbones    ) RenderBigBone  (lbone, dt);
+    for (auto& spitb: map.spitboys  ) RenderSpitBoy  (spitb, dt);
+    for (auto& cboi : map.cboi      ) RenderCrushBoi (cboi     );
+    for (auto& walkb: map.walkboys  ) RenderWalkBoy  (walkb, dt);
+    for (auto& chrgb: map.chargeboys) RenderChargeBoy(chrgb, dt);
 }
 
 INTERNAL void DrawMapFrontEntities (Map& map, float dt)
@@ -269,9 +278,10 @@ INTERNAL void ResetMap ()
     RespawnMapBones();
     RespawnMapBlocks();
 
-    for (auto& spitboy: gWorld.current_map.spitboys) ResetSpitBoy(spitboy);
-    for (auto& cboi: gWorld.current_map.cboi) ResetCrushBoi(cboi);
-    for (auto& walkboy: gWorld.current_map.walkboys) ResetWalkBoy(walkboy);
+    for (auto& spitboy  : gWorld.current_map.spitboys  ) ResetSpitBoy  (spitboy  );
+    for (auto& cboi     : gWorld.current_map.cboi      ) ResetCrushBoi (cboi     );
+    for (auto& walkboy  : gWorld.current_map.walkboys  ) ResetWalkBoy  (walkboy  );
+    for (auto& chargeboy: gWorld.current_map.chargeboys) ResetChargeBoy(chargeboy);
 }
 
 INTERNAL Tile& GetMapTile (Map& map, int x, int y)

@@ -7,6 +7,7 @@ INTERNAL void InitGame ()
     InitCrushBoi();
     InitSpitBoy();
     InitWalkBoy();
+    InitChargeBoy();
     InitParticleSystem();
     CreateDog(gGameState.dog, 0, 0, FLIP_NONE);
 
@@ -26,6 +27,7 @@ INTERNAL void QuitGame ()
     QuitCrushBoi();
     QuitSpitBoy();
     QuitWalkBoy();
+    QuitChargeBoy();
     DeleteBreakableBlock();
     DeleteBones();
     QuitGui();

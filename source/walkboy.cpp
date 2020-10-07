@@ -58,6 +58,8 @@ INTERNAL void ResetWalkBoy (WalkBoy& walkboy)
     walkboy.flip = FLIP_NONE;
 }
 
+// HELPER FUNCTIONS
+
 INTERNAL bool WalkBoyCheckRightIsGood (WalkBoy& walkboy, Vec2 pos)
 {
     float x = pos.x + TILE_W;

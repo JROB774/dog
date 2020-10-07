@@ -41,10 +41,10 @@
 * [x] Bones should remember they've been collected when transitioning maps, between sessions, etc.
 * [x] Improve the player's collision with tiles.
 * [x] Fix issues with updward map transitions.
-* [ ] Add Enemies:
+* [x] Add Enemies:
   * [x] Aiming Turret
   * [x] Walk Back-and-Forth
-  * [ ] Walk Back-and-Forth (Charges on Sight)
+  * [x] Walk Back-and-Forth (Charges on Sight)
 
 ## TiKo
 

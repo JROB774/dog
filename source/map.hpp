@@ -28,6 +28,7 @@ struct Map
     std::vector<CrushBoi> cboi;
     std::vector<SpitBoy> spitboys;
     std::vector<WalkBoy> walkboys;
+    std::vector<ChargeBoy> chargeboys;
 };
 
 INTERNAL void LoadMap (Map& map, std::string file_name);

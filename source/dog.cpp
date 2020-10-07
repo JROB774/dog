@@ -369,6 +369,14 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
             break;
         }
     }
+    for (auto& chargeboy: gWorld.current_map.chargeboys)
+    {
+        if (EntityAndEntityCollision(dog.pos,dog.bounds, chargeboy.pos,chargeboy.bounds))
+        {
+            KillDog(dog);
+            break;
+        }
+    }
 }
 
 INTERNAL void DrawDog (Dog& dog, float dt)
