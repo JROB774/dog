@@ -1,4 +1,4 @@
-GLOBAL constexpr float SPITBOY_SPIT_COOLDOWN = 0.1f;
+GLOBAL constexpr float SPITBOY_SPIT_COOLDOWN = 0.5f;
 GLOBAL constexpr float SPITBOY_SPIT_FORCE = 225.0f;
 
 GLOBAL Image gSpitBoyImage;
@@ -9,7 +9,7 @@ INTERNAL void InitSpitBoy ()
 {
     LoadImage(gSpitBoyImage, "spitboy.bmp");
     LoadImage(gSpitImage, "spit.bmp");
-    LoadSound(gSpitBoySound, "spit.wav");
+    // LoadSound(gSpitBoySound, "spit.wav");
 }
 
 INTERNAL void QuitSpitBoy ()
@@ -48,7 +48,7 @@ INTERNAL void UpdateSpitBoy (SpitBoy& spitboy, float dt)
                 Vec2 pos = { ax-(8/2)-2, ay-(8/2)-2 };
                 Vec2 vel = { -SPITBOY_SPIT_FORCE, 0.0f }, nvel;
 
-                float spit_angle = spitboy.angle + DegToRad(RandomFloatRange(-3.0f, 3.0f));
+                float spit_angle = spitboy.angle /*+ DegToRad(RandomFloatRange(-3.0f, 3.0f))*/;
 
                 nvel.x = vel.x * cos(spit_angle) - vel.y * sin(spit_angle);
                 nvel.y = vel.x * sin(spit_angle) + vel.y * cos(spit_angle);
