@@ -42,7 +42,9 @@
 * [x] Improve the player's collision with tiles.
 * [x] Fix issues with updward map transitions.
 * [ ] Add Enemies:
-  * [ ] Aiming Turret
+  * [x] Aiming Turret
+  * [x] Walk Back-and-Forth
+  * [ ] Walk Back-and-Forth (Charges on Sight)
 
 ## TiKo
 
@@ -53,15 +55,12 @@
   * [x] Large bones.
 * [x] Implement the dig system with breakable blocks.
 * [x] Add Music
-* [ ] Add Enemies:
-  * [ ] Horizontal Crushers
-  * [ ] Vertiical Crushers
+* [x] Add Enemies:
+  * [x] Horizontal Crushers
+  * [x] Vertiical Crushers
 
 ## Unassigned
 
-* [ ] Add Enemies:
-  * [ ] Walk Back-and-Forth
-  * [ ] Walk Back-and-Forth (Charges on Sight)
 * [ ] Add Content
 * [ ] Add Splash Screen
 * [ ] Add Ending
