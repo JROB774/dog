@@ -32,10 +32,12 @@ INTERNAL void UpdateCrushBoi(CrushBoi& _boi, float _dt)
                 if(_boi.vel.y < 0){
                     particle_pos.y = _boi.pos.y;
                     CreateParticlesRotated(PARTICLE_TYPE_PUFF_D, (int)particle_pos.x-2,(int)particle_pos.y,(int)particle_pos.x + 16,(int)particle_pos.y + 2, 4, 8, DegToRad(180));
+                    PlaySound(gCrushBoiHitSound);
                 }
                 if(_boi.vel.y > 0){
                     particle_pos.y = _boi.pos.y + _boi.bounds.h;
                     CreateParticlesRotated(PARTICLE_TYPE_PUFF_D, (int)particle_pos.x-2,(int)particle_pos.y,(int)particle_pos.x + 16,(int)particle_pos.y, 4, 8, DegToRad(0));
+                    PlaySound(gCrushBoiHitSound);
                 }
             }
             if(!_boi.vertical){
@@ -43,14 +45,15 @@ INTERNAL void UpdateCrushBoi(CrushBoi& _boi, float _dt)
                 if(_boi.vel.x < 0){
                     particle_pos.x = _boi.pos.x;
                     CreateParticlesRotated(PARTICLE_TYPE_PUFF_D, (int)particle_pos.x,(int)particle_pos.y - 2,(int)particle_pos.x,(int)particle_pos.y + 16, 4, 8, DegToRad(90));
+                    PlaySound(gCrushBoiHitSound);
                 }
                 if(_boi.vel.x > 0){
                     particle_pos.x = _boi.pos.x + _boi.bounds.w;
                     CreateParticlesRotated(PARTICLE_TYPE_PUFF_D, (int)particle_pos.x,(int)particle_pos.y - 2,(int)particle_pos.x,(int)particle_pos.y + 16, 4, 8, DegToRad(180));
+                    PlaySound(gCrushBoiHitSound);
                 }
             }
 
-            PlaySound(gCrushBoiHitSound);
             _boi.active = false;
         }
         if(_boi.vertical ){_boi.pos.y += _boi.vel.y * _dt;}
