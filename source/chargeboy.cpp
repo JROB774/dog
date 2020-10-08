@@ -1,16 +1,20 @@
 GLOBAL constexpr float CHARGEBOY_WALK_SPEED = 2.5f * TILE_W;
 GLOBAL constexpr float CHARGEBOY_CHARGE_SPEED = CHARGEBOY_WALK_SPEED * 3;
+GLOBAL constexpr float CHARGEBOY_SOUND_COOLDOWN = 0.1f;
 
 GLOBAL Image gChargeBoyImage;
+GLOBAL Sound gChargeBoySound;
 
 INTERNAL void InitChargeBoy ()
 {
     LoadImage(gChargeBoyImage, "chargeboy.bmp");
+    LoadSound(gChargeBoySound, "charge.wav");
 }
 
 INTERNAL void QuitChargeBoy ()
 {
     FreeImage(gChargeBoyImage);
+    FreeSound(gChargeBoySound);
 }
 
 INTERNAL void CreateChargeBoy (ChargeBoy& chargeboy, float x, float y)
@@ -20,6 +24,7 @@ INTERNAL void CreateChargeBoy (ChargeBoy& chargeboy, float x, float y)
     chargeboy.bounds = { 2,10,12,6 };
     chargeboy.flip = FLIP_NONE;
     chargeboy.charging = false;
+    chargeboy.timer = 0.0f;
     LoadAnimation(chargeboy.anim, "chargeboy.anim");
 }
 
@@ -77,6 +82,14 @@ INTERNAL void UpdateChargeBoy (ChargeBoy& chargeboy, float dt)
             }
         }
     }
+
+    // If charging then play the charge sound periodically.
+    if (chargeboy.timer > 0.0f) chargeboy.timer -= dt;
+    else if (chargeboy.charging)
+    {
+        chargeboy.timer = CHARGEBOY_SOUND_COOLDOWN;
+        PlaySound(gChargeBoySound);
+    }
 }
 
 INTERNAL void RenderChargeBoy (ChargeBoy& chargeboy, float dt)
@@ -90,6 +103,7 @@ INTERNAL void ResetChargeBoy (ChargeBoy& chargeboy)
     chargeboy.pos = chargeboy.start_pos;
     chargeboy.flip = FLIP_NONE;
     chargeboy.charging = false;
+    chargeboy.timer = 0.0f;
     ResetAnimation(chargeboy.anim);
 }
 

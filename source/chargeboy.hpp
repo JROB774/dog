@@ -8,6 +8,7 @@ struct ChargeBoy
     Rect bounds;
     Flip flip;
     bool charging;
+    float timer;
     Animation anim;
 };
 
