@@ -3,20 +3,23 @@ GLOBAL constexpr float SPITBOY_SPIT_FORCE = 225.0f;
 
 GLOBAL Image gSpitBoyImage;
 GLOBAL Image gSpitImage;
-GLOBAL Sound gSpitBoySound;
+GLOBAL Sound gSpitBoySpitSound;
+GLOBAL Sound gSpitBoyHitSound;
 
 INTERNAL void InitSpitBoy ()
 {
     LoadImage(gSpitBoyImage, "spitboy.bmp");
     LoadImage(gSpitImage, "spit.bmp");
-    // LoadSound(gSpitBoySound, "spit.wav");
+    LoadSound(gSpitBoySpitSound, "spit.wav");
+    LoadSound(gSpitBoyHitSound, "hit.wav");
 }
 
 INTERNAL void QuitSpitBoy ()
 {
-    FreeSound(gSpitBoySound);
     FreeImage(gSpitBoyImage);
     FreeImage(gSpitImage);
+    FreeSound(gSpitBoySpitSound);
+    FreeSound(gSpitBoyHitSound);
 }
 
 INTERNAL void CreateSpitBoy (SpitBoy& spitboy, float x, float y, bool flip)
@@ -70,6 +73,7 @@ INTERNAL void UpdateSpitBoy (SpitBoy& spitboy, float dt)
                 spitboy.state = SPITBOY_STATE_SPIT;
                 LoadAnimation(spitboy.spit.back().anim, "spit.anim");
                 ResetAnimation(spitboy.anim[SPITBOY_STATE_SPIT]);
+                PlaySound(gSpitBoySpitSound);
             }
         }
     }
@@ -130,4 +134,5 @@ INTERNAL void KillSpit (Spit& spit)
     CreateParticles(PARTICLE_TYPE_PUFF, (int)spit.pos.x+4,(int)spit.pos.y+4,(int)spit.pos.x+4,(int)spit.pos.y+4, 1,3);
     CreateParticles(PARTICLE_TYPE_SPEC, (int)spit.pos.x+4,(int)spit.pos.y+4,(int)spit.pos.x+4,(int)spit.pos.y+4, 2,4, 1.5f);
     spit.dead = true;
+    PlaySound(gSpitBoyHitSound);
 }
