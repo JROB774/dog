@@ -46,11 +46,11 @@
   * [x] Walk Back-and-Forth
   * [x] Walk Back-and-Forth (Charges on Sight)
 * [x] Camera screen shake.
-* [ ] Polish and finalise the enemies (graphics, sounds, effects, etc):
+* [x] Polish and finalise the enemies (graphics, sounds, effects, etc):
   * [x] Spit Boy
   * [x] Crush Boy
   * [x] Walk Boy
-  * [ ] Charge Boy
+  * [x] Charge Boy
 * [ ] Dog should animate when breaking blocks.
 
 ## TiKo

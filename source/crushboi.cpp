@@ -83,6 +83,8 @@ INTERNAL void UpdateCrushBoi(CrushBoi& boi, float dt)
     if(!boi.active){
         if (boi.timer <= 0.0f)
         {
+            if (EntityLineOfSight(boi.pos,boi.bounds, gGameState.dog.pos,gGameState.dog.bounds, gWorld.current_map))
+
             if(boi.vertical){
                 float temp = gGameState.dog.bounds.x + gGameState.dog.pos.x;
                 if(temp < boi.pos.x && temp + gGameState.dog.bounds.w > boi.pos.x || temp > boi.pos.x && temp < boi.pos.x + 16){
