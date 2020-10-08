@@ -70,6 +70,13 @@
 ## Unassigned
 
 * [ ] Add a proper win sequence when collecting a big bone.
-* [ ] Add Content
-* [ ] Add Splash Screen
-* [ ] Add Ending
+* [ ] Implement Levels/Zones:
+  * [ ] Normal Mode
+  * [ ] Challenge Mode
+  * [ ] Hard Normal Mode
+  * [ ] Hard Challenge Mode
+* [ ] Implement Badges:
+  * [ ] Unlocking
+  * [ ] Badge Screen
+  * [ ] Save/Load
+* [ ] Add Splash Screen / Credits
