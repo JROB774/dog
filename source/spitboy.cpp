@@ -19,11 +19,23 @@ INTERNAL void QuitSpitBoy ()
     FreeImage(gSpitImage);
 }
 
-INTERNAL void CreateSpitBoy (SpitBoy& spitboy, float x, float y)
+INTERNAL void CreateSpitBoy (SpitBoy& spitboy, float x, float y, bool flip)
 {
+    spitboy.state = SPITBOY_STATE_IDLE;
     spitboy.pos.x = x, spitboy.pos.y = y;
     spitboy.angle = DegToRad(270);
     spitboy.bounds = { 4,4,16,16 };
+    spitboy.flip = (flip) ? FLIP_VERT : FLIP_NONE;
+    spitboy.timer = 0.0f;
+
+    LoadAnimation(spitboy.anim[SPITBOY_STATE_IDLE], "spitboy-idle.anim");
+    LoadAnimation(spitboy.anim[SPITBOY_STATE_SPIT], "spitboy-spit.anim");
+}
+
+INTERNAL void DeleteSpitBoy (SpitBoy& spitboy)
+{
+    FreeAnimation(spitboy.anim[SPITBOY_STATE_IDLE]);
+    FreeAnimation(spitboy.anim[SPITBOY_STATE_SPIT]);
 }
 
 INTERNAL void UpdateSpitBoy (SpitBoy& spitboy, float dt)
@@ -55,6 +67,9 @@ INTERNAL void UpdateSpitBoy (SpitBoy& spitboy, float dt)
 
                 spitboy.timer = SPITBOY_SPIT_COOLDOWN;
                 spitboy.spit.push_back({ pos, nvel, { 2,2,4,4 }, false });
+                spitboy.state = SPITBOY_STATE_SPIT;
+                LoadAnimation(spitboy.spit.back().anim, "spit.anim");
+                ResetAnimation(spitboy.anim[SPITBOY_STATE_SPIT]);
             }
         }
     }
@@ -73,18 +88,40 @@ INTERNAL void UpdateSpitBoy (SpitBoy& spitboy, float dt)
             spit.pos.y += spit.vel.y * dt;
         }
     }
+
+    // Reset the animation back to idle once the spitting animation is done.
+    if (spitboy.state == SPITBOY_STATE_SPIT)
+    {
+        if (IsAnimationDone(spitboy.anim[SPITBOY_STATE_SPIT]))
+        {
+            spitboy.state = SPITBOY_STATE_IDLE;
+        }
+    }
 }
 
 INTERNAL void RenderSpitBoy (SpitBoy& spitboy, float dt)
 {
-    float degrees = RadToDeg(spitboy.angle); // RadToDeg(RoundToMultiple(spitboy.angle, (float)(M_PI*2)/16));
-    for (auto& spit: spitboy.spit) if (!spit.dead) DrawImage(gSpitImage, spit.pos.x-spit.bounds.x, spit.pos.y-spit.bounds.y);
-    DrawImageEx(gSpitBoyImage, spitboy.pos.x-spitboy.bounds.x, spitboy.pos.y-spitboy.bounds.y, degrees);
+    // Draw the spit.
+    for (auto& spit: spitboy.spit)
+    {
+        if (!spit.dead)
+        {
+            UpdateAnimation(spit.anim, dt);
+            DrawImage(gSpitImage, spit.pos.x-spit.bounds.x, spit.pos.y-spit.bounds.y, FLIP_NONE, GetAnimationClip(spit.anim));
+        }
+    }
+    // Draw the spit boy.
+    UpdateAnimation(spitboy.anim[spitboy.state], dt);
+    DrawImage(gSpitBoyImage, spitboy.pos.x-spitboy.bounds.x, spitboy.pos.y-spitboy.bounds.y, spitboy.flip, GetAnimationClip(spitboy.anim[spitboy.state]));
 }
 
 INTERNAL void ResetSpitBoy (SpitBoy& spitboy)
 {
+    ResetAnimation(spitboy.anim[SPITBOY_STATE_SPIT]);
+    spitboy.state = SPITBOY_STATE_IDLE;
+    spitboy.timer = 0.0f;
     spitboy.angle = DegToRad(270);
+    for (auto& spit: spitboy.spit) FreeAnimation(spit.anim);
     spitboy.spit.clear();
 }
 

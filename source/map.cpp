@@ -185,7 +185,8 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
                 case (TILE_SPITB_COLOR): // SPIT BOYS!
                 {
                     map.spitboys.push_back(SpitBoy());
-                    CreateSpitBoy(map.spitboys.back(), (float)(ix*TILE_W), (float)(iy*TILE_H));
+                    bool flip = ((iy == (map.h-1)) || (pixels[(iy+1)*map.w+(ix)] == TILE_SOLID_COLOR));
+                    CreateSpitBoy(map.spitboys.back(), (float)(ix*TILE_W), (float)(iy*TILE_H), flip);
                 } break;
                 case (TILE_WALKB_COLOR): // WALK BOYS!
                 {
@@ -212,7 +213,8 @@ INTERNAL void FreeMap (Map& map)
     map.w = 0, map.h = 0;
     map.has_background = false;
     // Entities
-    for (auto& spike: map.spikes) DeleteSpike(spike);
+    for (auto& spike: map.spikes  ) DeleteSpike  (spike);
+    for (auto& spitb: map.spitboys) DeleteSpitBoy(spitb);
     map.spikes.clear();
     map.sbones.clear();
     map.lbones.clear();
