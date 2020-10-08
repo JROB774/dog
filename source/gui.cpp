@@ -12,7 +12,7 @@ INTERNAL void QuitGui ()
 INTERNAL void DrawGui (float dt)
 {
     // Hard-coded that the bone counter doesn't display in the tutorial or hub zones as there's no bones.
-    if (gWorld.current_zone == "tutorial" || gWorld.current_zone == "hub") return;
+    // if (gWorld.current_zone == "tutorial" || gWorld.current_zone == "hub") return;
 
     if (IsFading() && gFade.state == FADE_OUT) return;
 

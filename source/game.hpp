@@ -9,10 +9,10 @@ GLOBAL constexpr const char* START_CHALLENGE_MAP  = "tutorial-main-start.bmp";
 GLOBAL constexpr float       START_CHALLENGE_X    = 188;
 GLOBAL constexpr float       START_CHALLENGE_Y    = 140;
 GLOBAL constexpr Flip        START_CHALLENGE_FLIP = FLIP_HORZ;
-GLOBAL constexpr const char* START_TUTORIAL_MAP   = "tutorial-main-start.bmp";
-GLOBAL constexpr float       START_TUTORIAL_X     = 188;
-GLOBAL constexpr float       START_TUTORIAL_Y     = 140;
-GLOBAL constexpr Flip        START_TUTORIAL_FLIP  = FLIP_HORZ;
+GLOBAL constexpr const char* START_TUTORIAL_MAP   = "tutorial-grid-00.bmp";
+GLOBAL constexpr float       START_TUTORIAL_X     =  3.5f*TILE_W;
+GLOBAL constexpr float       START_TUTORIAL_Y     = 10.5f*TILE_H;
+GLOBAL constexpr Flip        START_TUTORIAL_FLIP  = FLIP_NONE;
 
 GLOBAL constexpr float GRAVITY = 32.0f;
 
@@ -24,7 +24,7 @@ GLOBAL struct GameState
 
     Dog dog;
 
-    bool challenge_locked;
+    bool challenge_locked; // @TEMPORARY: JUST SO THE CHALLENGE CAN BE LOCKED FOR NOW...
 
 } gGameState;
 
