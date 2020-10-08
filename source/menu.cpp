@@ -1,8 +1,10 @@
 enum MenuItem
 {
     MENU_ITEM_PLAYGAME,
+    MENU_ITEM_PLAYCHALLENGE,
     MENU_ITEM_PLAYTUT,
-    MENU_ITEM_CONTROLS,
+    // MENU_ITEM_CONTROLS,
+    MENU_ITEM_ACHIEVEMENTS,
     MENU_ITEM_SETTINGS,
     MENU_ITEM_EXITGAME,
     MENU_ITEM_TOTAL
@@ -70,6 +72,7 @@ INTERNAL void UpdateMenu (float dt)
             {
                 if (gMenuState.selected == 0) gMenuState.selected = MENU_ITEM_TOTAL-1;
                 else gMenuState.selected--;
+                if (gMenuState.selected == MENU_ITEM_PLAYCHALLENGE && gGameState.challenge_locked) gMenuState.selected--; // Move again if on the locked challenge.
                 ResetAnimation(gMenuState.caret_anim);
                 PlaySound(gMenuState.snd_change);
             }
@@ -77,6 +80,7 @@ INTERNAL void UpdateMenu (float dt)
             {
                 if (gMenuState.selected == MENU_ITEM_TOTAL-1) gMenuState.selected = 0;
                 else gMenuState.selected++;
+                if (gMenuState.selected == MENU_ITEM_PLAYCHALLENGE && gGameState.challenge_locked) gMenuState.selected++; // Move again if on the locked challenge.
                 ResetAnimation(gMenuState.caret_anim);
                 PlaySound(gMenuState.snd_change);
             }
@@ -85,11 +89,13 @@ INTERNAL void UpdateMenu (float dt)
                 PlaySound(gMenuState.snd_select);
                 switch (gMenuState.selected)
                 {
-                    case (MENU_ITEM_PLAYGAME): StartFade(FADE_SPECIAL, [](){ StartGame(START_GAME_MAP, START_GAME_X, START_GAME_Y, START_GAME_FLIP, gGameState.mus_game); }); break;
-                    case (MENU_ITEM_PLAYTUT ): StartFade(FADE_SPECIAL, [](){ StartGame(START_TUTORIAL_MAP, START_TUTORIAL_X, START_TUTORIAL_Y, START_TUTORIAL_FLIP, gGameState.mus_tutorial); }); break;
-                    case (MENU_ITEM_CONTROLS): ResetAnimation(gMenuState.help_anim); gMenuState.mode = MENU_MODE_CONTROLS; break;
-                    case (MENU_ITEM_SETTINGS): gMenuState.mode = MENU_MODE_SETTINGS; gMenuState.selected = 0; break;
-                    case (MENU_ITEM_EXITGAME): gWindow.running = false; break;
+                    case (MENU_ITEM_PLAYGAME     ):                                   StartFade(FADE_SPECIAL, [](){ StartGame(START_GAME_MAP,      START_GAME_X,      START_GAME_Y,      START_GAME_FLIP,      gGameState.mus_game     ); }); break;
+                    case (MENU_ITEM_PLAYCHALLENGE): if (!gGameState.challenge_locked) StartFade(FADE_SPECIAL, [](){ StartGame(START_CHALLENGE_MAP, START_CHALLENGE_X, START_CHALLENGE_Y, START_CHALLENGE_FLIP, gGameState.mus_challenge); }); break;
+                    case (MENU_ITEM_PLAYTUT      ):                                   StartFade(FADE_SPECIAL, [](){ StartGame(START_TUTORIAL_MAP,  START_TUTORIAL_X,  START_TUTORIAL_Y,  START_TUTORIAL_FLIP,  gGameState.mus_tutorial ); }); break;
+                    // case (MENU_ITEM_CONTROLS     ): ResetAnimation(gMenuState.help_anim); gMenuState.mode = MENU_MODE_CONTROLS; break;
+                    case (MENU_ITEM_ACHIEVEMENTS ): /* NOTHING RIGHT NOW */ break;
+                    case (MENU_ITEM_SETTINGS     ): gMenuState.mode = MENU_MODE_SETTINGS; gMenuState.selected = 0; break;
+                    case (MENU_ITEM_EXITGAME     ): gWindow.running = false; break;
                 }
             }
             if (back)
@@ -98,14 +104,14 @@ INTERNAL void UpdateMenu (float dt)
                 gWindow.running = false;
             }
         } break;
-        case (MENU_MODE_CONTROLS):
-        {
-            if (action || back)
-            {
-                gMenuState.mode = MENU_MODE_MAINMENU;
-                PlaySound(gMenuState.snd_select);
-            }
-        } break;
+        // case (MENU_MODE_CONTROLS):
+        // {
+        //     if (action || back)
+        //     {
+        //         gMenuState.mode = MENU_MODE_MAINMENU;
+        //         PlaySound(gMenuState.snd_select);
+        //     }
+        // } break;
         case (MENU_MODE_SETTINGS):
         {
             if (up)
@@ -204,13 +210,15 @@ INTERNAL void RenderMenu (float dt)
 
             DrawImage(gMenuState.title, tx,ty);
 
-            std::string play_text     = "PLAY GAME";
-            std::string tutorial_text = "TUTORIAL";
-            std::string controls_text = "CONTROLS";
-            std::string options_text  = "OPTIONS";
-            std::string exit_text     = "EXIT GAME";
+            std::string play_text         = "PLAY GAME";
+            std::string challenge_text    = "CHALLENGE";
+            std::string tutorial_text     = "TUTORIAL";
+            // std::string controls_text  = "CONTROLS";
+            std::string achievements_text = "BADGES";
+            std::string options_text      = "OPTIONS";
+            std::string exit_text         = "EXIT GAME";
 
-            ty = WINDOW_SCREEN_H - 48;
+            ty = WINDOW_SCREEN_H - 40;
 
             tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, exit_text)) / 2;
             if (gMenuState.selected == MENU_ITEM_EXITGAME) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
@@ -222,14 +230,24 @@ INTERNAL void RenderMenu (float dt)
             DrawText(gAppState.sfont, options_text, tx,ty, MakeColor(0,0,0));
             ty -= 16;
 
-            tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, controls_text)) / 2;
-            if (gMenuState.selected == MENU_ITEM_CONTROLS) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
-            DrawText(gAppState.sfont, controls_text, tx,ty, MakeColor(0,0,0));
+            tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, achievements_text)) / 2;
+            if (gMenuState.selected == MENU_ITEM_ACHIEVEMENTS) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
+            DrawText(gAppState.sfont, achievements_text, tx,ty, MakeColor(0,0,0));
             ty -= 16;
+
+            // tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, controls_text)) / 2;
+            // if (gMenuState.selected == MENU_ITEM_CONTROLS) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
+            // DrawText(gAppState.sfont, controls_text, tx,ty, MakeColor(0,0,0));
+            // ty -= 16;
 
             tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, tutorial_text)) / 2;
             if (gMenuState.selected == MENU_ITEM_PLAYTUT) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
             DrawText(gAppState.sfont, tutorial_text, tx,ty, MakeColor(0,0,0));
+            ty -= 16;
+
+            tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, challenge_text)) / 2;
+            if (gMenuState.selected == MENU_ITEM_PLAYCHALLENGE) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
+            DrawText(gAppState.sfont, challenge_text, tx,ty, (gGameState.challenge_locked) ? MakeColor(0.75f,0.75f,0.75f) : MakeColor(0,0,0));
             ty -= 16;
 
             tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, play_text)) / 2;
@@ -237,13 +255,13 @@ INTERNAL void RenderMenu (float dt)
             DrawText(gAppState.sfont, play_text, tx,ty, MakeColor(0,0,0));
             ty -= 16;
         } break;
-        case (MENU_MODE_CONTROLS):
-        {
-            tx = roundf((float)WINDOW_SCREEN_W - (gMenuState.help.w/2)) / 2;
-            ty = roundf((float)WINDOW_SCREEN_H - (gMenuState.help.h  )) / 2;
-
-            DrawImage(gMenuState.help, tx,ty, FLIP_NONE, GetAnimationClip(gMenuState.help_anim));
-        } break;
+        // case (MENU_MODE_CONTROLS):
+        // {
+        //     tx = roundf((float)WINDOW_SCREEN_W - (gMenuState.help.w/2)) / 2;
+        //     ty = roundf((float)WINDOW_SCREEN_H - (gMenuState.help.h  )) / 2;
+        //
+        //     DrawImage(gMenuState.help, tx,ty, FLIP_NONE, GetAnimationClip(gMenuState.help_anim));
+        // } break;
         case (MENU_MODE_SETTINGS):
         {
             tx = roundf((float)WINDOW_SCREEN_W - gMenuState.title.w) / 2;

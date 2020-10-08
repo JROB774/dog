@@ -14,6 +14,8 @@ INTERNAL void InitGame ()
     LoadMusic(gGameState.mus_game,      "skate.wav");
     LoadMusic(gGameState.mus_tutorial,  "school.wav");
     LoadMusic(gGameState.mus_challenge, "battle.wav");
+
+    gGameState.challenge_locked = true;
 }
 
 INTERNAL void QuitGame ()
