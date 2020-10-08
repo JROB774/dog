@@ -34,6 +34,10 @@
 #include <GON/GON.hpp>
 #include <GON/GON.cpp>
 
+#define GAME_VERSION_MAJOR 1
+#define GAME_VERSION_MINOR 0
+#define GAME_VERSION_PATCH 0
+
 // Header includes.
 #include "utility.hpp"
 #include "error.hpp"

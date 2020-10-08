@@ -7,13 +7,10 @@ SDL2main.lib SDL2.lib SDL2_mixer.lib opengl32.lib dinput8.lib dxguid.lib    ^
 user32.lib gdi32.lib winmm.lib imm32.lib ole32.lib oleaut32.lib shell32.lib ^
 version.lib uuid.lib advapi32.lib setupapi.lib dbghelp.lib setargv.obj
 
-:: SELECT WHICH ARCHITECTURE YOU WANT BY UNCOMMENTING
-:: set Architecture=x86
-   set Architecture=amd64
-
-:: SELECT WHICH BUILD MODE YOU WANT BY UNCOMMENTING
-   set BuildMode=Debug
-:: set BuildMode=Release
+:: Can be either "x86" or "amd64"
+set Architecture=amd64
+:: Can be either "Debug" or "Release"
+set BuildMode=Release
 
 set IncludeDirs=-I ..\source\
 set LibraryDirs=-libpath:..\library\win32\%Architecture%\
@@ -26,13 +23,13 @@ set LinkerFlags=-opt:ref -incremental:no
 set CompilerWarnings=-wd4100 -wd4505 -wd4189
 set LinkerWarnings=-ignore:4099
 
-set ResourceFile=
-set ResourcePath=
+set ResourceFile=..\resource\resources.rc
+set ResourcePath=..\resource\
 
-set InputResource=
+set InputResource=..\resource\resources.res
 set InputSource=..\source\main.cpp
 
-set OutputExecutable=CoverJam-%Architecture%
+set OutputExecutable=DOG-%Architecture%
 
 if %BuildMode%==Release (
     set CompilerFlags=%CompilerFlags% -WX

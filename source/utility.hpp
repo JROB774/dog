@@ -5,7 +5,7 @@
 #include <assert.h>
 #define ASSERT(e) assert(e)
 #else
-#define ASSERT()
+#define ASSERT(e) ((void)0)
 #endif
 
 #define PERSISTENT static
