@@ -28,7 +28,9 @@ INTERNAL void UpdateChargeBoy (ChargeBoy& chargeboy, float dt)
 
     Vec2 next_pos = chargeboy.pos;
 
-    if (ChargeBoyShouldCharge(chargeboy, dt)) // Move at a faster speed if we should be charging!
+    bool charging = ChargeBoyShouldCharge(chargeboy, dt);
+
+    if (charging) // Move at a faster speed if we should be charging!
     {
         if (chargeboy.flip == FLIP_NONE) next_pos.x += CHARGEBOY_CHARGE_SPEED * dt; // Right
         if (chargeboy.flip == FLIP_HORZ) next_pos.x -= CHARGEBOY_CHARGE_SPEED * dt; // Left
@@ -53,7 +55,21 @@ INTERNAL void UpdateChargeBoy (ChargeBoy& chargeboy, float dt)
     }
 
     // If it's safe to move then we shall update our position.
-    if (should_move) chargeboy.pos = next_pos;
+    if (should_move)
+    {
+        chargeboy.pos = next_pos;
+        if (charging)
+        {
+            if (chargeboy.flip == FLIP_NONE) // Right
+            {
+                CreateParticles(PARTICLE_TYPE_PUFF, (int)chargeboy.pos.x,(int)chargeboy.pos.y+10,(int)chargeboy.pos.x+6,(int)chargeboy.pos.y+16, 1,3);
+            }
+            if (chargeboy.flip == FLIP_HORZ) // Left
+            {
+                CreateParticles(PARTICLE_TYPE_PUFF, (int)chargeboy.pos.x+10,(int)chargeboy.pos.y+10,(int)chargeboy.pos.x+16,(int)chargeboy.pos.y+16, 1,3);
+            }
+        }
+    }
 }
 
 INTERNAL void RenderChargeBoy (ChargeBoy& chargeboy, float dt)
