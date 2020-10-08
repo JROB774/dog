@@ -51,6 +51,8 @@
   * [x] Crush Boy
   * [x] Walk Boy
   * [x] Charge Boy
+* [x] Implement the tutorial zone.
+* [x] Change how the bone system works.
 
 ## TiKo
 
@@ -67,6 +69,7 @@
 
 ## Unassigned
 
+* [ ] Add a proper win sequence when collecting a big bone.
 * [ ] Add Content
 * [ ] Add Splash Screen
 * [ ] Add Ending

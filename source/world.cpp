@@ -108,7 +108,7 @@ INTERNAL void LoadWorld (std::string start_map)
                     {
                         LoadMap(temp_room_map, room);
                         gCurrentZoneBoneTotal += (int)temp_room_map.sbones.size();
-                        gCurrentZoneBoneTotal += (int)temp_room_map.lbones.size() * LARGE_BONE_WORTH;
+                        // gCurrentZoneBoneTotal += (int)temp_room_map.lbones.size() * LARGE_BONE_WORTH;
                         FreeMap(temp_room_map);
                         rooms_done.push_back(room);
                     }
@@ -129,6 +129,7 @@ INTERNAL void LoadWorld (std::string start_map)
 
 INTERNAL void FreeWorld ()
 {
+    ClearParticles();
     gWorld.rooms.clear();
     FreeMap(gWorld.current_map);
     gWorld.current_map_name.clear();

@@ -332,6 +332,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
                 lbone.dead = true;
                 PlaySound(small_bone_sound);
                 PlaySound(big_bone_sound);
+                StartFade(FADE_SPECIAL, [](){ EndGame(); });
             }
         }
     }

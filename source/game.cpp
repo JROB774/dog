@@ -64,6 +64,9 @@ INTERNAL void RenderGame (float dt)
 
 INTERNAL void StartGame (std::string start_map, float start_x, float start_y, Flip start_flip, Music& music)
 {
+    gBoneCollectedIds.clear();
+    gTempBoneCollectedIds.clear();
+
     LoadWorld(start_map);
 
     gGameState.dog.state    = DOG_STATE_IDLE;
