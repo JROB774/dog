@@ -10,7 +10,7 @@ version.lib uuid.lib advapi32.lib setupapi.lib dbghelp.lib setargv.obj
 :: Can be either "x86" or "amd64"
 set Architecture=amd64
 :: Can be either "Debug" or "Release"
-set BuildMode=Release
+set BuildMode=Debug
 
 set IncludeDirs=-I ..\source\
 set LibraryDirs=-libpath:..\library\win32\%Architecture%\
