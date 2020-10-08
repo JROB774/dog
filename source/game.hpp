@@ -10,14 +10,15 @@ GLOBAL constexpr float       START_CHALLENGE_X    = 188;
 GLOBAL constexpr float       START_CHALLENGE_Y    = 140;
 GLOBAL constexpr Flip        START_CHALLENGE_FLIP = FLIP_HORZ;
 GLOBAL constexpr const char* START_TUTORIAL_MAP   = "tutorial-grid-00.bmp";
-GLOBAL constexpr float       START_TUTORIAL_X     =  3.5f*TILE_W;
-GLOBAL constexpr float       START_TUTORIAL_Y     = 10.5f*TILE_H;
+GLOBAL constexpr float       START_TUTORIAL_X     =  56;
+GLOBAL constexpr float       START_TUTORIAL_Y     = 172;
 GLOBAL constexpr Flip        START_TUTORIAL_FLIP  = FLIP_NONE;
 
 GLOBAL constexpr float GRAVITY = 32.0f;
 
 GLOBAL struct GameState
 {
+    Music mus_fanfare;
     Music mus_game;
     Music mus_tutorial;
     Music mus_challenge;

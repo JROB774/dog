@@ -11,17 +11,19 @@ INTERNAL void InitGame ()
     InitParticleSystem();
     CreateDog(gGameState.dog, 0, 0, FLIP_NONE);
 
-    LoadMusic(gGameState.mus_game,      "skate.wav");
-    LoadMusic(gGameState.mus_tutorial,  "school.wav");
-    LoadMusic(gGameState.mus_challenge, "battle.wav");
+    LoadMusic(gGameState.mus_fanfare,   "fanfare.wav"  );
+    LoadMusic(gGameState.mus_game,      "game.wav"     );
+    LoadMusic(gGameState.mus_tutorial,  "tutorial.wav" );
+    LoadMusic(gGameState.mus_challenge, "challenge.wav");
 
     gGameState.challenge_locked = true;
 }
 
 INTERNAL void QuitGame ()
 {
-    FreeMusic(gGameState.mus_game);
-    FreeMusic(gGameState.mus_tutorial);
+    FreeMusic(gGameState.mus_fanfare  );
+    FreeMusic(gGameState.mus_game     );
+    FreeMusic(gGameState.mus_tutorial );
     FreeMusic(gGameState.mus_challenge);
 
     DeleteDog(gGameState.dog);

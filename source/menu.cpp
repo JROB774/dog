@@ -34,7 +34,7 @@ INTERNAL void InitMenu ()
     LoadSound(gMenuState.snd_change, "change.wav");
     LoadSound(gMenuState.snd_select, "select.wav");
 
-    LoadMusic(gMenuState.music, "mushroom.wav");
+    LoadMusic(gMenuState.music, "menu.wav");
 }
 
 INTERNAL void QuitMenu ()
