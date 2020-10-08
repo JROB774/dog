@@ -49,7 +49,7 @@
 * [ ] Polish and finalise the enemies (graphics, sounds, effects, etc):
   * [x] Spit Boy
   * [x] Crush Boy
-  * [ ] Walk Boy
+  * [x] Walk Boy
   * [ ] Charge Boy
 * [ ] Dog should animate when breaking blocks.
 

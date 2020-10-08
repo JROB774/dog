@@ -1,0 +1,7 @@
+#version 1
+
+start_position [ 0 0 ]
+frame_size [ 24 24 ]
+frame_count 2
+frame_durations [ 0.2 0.2 ]
+looped true

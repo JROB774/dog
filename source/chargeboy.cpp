@@ -19,6 +19,13 @@ INTERNAL void CreateChargeBoy (ChargeBoy& chargeboy, float x, float y)
     chargeboy.pos = chargeboy.start_pos;
     chargeboy.bounds = { 2,10,12,6 };
     chargeboy.flip = FLIP_NONE;
+    chargeboy.charging = false;
+    LoadAnimation(chargeboy.anim, "chargeboy.anim");
+}
+
+INTERNAL void DeleteChargeBoy (ChargeBoy& chargeboy)
+{
+    FreeAnimation(chargeboy.anim);
 }
 
 INTERNAL void UpdateChargeBoy (ChargeBoy& chargeboy, float dt)
@@ -28,9 +35,9 @@ INTERNAL void UpdateChargeBoy (ChargeBoy& chargeboy, float dt)
 
     Vec2 next_pos = chargeboy.pos;
 
-    bool charging = ChargeBoyShouldCharge(chargeboy, dt);
+    chargeboy.charging = ChargeBoyShouldCharge(chargeboy, dt);
 
-    if (charging) // Move at a faster speed if we should be charging!
+    if (chargeboy.charging) // Move at a faster speed if we should be charging!
     {
         if (chargeboy.flip == FLIP_NONE) next_pos.x += CHARGEBOY_CHARGE_SPEED * dt; // Right
         if (chargeboy.flip == FLIP_HORZ) next_pos.x -= CHARGEBOY_CHARGE_SPEED * dt; // Left
@@ -58,7 +65,7 @@ INTERNAL void UpdateChargeBoy (ChargeBoy& chargeboy, float dt)
     if (should_move)
     {
         chargeboy.pos = next_pos;
-        if (charging)
+        if (chargeboy.charging)
         {
             if (chargeboy.flip == FLIP_NONE) // Right
             {
@@ -74,13 +81,16 @@ INTERNAL void UpdateChargeBoy (ChargeBoy& chargeboy, float dt)
 
 INTERNAL void RenderChargeBoy (ChargeBoy& chargeboy, float dt)
 {
-    DrawImage(gChargeBoyImage, chargeboy.pos.x-4, chargeboy.pos.y-4, chargeboy.flip);
+    UpdateAnimation(chargeboy.anim, dt * ((chargeboy.charging) ? 3.0f : 1.0f));
+    DrawImage(gChargeBoyImage, chargeboy.pos.x-4, chargeboy.pos.y-4, chargeboy.flip, GetAnimationClip(chargeboy.anim));
 }
 
 INTERNAL void ResetChargeBoy (ChargeBoy& chargeboy)
 {
     chargeboy.pos = chargeboy.start_pos;
     chargeboy.flip = FLIP_NONE;
+    chargeboy.charging = false;
+    ResetAnimation(chargeboy.anim);
 }
 
 // HELPER FUNCTIONS

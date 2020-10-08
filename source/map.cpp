@@ -213,9 +213,10 @@ INTERNAL void FreeMap (Map& map)
     map.w = 0, map.h = 0;
     map.has_background = false;
     // Entities
-    for (auto& spike: map.spikes  ) DeleteSpike  (spike);
-    for (auto& spitb: map.spitboys) DeleteSpitBoy(spitb);
-    for (auto& walkb: map.walkboys) DeleteWalkBoy(walkb);
+    for (auto& spike: map.spikes    ) DeleteSpike    (spike);
+    for (auto& spitb: map.spitboys  ) DeleteSpitBoy  (spitb);
+    for (auto& walkb: map.walkboys  ) DeleteWalkBoy  (walkb);
+    for (auto& chrgb: map.chargeboys) DeleteChargeBoy(chrgb);
     map.spikes.clear();
     map.sbones.clear();
     map.lbones.clear();

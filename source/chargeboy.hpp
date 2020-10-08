@@ -7,11 +7,14 @@ struct ChargeBoy
     Vec2 pos;
     Rect bounds;
     Flip flip;
+    bool charging;
+    Animation anim;
 };
 
 INTERNAL void   InitChargeBoy ();
 INTERNAL void   QuitChargeBoy ();
 INTERNAL void CreateChargeBoy (ChargeBoy& chargeboy, float x, float y);
+INTERNAL void DeleteChargeBoy (ChargeBoy& chargeboy);
 INTERNAL void UpdateChargeBoy (ChargeBoy& chargeboy, float dt);
 INTERNAL void RenderChargeBoy (ChargeBoy& chargeboy, float dt);
 INTERNAL void  ResetChargeBoy (ChargeBoy& chargeboy);
