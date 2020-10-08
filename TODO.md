@@ -45,6 +45,13 @@
   * [x] Aiming Turret
   * [x] Walk Back-and-Forth
   * [x] Walk Back-and-Forth (Charges on Sight)
+* [x] Camera screen shake.
+* [ ] Polish and finalise the enemies (graphics, sounds, effects, etc):
+  * [x] Spit Boy
+  * [x] Crush Boy
+  * [ ] Walk Boy
+  * [ ] Charge Boy
+* [ ] Dog should animate when breaking blocks.
 
 ## TiKo
 
@@ -64,6 +71,3 @@
 * [ ] Add Content
 * [ ] Add Splash Screen
 * [ ] Add Ending
-* [ ] Screen shake for crushboi
-
-*Flesh out these and add more as needed...*
