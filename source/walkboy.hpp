@@ -7,11 +7,13 @@ struct WalkBoy
     Vec2 pos;
     Rect bounds;
     Flip flip;
+    Animation anim;
 };
 
 INTERNAL void   InitWalkBoy ();
 INTERNAL void   QuitWalkBoy ();
 INTERNAL void CreateWalkBoy (WalkBoy& walkboy, float x, float y);
+INTERNAL void DeleteWalkBoy (WalkBoy& walkboy);
 INTERNAL void UpdateWalkBoy (WalkBoy& walkboy, float dt);
 INTERNAL void RenderWalkBoy (WalkBoy& walkboy, float dt);
 INTERNAL void  ResetWalkBoy (WalkBoy& walkboy);

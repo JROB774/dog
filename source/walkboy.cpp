@@ -18,6 +18,12 @@ INTERNAL void CreateWalkBoy (WalkBoy& walkboy, float x, float y)
     walkboy.pos = walkboy.start_pos;
     walkboy.bounds = { 2,10,12,6 };
     walkboy.flip = FLIP_NONE;
+    LoadAnimation(walkboy.anim, "walkboy.anim");
+}
+
+INTERNAL void DeleteWalkBoy (WalkBoy& walkboy)
+{
+    FreeAnimation(walkboy.anim);
 }
 
 INTERNAL void UpdateWalkBoy (WalkBoy& walkboy, float dt)
@@ -49,13 +55,15 @@ INTERNAL void UpdateWalkBoy (WalkBoy& walkboy, float dt)
 
 INTERNAL void RenderWalkBoy (WalkBoy& walkboy, float dt)
 {
-    DrawImage(gWalkBoyImage, walkboy.pos.x-4, walkboy.pos.y-4, walkboy.flip);
+    UpdateAnimation(walkboy.anim, dt);
+    DrawImage(gWalkBoyImage, walkboy.pos.x-4, walkboy.pos.y-4, walkboy.flip, GetAnimationClip(walkboy.anim));
 }
 
 INTERNAL void ResetWalkBoy (WalkBoy& walkboy)
 {
     walkboy.pos = walkboy.start_pos;
     walkboy.flip = FLIP_NONE;
+    ResetAnimation(walkboy.anim);
 }
 
 // HELPER FUNCTIONS

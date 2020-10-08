@@ -215,6 +215,7 @@ INTERNAL void FreeMap (Map& map)
     // Entities
     for (auto& spike: map.spikes  ) DeleteSpike  (spike);
     for (auto& spitb: map.spitboys) DeleteSpitBoy(spitb);
+    for (auto& walkb: map.walkboys) DeleteWalkBoy(walkb);
     map.spikes.clear();
     map.sbones.clear();
     map.lbones.clear();
