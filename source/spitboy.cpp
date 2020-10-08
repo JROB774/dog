@@ -1,4 +1,4 @@
-GLOBAL constexpr float SPITBOY_SPIT_COOLDOWN = 0.5f;
+GLOBAL constexpr float SPITBOY_SPIT_COOLDOWN = 0.75f;
 GLOBAL constexpr float SPITBOY_SPIT_FORCE = 225.0f;
 
 GLOBAL Image gSpitBoyImage;
