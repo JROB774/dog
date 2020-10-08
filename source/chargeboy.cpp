@@ -166,5 +166,5 @@ INTERNAL bool ChargeBoyShouldCharge (ChargeBoy& chargeboy, float dt)
         }
     }
 
-    return (EntityAndEntityCollision(gGameState.dog.pos,gGameState.dog.bounds, { 0,0 },aggro_bounds));
+    return (!gGameState.dog.dead && EntityAndEntityCollision(gGameState.dog.pos,gGameState.dog.bounds, { 0,0 },aggro_bounds));
 }
