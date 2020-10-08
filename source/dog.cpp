@@ -124,12 +124,8 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
         dog.jump_release = true;
         dog.action       = false;
 
-        if (IsKeyPressed(SDL_SCANCODE_UP)    || IsKeyPressed   (SDL_SCANCODE_W)     || IsButtonPressed(SDL_CONTROLLER_BUTTON_DPAD_UP)    || IsLeftStickUpPressed   ()) EndWinSequence();
-        if (IsKeyPressed(SDL_SCANCODE_RIGHT) || IsKeyPressed   (SDL_SCANCODE_D)     || IsButtonPressed(SDL_CONTROLLER_BUTTON_DPAD_RIGHT) || IsLeftStickRightPressed()) EndWinSequence();
-        if (IsKeyPressed(SDL_SCANCODE_DOWN)  || IsKeyPressed   (SDL_SCANCODE_S)     || IsButtonPressed(SDL_CONTROLLER_BUTTON_DPAD_DOWN)  || IsLeftStickDownPressed ()) EndWinSequence();
-        if (IsKeyPressed(SDL_SCANCODE_LEFT)  || IsKeyPressed   (SDL_SCANCODE_A)     || IsButtonPressed(SDL_CONTROLLER_BUTTON_DPAD_LEFT)  || IsLeftStickLeftPressed ()) EndWinSequence();
-        if (IsKeyPressed(SDL_SCANCODE_Z)     || IsKeyPressed   (SDL_SCANCODE_SPACE) || IsButtonPressed(SDL_CONTROLLER_BUTTON_A))                                       EndWinSequence();
-        if (IsKeyPressed(SDL_SCANCODE_X)     || IsButtonPressed(SDL_CONTROLLER_BUTTON_X))                                                                              EndWinSequence();
+        if (IsKeyPressed(SDL_SCANCODE_Z) || IsKeyPressed   (SDL_SCANCODE_SPACE) || IsButtonPressed(SDL_CONTROLLER_BUTTON_A)) EndWinSequence();
+        if (IsKeyPressed(SDL_SCANCODE_X) ||                                        IsButtonPressed(SDL_CONTROLLER_BUTTON_X)) EndWinSequence();
     }
 
     // If the dog is dead respawn when a button is pressed or after some time.
