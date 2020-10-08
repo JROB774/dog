@@ -51,7 +51,6 @@
   * [x] Crush Boy
   * [x] Walk Boy
   * [x] Charge Boy
-* [ ] Dog should animate when breaking blocks.
 
 ## TiKo
 

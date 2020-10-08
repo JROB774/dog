@@ -209,6 +209,9 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
                 if (TryBreakABlock(dog, bblock))
                 {
                     block_broken = true;
+                    ResetAnimation(dog.anim[DOG_STATE_BARK]);
+                    dog.state = DOG_STATE_BARK;
+                    // PlaySound(dog.snd_bark);
                 }
             }
         }
@@ -238,17 +241,11 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
         }
         else
         {
-            if (dog.state != DOG_STATE_BARK)
+            if (dog.state != DOG_STATE_BARK && dog.action && !block_broken && !dog.up && !dog.right && !dog.left && !dog.down)
             {
-                if (dog.action && !block_broken)
-                {
-                    // if (!dog.up && !dog.right && !dog.left && !dog.down)
-                    // {
-                    ResetAnimation(dog.anim[DOG_STATE_BARK]);
-                    dog.state = DOG_STATE_BARK;
-                    PlaySound(dog.snd_bark);
-                    // }
-                }
+                 ResetAnimation(dog.anim[DOG_STATE_BARK]);
+                 dog.state = DOG_STATE_BARK;
+                 PlaySound(dog.snd_bark);
             }
 
             if (dog.state == DOG_STATE_BARK || dog.state == DOG_STATE_BLNK)
