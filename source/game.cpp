@@ -57,6 +57,7 @@ INTERNAL void RenderGame (float dt)
     DrawParticles(dt);
     DrawMapFrontEntities(gWorld.current_map, dt);
     DrawMapFrontTiles(gWorld.current_map);
+    DrawMapForeground(gWorld.current_map);
     EndCamera();
     DrawGui(dt);
 }

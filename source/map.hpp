@@ -16,10 +16,12 @@ struct Tile
 struct Map
 {
     Image background;
+    Image foreground;
     Image tileset;
     int w,h;
     std::vector<Tile> tiles;
     bool has_background;
+    bool has_foreground;
     // Entities
     std::vector<Spike> spikes;
     std::vector<SmallBone> sbones;
@@ -40,6 +42,7 @@ INTERNAL void DrawMapBackground    (Map& map);
 INTERNAL void DrawMapBackEntities  (Map& map, float dt);
 INTERNAL void DrawMapFrontEntities (Map& map, float dt);
 INTERNAL void DrawMapFrontTiles    (Map& map);
+INTERNAL void DrawMapForeground    (Map& map);
 
 INTERNAL void ResetMap ();
 

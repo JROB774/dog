@@ -41,6 +41,10 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
     map.has_background = std::filesystem::exists("assets/" + background_file);
     if (map.has_background) LoadImage(map.background, background_file.c_str());
 
+    std::string foreground_file = "fronts/" + file_name;
+    map.has_foreground = std::filesystem::exists("assets/" + foreground_file);
+    if (map.has_foreground) LoadImage(map.foreground, foreground_file.c_str());
+
     std::string tileset_file = "t" + tokens[1] + ".bmp";
     LoadImage(map.tileset, tileset_file.c_str());
 
@@ -208,10 +212,12 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
 INTERNAL void FreeMap (Map& map)
 {
     if (map.has_background) FreeImage(map.background);
+    if (map.has_foreground) FreeImage(map.foreground);
     FreeImage(map.tileset);
     map.tiles.clear();
     map.w = 0, map.h = 0;
     map.has_background = false;
+    map.has_foreground = false;
     // Entities
     for (auto& spike: map.spikes    ) DeleteSpike    (spike);
     for (auto& spitb: map.spitboys  ) DeleteSpitBoy  (spitb);
@@ -273,6 +279,11 @@ INTERNAL void DrawMapFrontTiles (Map& map)
             }
         }
     }
+}
+
+INTERNAL void DrawMapForeground (Map& map)
+{
+    if (map.has_foreground) DrawImage(map.foreground, 0,0);
 }
 
 INTERNAL void ResetMap ()
