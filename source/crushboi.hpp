@@ -14,18 +14,15 @@ struct CrushBoi
     Vec2 vel;
 
     Rect bounds;
+
+    float timer;
 };
 
-GLOBAL SDL_Rect gCrushBoiClip = {0, 0, 16, 16};
-GLOBAL Image gCrushBoiImage;
-//GLOBAL Sound gCrushBoiMove;
-GLOBAL Sound gCrushBoiHitSound;
-
-INTERNAL void InitCrushBoi();
-INTERNAL void QuitCrushBoi();
-INTERNAL void CreateCrushBoi(CrushBoi& _boi, float _x, float _y, bool _vertical);
-INTERNAL void UpdateCrushBoi(CrushBoi& _boi);
-INTERNAL void RenderCrushBoi(CrushBoi& _boi);
-INTERNAL void ResetCrushBoi(CrushBoi& _boi);
+INTERNAL void InitCrushBoi   ();
+INTERNAL void QuitCrushBoi   ();
+INTERNAL void CreateCrushBoi (CrushBoi& boi, float x, float y, bool vertical);
+INTERNAL void UpdateCrushBoi (CrushBoi& boi, float dt);
+INTERNAL void RenderCrushBoi (CrushBoi& boi);
+INTERNAL void ResetCrushBoi  (CrushBoi& boi);
 
 #endif

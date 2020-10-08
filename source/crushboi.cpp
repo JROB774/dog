@@ -1,6 +1,12 @@
+GLOBAL constexpr float CRUSHBOI_COOLDOWN = 0.75f;
+GLOBAL constexpr float CRUSHBOI_SPEED = 350.0f;
+
+GLOBAL Image gCrushBoiImage;
+GLOBAL Sound gCrushBoiHitSound;
+
 INTERNAL void InitCrushBoi()
 {
-    LoadImage(gCrushBoiImage, "crushboi.bmp");
+    LoadImage(gCrushBoiImage, "crushboy.bmp");
     LoadSound(gCrushBoiHitSound, "crush.wav");
 }
 
@@ -10,89 +16,106 @@ INTERNAL void QuitCrushBoi()
     FreeImage(gCrushBoiImage);
 }
 
-INTERNAL void CreateCrushBoi(CrushBoi& _boi, float _x, float _y, bool _vertical)
+INTERNAL void CreateCrushBoi(CrushBoi& boi, float x, float y, bool vertical)
 {
-    _boi.pos = {_x,_y};
-    _boi.start_pos = {_x, _y};
-    _boi.vel = { 0, 0};
-    _boi.vertical = _vertical;
-    _boi.active = false;
-    _boi.bounds = {0,0,16,16};
+    boi.pos = {x,y};
+    boi.start_pos = {x, y};
+    boi.vel = { 0, 0};
+    boi.vertical = vertical;
+    boi.active = false;
+    boi.bounds = {0,0,16,16};
+    boi.timer = 0.0f;
 }
 
-INTERNAL void UpdateCrushBoi(CrushBoi& _boi, float _dt)
+INTERNAL void UpdateCrushBoi(CrushBoi& boi, float dt)
 {
-    if(_boi.active){
+    if(boi.active){
         Vec2 we_arent_using_this = {0,0};
-        if(EntityAndMapCollision(_boi.pos,_boi.bounds, _boi.vel, gWorld.current_map, we_arent_using_this, _dt)){
+        if(EntityAndMapCollision(boi.pos,boi.bounds, boi.vel, gWorld.current_map, we_arent_using_this, dt)){
             //This is where particles go
             Vec2 particle_pos = {0,0};
-            if(_boi.vertical){
-                particle_pos.x = _boi.pos.x;
-                if(_boi.vel.y < 0){
-                    particle_pos.y = _boi.pos.y;
+            if(boi.vertical){
+                particle_pos.x = boi.pos.x;
+                if(boi.vel.y < 0){
+                    particle_pos.y = boi.pos.y;
                     CreateParticlesRotated(PARTICLE_TYPE_PUFF_D, (int)particle_pos.x-2,(int)particle_pos.y,(int)particle_pos.x + 16,(int)particle_pos.y + 2, 4, 8, DegToRad(180));
+                    // CreateParticles(PARTICLE_TYPE_SBREAK, (int)particle_pos.x-2,(int)particle_pos.y,(int)particle_pos.x + 16,(int)particle_pos.y + 2, 1,2);
                     PlaySound(gCrushBoiHitSound);
+                    ShakeCamera(0, -1, 0, 1, 0.25f);
                 }
-                if(_boi.vel.y > 0){
-                    particle_pos.y = _boi.pos.y + _boi.bounds.h;
+                if(boi.vel.y > 0){
+                    particle_pos.y = boi.pos.y + boi.bounds.h;
                     CreateParticlesRotated(PARTICLE_TYPE_PUFF_D, (int)particle_pos.x-2,(int)particle_pos.y,(int)particle_pos.x + 16,(int)particle_pos.y, 4, 8, DegToRad(0));
+                    // CreateParticles(PARTICLE_TYPE_SBREAK, (int)particle_pos.x-2,(int)particle_pos.y,(int)particle_pos.x + 16,(int)particle_pos.y, 1,2);
                     PlaySound(gCrushBoiHitSound);
+                    ShakeCamera(0, -1, 0, 1, 0.25f);
                 }
             }
-            if(!_boi.vertical){
-                particle_pos.y = _boi.pos.y;
-                if(_boi.vel.x < 0){
-                    particle_pos.x = _boi.pos.x;
+            if(!boi.vertical){
+                particle_pos.y = boi.pos.y;
+                if(boi.vel.x < 0){
+                    particle_pos.x = boi.pos.x;
                     CreateParticlesRotated(PARTICLE_TYPE_PUFF_D, (int)particle_pos.x,(int)particle_pos.y - 2,(int)particle_pos.x,(int)particle_pos.y + 16, 4, 8, DegToRad(90));
+                    // CreateParticles(PARTICLE_TYPE_SBREAK, (int)particle_pos.x,(int)particle_pos.y - 2,(int)particle_pos.x,(int)particle_pos.y + 16, 1,2);
                     PlaySound(gCrushBoiHitSound);
+                    ShakeCamera(-1, 0, 1, 0, 0.25f);
                 }
-                if(_boi.vel.x > 0){
-                    particle_pos.x = _boi.pos.x + _boi.bounds.w;
+                if(boi.vel.x > 0){
+                    particle_pos.x = boi.pos.x + boi.bounds.w;
                     CreateParticlesRotated(PARTICLE_TYPE_PUFF_D, (int)particle_pos.x,(int)particle_pos.y - 2,(int)particle_pos.x,(int)particle_pos.y + 16, 4, 8, DegToRad(180));
+                    // CreateParticles(PARTICLE_TYPE_SBREAK, (int)particle_pos.x,(int)particle_pos.y - 2,(int)particle_pos.x,(int)particle_pos.y + 16, 1,2);
                     PlaySound(gCrushBoiHitSound);
+                    ShakeCamera(-1, 0, 1, 0, 0.25f);
                 }
             }
 
-            _boi.active = false;
+            boi.timer = CRUSHBOI_COOLDOWN;
+            boi.active = false;
         }
-        if(_boi.vertical ){_boi.pos.y += _boi.vel.y * _dt;}
-        if(!_boi.vertical){_boi.pos.x += _boi.vel.x * _dt;}
+        if(boi.vertical ){boi.pos.y += boi.vel.y * dt;}
+        if(!boi.vertical){boi.pos.x += boi.vel.x * dt;}
     }
+
+    if (boi.timer > 0.0f) boi.timer -= dt;
 
     if(gGameState.dog.dead){return;}
 
-    if(!_boi.active){
-        if(_boi.vertical){
-            float temp = gGameState.dog.bounds.x + gGameState.dog.pos.x;
-            if(temp < _boi.pos.x && temp + gGameState.dog.bounds.w > _boi.pos.x || temp > _boi.pos.x && temp < _boi.pos.x + 16){
-                _boi.active = true;
-                temp = gGameState.dog.bounds.y + gGameState.dog.pos.y;
-                if(temp < _boi.pos.y){_boi.vel.y = -225;}
-                if(temp > _boi.pos.y){_boi.vel.y =  225;}
+    if(!boi.active){
+        if (boi.timer <= 0.0f)
+        {
+            if(boi.vertical){
+                float temp = gGameState.dog.bounds.x + gGameState.dog.pos.x;
+                if(temp < boi.pos.x && temp + gGameState.dog.bounds.w > boi.pos.x || temp > boi.pos.x && temp < boi.pos.x + 16){
+                    boi.active = true;
+                    temp = gGameState.dog.bounds.y + gGameState.dog.pos.y;
+                    if(temp < boi.pos.y){boi.vel.y = -CRUSHBOI_SPEED;}
+                    if(temp > boi.pos.y){boi.vel.y =  CRUSHBOI_SPEED;}
+                }
             }
-        }
-        if(!_boi.vertical){
-            float temp = gGameState.dog.bounds.y + gGameState.dog.pos.y;
-            if(temp < _boi.pos.y && temp + gGameState.dog.bounds.h > _boi.pos.y || temp > _boi.pos.y && temp < _boi.pos.y + 16){
-                _boi.active = true;
-                temp = gGameState.dog.bounds.x + gGameState.dog.pos.x;
-                if(temp < _boi.pos.x){_boi.vel.x = -225;}
-                if(temp > _boi.pos.x){_boi.vel.x =  225;}
+            if(!boi.vertical){
+                float temp = gGameState.dog.bounds.y + gGameState.dog.pos.y;
+                if(temp < boi.pos.y && temp + gGameState.dog.bounds.h > boi.pos.y || temp > boi.pos.y && temp < boi.pos.y + 16){
+                    boi.active = true;
+                    temp = gGameState.dog.bounds.x + gGameState.dog.pos.x;
+                    if(temp < boi.pos.x){boi.vel.x = -CRUSHBOI_SPEED;}
+                    if(temp > boi.pos.x){boi.vel.x =  CRUSHBOI_SPEED;}
+                }
             }
         }
     }
 }
 
-INTERNAL void RenderCrushBoi(CrushBoi& _boi)
+INTERNAL void RenderCrushBoi(CrushBoi& boi)
 {
-    SDL_Rect temp_clip = gCrushBoiClip;
-    if(_boi.vertical){temp_clip.x += 16;}
-    DrawImage(gCrushBoiImage, _boi.pos.x, _boi.pos.y, SDL_FLIP_NONE, &temp_clip);
+    SDL_Rect clip = { 0,0,32,32 };
+    if (boi.active||boi.timer>0.0f) clip.x += 32;
+    if (!boi.vertical) clip.y += 32;
+    DrawImage(gCrushBoiImage, boi.pos.x-8,boi.pos.y-8, FLIP_NONE, &clip);
 }
 
-INTERNAL void ResetCrushBoi(CrushBoi& _boi)
+INTERNAL void ResetCrushBoi(CrushBoi& boi)
 {
-    _boi.pos = _boi.start_pos;
-    _boi.active = false;
+    boi.pos = boi.start_pos;
+    boi.active = false;
+    boi.timer = 0.0f;
 }
