@@ -114,3 +114,8 @@ INTERNAL bool IsMusicOn ()
 {
     return (gMixer.music_volume > 0.0f);
 }
+
+INTERNAL bool IsMusicPlaying ()
+{
+    return Mix_PlayingMusic();
+}

@@ -44,6 +44,7 @@ INTERNAL void CreateDog (Dog& dog, float x, float y, Flip flip)
     LoadAnimation(dog.anim[DOG_STATE_BARK], "dog-bark.anim");
     LoadAnimation(dog.anim[DOG_STATE_LKDN], "dog-lkdn.anim");
     LoadAnimation(dog.anim[DOG_STATE_LKUP], "dog-lkup.anim");
+    LoadAnimation(dog.anim[DOG_STATE_HPPY], "dog-hppy.anim");
 
     dog.up           = false;
     dog.right        = false;
@@ -72,6 +73,16 @@ INTERNAL void CreateDog (Dog& dog, float x, float y, Flip flip)
 
 INTERNAL void DeleteDog (Dog& dog)
 {
+    FreeAnimation(dog.anim[DOG_STATE_IDLE]);
+    FreeAnimation(dog.anim[DOG_STATE_BLNK]);
+    FreeAnimation(dog.anim[DOG_STATE_MOVE]);
+    FreeAnimation(dog.anim[DOG_STATE_JUMP]);
+    FreeAnimation(dog.anim[DOG_STATE_FALL]);
+    FreeAnimation(dog.anim[DOG_STATE_BARK]);
+    FreeAnimation(dog.anim[DOG_STATE_LKDN]);
+    FreeAnimation(dog.anim[DOG_STATE_LKUP]);
+    FreeAnimation(dog.anim[DOG_STATE_HPPY]);
+
     FreeImage(dog.image);
 
     FreeSound(dog.snd_footstep);
@@ -93,13 +104,33 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
     // CreateParticles(PARTICLE_TYPE_TEST, (int)gGameState.dog.pos.x,(int)gGameState.dog.pos.y,(int)gGameState.dog.pos.x+24,(int)gGameState.dog.pos.y+24, 4,10);
 
     // Handle controls!!!
-    dog.up           = (IsKeyDown(SDL_SCANCODE_UP)    || IsKeyDown(SDL_SCANCODE_W)         || IsButtonDown(SDL_CONTROLLER_BUTTON_DPAD_UP)    || IsLeftStickUp());
-    dog.right        = (IsKeyDown(SDL_SCANCODE_RIGHT) || IsKeyDown(SDL_SCANCODE_D)         || IsButtonDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT) || IsLeftStickRight());
-    dog.down         = (IsKeyDown(SDL_SCANCODE_DOWN)  || IsKeyDown(SDL_SCANCODE_S)         || IsButtonDown(SDL_CONTROLLER_BUTTON_DPAD_DOWN)  || IsLeftStickDown());
-    dog.left         = (IsKeyDown(SDL_SCANCODE_LEFT)  || IsKeyDown(SDL_SCANCODE_A)         || IsButtonDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT)  || IsLeftStickLeft());
-    dog.jump_press   = (IsKeyPressed(SDL_SCANCODE_Z)  || IsKeyPressed(SDL_SCANCODE_SPACE)  || IsButtonPressed(SDL_CONTROLLER_BUTTON_A));
-    dog.jump_release = (IsKeyReleased(SDL_SCANCODE_Z) || IsKeyReleased(SDL_SCANCODE_SPACE) || IsButtonReleased(SDL_CONTROLLER_BUTTON_A));
-    dog.action       = (IsKeyPressed(SDL_SCANCODE_X)  || IsButtonPressed(SDL_CONTROLLER_BUTTON_X));
+    if (!gGameState.doing_win_sequence)
+    {
+        dog.up           = (IsKeyDown(SDL_SCANCODE_UP)    || IsKeyDown(SDL_SCANCODE_W)         || IsButtonDown(SDL_CONTROLLER_BUTTON_DPAD_UP)    || IsLeftStickUp());
+        dog.right        = (IsKeyDown(SDL_SCANCODE_RIGHT) || IsKeyDown(SDL_SCANCODE_D)         || IsButtonDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT) || IsLeftStickRight());
+        dog.down         = (IsKeyDown(SDL_SCANCODE_DOWN)  || IsKeyDown(SDL_SCANCODE_S)         || IsButtonDown(SDL_CONTROLLER_BUTTON_DPAD_DOWN)  || IsLeftStickDown());
+        dog.left         = (IsKeyDown(SDL_SCANCODE_LEFT)  || IsKeyDown(SDL_SCANCODE_A)         || IsButtonDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT)  || IsLeftStickLeft());
+        dog.jump_press   = (IsKeyPressed(SDL_SCANCODE_Z)  || IsKeyPressed(SDL_SCANCODE_SPACE)  || IsButtonPressed(SDL_CONTROLLER_BUTTON_A));
+        dog.jump_release = (IsKeyReleased(SDL_SCANCODE_Z) || IsKeyReleased(SDL_SCANCODE_SPACE) || IsButtonReleased(SDL_CONTROLLER_BUTTON_A));
+        dog.action       = (IsKeyPressed(SDL_SCANCODE_X)  || IsButtonPressed(SDL_CONTROLLER_BUTTON_X));
+    }
+    else
+    {
+        dog.up           = false;
+        dog.right        = false;
+        dog.down         = false;
+        dog.left         = false;
+        dog.jump_press   = false;
+        dog.jump_release = true;
+        dog.action       = false;
+
+        if (IsKeyPressed(SDL_SCANCODE_UP)    || IsKeyPressed   (SDL_SCANCODE_W)     || IsButtonPressed(SDL_CONTROLLER_BUTTON_DPAD_UP)    || IsLeftStickUpPressed   ()) EndWinSequence();
+        if (IsKeyPressed(SDL_SCANCODE_RIGHT) || IsKeyPressed   (SDL_SCANCODE_D)     || IsButtonPressed(SDL_CONTROLLER_BUTTON_DPAD_RIGHT) || IsLeftStickRightPressed()) EndWinSequence();
+        if (IsKeyPressed(SDL_SCANCODE_DOWN)  || IsKeyPressed   (SDL_SCANCODE_S)     || IsButtonPressed(SDL_CONTROLLER_BUTTON_DPAD_DOWN)  || IsLeftStickDownPressed ()) EndWinSequence();
+        if (IsKeyPressed(SDL_SCANCODE_LEFT)  || IsKeyPressed   (SDL_SCANCODE_A)     || IsButtonPressed(SDL_CONTROLLER_BUTTON_DPAD_LEFT)  || IsLeftStickLeftPressed ()) EndWinSequence();
+        if (IsKeyPressed(SDL_SCANCODE_Z)     || IsKeyPressed   (SDL_SCANCODE_SPACE) || IsButtonPressed(SDL_CONTROLLER_BUTTON_A))                                       EndWinSequence();
+        if (IsKeyPressed(SDL_SCANCODE_X)     || IsButtonPressed(SDL_CONTROLLER_BUTTON_X))                                                                              EndWinSequence();
+    }
 
     // If the dog is dead respawn when a button is pressed or after some time.
     if (dog.dead)
@@ -222,6 +253,10 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
     }
 
     // Handle setting the dog's current animation state.
+    if (gGameState.doing_win_sequence)
+    {
+        dog.state = DOG_STATE_HPPY;
+    }
     if (!dog.grounded)
     {
         if (dog.vel.y <= 0.0f)
@@ -235,45 +270,48 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
     }
     else
     {
-        if (dog.vel.x != 0.0f)
+        if (dog.state != DOG_STATE_HPPY)
         {
-            dog.state = DOG_STATE_MOVE;
-        }
-        else
-        {
-            if (dog.state != DOG_STATE_BARK && dog.action && !block_broken && !dog.up && !dog.right && !dog.left && !dog.down)
+            if (dog.vel.x != 0.0f)
             {
-                 ResetAnimation(dog.anim[DOG_STATE_BARK]);
-                 dog.state = DOG_STATE_BARK;
-                 PlaySound(dog.snd_bark);
-            }
-
-            if (dog.state == DOG_STATE_BARK || dog.state == DOG_STATE_BLNK)
-            {
-                if (IsAnimationDone(dog.anim[dog.state]))
-                {
-                    dog.state = DOG_STATE_IDLE;
-                }
+                dog.state = DOG_STATE_MOVE;
             }
             else
             {
-                dog.state = DOG_STATE_IDLE;
-
-                if (dog.down)
+                if (dog.state != DOG_STATE_BARK && dog.action && !block_broken && !dog.up && !dog.right && !dog.left && !dog.down)
                 {
-                    dog.state = DOG_STATE_LKDN;
-                }
-                if (dog.up)
-                {
-                    dog.state = DOG_STATE_LKUP;
+                     ResetAnimation(dog.anim[DOG_STATE_BARK]);
+                     dog.state = DOG_STATE_BARK;
+                     PlaySound(dog.snd_bark);
                 }
 
-                if (dog.state == DOG_STATE_IDLE)
+                if (dog.state == DOG_STATE_BARK || dog.state == DOG_STATE_BLNK)
                 {
-                    if (RandomRange(0, 1000) <= 10)
+                    if (IsAnimationDone(dog.anim[dog.state]))
                     {
-                        ResetAnimation(dog.anim[DOG_STATE_BLNK]);
-                        dog.state = DOG_STATE_BLNK;
+                        dog.state = DOG_STATE_IDLE;
+                    }
+                }
+                else
+                {
+                    dog.state = DOG_STATE_IDLE;
+
+                    if (dog.down)
+                    {
+                        dog.state = DOG_STATE_LKDN;
+                    }
+                    if (dog.up)
+                    {
+                        dog.state = DOG_STATE_LKUP;
+                    }
+
+                    if (dog.state == DOG_STATE_IDLE)
+                    {
+                        if (RandomRange(0, 1000) <= 10)
+                        {
+                            ResetAnimation(dog.anim[DOG_STATE_BLNK]);
+                            dog.state = DOG_STATE_BLNK;
+                        }
                     }
                 }
             }
@@ -332,7 +370,8 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
                 lbone.dead = true;
                 PlaySound(small_bone_sound);
                 PlaySound(big_bone_sound);
-                StartFade(FADE_SPECIAL, [](){ EndGame(); });
+                StartWinSequence();
+                // StartFade(FADE_SPECIAL, [](){ EndGame(); });
             }
         }
     }

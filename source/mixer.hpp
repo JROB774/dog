@@ -38,4 +38,6 @@ INTERNAL float GetMusicVolume ();
 INTERNAL bool IsSoundOn ();
 INTERNAL bool IsMusicOn ();
 
+INTERNAL bool IsMusicPlaying ();
+
 #endif /* MIXER_HPP */

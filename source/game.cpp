@@ -17,6 +17,7 @@ INTERNAL void InitGame ()
     LoadMusic(gGameState.mus_challenge, "challenge.wav");
 
     gGameState.challenge_locked = true;
+    gGameState.doing_win_sequence = false;
 }
 
 INTERNAL void QuitGame ()
@@ -40,7 +41,7 @@ INTERNAL void QuitGame ()
 
 INTERNAL void UpdateGame (float dt)
 {
-    if (IsKeyPressed(SDL_SCANCODE_ESCAPE) || IsButtonPressed(SDL_CONTROLLER_BUTTON_START)) Pause();
+    if (!gGameState.doing_win_sequence && (IsKeyPressed(SDL_SCANCODE_ESCAPE) || IsButtonPressed(SDL_CONTROLLER_BUTTON_START))) Pause();
 
     if (!IsFading()) WorldTransitionIfOutOfBounds();
 
@@ -48,6 +49,8 @@ INTERNAL void UpdateGame (float dt)
     UpdateDog(gGameState.dog, dt);
     UpdateParticles(dt);
     UpdateCamera(dt);
+
+    DoWinSequence();
 }
 
 INTERNAL void RenderGame (float dt)
@@ -92,6 +95,26 @@ INTERNAL void StartGame (std::string start_map, float start_x, float start_y, Fl
 
 INTERNAL void EndGame ()
 {
+    gGameState.doing_win_sequence = false;
     GoToMenu();
     FreeWorld();
+}
+
+INTERNAL void StartWinSequence ()
+{
+    gGameState.doing_win_sequence = true;
+    if (gGameState.dog.vel.y < 0.0f) gGameState.dog.vel.y = 0.0f;
+    gGameState.dog.vel.x = 0.0f;
+    PlayMusic(gGameState.mus_fanfare, 1);
+}
+
+INTERNAL void DoWinSequence ()
+{
+    if (!gGameState.doing_win_sequence) return;
+    if (!IsMusicPlaying()) EndWinSequence();
+}
+
+INTERNAL void EndWinSequence ()
+{
+    StartFade(FADE_SPECIAL, [](){ EndGame(); });
 }

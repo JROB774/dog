@@ -53,6 +53,7 @@
   * [x] Charge Boy
 * [x] Implement the tutorial zone.
 * [x] Change how the bone system works.
+* [x] Add a proper win sequence when collecting a big bone.
 
 ## TiKo
 
@@ -69,7 +70,7 @@
 
 ## Unassigned
 
-* [ ] Add a proper win sequence when collecting a big bone.
+* [ ] Add Splash Screen / Credits
 * [ ] Implement Levels/Zones:
   * [ ] Normal Mode
   * [ ] Challenge Mode
@@ -79,4 +80,3 @@
   * [ ] Unlocking
   * [ ] Badge Screen
   * [ ] Save/Load
-* [ ] Add Splash Screen / Credits
