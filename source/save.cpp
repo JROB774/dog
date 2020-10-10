@@ -1,61 +1,78 @@
 GLOBAL constexpr const char* SAVE_FILE = "save.data";
 
+GLOBAL constexpr U16 COMPLETE_0_BIT = 0b0000000000000001;
+GLOBAL constexpr U16 COMPLETE_1_BIT = 0b0000000000000010;
+GLOBAL constexpr U16 COMPLETE_2_BIT = 0b0000000000000100;
+GLOBAL constexpr U16 COMPLETE_3_BIT = 0b0000000000001000;
+GLOBAL constexpr U16  COLLECT_0_BIT = 0b0000000000010000;
+GLOBAL constexpr U16  COLLECT_1_BIT = 0b0000000000100000;
+GLOBAL constexpr U16  COLLECT_2_BIT = 0b0000000001000000;
+GLOBAL constexpr U16  COLLECT_3_BIT = 0b0000000010000000;
+GLOBAL constexpr U16  IRONMAN_0_BIT = 0b0000000100000000;
+GLOBAL constexpr U16  IRONMAN_1_BIT = 0b0000001000000000;
+GLOBAL constexpr U16  IRONMAN_2_BIT = 0b0000010000000000;
+GLOBAL constexpr U16  IRONMAN_3_BIT = 0b0000100000000000;
+GLOBAL constexpr U16 SPEEDRUN_0_BIT = 0b0001000000000000;
+GLOBAL constexpr U16 SPEEDRUN_1_BIT = 0b0010000000000000;
+GLOBAL constexpr U16 SPEEDRUN_2_BIT = 0b0100000000000000;
+GLOBAL constexpr U16 SPEEDRUN_3_BIT = 0b1000000000000000;
+
 INTERNAL void SaveData ()
 {
-    /*
-    FILE* save = fopen(SAVE_FILE, "w");
-    if (!save) LOG_ERROR(ERR_MED, "Failed to save data!\n");
-    else
-    {
-        fprintf(save, "player_state %d\n",     gGameState.dog.start_state                       );
-        fprintf(save, "player_pos_x %f\n",     gGameState.dog.start_pos.x                       );
-        fprintf(save, "player_pos_y %f\n",     gGameState.dog.start_pos.y                       );
-        fprintf(save, "player_vel_x %f\n",     gGameState.dog.start_vel.x                       );
-        fprintf(save, "player_vel_y %f\n",     gGameState.dog.start_vel.y                       );
-        fprintf(save, "player_flip %d\n",      gGameState.dog.start_flip                        );
-        fprintf(save, "player_deaths %d\n",    gGameState.dog.deaths                            );
-        fprintf(save, "player_grounded %s\n", (gGameState.dog.start_grounded) ? "true" : "false");
-        fprintf(save, "current_map \"%s\"\n",  gWorld.current_map_name.c_str()                  );
+    // Pack the flags for each badge's completion status into a 16-bit value
+    // where each bit's state corresponds to a particular badge's unlock.
+    U16 save_data = 0x0000;
 
-        fprintf(save, "bones [\n");
-        for (auto& id: gBoneCollectedIds) fprintf(save, "    \"%s\"\n", id.c_str());
-        fprintf(save, "]\n");
+    save_data |= (gBadges.unlocked_complete[0]) ? COMPLETE_0_BIT : 0x0000;
+    save_data |= (gBadges.unlocked_complete[1]) ? COMPLETE_1_BIT : 0x0000;
+    save_data |= (gBadges.unlocked_complete[2]) ? COMPLETE_2_BIT : 0x0000;
+    save_data |= (gBadges.unlocked_complete[3]) ? COMPLETE_3_BIT : 0x0000;
+    save_data |= (gBadges.unlocked_collect [0]) ?  COLLECT_0_BIT : 0x0000;
+    save_data |= (gBadges.unlocked_collect [1]) ?  COLLECT_1_BIT : 0x0000;
+    save_data |= (gBadges.unlocked_collect [2]) ?  COLLECT_2_BIT : 0x0000;
+    save_data |= (gBadges.unlocked_collect [3]) ?  COLLECT_3_BIT : 0x0000;
+    save_data |= (gBadges.unlocked_ironman [0]) ?  IRONMAN_0_BIT : 0x0000;
+    save_data |= (gBadges.unlocked_ironman [1]) ?  IRONMAN_1_BIT : 0x0000;
+    save_data |= (gBadges.unlocked_ironman [2]) ?  IRONMAN_2_BIT : 0x0000;
+    save_data |= (gBadges.unlocked_ironman [3]) ?  IRONMAN_3_BIT : 0x0000;
+    save_data |= (gBadges.unlocked_speedrun[0]) ? SPEEDRUN_0_BIT : 0x0000;
+    save_data |= (gBadges.unlocked_speedrun[1]) ? SPEEDRUN_1_BIT : 0x0000;
+    save_data |= (gBadges.unlocked_speedrun[2]) ? SPEEDRUN_2_BIT : 0x0000;
+    save_data |= (gBadges.unlocked_speedrun[3]) ? SPEEDRUN_3_BIT : 0x0000;
 
-        fclose(save);
-    }
-    */
+    FILE* file = fopen(SAVE_FILE, "wb");
+    if (!file) { LOG_ERROR(ERR_MED, "Failed to save game data!\n"); return; }
+    fwrite(&save_data, sizeof(save_data), 1, file);
+    fclose(file);
 }
 
 INTERNAL void LoadData ()
 {
-    /*
-    if (IsThereSaveData())
-    {
-        GonObject save = GonObject::Load(SAVE_FILE);
+    if (!std::filesystem::exists(SAVE_FILE)) return; // Don't attempt to load if we don't have save data.
 
-        gGameState.dog.state    = (DogState)save["player_state"   ].Int   ();
-        gGameState.dog.pos.x    = (float   )save["player_pos_x"   ].Number();
-        gGameState.dog.pos.y    = (float   )save["player_pos_y"   ].Number();
-        gGameState.dog.vel.x    = (float   )save["player_vel_x"   ].Number();
-        gGameState.dog.vel.y    = (float   )save["player_vel_y"   ].Number();
-        gGameState.dog.flip     = (Flip    )save["player_flip"    ].Int   ();
-        gGameState.dog.deaths   =           save["player_deaths"  ].Int   ();
-        gGameState.dog.grounded =           save["player_grounded"].Bool  ();
+    // Unpack the flags for each badge's completion status from a 16-bit value
+    // where each bit's state corresponds to a particular badge's unlock.
+    U16 save_data = 0x0000;
 
-        gGameState.dog.start_state    = gGameState.dog.state;
-        gGameState.dog.start_pos      = gGameState.dog.pos;
-        gGameState.dog.start_vel      = gGameState.dog.vel;
-        gGameState.dog.start_flip     = gGameState.dog.flip;
-        gGameState.dog.start_grounded = gGameState.dog.grounded;
+    FILE* file = fopen(SAVE_FILE, "rb");
+    if (!file) { LOG_ERROR(ERR_MED, "Failed to load save data!\n"); return; }
+    fread(&save_data, sizeof(save_data), 1, file);
+    fclose(file);
 
-        FreeWorld();
-        LoadWorld(save["current_map"].String());
-
-        gBoneCollectedIds.clear();
-        gTempBoneCollectedIds.clear();
-        for (int i=0; i<save["bones"].Size(); ++i) {
-            gBoneCollectedIds.push_back(save["bones"][i].String());
-        }
-    }
-    */
+    gBadges.unlocked_complete[0] = (save_data & COMPLETE_0_BIT);
+    gBadges.unlocked_complete[1] = (save_data & COMPLETE_1_BIT);
+    gBadges.unlocked_complete[2] = (save_data & COMPLETE_2_BIT);
+    gBadges.unlocked_complete[3] = (save_data & COMPLETE_3_BIT);
+    gBadges.unlocked_collect [0] = (save_data &  COLLECT_0_BIT);
+    gBadges.unlocked_collect [1] = (save_data &  COLLECT_1_BIT);
+    gBadges.unlocked_collect [2] = (save_data &  COLLECT_2_BIT);
+    gBadges.unlocked_collect [3] = (save_data &  COLLECT_3_BIT);
+    gBadges.unlocked_ironman [0] = (save_data &  IRONMAN_0_BIT);
+    gBadges.unlocked_ironman [1] = (save_data &  IRONMAN_1_BIT);
+    gBadges.unlocked_ironman [2] = (save_data &  IRONMAN_2_BIT);
+    gBadges.unlocked_ironman [3] = (save_data &  IRONMAN_3_BIT);
+    gBadges.unlocked_speedrun[0] = (save_data & SPEEDRUN_0_BIT);
+    gBadges.unlocked_speedrun[1] = (save_data & SPEEDRUN_1_BIT);
+    gBadges.unlocked_speedrun[2] = (save_data & SPEEDRUN_2_BIT);
+    gBadges.unlocked_speedrun[3] = (save_data & SPEEDRUN_3_BIT);
 }

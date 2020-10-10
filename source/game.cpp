@@ -3,6 +3,7 @@ INTERNAL void InitGame ()
     InitBones();
     InitBreakableBlock();
     InitGui();
+    InitBadges();
     InitBones();
     InitCrushBoi();
     InitSpitBoy();
@@ -35,6 +36,7 @@ INTERNAL void QuitGame ()
     QuitChargeBoy();
     DeleteBreakableBlock();
     DeleteBones();
+    QuitBadges();
     QuitGui();
     FreeWorld();
 }

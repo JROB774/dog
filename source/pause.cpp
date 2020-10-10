@@ -59,7 +59,7 @@ INTERNAL void UpdatePause (float dt)
         {
             case (PAUSE_ITEM_RETURN  ): Unpause(); break;
             case (PAUSE_ITEM_MENU    ): PlaySound(gPauseState.snd_select); StartFade(FADE_SPECIAL, [](){ EndGame(); }); break;
-            case (PAUSE_ITEM_EXITGAME): PlaySound(gPauseState.snd_select); SaveData(); gWindow.running = false; break;
+            case (PAUSE_ITEM_EXITGAME): PlaySound(gPauseState.snd_select); gWindow.running = false; break;
         }
     }
     if (back)

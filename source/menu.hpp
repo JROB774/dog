@@ -4,7 +4,7 @@
 enum MenuMode
 {
     MENU_MODE_MAINMENU,
-    // MENU_MODE_CONTROLS,
+    MENU_MODE_BADGES,
     MENU_MODE_SETTINGS,
 };
 
@@ -31,5 +31,12 @@ INTERNAL void QuitMenu   ();
 INTERNAL void UpdateMenu (float dt);
 INTERNAL void RenderMenu (float dt);
 INTERNAL void GoToMenu   ();
+
+INTERNAL void UpdateMenuMain     (float dt, bool up, bool down, bool right, bool left, bool action, bool back);
+INTERNAL void RenderMenuMain     (float dt);
+INTERNAL void UpdateMenuBadges   (float dt, bool up, bool down, bool right, bool left, bool action, bool back);
+INTERNAL void RenderMenuBadges   (float dt);
+INTERNAL void UpdateMenuSettings (float dt, bool up, bool down, bool right, bool left, bool action, bool back);
+INTERNAL void RenderMenuSettings (float dt);
 
 #endif /* MENU_HPP */
