@@ -24,10 +24,10 @@ INTERNAL void InitBadges ()
     gBadges.description[0][2] = "COMPLETE NORMAL+ MODE";
     gBadges.description[0][3] = "COMPLETE CHALLENGE+ MODE";
     // COLLECT
-    gBadges.description[1][0] = "COLLECT ALL NORMAL BONES";
-    gBadges.description[1][1] = "COLLECT ALL CHALLENGE\nBONES";
-    gBadges.description[1][2] = "COLLECT ALL NORMAL+ BONES";
-    gBadges.description[1][3] = "COLLECT ALL CHALLENGE+\nBONES";
+    gBadges.description[1][0] = "COLLECT ALL BONES IN\nNORMAL MODE";
+    gBadges.description[1][1] = "COLLECT ALL BONES IN\nCHALLENGE MODE";
+    gBadges.description[1][2] = "COLLECT ALL BONES IN\nNORMAL+ MODE";
+    gBadges.description[1][3] = "COLLECT ALL BONES IN\nCHALLENGE+ MODE";
     // IRONMAN
     gBadges.description[2][0] = "COMPLETE NORMAL MODE\nWITHOUT DYING";
     gBadges.description[2][1] = "COMPLETE CHALLENGE MODE\nWITHOUT DYING";
