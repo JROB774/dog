@@ -6,8 +6,8 @@ enum GameMode
     GAME_MODE_TUTORIAL,
     GAME_MODE_NORMAL,
     GAME_MODE_CHALLENGE,
-    GAME_MODE_NORMAL_HARD,
-    GAME_MODE_CHALLENGE_HARD,
+    GAME_MODE_NORMALPLUS,
+    GAME_MODE_CHALLENGEPLUS,
     GAME_MODE_TOTAL
 };
 
@@ -51,7 +51,7 @@ INTERNAL void QuitGame   ();
 INTERNAL void UpdateGame (float dt);
 INTERNAL void RenderGame (float dt);
 
-INTERNAL void StartGame (GameMode game_mode);
+INTERNAL void StartGame (GameMode game_mode, bool retry = false);
 INTERNAL void EndGame   ();
 INTERNAL void RetryGame ();
 

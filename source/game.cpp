@@ -69,7 +69,7 @@ INTERNAL void RenderGame (float dt)
     DrawGui(dt);
 }
 
-INTERNAL void StartGame (GameMode game_mode)
+INTERNAL void StartGame (GameMode game_mode, bool retry)
 {
     gBoneCollectedIds.clear();
     gTempBoneCollectedIds.clear();
@@ -94,7 +94,8 @@ INTERNAL void StartGame (GameMode game_mode)
 
     gAppState.state = APP_STATE_GAME;
 
-    PlayMusic(*GAME_MODE_INFO[gGameState.mode].music);
+    // Prevents the music being reset when retrying, it's much nicer if it just carries on playing.
+    if (!retry) PlayMusic(*GAME_MODE_INFO[gGameState.mode].music);
 }
 
 INTERNAL void EndGame ()
@@ -107,7 +108,7 @@ INTERNAL void EndGame ()
 INTERNAL void RetryGame ()
 {
     FreeWorld();
-    StartGame(gGameState.mode);
+    StartGame(gGameState.mode, true);
 }
 
 INTERNAL void StartWinSequence ()

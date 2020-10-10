@@ -19,25 +19,25 @@ INTERNAL void InitBadges ()
     gBadges.cursor_y = 0;
 
     // COMPLETE
-    gBadges.description[0][0] = "COMPLETE THE GAME";
-    gBadges.description[0][1] = "COMPLETE THE CHALLENGE";
-    gBadges.description[0][2] = "COMPLETE THE GAME\nON HARD MODE";
-    gBadges.description[0][3] = "COMPLETE THE CHALLENGE\nON HARD MODE";
+    gBadges.description[0][0] = "COMPLETE NORMAL MODE";
+    gBadges.description[0][1] = "COMPLETE CHALLENGE MODE";
+    gBadges.description[0][2] = "COMPLETE NORMAL+ MODE";
+    gBadges.description[0][3] = "COMPLETE CHALLENGE+ MODE";
     // COLLECT
-    gBadges.description[1][0] = "COLLECT ALL GAME BONES";
+    gBadges.description[1][0] = "COLLECT ALL NORMAL BONES";
     gBadges.description[1][1] = "COLLECT ALL CHALLENGE\nBONES";
-    gBadges.description[1][2] = "COLLECT ALL GAME BONES\nON HARD MODE";
-    gBadges.description[1][3] = "COLLECT ALL CHALLENGE\nBONES ON HARD MODE";
+    gBadges.description[1][2] = "COLLECT ALL NORMAL+ BONES";
+    gBadges.description[1][3] = "COLLECT ALL CHALLENGE+\nBONES";
     // IRONMAN
-    gBadges.description[2][0] = "COMPLETE THE GAME\nWITHOUT DYING";
-    gBadges.description[2][1] = "COMPLETE THE CHALLENGE\nWITHOUT DYING";
-    gBadges.description[2][2] = "COMPLETE THE GAME\nON HARD MODE\nWITHOUT DYING";
-    gBadges.description[2][3] = "COMPLETE THE CHALLENGE\nON HARD MODE\nWITHOUT DYING";
+    gBadges.description[2][0] = "COMPLETE NORMAL MODE\nWITHOUT DYING";
+    gBadges.description[2][1] = "COMPLETE CHALLENGE MODE\nWITHOUT DYING";
+    gBadges.description[2][2] = "COMPLETE NORMAL+\nWITHOUT DYING";
+    gBadges.description[2][3] = "COMPLETE CHALLENGE+\nWITHOUT DYING";
     // SPEEDRUN
-    gBadges.description[3][0] = "COMPLETE THE GAME\nIN 00:00 MINUTES";
-    gBadges.description[3][1] = "COMPLETE THE CHALLENGE\nIN 00:00 MINUTES";
-    gBadges.description[3][2] = "COMPLETE THE GAME\nON HARD MODE\nIN 00:00 MINUTES";
-    gBadges.description[3][3] = "COMPLETE THE CHALLENGE\nON HARD MODE\nIN 00:00 MINUTES";
+    gBadges.description[3][0] = "COMPLETE NORMAL MODE\nIN 00:00 MINUTES";
+    gBadges.description[3][1] = "COMPLETE CHALLENGE MODE\nIN 00:00 MINUTES";
+    gBadges.description[3][2] = "COMPLETE NORMAL+ MODE\nIN 00:00 MINUTES";
+    gBadges.description[3][3] = "COMPLETE CHALLENGE+ MODE\nIN 00:00 MINUTES";
 }
 
 INTERNAL void QuitBadges ()

@@ -131,8 +131,8 @@ INTERNAL void RenderMenuMain (float dt)
 
     DrawImage(gMenuState.title, tx,ty);
 
-    std::string play_text      = "PLAY GAME";
-    std::string challenge_text = "CHALLENGE";
+    std::string play_text      = "NORMAL MODE";
+    std::string challenge_text = "CHALLENGE MODE";
     std::string tutorial_text  = "TUTORIAL";
     std::string badges_text    = "BADGES";
     std::string options_text   = "OPTIONS";
