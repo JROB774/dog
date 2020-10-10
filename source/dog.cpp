@@ -333,9 +333,14 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 
     // Check dog collision with entities and perform the appropriate actions!
 
+    // We shrink the collision bounds of the dog when dealing with spikes because otherwise colliding
+    // horizontally with the spikes seems a bit unfair and feels wrong (smaller hitbox works better).
+    Rect shrunken_dog_bounds = dog.bounds;
+    shrunken_dog_bounds.x += 3;
+    shrunken_dog_bounds.w -= 6;
     for (auto& spike: gWorld.current_map.spikes)
     {
-        if (EntityAndEntityCollision(dog.pos,dog.bounds, { spike.x,spike.y },spike.bounds))
+        if (EntityAndEntityCollision(dog.pos,shrunken_dog_bounds, { spike.x,spike.y },spike.bounds))
         {
             KillDog(dog);
             break;
