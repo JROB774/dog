@@ -85,12 +85,15 @@ INTERNAL void StartGame (GameMode game_mode, bool retry)
     gGameState.dog.vel.y    = 0;
     gGameState.dog.flip     = GAME_MODE_INFO[gGameState.mode].flip;
     gGameState.dog.grounded = true;
+    gGameState.dog.deaths   = 0;
 
     gGameState.dog.start_state    = gGameState.dog.state;
     gGameState.dog.start_pos      = gGameState.dog.pos;
     gGameState.dog.start_vel      = gGameState.dog.vel;
     gGameState.dog.start_flip     = gGameState.dog.flip;
     gGameState.dog.start_grounded = gGameState.dog.grounded;
+
+    gGameState.start_time = SDL_GetTicks();
 
     gAppState.state = APP_STATE_GAME;
 
@@ -126,5 +129,13 @@ INTERNAL void DoWinSequence ()
 
 INTERNAL void EndWinSequence ()
 {
+    float elapsed_seconds = (float)(SDL_GetTicks() - gGameState.start_time) / 1000.0f;
+
+    // Handle unlocking badges!
+                                                                          gBadges.unlocked_complete[gGameState.mode] = true; // COMPLETE
+    if (gBoneCollectedIds.size() == gCurrentZoneBoneTotal)                gBadges.unlocked_collect [gGameState.mode] = true; // COLLECT
+    if (gGameState.dog.deaths == 0)                                       gBadges.unlocked_ironman [gGameState.mode] = true; // IRONMAN
+    if (elapsed_seconds <= GAME_MODE_INFO[gGameState.mode].speedrun_time) gBadges.unlocked_speedrun[gGameState.mode] = true; // SPEEDRUN
+
     StartFade(FADE_SPECIAL, [](){ EndGame(); });
 }

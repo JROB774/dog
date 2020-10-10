@@ -54,8 +54,8 @@
 * [x] Implement the tutorial zone.
 * [x] Change how the bone system works.
 * [x] Add a proper win sequence when collecting a big bone.
-* [ ] Implement Badges:
-  * [ ] Unlocking
+* [x] Implement Badges:
+  * [x] Unlocking
   * [x] Graphics
   * [x] Badge Screen
   * [x] Save/Load
