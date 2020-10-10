@@ -78,9 +78,18 @@ INTERNAL void DrawImageEx (Image& image, float x, float y, float angle, Flip fli
 
 INTERNAL void DrawText (Font& font, std::string text, float x, float y, Color color)
 {
+    // NOTE: We just assume the caller wants multi-line text to be center aligned.
+
     font.image.color = color;
-    for(int i = 0; i < text.length(); i++){
-        DrawImage(font.image, x, y, FLIP_NONE, &font.bounds[static_cast<U8>(text.at(i))]);
-        x += font.charw;
+    float ix = x;
+    float iy = y;
+    for(int i = 0; i < text.length(); i++)
+    {
+        if (text[i] == '\n') ix = x, iy += font.charh;
+        else
+        {
+            DrawImage(font.image, ix, iy, FLIP_NONE, &font.bounds[static_cast<U8>(text.at(i))]);
+            ix += font.charw;
+        }
     }
 }

@@ -1,6 +1,9 @@
 #ifndef BADGES_HPP
 #define BADGES_HPP
 
+// Most of this stuff is used by the main menu for displaying the badge
+// screen. Look at the "menu.hpp" and "menu.cpp" files for that stuff.
+
 enum BadgeType
 {
     BADGE_TYPE_LOCKED_COMPLETE,
@@ -17,7 +20,15 @@ enum BadgeType
 GLOBAL struct Badges
 {
     Animation anim[BADGE_TYPE_TOTAL];
-    Image image;
+
+    Image background;
+    Image badges;
+    Image caret;
+
+    std::string description[4][4];
+
+    int cursor_x;
+    int cursor_y;
 
     bool unlocked_complete[4];
     bool unlocked_collect [4];

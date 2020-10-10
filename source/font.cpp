@@ -22,10 +22,32 @@ INTERNAL void FreeFont (Font& font)
 
 INTERNAL float GetTextWidth (Font& font, std::string text)
 {
-    return (font.charw * text.length());
+    float linewidth = 0;
+    float width = 0;
+    for (int i=0; i<text.length(); ++i)
+    {
+        if (text[i] == '\n')
+        {
+            width = std::max(width, linewidth);
+            linewidth = 0;
+        }
+        else
+        {
+            linewidth += font.charw;
+        }
+    }
+    return std::max(width, linewidth);
 }
 
 INTERNAL float GetTextHeight (Font& font, std::string text)
 {
-    return (font.charh); // We don't handle multiple lines right now...
+    float height = font.charh;
+    for (int i=0; i<text.length(); ++i)
+    {
+        if (text[i] == '\n')
+        {
+            height += font.charh;
+        }
+    }
+    return height;
 }

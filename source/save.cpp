@@ -59,20 +59,20 @@ INTERNAL void LoadData ()
     fread(&save_data, sizeof(save_data), 1, file);
     fclose(file);
 
-    gBadges.unlocked_complete[0] = (save_data & COMPLETE_0_BIT);
-    gBadges.unlocked_complete[1] = (save_data & COMPLETE_1_BIT);
-    gBadges.unlocked_complete[2] = (save_data & COMPLETE_2_BIT);
-    gBadges.unlocked_complete[3] = (save_data & COMPLETE_3_BIT);
-    gBadges.unlocked_collect [0] = (save_data &  COLLECT_0_BIT);
-    gBadges.unlocked_collect [1] = (save_data &  COLLECT_1_BIT);
-    gBadges.unlocked_collect [2] = (save_data &  COLLECT_2_BIT);
-    gBadges.unlocked_collect [3] = (save_data &  COLLECT_3_BIT);
-    gBadges.unlocked_ironman [0] = (save_data &  IRONMAN_0_BIT);
-    gBadges.unlocked_ironman [1] = (save_data &  IRONMAN_1_BIT);
-    gBadges.unlocked_ironman [2] = (save_data &  IRONMAN_2_BIT);
-    gBadges.unlocked_ironman [3] = (save_data &  IRONMAN_3_BIT);
-    gBadges.unlocked_speedrun[0] = (save_data & SPEEDRUN_0_BIT);
-    gBadges.unlocked_speedrun[1] = (save_data & SPEEDRUN_1_BIT);
-    gBadges.unlocked_speedrun[2] = (save_data & SPEEDRUN_2_BIT);
-    gBadges.unlocked_speedrun[3] = (save_data & SPEEDRUN_3_BIT);
+    gBadges.unlocked_complete[0] = (save_data & COMPLETE_0_BIT) >>  0;
+    gBadges.unlocked_complete[1] = (save_data & COMPLETE_1_BIT) >>  1;
+    gBadges.unlocked_complete[2] = (save_data & COMPLETE_2_BIT) >>  2;
+    gBadges.unlocked_complete[3] = (save_data & COMPLETE_3_BIT) >>  3;
+    gBadges.unlocked_collect [0] = (save_data &  COLLECT_0_BIT) >>  4;
+    gBadges.unlocked_collect [1] = (save_data &  COLLECT_1_BIT) >>  5;
+    gBadges.unlocked_collect [2] = (save_data &  COLLECT_2_BIT) >>  6;
+    gBadges.unlocked_collect [3] = (save_data &  COLLECT_3_BIT) >>  7;
+    gBadges.unlocked_ironman [0] = (save_data &  IRONMAN_0_BIT) >>  8;
+    gBadges.unlocked_ironman [1] = (save_data &  IRONMAN_1_BIT) >>  9;
+    gBadges.unlocked_ironman [2] = (save_data &  IRONMAN_2_BIT) >> 10;
+    gBadges.unlocked_ironman [3] = (save_data &  IRONMAN_3_BIT) >> 11;
+    gBadges.unlocked_speedrun[0] = (save_data & SPEEDRUN_0_BIT) >> 12;
+    gBadges.unlocked_speedrun[1] = (save_data & SPEEDRUN_1_BIT) >> 13;
+    gBadges.unlocked_speedrun[2] = (save_data & SPEEDRUN_2_BIT) >> 14;
+    gBadges.unlocked_speedrun[3] = (save_data & SPEEDRUN_3_BIT) >> 15;
 }

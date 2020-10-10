@@ -1,6 +1,6 @@
 #version 1
 
-start_position [ 0 32 ]
+start_position [ 32 32 ]
 frame_size [ 32 32 ]
 frame_count 7
 frame_durations [ 4.0 0.2 0.2 0.2 0.2 0.2 0.2 ]
