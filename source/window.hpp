@@ -17,7 +17,6 @@ GLOBAL struct Window
     int           height; // Used to cache size when in fullscreen!!!
     bool          fullscreen;
     bool          running;
-    bool          reset;
 
 } gWindow;
 
