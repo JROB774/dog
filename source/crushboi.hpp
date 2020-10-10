@@ -1,8 +1,8 @@
-#ifndef  CRUSHBOI_HPP
+#ifndef CRUSHBOI_HPP
 #define CRUSHBOI_HPP
 
-//Left and Right Light Lime #B6FF00
-//Up and Down Dark Lime #5B7F00
+// Left and Right Light Lime #B6FF00
+// Up and Down Dark Lime #5B7F00
 
 struct CrushBoi
 {
@@ -25,4 +25,4 @@ INTERNAL void UpdateCrushBoi (CrushBoi& boi, float dt);
 INTERNAL void RenderCrushBoi (CrushBoi& boi);
 INTERNAL void ResetCrushBoi  (CrushBoi& boi);
 
-#endif
+#endif /* CRUSHBOI_HPP */
