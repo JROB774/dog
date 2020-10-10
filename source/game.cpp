@@ -103,7 +103,6 @@ INTERNAL void EndGame ()
 INTERNAL void StartWinSequence ()
 {
     gGameState.doing_win_sequence = true;
-    if (gGameState.dog.vel.y < 0.0f) gGameState.dog.vel.y = 0.0f;
     gGameState.dog.vel.x = 0.0f;
     PlayMusic(gGameState.mus_fanfare, 1);
 }
