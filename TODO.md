@@ -59,6 +59,7 @@
   * [x] Graphics
   * [x] Badge Screen
   * [x] Save/Load
+* [ ] The in-game timer should stop counting up whilst paused and once the large bone is reached.
 * [ ] Implement Levels/Zones:
   * [ ] Normal Mode
   * [ ] Challenge Mode

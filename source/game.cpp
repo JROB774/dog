@@ -133,7 +133,7 @@ INTERNAL void EndWinSequence ()
     // Handle unlocking badges!
     if (gGameState.mode != GAME_MODE_TUTORIAL)
     {
-        float elapsed_seconds = (float)(SDL_GetTicks() - gGameState.start_time) / 100.0f;
+        float elapsed_seconds = (float)(SDL_GetTicks() - gGameState.start_time) / 1000.0f;
                                                                               gBadges.unlocked_complete[gGameState.mode] = true; // COMPLETE
         if (gBoneCollectedIds.size() == gCurrentZoneBoneTotal)                gBadges.unlocked_collect [gGameState.mode] = true; // COLLECT
         if (gGameState.dog.deaths == 0)                                       gBadges.unlocked_ironman [gGameState.mode] = true; // IRONMAN

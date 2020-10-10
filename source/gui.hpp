@@ -4,9 +4,6 @@
 GLOBAL struct Gui
 {
     Image splat;
-    float current_x;
-    float target_x;
-    float timer;
 
 } gGui;
 

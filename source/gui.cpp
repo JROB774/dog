@@ -1,7 +1,6 @@
 INTERNAL void InitGui ()
 {
     LoadImage(gGui.splat, "splat.bmp");
-    gGui.current_x = 0.0f;
 }
 
 INTERNAL void QuitGui ()
@@ -11,19 +10,34 @@ INTERNAL void QuitGui ()
 
 INTERNAL void DrawGui (float dt)
 {
-    // Hard-coded that the bone counter doesn't display in the tutorial or hub zones as there's no bones.
-    // if (gWorld.current_zone == "tutorial" || gWorld.current_zone == "hub") return;
-
     if (IsFading() && gFade.state == FADE_OUT) return;
 
-    DrawImage(gGui.splat, gGui.current_x,0);
+    DrawImage(gGui.splat, 0,0);
 
-    // Pad the values with zeroes so that they are always three digits long.
+    // We pad all values with zeroes so that they are always the same length.
+
+    // Format and display the current bones collected.
     std::string collected = std::to_string(GetBoneCollectedCount());
-    while (collected.length() < 3) collected = "0" + collected;
     std::string total = std::to_string(GetBoneTotalCount());
-    while (total.length() < 3) total = "0" + total;
-    std::string text = collected + "/" + total;
-    if (GetBoneCollectedCount() >= GetBoneTotalCount()) text += "!";
-    DrawText(gAppState.sfont, text, gGui.current_x+15, 1, MakeColor(1,1,1));
+
+    while (collected.length() < 3) collected = "0" + collected;
+    while (total.length()     < 3) total = "0" + total;
+
+    std::string bone_text = collected + "/" + total;
+    if (GetBoneCollectedCount() >= GetBoneTotalCount()) bone_text += "!";
+
+    DrawText(gAppState.sfont, bone_text, 15, 1, MakeColor(1,1,1));
+
+    // Format and display the current timer.
+    float elapsed_seconds = (float)(SDL_GetTicks() - gGameState.start_time) / 1000.0f;
+
+    std::string minutes = std::to_string((int)elapsed_seconds / 60);
+    std::string seconds = std::to_string((int)elapsed_seconds % 60);
+
+    while (minutes.length() < 2) minutes = "0" + minutes;
+    while (seconds.length() < 2) seconds = "0" + seconds;
+
+    std::string time_text = minutes + ":" + seconds;
+
+    DrawText(gAppState.sfont, time_text, 15, 15, MakeColor(1,1,1));
 }
