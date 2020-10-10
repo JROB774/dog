@@ -129,6 +129,8 @@ INTERNAL void DoWinSequence ()
 
 INTERNAL void EndWinSequence ()
 {
+    gGameState.doing_win_sequence = false;
+
     float elapsed_seconds = (float)(SDL_GetTicks() - gGameState.start_time) / 1000.0f;
 
     // Handle unlocking badges!
