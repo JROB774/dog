@@ -29,7 +29,7 @@ GLOBAL struct GameState
     Music mus_tutorial;
     Music mus_challenge;
 
-    U32 start_time;
+    float timer;
 
     Dog dog;
 

@@ -46,6 +46,8 @@ INTERNAL void UpdateGame (float dt)
 
     if (!IsFading()) WorldTransitionIfOutOfBounds();
 
+    if (!gGameState.doing_win_sequence) gGameState.timer += dt;
+
     UpdateMap(gWorld.current_map, dt);
     UpdateDog(gGameState.dog, dt);
     UpdateParticles(dt);
@@ -92,7 +94,7 @@ INTERNAL void StartGame (GameMode game_mode, bool retry)
     gGameState.dog.start_flip     = gGameState.dog.flip;
     gGameState.dog.start_grounded = gGameState.dog.grounded;
 
-    gGameState.start_time = SDL_GetTicks();
+    gGameState.timer = 0.0f;
 
     gAppState.state = APP_STATE_GAME;
 
@@ -133,11 +135,10 @@ INTERNAL void EndWinSequence ()
     // Handle unlocking badges!
     if (gGameState.mode != GAME_MODE_TUTORIAL)
     {
-        float elapsed_seconds = (float)(SDL_GetTicks() - gGameState.start_time) / 1000.0f;
-                                                                              gBadges.unlocked_complete[gGameState.mode] = true; // COMPLETE
-        if (gBoneCollectedIds.size() == gCurrentZoneBoneTotal)                gBadges.unlocked_collect [gGameState.mode] = true; // COLLECT
-        if (gGameState.dog.deaths == 0)                                       gBadges.unlocked_ironman [gGameState.mode] = true; // IRONMAN
-        if (elapsed_seconds <= GAME_MODE_INFO[gGameState.mode].speedrun_time) gBadges.unlocked_speedrun[gGameState.mode] = true; // SPEEDRUN
+                                                                               gBadges.unlocked_complete[gGameState.mode] = true; // COMPLETE
+        if (gBoneCollectedIds.size() == gCurrentZoneBoneTotal)                 gBadges.unlocked_collect [gGameState.mode] = true; // COLLECT
+        if (gGameState.dog.deaths == 0)                                        gBadges.unlocked_ironman [gGameState.mode] = true; // IRONMAN
+        if (gGameState.timer <= GAME_MODE_INFO[gGameState.mode].speedrun_time) gBadges.unlocked_speedrun[gGameState.mode] = true; // SPEEDRUN
     }
 
     StartFade(FADE_SPECIAL, [](){ EndGame(); });

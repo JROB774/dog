@@ -29,10 +29,8 @@ INTERNAL void DrawGui (float dt)
     DrawText(gAppState.sfont, bone_text, 15, 1, MakeColor(1,1,1));
 
     // Format and display the current timer.
-    float elapsed_seconds = (float)(SDL_GetTicks() - gGameState.start_time) / 1000.0f;
-
-    std::string minutes = std::to_string((int)elapsed_seconds / 60);
-    std::string seconds = std::to_string((int)elapsed_seconds % 60);
+    std::string minutes = std::to_string((int)gGameState.timer / 60);
+    std::string seconds = std::to_string((int)gGameState.timer % 60);
 
     while (minutes.length() < 2) minutes = "0" + minutes;
     while (seconds.length() < 2) seconds = "0" + seconds;
