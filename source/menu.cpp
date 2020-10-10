@@ -110,9 +110,9 @@ INTERNAL void UpdateMenuMain (float dt, bool up, bool down, bool right, bool lef
         PlaySound(gMenuState.snd_select);
         switch (gMenuState.selected)
         {
-            case (MENU_ITEM_PLAYGAME     ):                                   StartFade(FADE_SPECIAL, [](){ StartGame(START_GAME_MAP,      START_GAME_X,      START_GAME_Y,      START_GAME_FLIP,      gGameState.mus_game     ); }); break;
-            case (MENU_ITEM_PLAYCHALLENGE): if (!gGameState.challenge_locked) StartFade(FADE_SPECIAL, [](){ StartGame(START_CHALLENGE_MAP, START_CHALLENGE_X, START_CHALLENGE_Y, START_CHALLENGE_FLIP, gGameState.mus_challenge); }); break;
-            case (MENU_ITEM_PLAYTUT      ):                                   StartFade(FADE_SPECIAL, [](){ StartGame(START_TUTORIAL_MAP,  START_TUTORIAL_X,  START_TUTORIAL_Y,  START_TUTORIAL_FLIP,  gGameState.mus_tutorial ); }); break;
+            case (MENU_ITEM_PLAYGAME     ):                                   StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_NORMAL   ); }); break;
+            case (MENU_ITEM_PLAYCHALLENGE): if (!gGameState.challenge_locked) StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_CHALLENGE); }); break;
+            case (MENU_ITEM_PLAYTUT      ):                                   StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_TUTORIAL ); }); break;
             case (MENU_ITEM_BADGES       ): gMenuState.mode = MENU_MODE_BADGES; break;
             case (MENU_ITEM_SETTINGS     ): gMenuState.mode = MENU_MODE_SETTINGS; gMenuState.selected = 0; break;
             case (MENU_ITEM_EXITGAME     ): gWindow.running = false; break;

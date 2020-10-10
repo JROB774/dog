@@ -1,6 +1,7 @@
 enum PauseItem
 {
     PAUSE_ITEM_RETURN,
+    PAUSE_ITEM_RETRY,
     PAUSE_ITEM_MENU,
     PAUSE_ITEM_EXITGAME,
     PAUSE_ITEM_TOTAL
@@ -58,6 +59,7 @@ INTERNAL void UpdatePause (float dt)
         switch (gPauseState.selected)
         {
             case (PAUSE_ITEM_RETURN  ): Unpause(); break;
+            case (PAUSE_ITEM_RETRY   ): PlaySound(gPauseState.snd_select); StartFade(FADE_SPECIAL, [](){ RetryGame(); }); break;
             case (PAUSE_ITEM_MENU    ): PlaySound(gPauseState.snd_select); StartFade(FADE_SPECIAL, [](){ EndGame(); }); break;
             case (PAUSE_ITEM_EXITGAME): PlaySound(gPauseState.snd_select); gWindow.running = false; break;
         }
@@ -74,9 +76,10 @@ INTERNAL void RenderPause (float dt)
 
     UpdateAnimation(gPauseState.caret_anim, dt);
 
-    std::string return_text = "RETURN TO GAME";
-    std::string menu_text   = "GO TO MAIN MENU";
-    std::string exit_text   = "EXIT GAME";
+    std::string return_text = "RESUME";
+    std::string retry_text  = "RETRY";
+    std::string menu_text   = "MENU";
+    std::string exit_text   = "EXIT";
 
     float tx = roundf((float)WINDOW_SCREEN_W - gPauseState.title.w) / 2;
     float ty = 48;
@@ -93,6 +96,11 @@ INTERNAL void RenderPause (float dt)
     tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, menu_text)) / 2;
     if (gPauseState.selected == PAUSE_ITEM_MENU) DrawImage(gPauseState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gPauseState.caret_anim));
     DrawText(gAppState.sfont, menu_text, tx,ty, MakeColor(0,0,0));
+    ty -= 16;
+
+    tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, retry_text)) / 2;
+    if (gPauseState.selected == PAUSE_ITEM_RETRY) DrawImage(gPauseState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gPauseState.caret_anim));
+    DrawText(gAppState.sfont, retry_text, tx,ty, MakeColor(0,0,0));
     ty -= 16;
 
     tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, return_text)) / 2;

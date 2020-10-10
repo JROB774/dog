@@ -59,12 +59,12 @@
   * [x] Graphics
   * [x] Badge Screen
   * [x] Save/Load
-* [ ] Add Splash Screen / Credits
 * [ ] Implement Levels/Zones:
   * [ ] Normal Mode
   * [ ] Challenge Mode
   * [ ] Hard Normal Mode
   * [ ] Hard Challenge Mode
+* [ ] Add Splash Screen / Credits
 
 ## TiKo
 

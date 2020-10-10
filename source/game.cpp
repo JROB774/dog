@@ -69,19 +69,21 @@ INTERNAL void RenderGame (float dt)
     DrawGui(dt);
 }
 
-INTERNAL void StartGame (std::string start_map, float start_x, float start_y, Flip start_flip, Music& music)
+INTERNAL void StartGame (GameMode game_mode)
 {
     gBoneCollectedIds.clear();
     gTempBoneCollectedIds.clear();
 
-    LoadWorld(start_map);
+    gGameState.mode = game_mode;
+
+    LoadWorld(GAME_MODE_INFO[gGameState.mode].map);
 
     gGameState.dog.state    = DOG_STATE_IDLE;
-    gGameState.dog.pos.x    = start_x;
-    gGameState.dog.pos.y    = start_y;
+    gGameState.dog.pos.x    = GAME_MODE_INFO[gGameState.mode].pos.x;
+    gGameState.dog.pos.y    = GAME_MODE_INFO[gGameState.mode].pos.y;
     gGameState.dog.vel.x    = 0;
     gGameState.dog.vel.y    = 0;
-    gGameState.dog.flip     = start_flip;
+    gGameState.dog.flip     = GAME_MODE_INFO[gGameState.mode].flip;
     gGameState.dog.grounded = true;
 
     gGameState.dog.start_state    = gGameState.dog.state;
@@ -92,7 +94,7 @@ INTERNAL void StartGame (std::string start_map, float start_x, float start_y, Fl
 
     gAppState.state = APP_STATE_GAME;
 
-    PlayMusic(music);
+    PlayMusic(*GAME_MODE_INFO[gGameState.mode].music);
 }
 
 INTERNAL void EndGame ()
@@ -100,6 +102,12 @@ INTERNAL void EndGame ()
     gGameState.doing_win_sequence = false;
     GoToMenu();
     FreeWorld();
+}
+
+INTERNAL void RetryGame ()
+{
+    FreeWorld();
+    StartGame(gGameState.mode);
 }
 
 INTERNAL void StartWinSequence ()
