@@ -54,8 +54,17 @@
 * [x] Implement the tutorial zone.
 * [x] Change how the bone system works.
 * [x] Add a proper win sequence when collecting a big bone.
+* [ ] Add Splash Screen / Credits
 * [ ] Implement Levels/Zones:
   * [ ] Normal Mode
+  * [ ] Challenge Mode
+  * [ ] Hard Normal Mode
+  * [ ] Hard Challenge Mode
+* [ ] Implement Badges:
+  * [ ] Unlocking
+  * [ ] Graphics
+  * [ ] Badge Screen
+  * [ ] Save/Load
 
 ## TiKo
 
@@ -69,17 +78,3 @@
 * [x] Add Enemies:
   * [x] Horizontal Crushers
   * [x] Vertiical Crushers
-
-## Unassigned
-
-* [ ] Add Splash Screen / Credits
-* [ ] Implement Levels/Zones:
-  * [ ] Normal Mode
-  * [ ] Challenge Mode
-  * [ ] Hard Normal Mode
-  * [ ] Hard Challenge Mode
-* [ ] Implement Badges:
-  * [ ] Unlocking
-  * [ ] Graphics
-  * [ ] Badge Screen
-  * [ ] Save/Load
