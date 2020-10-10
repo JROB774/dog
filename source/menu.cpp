@@ -181,10 +181,10 @@ INTERNAL void UpdateMenuBadges (float dt, bool up, bool down, bool right, bool l
     }
 
     // Navigate the badge screen with the cursor..
-    if (up   ) if (gBadges.cursor_y > 0) { gBadges.cursor_y--; PlaySound(gMenuState.snd_change); }
-    if (down ) if (gBadges.cursor_y < 3) { gBadges.cursor_y++; PlaySound(gMenuState.snd_change); }
-    if (right) if (gBadges.cursor_x < 3) { gBadges.cursor_x++; PlaySound(gMenuState.snd_change); }
-    if (left ) if (gBadges.cursor_x > 0) { gBadges.cursor_x--; PlaySound(gMenuState.snd_change); }
+    if (up   ) if (gBadges.cursor_y > 0) { gBadges.cursor_y--; PlaySound(gMenuState.snd_change); ResetAnimation(gBadges.caret_anim); }
+    if (down ) if (gBadges.cursor_y < 3) { gBadges.cursor_y++; PlaySound(gMenuState.snd_change); ResetAnimation(gBadges.caret_anim); }
+    if (right) if (gBadges.cursor_x < 3) { gBadges.cursor_x++; PlaySound(gMenuState.snd_change); ResetAnimation(gBadges.caret_anim); }
+    if (left ) if (gBadges.cursor_x > 0) { gBadges.cursor_x--; PlaySound(gMenuState.snd_change); ResetAnimation(gBadges.caret_anim); }
 }
 INTERNAL void RenderMenuBadges (float dt)
 {
@@ -234,7 +234,8 @@ INTERNAL void RenderMenuBadges (float dt)
     cx -= 4;
     cy -= 4;
 
-    DrawImage(gBadges.caret, cx,cy);
+    UpdateAnimation(gBadges.caret_anim, dt);
+    DrawImage(gBadges.caret, cx,cy, FLIP_NONE, GetAnimationClip(gBadges.caret_anim));
 
     float tx = WINDOW_SCREEN_W / 2;
     float ty = 215;

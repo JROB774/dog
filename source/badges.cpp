@@ -13,6 +13,8 @@ INTERNAL void InitBadges ()
     LoadAnimation(gBadges.anim[BADGE_TYPE_UNLOCKED_IRONMAN ], "badge-unlocked-ironman.anim" );
     LoadAnimation(gBadges.anim[BADGE_TYPE_UNLOCKED_SPEEDRUN], "badge-unlocked-speedrun.anim");
 
+    LoadAnimation(gBadges.caret_anim, "badgecaret.anim");
+
     gBadges.cursor_x = 0;
     gBadges.cursor_y = 0;
 
@@ -48,6 +50,8 @@ INTERNAL void QuitBadges ()
     FreeAnimation(gBadges.anim[BADGE_TYPE_UNLOCKED_COLLECT ]);
     FreeAnimation(gBadges.anim[BADGE_TYPE_UNLOCKED_IRONMAN ]);
     FreeAnimation(gBadges.anim[BADGE_TYPE_UNLOCKED_SPEEDRUN]);
+
+    FreeAnimation(gBadges.caret_anim);
 
     FreeImage(gBadges.background);
     FreeImage(gBadges.badges    );

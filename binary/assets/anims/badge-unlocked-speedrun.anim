@@ -3,5 +3,5 @@
 start_position [ 32 96 ]
 frame_size [ 32 32 ]
 frame_count 7
-frame_durations [ 4.0 0.2 0.2 0.2 0.2 0.2 0.2 ]
+frame_durations [ 3.0 0.05 0.05 0.05 0.05 0.05 0.05 ]
 looped true

@@ -20,6 +20,7 @@ enum BadgeType
 GLOBAL struct Badges
 {
     Animation anim[BADGE_TYPE_TOTAL];
+    Animation caret_anim;
 
     Image background;
     Image badges;
