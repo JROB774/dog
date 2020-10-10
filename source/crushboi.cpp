@@ -72,35 +72,41 @@ INTERNAL void UpdateCrushBoi(CrushBoi& boi, float dt)
             boi.timer = CRUSHBOI_COOLDOWN;
             boi.active = false;
         }
-        if(boi.vertical ){boi.pos.y += boi.vel.y * dt;}
-        if(!boi.vertical){boi.pos.x += boi.vel.x * dt;}
+
+        if ( boi.vertical) boi.pos.y += boi.vel.y * dt;
+        if (!boi.vertical) boi.pos.x += boi.vel.x * dt;
     }
 
     if (boi.timer > 0.0f) boi.timer -= dt;
 
-    if(gGameState.dog.dead){return;}
+    if (gGameState.dog.dead) return;
 
-    if(!boi.active){
+    if (!boi.active)
+    {
         if (boi.timer <= 0.0f)
         {
             if (EntityLineOfSight(boi.pos,boi.bounds, gGameState.dog.pos,gGameState.dog.bounds, gWorld.current_map))
-
-            if(boi.vertical){
-                float temp = gGameState.dog.bounds.x + gGameState.dog.pos.x;
-                if(temp < boi.pos.x && temp + gGameState.dog.bounds.w > boi.pos.x || temp > boi.pos.x && temp < boi.pos.x + 16){
-                    boi.active = true;
-                    temp = gGameState.dog.bounds.y + gGameState.dog.pos.y;
-                    if(temp < boi.pos.y){boi.vel.y = -CRUSHBOI_SPEED;}
-                    if(temp > boi.pos.y){boi.vel.y =  CRUSHBOI_SPEED;}
+            {
+                if(boi.vertical){
+                    float temp = gGameState.dog.bounds.x + gGameState.dog.pos.x;
+                    if (temp < boi.pos.x && temp + gGameState.dog.bounds.w > boi.pos.x || temp > boi.pos.x && temp < boi.pos.x + 16)
+                    {
+                        boi.active = true;
+                        temp = gGameState.dog.bounds.y + gGameState.dog.pos.y;
+                        if(temp < boi.pos.y){boi.vel.y = -CRUSHBOI_SPEED;}
+                        if(temp > boi.pos.y){boi.vel.y =  CRUSHBOI_SPEED;}
+                    }
                 }
-            }
-            if(!boi.vertical){
-                float temp = gGameState.dog.bounds.y + gGameState.dog.pos.y;
-                if(temp < boi.pos.y && temp + gGameState.dog.bounds.h > boi.pos.y || temp > boi.pos.y && temp < boi.pos.y + 16){
-                    boi.active = true;
-                    temp = gGameState.dog.bounds.x + gGameState.dog.pos.x;
-                    if(temp < boi.pos.x){boi.vel.x = -CRUSHBOI_SPEED;}
-                    if(temp > boi.pos.x){boi.vel.x =  CRUSHBOI_SPEED;}
+                if (!boi.vertical)
+                {
+                    float temp = gGameState.dog.bounds.y + gGameState.dog.pos.y;
+                    if (temp < boi.pos.y && temp + gGameState.dog.bounds.h > boi.pos.y || temp > boi.pos.y && temp < boi.pos.y + 16)
+                    {
+                        boi.active = true;
+                        temp = gGameState.dog.bounds.x + gGameState.dog.pos.x;
+                        if(temp < boi.pos.x){boi.vel.x = -CRUSHBOI_SPEED;}
+                        if(temp > boi.pos.x){boi.vel.x =  CRUSHBOI_SPEED;}
+                    }
                 }
             }
         }
