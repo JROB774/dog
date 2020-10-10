@@ -89,11 +89,14 @@ INTERNAL void GoToMenu ()
 
 INTERNAL void UpdateMenuMain (float dt, bool up, bool down, bool right, bool left, bool action, bool back)
 {
+    // If the player hasn't beaten normal mode then challenge mode is locked!
+    bool challenge_locked = (!gBadges.unlocked_complete[GAME_MODE_NORMAL]);
+
     if (up)
     {
         if (gMenuState.selected == 0) gMenuState.selected = MENU_ITEM_TOTAL-1;
         else gMenuState.selected--;
-        if (gMenuState.selected == MENU_ITEM_PLAYCHALLENGE && gGameState.challenge_locked) gMenuState.selected--; // Move again if on the locked challenge.
+        if (gMenuState.selected == MENU_ITEM_PLAYCHALLENGE && challenge_locked) gMenuState.selected--; // Move again if on the locked challenge.
         ResetAnimation(gMenuState.caret_anim);
         PlaySound(gMenuState.snd_change);
     }
@@ -101,7 +104,7 @@ INTERNAL void UpdateMenuMain (float dt, bool up, bool down, bool right, bool lef
     {
         if (gMenuState.selected == MENU_ITEM_TOTAL-1) gMenuState.selected = 0;
         else gMenuState.selected++;
-        if (gMenuState.selected == MENU_ITEM_PLAYCHALLENGE && gGameState.challenge_locked) gMenuState.selected++; // Move again if on the locked challenge.
+        if (gMenuState.selected == MENU_ITEM_PLAYCHALLENGE && challenge_locked) gMenuState.selected++; // Move again if on the locked challenge.
         ResetAnimation(gMenuState.caret_anim);
         PlaySound(gMenuState.snd_change);
     }
@@ -110,9 +113,9 @@ INTERNAL void UpdateMenuMain (float dt, bool up, bool down, bool right, bool lef
         PlaySound(gMenuState.snd_select);
         switch (gMenuState.selected)
         {
-            case (MENU_ITEM_PLAYGAME     ):                                   StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_NORMAL   ); }); break;
-            case (MENU_ITEM_PLAYCHALLENGE): if (!gGameState.challenge_locked) StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_CHALLENGE); }); break;
-            case (MENU_ITEM_PLAYTUT      ):                                   StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_TUTORIAL ); }); break;
+            case (MENU_ITEM_PLAYGAME     ):                        StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_NORMAL   ); }); break;
+            case (MENU_ITEM_PLAYCHALLENGE): if (!challenge_locked) StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_CHALLENGE); }); break;
+            case (MENU_ITEM_PLAYTUT      ):                        StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_TUTORIAL ); }); break;
             case (MENU_ITEM_BADGES       ): gMenuState.mode = MENU_MODE_BADGES; break;
             case (MENU_ITEM_SETTINGS     ): gMenuState.mode = MENU_MODE_SETTINGS; gMenuState.selected = 0; break;
             case (MENU_ITEM_EXITGAME     ): gWindow.running = false; break;
@@ -126,6 +129,9 @@ INTERNAL void UpdateMenuMain (float dt, bool up, bool down, bool right, bool lef
 }
 INTERNAL void RenderMenuMain (float dt)
 {
+    // If the player hasn't beaten normal mode then challenge mode is locked!
+    bool challenge_locked = (!gBadges.unlocked_complete[GAME_MODE_NORMAL]);
+
     float tx = roundf((float)WINDOW_SCREEN_W - gMenuState.title.w) / 2;
     float ty = 24;
 
@@ -162,7 +168,7 @@ INTERNAL void RenderMenuMain (float dt)
 
     tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, challenge_text)) / 2;
     if (gMenuState.selected == MENU_ITEM_PLAYCHALLENGE) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
-    DrawText(gAppState.sfont, challenge_text, tx,ty, (gGameState.challenge_locked) ? MakeColor(0.75f,0.75f,0.75f) : MakeColor(0,0,0));
+    DrawText(gAppState.sfont, challenge_text, tx,ty, (challenge_locked) ? MakeColor(0.75f,0.75f,0.75f) : MakeColor(0,0,0));
     ty -= 16;
 
     tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, play_text)) / 2;

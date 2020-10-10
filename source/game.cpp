@@ -17,7 +17,6 @@ INTERNAL void InitGame ()
     LoadMusic(gGameState.mus_tutorial,  "tutorial.wav" );
     LoadMusic(gGameState.mus_challenge, "challenge.wav");
 
-    gGameState.challenge_locked = true;
     gGameState.doing_win_sequence = false;
 }
 

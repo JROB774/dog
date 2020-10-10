@@ -33,7 +33,6 @@ GLOBAL struct GameState
 
     Dog dog;
 
-    bool challenge_locked; // @TEMPORARY: JUST SO THE CHALLENGE CAN BE LOCKED FOR NOW...
     bool doing_win_sequence;
 
     GameMode mode;
@@ -42,11 +41,11 @@ GLOBAL struct GameState
 
 GLOBAL const GameModeInfo GAME_MODE_INFO[GAME_MODE_TOTAL]
 {
-{ "tutorial-grid-00.bmp", { 56, 172 }, FLIP_NONE, &gGameState.mus_tutorial,  60 },
-{ "tutorial-grid-00.bmp", { 56, 172 }, FLIP_NONE, &gGameState.mus_game,      60 },
-{ "tutorial-grid-00.bmp", { 56, 172 }, FLIP_NONE, &gGameState.mus_challenge, 60 },
-{ "tutorial-grid-00.bmp", { 56, 172 }, FLIP_NONE, &gGameState.mus_game,      60 },
-{ "tutorial-grid-00.bmp", { 56, 172 }, FLIP_NONE, &gGameState.mus_challenge, 60 }
+{   "normal-main-00.bmp", { 180, 140 }, FLIP_HORZ, &gGameState.mus_game,      60 },
+{ "tutorial-grid-00.bmp", {  56, 172 }, FLIP_NONE, &gGameState.mus_challenge, 60 },
+{ "tutorial-grid-00.bmp", {  56, 172 }, FLIP_NONE, &gGameState.mus_game,      60 },
+{ "tutorial-grid-00.bmp", {  56, 172 }, FLIP_NONE, &gGameState.mus_challenge, 60 },
+{ "tutorial-grid-00.bmp", {  56, 172 }, FLIP_NONE, &gGameState.mus_tutorial,  60 }
 };
 
 INTERNAL void InitGame   ();
