@@ -20,6 +20,25 @@ INTERNAL void FreeFont (Font& font)
     FreeImage(font.image);
 }
 
+INTERNAL float GetTextLineWidth (Font& font, std::string text, int line)
+{
+    float linewidth = 0;
+    int lineindex = 0;
+    for (int i=0; i<text.length(); ++i)
+    {
+        if (text[i] == '\n')
+        {
+            if (lineindex++ == line) return linewidth;
+            else linewidth = 0;
+        }
+        else
+        {
+            linewidth += font.charw;
+        }
+    }
+    return linewidth;
+}
+
 INTERNAL float GetTextWidth (Font& font, std::string text)
 {
     float linewidth = 0;
