@@ -54,17 +54,17 @@
 * [x] Implement the tutorial zone.
 * [x] Change how the bone system works.
 * [x] Add a proper win sequence when collecting a big bone.
+* [ ] Implement Badges:
+  * [ ] Unlocking
+  * [x] Graphics
+  * [x] Badge Screen
+  * [x] Save/Load
 * [ ] Add Splash Screen / Credits
 * [ ] Implement Levels/Zones:
   * [ ] Normal Mode
   * [ ] Challenge Mode
   * [ ] Hard Normal Mode
   * [ ] Hard Challenge Mode
-* [ ] Implement Badges:
-  * [ ] Unlocking
-  * [ ] Graphics
-  * [ ] Badge Screen
-  * [ ] Save/Load
 
 ## TiKo
 
