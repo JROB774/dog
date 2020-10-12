@@ -188,7 +188,7 @@ INTERNAL void UpdateMenuBadges (float dt, bool up, bool down, bool right, bool l
 
     // Navigate the badge screen with the cursor..
     if (up   ) if (gBadges.cursor_y > 0) { gBadges.cursor_y--; PlaySound(gMenuState.snd_change); ResetAnimation(gBadges.caret_anim); }
-    if (down ) if (gBadges.cursor_y < 3) { gBadges.cursor_y++; PlaySound(gMenuState.snd_change); ResetAnimation(gBadges.caret_anim); }
+    if (down ) if (gBadges.cursor_y < 1) { gBadges.cursor_y++; PlaySound(gMenuState.snd_change); ResetAnimation(gBadges.caret_anim); }
     if (right) if (gBadges.cursor_x < 3) { gBadges.cursor_x++; PlaySound(gMenuState.snd_change); ResetAnimation(gBadges.caret_anim); }
     if (left ) if (gBadges.cursor_x > 0) { gBadges.cursor_x--; PlaySound(gMenuState.snd_change); ResetAnimation(gBadges.caret_anim); }
 }
@@ -199,25 +199,17 @@ INTERNAL void RenderMenuBadges (float dt)
     DrawImage(gBadges.background, 0, 0);
 
     // COMPLETE
-    DrawImage(gBadges.badges,  42,  17, FLIP_NONE, GetAnimationClip((gBadges.unlocked_complete[0]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_COMPLETE] : gBadges.anim[BADGE_TYPE_LOCKED_COMPLETE]));
     DrawImage(gBadges.badges,  42,  63, FLIP_NONE, GetAnimationClip((gBadges.unlocked_complete[1]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_COMPLETE] : gBadges.anim[BADGE_TYPE_LOCKED_COMPLETE]));
     DrawImage(gBadges.badges,  42, 109, FLIP_NONE, GetAnimationClip((gBadges.unlocked_complete[2]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_COMPLETE] : gBadges.anim[BADGE_TYPE_LOCKED_COMPLETE]));
-    DrawImage(gBadges.badges,  42, 155, FLIP_NONE, GetAnimationClip((gBadges.unlocked_complete[3]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_COMPLETE] : gBadges.anim[BADGE_TYPE_LOCKED_COMPLETE]));
     // COLLECT
-    DrawImage(gBadges.badges, 110,  17, FLIP_NONE, GetAnimationClip((gBadges.unlocked_collect [0]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_COLLECT ] : gBadges.anim[BADGE_TYPE_LOCKED_COLLECT ]));
     DrawImage(gBadges.badges, 110,  63, FLIP_NONE, GetAnimationClip((gBadges.unlocked_collect [1]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_COLLECT ] : gBadges.anim[BADGE_TYPE_LOCKED_COLLECT ]));
     DrawImage(gBadges.badges, 110, 109, FLIP_NONE, GetAnimationClip((gBadges.unlocked_collect [2]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_COLLECT ] : gBadges.anim[BADGE_TYPE_LOCKED_COLLECT ]));
-    DrawImage(gBadges.badges, 110, 155, FLIP_NONE, GetAnimationClip((gBadges.unlocked_collect [3]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_COLLECT ] : gBadges.anim[BADGE_TYPE_LOCKED_COLLECT ]));
     // IRONMAN
-    DrawImage(gBadges.badges, 178,  17, FLIP_NONE, GetAnimationClip((gBadges.unlocked_ironman [0]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_IRONMAN ] : gBadges.anim[BADGE_TYPE_LOCKED_IRONMAN ]));
     DrawImage(gBadges.badges, 178,  63, FLIP_NONE, GetAnimationClip((gBadges.unlocked_ironman [1]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_IRONMAN ] : gBadges.anim[BADGE_TYPE_LOCKED_IRONMAN ]));
     DrawImage(gBadges.badges, 178, 109, FLIP_NONE, GetAnimationClip((gBadges.unlocked_ironman [2]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_IRONMAN ] : gBadges.anim[BADGE_TYPE_LOCKED_IRONMAN ]));
-    DrawImage(gBadges.badges, 178, 155, FLIP_NONE, GetAnimationClip((gBadges.unlocked_ironman [3]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_IRONMAN ] : gBadges.anim[BADGE_TYPE_LOCKED_IRONMAN ]));
     // SPEEDRUN
-    DrawImage(gBadges.badges, 246,  17, FLIP_NONE, GetAnimationClip((gBadges.unlocked_speedrun[0]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_SPEEDRUN] : gBadges.anim[BADGE_TYPE_LOCKED_SPEEDRUN]));
     DrawImage(gBadges.badges, 246,  63, FLIP_NONE, GetAnimationClip((gBadges.unlocked_speedrun[1]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_SPEEDRUN] : gBadges.anim[BADGE_TYPE_LOCKED_SPEEDRUN]));
     DrawImage(gBadges.badges, 246, 109, FLIP_NONE, GetAnimationClip((gBadges.unlocked_speedrun[2]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_SPEEDRUN] : gBadges.anim[BADGE_TYPE_LOCKED_SPEEDRUN]));
-    DrawImage(gBadges.badges, 246, 155, FLIP_NONE, GetAnimationClip((gBadges.unlocked_speedrun[3]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_SPEEDRUN] : gBadges.anim[BADGE_TYPE_LOCKED_SPEEDRUN]));
 
     float cx = 0.0f;
     float cy = 0.0f;
@@ -231,10 +223,8 @@ INTERNAL void RenderMenuBadges (float dt)
     }
     switch (gBadges.cursor_y)
     {
-    case (0): cy =  17; break;
-    case (1): cy =  63; break;
-    case (2): cy = 109; break;
-    case (3): cy = 155; break;
+    case (0): cy =  63; break;
+    case (1): cy = 109; break;
     }
 
     cx -= 4;
