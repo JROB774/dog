@@ -62,13 +62,13 @@
 * [x] The in-game timer should stop counting up whilst paused and once the large bone is reached.
 * [x] Add credits screen.
 * [x] Put Normal, Challenge, and Tutorial on their own menu screen.
+* [x] Setup the itch.io page.
 * [ ] Implement Levels/Zones:
   * [ ] Normal Mode
   * [ ] Challenge Mode
 * [ ] Final polish and cleanup.
 * [ ] Test the game.
 * [ ] Package release.
-* [ ] Setup the itch.io page.
 
 ## TiKo
 
