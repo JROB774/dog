@@ -1,13 +1,20 @@
 enum MenuItem
 {
     MENU_ITEM_PLAYGAME,
-    MENU_ITEM_PLAYCHALLENGE,
-    MENU_ITEM_PLAYTUT,
     MENU_ITEM_BADGES,
     MENU_ITEM_SETTINGS,
     MENU_ITEM_CREDITS,
     MENU_ITEM_EXITGAME,
     MENU_ITEM_TOTAL
+};
+
+enum MenuPlayGameItem
+{
+    MENU_ITEM_PLAYGAME_NORMAL,
+    MENU_ITEM_PLAYGAME_CHALLENGE,
+    MENU_ITEM_PLAYGAME_TUTORIAL,
+    MENU_ITEM_PLAYGAME_BACK,
+    MENU_ITEM_PLAYGAME_TOTAL
 };
 
 enum MenuSettingsItem
@@ -65,6 +72,7 @@ INTERNAL void UpdateMenu (float dt)
     switch (gMenuState.mode)
     {
         case (MENU_MODE_MAINMENU): UpdateMenuMain    (dt, up, down, right, left, action, back); break;
+        case (MENU_MODE_PLAYGAME): UpdateMenuPlayGame(dt, up, down, right, left, action, back); break;
         case (MENU_MODE_BADGES  ): UpdateMenuBadges  (dt, up, down, right, left, action, back); break;
         case (MENU_MODE_SETTINGS): UpdateMenuSettings(dt, up, down, right, left, action, back); break;
         case (MENU_MODE_CREDITS ): UpdateMenuCredits (dt, up, down, right, left, action, back); break;
@@ -80,6 +88,7 @@ INTERNAL void RenderMenu (float dt)
     switch (gMenuState.mode)
     {
         case (MENU_MODE_MAINMENU): RenderMenuMain    (dt); break;
+        case (MENU_MODE_PLAYGAME): RenderMenuPlayGame(dt); break;
         case (MENU_MODE_BADGES  ): RenderMenuBadges  (dt); break;
         case (MENU_MODE_SETTINGS): RenderMenuSettings(dt); break;
         case (MENU_MODE_CREDITS ): RenderMenuCredits (dt); break;
@@ -88,6 +97,8 @@ INTERNAL void RenderMenu (float dt)
 
 INTERNAL void GoToMenu ()
 {
+    gMenuState.mode = MENU_MODE_MAINMENU;
+    gMenuState.selected = 0;
     gAppState.state = APP_STATE_MENU;
     PlayMusic(gMenuState.music);
 }
@@ -95,13 +106,13 @@ INTERNAL void GoToMenu ()
 INTERNAL void UpdateMenuMain (float dt, bool up, bool down, bool right, bool left, bool action, bool back)
 {
     // If the player hasn't beaten normal mode then challenge mode is locked!
-    bool challenge_locked = (!gBadges.unlocked_complete[GAME_MODE_NORMAL]);
+    // bool challenge_locked = (!gBadges.unlocked_complete[GAME_MODE_NORMAL]);
 
     if (up)
     {
         if (gMenuState.selected == 0) gMenuState.selected = MENU_ITEM_TOTAL-1;
         else gMenuState.selected--;
-        if (gMenuState.selected == MENU_ITEM_PLAYCHALLENGE && challenge_locked) gMenuState.selected--; // Move again if on the locked challenge.
+        // if (gMenuState.selected == MENU_ITEM_PLAYCHALLENGE && challenge_locked) gMenuState.selected--; // Move again if on the locked challenge.
         ResetAnimation(gMenuState.caret_anim);
         PlaySound(gMenuState.snd_change);
     }
@@ -109,7 +120,7 @@ INTERNAL void UpdateMenuMain (float dt, bool up, bool down, bool right, bool lef
     {
         if (gMenuState.selected == MENU_ITEM_TOTAL-1) gMenuState.selected = 0;
         else gMenuState.selected++;
-        if (gMenuState.selected == MENU_ITEM_PLAYCHALLENGE && challenge_locked) gMenuState.selected++; // Move again if on the locked challenge.
+        // if (gMenuState.selected == MENU_ITEM_PLAYCHALLENGE && challenge_locked) gMenuState.selected++; // Move again if on the locked challenge.
         ResetAnimation(gMenuState.caret_anim);
         PlaySound(gMenuState.snd_change);
     }
@@ -118,13 +129,14 @@ INTERNAL void UpdateMenuMain (float dt, bool up, bool down, bool right, bool lef
         PlaySound(gMenuState.snd_select);
         switch (gMenuState.selected)
         {
-            case (MENU_ITEM_PLAYGAME     ):                        StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_NORMAL   ); }); break;
-            case (MENU_ITEM_PLAYCHALLENGE): if (!challenge_locked) StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_CHALLENGE); }); break;
-            case (MENU_ITEM_PLAYTUT      ):                        StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_TUTORIAL ); }); break;
-            case (MENU_ITEM_BADGES       ): gMenuState.mode = MENU_MODE_BADGES;                            break;
-            case (MENU_ITEM_SETTINGS     ): gMenuState.mode = MENU_MODE_SETTINGS; gMenuState.selected = 0; break;
-            case (MENU_ITEM_CREDITS      ): gMenuState.mode = MENU_MODE_CREDITS;                           break;
-            case (MENU_ITEM_EXITGAME     ): gWindow.running = false;                                       break;
+            // case (MENU_ITEM_PLAYGAME     ):                        StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_NORMAL   ); }); break;
+            // case (MENU_ITEM_PLAYCHALLENGE): if (!challenge_locked) StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_CHALLENGE); }); break;
+            // case (MENU_ITEM_PLAYTUT      ):                        StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_TUTORIAL ); }); break;
+            case (MENU_ITEM_PLAYGAME): gMenuState.mode = MENU_MODE_PLAYGAME; gMenuState.selected = 0; break;
+            case (MENU_ITEM_BADGES  ): gMenuState.mode = MENU_MODE_BADGES;                            break;
+            case (MENU_ITEM_SETTINGS): gMenuState.mode = MENU_MODE_SETTINGS; gMenuState.selected = 0; break;
+            case (MENU_ITEM_CREDITS ): gMenuState.mode = MENU_MODE_CREDITS;                           break;
+            case (MENU_ITEM_EXITGAME): gWindow.running = false;                                       break;
         }
     }
     if (back)
@@ -135,23 +147,18 @@ INTERNAL void UpdateMenuMain (float dt, bool up, bool down, bool right, bool lef
 }
 INTERNAL void RenderMenuMain (float dt)
 {
-    // If the player hasn't beaten normal mode then challenge mode is locked!
-    bool challenge_locked = (!gBadges.unlocked_complete[GAME_MODE_NORMAL]);
-
     float tx = roundf((float)WINDOW_SCREEN_W - gMenuState.title.w) / 2;
     float ty = 24;
 
     DrawImage(gMenuState.title, tx,ty);
 
-    std::string play_text      = "NORMAL MODE";
-    std::string challenge_text = "CHALLENGE MODE";
-    std::string tutorial_text  = "TUTORIAL";
-    std::string badges_text    = "BADGES";
+    std::string playgame_text  = "PLAY GAME";
+    std::string badges_text    = "ACHIEVEMENTS";
     std::string options_text   = "OPTIONS";
     std::string credits_text   = "CREDITS";
     std::string exit_text      = "EXIT GAME";
 
-    ty = WINDOW_SCREEN_H - 32;
+    ty = WINDOW_SCREEN_H - 48;
 
     tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, exit_text)) / 2;
     if (gMenuState.selected == MENU_ITEM_EXITGAME) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
@@ -173,19 +180,86 @@ INTERNAL void RenderMenuMain (float dt)
     DrawText(gAppState.sfont, badges_text, tx,ty, MakeColor(0,0,0));
     ty -= 16;
 
+    tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, playgame_text)) / 2;
+    if (gMenuState.selected == MENU_ITEM_PLAYGAME) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
+    DrawText(gAppState.sfont, playgame_text, tx,ty, MakeColor(0,0,0));
+    ty -= 16;
+}
+
+INTERNAL void UpdateMenuPlayGame (float dt, bool up, bool down, bool right, bool left, bool action, bool back)
+{
+    // If the player hasn't beaten normal mode then challenge mode is locked!
+    bool challenge_locked = (!gBadges.unlocked_complete[GAME_MODE_NORMAL]);
+
+    if (up)
+    {
+        if (gMenuState.selected == 0) gMenuState.selected = MENU_ITEM_PLAYGAME_TOTAL-1;
+        else gMenuState.selected--;
+        if (gMenuState.selected == MENU_ITEM_PLAYGAME_CHALLENGE && challenge_locked) gMenuState.selected--; // Move again if on the locked challenge.
+        ResetAnimation(gMenuState.caret_anim);
+        PlaySound(gMenuState.snd_change);
+    }
+    if (down)
+    {
+        if (gMenuState.selected == MENU_ITEM_PLAYGAME_TOTAL-1) gMenuState.selected = 0;
+        else gMenuState.selected++;
+        if (gMenuState.selected == MENU_ITEM_PLAYGAME_CHALLENGE && challenge_locked) gMenuState.selected++; // Move again if on the locked challenge.
+        ResetAnimation(gMenuState.caret_anim);
+        PlaySound(gMenuState.snd_change);
+    }
+    if (action)
+    {
+        PlaySound(gMenuState.snd_select);
+        switch (gMenuState.selected)
+        {
+            case (MENU_ITEM_PLAYGAME_NORMAL   ):                        StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_NORMAL   ); }); break;
+            case (MENU_ITEM_PLAYGAME_CHALLENGE): if (!challenge_locked) StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_CHALLENGE); }); break;
+            case (MENU_ITEM_PLAYGAME_TUTORIAL ):                        StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_TUTORIAL ); }); break;
+            case (MENU_ITEM_PLAYGAME_BACK     ): gMenuState.mode = MENU_MODE_MAINMENU; gMenuState.selected = MENU_ITEM_PLAYGAME;          break;
+        }
+    }
+    if (back)
+    {
+        PlaySound(gMenuState.snd_select);
+        gMenuState.mode = MENU_MODE_MAINMENU;
+        gMenuState.selected = MENU_ITEM_PLAYGAME;
+    }
+}
+INTERNAL void RenderMenuPlayGame (float dt)
+{
+    // If the player hasn't beaten normal mode then challenge mode is locked!
+    bool challenge_locked = (!gBadges.unlocked_complete[GAME_MODE_NORMAL]);
+
+    float tx = roundf((float)WINDOW_SCREEN_W - gMenuState.title.w) / 2;
+    float ty = 24;
+
+    DrawImage(gMenuState.title, tx,ty);
+
+    std::string normal_text    = "NORMAL";
+    std::string challenge_text = "CHALLENGE";
+    std::string tutorial_text  = "TUTORIAL";
+    std::string back_text      = "BACK";
+
+    ty = WINDOW_SCREEN_H - 56;
+
+    tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, back_text)) / 2;
+    if (gMenuState.selected == MENU_ITEM_PLAYGAME_BACK) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
+    DrawText(gAppState.sfont, back_text, tx,ty, MakeColor(0,0,0));
+    ty -= 16;
+
     tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, tutorial_text)) / 2;
-    if (gMenuState.selected == MENU_ITEM_PLAYTUT) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
+    if (gMenuState.selected == MENU_ITEM_PLAYGAME_TUTORIAL) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
     DrawText(gAppState.sfont, tutorial_text, tx,ty, MakeColor(0,0,0));
     ty -= 16;
 
     tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, challenge_text)) / 2;
-    if (gMenuState.selected == MENU_ITEM_PLAYCHALLENGE) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
+    if (gMenuState.selected == MENU_ITEM_PLAYGAME_CHALLENGE) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
     DrawText(gAppState.sfont, challenge_text, tx,ty, (challenge_locked) ? MakeColor(0.75f,0.75f,0.75f) : MakeColor(0,0,0));
     ty -= 16;
 
-    tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, play_text)) / 2;
-    if (gMenuState.selected == MENU_ITEM_PLAYGAME) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
-    DrawText(gAppState.sfont, play_text, tx,ty, MakeColor(0,0,0));
+    tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, normal_text)) / 2;
+    if (gMenuState.selected == MENU_ITEM_PLAYGAME_NORMAL) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
+    DrawText(gAppState.sfont, normal_text, tx,ty, MakeColor(0,0,0));
     ty -= 16;
 }
 

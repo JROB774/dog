@@ -4,6 +4,7 @@
 enum MenuMode
 {
     MENU_MODE_MAINMENU,
+    MENU_MODE_PLAYGAME,
     MENU_MODE_BADGES,
     MENU_MODE_SETTINGS,
     MENU_MODE_CREDITS,
@@ -36,6 +37,8 @@ INTERNAL void GoToMenu   ();
 
 INTERNAL void UpdateMenuMain     (float dt, bool up, bool down, bool right, bool left, bool action, bool back);
 INTERNAL void RenderMenuMain     (float dt);
+INTERNAL void UpdateMenuPlayGame (float dt, bool up, bool down, bool right, bool left, bool action, bool back);
+INTERNAL void RenderMenuPlayGame (float dt);
 INTERNAL void UpdateMenuBadges   (float dt, bool up, bool down, bool right, bool left, bool action, bool back);
 INTERNAL void RenderMenuBadges   (float dt);
 INTERNAL void UpdateMenuSettings (float dt, bool up, bool down, bool right, bool left, bool action, bool back);

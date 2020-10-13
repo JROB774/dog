@@ -61,7 +61,7 @@
   * [x] Save/Load
 * [x] The in-game timer should stop counting up whilst paused and once the large bone is reached.
 * [x] Add credits screen.
-* [ ] Put Normal, Challenge, and Tutorial on their own menu screen.
+* [x] Put Normal, Challenge, and Tutorial on their own menu screen.
 * [ ] Implement Levels/Zones:
   * [ ] Normal Mode
   * [ ] Challenge Mode
