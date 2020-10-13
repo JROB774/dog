@@ -10,8 +10,6 @@ INTERNAL void QuitGui ()
 
 INTERNAL void DrawGui (float dt)
 {
-    if (IsFading() && gFade.state == FADE_OUT) return;
-
     DrawImage(gGui.splat, 0,0);
 
     // We pad all values with zeroes so that they are always the same length.
