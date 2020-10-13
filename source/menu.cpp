@@ -5,6 +5,7 @@ enum MenuItem
     MENU_ITEM_PLAYTUT,
     MENU_ITEM_BADGES,
     MENU_ITEM_SETTINGS,
+    MENU_ITEM_CREDITS,
     MENU_ITEM_EXITGAME,
     MENU_ITEM_TOTAL
 };
@@ -27,6 +28,7 @@ INTERNAL void InitMenu ()
     LoadImage(gMenuState.title, "title.bmp");
     LoadImage(gMenuState.bar, "bar.bmp");
     LoadImage(gMenuState.caret, "caret.bmp");
+    LoadImage(gMenuState.credit, "credit.bmp");
 
     LoadAnimation(gMenuState.caret_anim, "caret.anim");
 
@@ -48,6 +50,7 @@ INTERNAL void QuitMenu ()
     FreeImage(gMenuState.title);
     FreeImage(gMenuState.bar);
     FreeImage(gMenuState.caret);
+    FreeImage(gMenuState.credit);
 }
 
 INTERNAL void UpdateMenu (float dt)
@@ -64,6 +67,7 @@ INTERNAL void UpdateMenu (float dt)
         case (MENU_MODE_MAINMENU): UpdateMenuMain    (dt, up, down, right, left, action, back); break;
         case (MENU_MODE_BADGES  ): UpdateMenuBadges  (dt, up, down, right, left, action, back); break;
         case (MENU_MODE_SETTINGS): UpdateMenuSettings(dt, up, down, right, left, action, back); break;
+        case (MENU_MODE_CREDITS ): UpdateMenuCredits (dt, up, down, right, left, action, back); break;
     }
 }
 
@@ -78,6 +82,7 @@ INTERNAL void RenderMenu (float dt)
         case (MENU_MODE_MAINMENU): RenderMenuMain    (dt); break;
         case (MENU_MODE_BADGES  ): RenderMenuBadges  (dt); break;
         case (MENU_MODE_SETTINGS): RenderMenuSettings(dt); break;
+        case (MENU_MODE_CREDITS ): RenderMenuCredits (dt); break;
     }
 }
 
@@ -116,9 +121,10 @@ INTERNAL void UpdateMenuMain (float dt, bool up, bool down, bool right, bool lef
             case (MENU_ITEM_PLAYGAME     ):                        StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_NORMAL   ); }); break;
             case (MENU_ITEM_PLAYCHALLENGE): if (!challenge_locked) StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_CHALLENGE); }); break;
             case (MENU_ITEM_PLAYTUT      ):                        StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_TUTORIAL ); }); break;
-            case (MENU_ITEM_BADGES       ): gMenuState.mode = MENU_MODE_BADGES; break;
+            case (MENU_ITEM_BADGES       ): gMenuState.mode = MENU_MODE_BADGES;                            break;
             case (MENU_ITEM_SETTINGS     ): gMenuState.mode = MENU_MODE_SETTINGS; gMenuState.selected = 0; break;
-            case (MENU_ITEM_EXITGAME     ): gWindow.running = false; break;
+            case (MENU_ITEM_CREDITS      ): gMenuState.mode = MENU_MODE_CREDITS;                           break;
+            case (MENU_ITEM_EXITGAME     ): gWindow.running = false;                                       break;
         }
     }
     if (back)
@@ -142,13 +148,19 @@ INTERNAL void RenderMenuMain (float dt)
     std::string tutorial_text  = "TUTORIAL";
     std::string badges_text    = "BADGES";
     std::string options_text   = "OPTIONS";
+    std::string credits_text   = "CREDITS";
     std::string exit_text      = "EXIT GAME";
 
-    ty = WINDOW_SCREEN_H - 40;
+    ty = WINDOW_SCREEN_H - 32;
 
     tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, exit_text)) / 2;
     if (gMenuState.selected == MENU_ITEM_EXITGAME) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
     DrawText(gAppState.sfont, exit_text, tx,ty, MakeColor(0,0,0));
+    ty -= 16;
+
+    tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, credits_text)) / 2;
+    if (gMenuState.selected == MENU_ITEM_CREDITS) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
+    DrawText(gAppState.sfont, credits_text, tx,ty, MakeColor(0,0,0));
     ty -= 16;
 
     tx = roundf((float)WINDOW_SCREEN_W - GetTextWidth(gAppState.sfont, options_text)) / 2;
@@ -367,4 +379,18 @@ INTERNAL void RenderMenuSettings (float dt)
     if (gMenuState.selected == MENU_ITEM_SETTINGS_FULLSCREEN) DrawImage(gMenuState.caret, tx-12,ty, FLIP_NONE, GetAnimationClip(gMenuState.caret_anim));
     DrawText(gAppState.sfont, fullscreen_text, tx,ty, MakeColor(0,0,0));
     ty -= 16;
+}
+
+INTERNAL void UpdateMenuCredits (float dt, bool up, bool down, bool right, bool left, bool action, bool back)
+{
+    if (action || back)
+    {
+        gMenuState.mode = MENU_MODE_MAINMENU;
+        PlaySound(gMenuState.snd_select);
+        return;
+    }
+}
+INTERNAL void RenderMenuCredits (float dt)
+{
+    DrawImage(gMenuState.credit, 0,0);
 }

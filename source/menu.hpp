@@ -6,6 +6,7 @@ enum MenuMode
     MENU_MODE_MAINMENU,
     MENU_MODE_BADGES,
     MENU_MODE_SETTINGS,
+    MENU_MODE_CREDITS,
 };
 
 GLOBAL struct MenuState
@@ -16,6 +17,7 @@ GLOBAL struct MenuState
     Image title;
     Image bar;
     Image caret;
+    Image credit;
 
     Animation caret_anim;
 
@@ -38,5 +40,7 @@ INTERNAL void UpdateMenuBadges   (float dt, bool up, bool down, bool right, bool
 INTERNAL void RenderMenuBadges   (float dt);
 INTERNAL void UpdateMenuSettings (float dt, bool up, bool down, bool right, bool left, bool action, bool back);
 INTERNAL void RenderMenuSettings (float dt);
+INTERNAL void UpdateMenuCredits  (float dt, bool up, bool down, bool right, bool left, bool action, bool back);
+INTERNAL void RenderMenuCredits  (float dt);
 
 #endif /* MENU_HPP */

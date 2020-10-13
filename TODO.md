@@ -60,12 +60,14 @@
   * [x] Badge Screen
   * [x] Save/Load
 * [x] The in-game timer should stop counting up whilst paused and once the large bone is reached.
+* [ ] Add credits screen.
 * [ ] Implement Levels/Zones:
   * [ ] Normal Mode
   * [ ] Challenge Mode
-  * [ ] Hard Normal Mode
-  * [ ] Hard Challenge Mode
-* [ ] Add Splash Screen / Credits
+* [ ] Final polish and cleanup.
+* [ ] Test the game.
+* [ ] Package release.
+* [ ] Setup the itch.io page.
 
 ## TiKo
 
