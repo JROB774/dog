@@ -33,6 +33,7 @@ GLOBAL struct GameState
 
     Dog dog;
 
+    bool show_stats_on_end_game;
     bool doing_win_sequence;
 
     GameMode mode;

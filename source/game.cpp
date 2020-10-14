@@ -17,6 +17,7 @@ INTERNAL void InitGame ()
     LoadMusic(gGameState.mus_tutorial,  "tutorial.wav" );
     LoadMusic(gGameState.mus_challenge, "challenge.wav");
 
+    gGameState.show_stats_on_end_game = false;
     gGameState.doing_win_sequence = false;
 }
 
@@ -105,8 +106,11 @@ INTERNAL void StartGame (GameMode game_mode, bool retry)
 
 INTERNAL void EndGame ()
 {
-    gGameState.doing_win_sequence = false;
-    GoToMenu();
+    bool show_stats_on_end_game = gGameState.show_stats_on_end_game;
+    gGameState.show_stats_on_end_game = false;
+
+    if (show_stats_on_end_game) GoToStats(); else GoToMenu();
+
     FreeWorld();
 }
 
@@ -118,6 +122,7 @@ INTERNAL void RetryGame ()
 
 INTERNAL void StartWinSequence ()
 {
+    if (gGameState.mode != GAME_MODE_TUTORIAL) gGameState.show_stats_on_end_game = true;
     gGameState.doing_win_sequence = true;
     gGameState.dog.vel.x = 0.0f;
     PlayMusic(gGameState.mus_fanfare, 1);

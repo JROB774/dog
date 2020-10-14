@@ -6,6 +6,7 @@ enum AppState
     APP_STATE_MENU,
     APP_STATE_GAME,
     APP_STATE_PAUSE,
+    APP_STATE_STATS,
 };
 
 GLOBAL struct ApplicationState
