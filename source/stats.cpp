@@ -28,6 +28,8 @@ INTERNAL void UpdateStats (float dt)
 
 INTERNAL void RenderStats (float dt)
 {
+    for (int i=0; i<BADGE_TYPE_TOTAL; ++i) UpdateAnimation(gBadges.anim[i], dt);
+
     DrawImage(gStatsState.back, 0,0);
 
     // Format and create the bones string.
