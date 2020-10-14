@@ -10,10 +10,11 @@ INTERNAL void QuitStats ()
 
 INTERNAL void UpdateStats (float dt)
 {
-    bool action = (IsKeyPressed(SDL_SCANCODE_Z)                                      || IsButtonPressed(SDL_CONTROLLER_BUTTON_A) || IsButtonPressed(SDL_CONTROLLER_BUTTON_X));
-    bool back   = (IsKeyPressed(SDL_SCANCODE_X) || IsKeyPressed(SDL_SCANCODE_ESCAPE) || IsButtonPressed(SDL_CONTROLLER_BUTTON_B));
+    bool action = (IsKeyPressed(SDL_SCANCODE_Z     ) || IsButtonPressed(SDL_CONTROLLER_BUTTON_A    ) || IsButtonPressed(SDL_CONTROLLER_BUTTON_X));
+    bool back   = (IsKeyPressed(SDL_SCANCODE_X     ) || IsButtonPressed(SDL_CONTROLLER_BUTTON_B    )                                            );
+    bool start  = (IsKeyPressed(SDL_SCANCODE_ESCAPE) || IsButtonPressed(SDL_CONTROLLER_BUTTON_START)                                            );
 
-    if (action || back)
+    if (action || back || start)
     {
         // HACK: We don't call GoToMenu() because we don't want the music to play again as it's already playgin!
         StartFade(FADE_SPECIAL, []()

@@ -62,12 +62,12 @@ INTERNAL void QuitMenu ()
 
 INTERNAL void UpdateMenu (float dt)
 {
-    bool up     = (IsKeyPressed(SDL_SCANCODE_UP)    || IsButtonPressed(SDL_CONTROLLER_BUTTON_DPAD_UP)    || IsLeftStickUpPressed());
-    bool down   = (IsKeyPressed(SDL_SCANCODE_DOWN)  || IsButtonPressed(SDL_CONTROLLER_BUTTON_DPAD_DOWN)  || IsLeftStickDownPressed());
-    bool right  = (IsKeyPressed(SDL_SCANCODE_RIGHT) || IsButtonPressed(SDL_CONTROLLER_BUTTON_DPAD_RIGHT) || IsLeftStickRightPressed());
-    bool left   = (IsKeyPressed(SDL_SCANCODE_LEFT)  || IsButtonPressed(SDL_CONTROLLER_BUTTON_DPAD_LEFT)  || IsLeftStickLeftPressed());
-    bool action = (IsKeyPressed(SDL_SCANCODE_Z)     || IsButtonPressed(SDL_CONTROLLER_BUTTON_A)          || IsButtonPressed(SDL_CONTROLLER_BUTTON_X));
-    bool back   = (IsKeyPressed(SDL_SCANCODE_X)     || IsButtonPressed(SDL_CONTROLLER_BUTTON_B));
+    bool up     = (IsKeyPressed(SDL_SCANCODE_UP   ) || IsButtonPressed(SDL_CONTROLLER_BUTTON_DPAD_UP   ) || IsLeftStickUpPressed   ()               );
+    bool down   = (IsKeyPressed(SDL_SCANCODE_DOWN ) || IsButtonPressed(SDL_CONTROLLER_BUTTON_DPAD_DOWN ) || IsLeftStickDownPressed ()               );
+    bool right  = (IsKeyPressed(SDL_SCANCODE_RIGHT) || IsButtonPressed(SDL_CONTROLLER_BUTTON_DPAD_RIGHT) || IsLeftStickRightPressed()               );
+    bool left   = (IsKeyPressed(SDL_SCANCODE_LEFT ) || IsButtonPressed(SDL_CONTROLLER_BUTTON_DPAD_LEFT ) || IsLeftStickLeftPressed ()               );
+    bool action = (IsKeyPressed(SDL_SCANCODE_Z    ) || IsButtonPressed(SDL_CONTROLLER_BUTTON_A         ) || IsButtonPressed(SDL_CONTROLLER_BUTTON_X));
+    bool back   = (IsKeyPressed(SDL_SCANCODE_X    ) || IsButtonPressed(SDL_CONTROLLER_BUTTON_B         )                                            );
 
     switch (gMenuState.mode)
     {
@@ -105,14 +105,10 @@ INTERNAL void GoToMenu ()
 
 INTERNAL void UpdateMenuMain (float dt, bool up, bool down, bool right, bool left, bool action, bool back)
 {
-    // If the player hasn't beaten normal mode then challenge mode is locked!
-    // bool challenge_locked = (!gBadges.unlocked_complete[GAME_MODE_NORMAL]);
-
     if (up)
     {
         if (gMenuState.selected == 0) gMenuState.selected = MENU_ITEM_TOTAL-1;
         else gMenuState.selected--;
-        // if (gMenuState.selected == MENU_ITEM_PLAYCHALLENGE && challenge_locked) gMenuState.selected--; // Move again if on the locked challenge.
         ResetAnimation(gMenuState.caret_anim);
         PlaySound(gMenuState.snd_change);
     }
@@ -120,7 +116,6 @@ INTERNAL void UpdateMenuMain (float dt, bool up, bool down, bool right, bool lef
     {
         if (gMenuState.selected == MENU_ITEM_TOTAL-1) gMenuState.selected = 0;
         else gMenuState.selected++;
-        // if (gMenuState.selected == MENU_ITEM_PLAYCHALLENGE && challenge_locked) gMenuState.selected++; // Move again if on the locked challenge.
         ResetAnimation(gMenuState.caret_anim);
         PlaySound(gMenuState.snd_change);
     }
@@ -129,9 +124,6 @@ INTERNAL void UpdateMenuMain (float dt, bool up, bool down, bool right, bool lef
         PlaySound(gMenuState.snd_select);
         switch (gMenuState.selected)
         {
-            // case (MENU_ITEM_PLAYGAME     ):                        StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_NORMAL   ); }); break;
-            // case (MENU_ITEM_PLAYCHALLENGE): if (!challenge_locked) StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_CHALLENGE); }); break;
-            // case (MENU_ITEM_PLAYTUT      ):                        StartFade(FADE_SPECIAL, [](){ StartGame(GAME_MODE_TUTORIAL ); }); break;
             case (MENU_ITEM_PLAYGAME): gMenuState.mode = MENU_MODE_PLAYGAME; gMenuState.selected = 0; break;
             case (MENU_ITEM_BADGES  ): gMenuState.mode = MENU_MODE_BADGES;                            break;
             case (MENU_ITEM_SETTINGS): gMenuState.mode = MENU_MODE_SETTINGS; gMenuState.selected = 0; break;
@@ -139,9 +131,8 @@ INTERNAL void UpdateMenuMain (float dt, bool up, bool down, bool right, bool lef
             case (MENU_ITEM_EXITGAME): gWindow.running = false;                                       break;
         }
     }
-    if (back)
+    if (back || IsKeyPressed(SDL_SCANCODE_ESCAPE))
     {
-        PlaySound(gMenuState.snd_select);
         gWindow.running = false;
     }
 }
@@ -218,7 +209,7 @@ INTERNAL void UpdateMenuPlayGame (float dt, bool up, bool down, bool right, bool
             case (MENU_ITEM_PLAYGAME_BACK     ): gMenuState.mode = MENU_MODE_MAINMENU; gMenuState.selected = MENU_ITEM_PLAYGAME;          break;
         }
     }
-    if (back)
+    if (back || IsKeyPressed(SDL_SCANCODE_ESCAPE))
     {
         PlaySound(gMenuState.snd_select);
         gMenuState.mode = MENU_MODE_MAINMENU;
@@ -265,7 +256,7 @@ INTERNAL void RenderMenuPlayGame (float dt)
 
 INTERNAL void UpdateMenuBadges (float dt, bool up, bool down, bool right, bool left, bool action, bool back)
 {
-    if (action || back)
+    if (action || back || IsKeyPressed(SDL_SCANCODE_ESCAPE))
     {
         gMenuState.mode = MENU_MODE_MAINMENU;
         PlaySound(gMenuState.snd_select);
@@ -397,7 +388,7 @@ INTERNAL void UpdateMenuSettings (float dt, bool up, bool down, bool right, bool
             } break;
         }
     }
-    if (back)
+    if (back || IsKeyPressed(SDL_SCANCODE_ESCAPE))
     {
         PlaySound(gMenuState.snd_select);
         SaveSettings();
@@ -457,7 +448,7 @@ INTERNAL void RenderMenuSettings (float dt)
 
 INTERNAL void UpdateMenuCredits (float dt, bool up, bool down, bool right, bool left, bool action, bool back)
 {
-    if (action || back)
+    if (action || back || IsKeyPressed(SDL_SCANCODE_ESCAPE))
     {
         gMenuState.mode = MENU_MODE_MAINMENU;
         PlaySound(gMenuState.snd_select);
