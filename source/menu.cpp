@@ -285,17 +285,17 @@ INTERNAL void RenderMenuBadges (float dt)
     DrawImage(gBadges.background, 0, 0);
 
     // COMPLETE
-    DrawImage(gBadges.badges,  42,  63, FLIP_NONE, GetAnimationClip((gBadges.unlocked_complete[1]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_COMPLETE] : gBadges.anim[BADGE_TYPE_LOCKED_COMPLETE]));
-    DrawImage(gBadges.badges,  42, 109, FLIP_NONE, GetAnimationClip((gBadges.unlocked_complete[2]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_COMPLETE] : gBadges.anim[BADGE_TYPE_LOCKED_COMPLETE]));
+    DrawImage(gBadges.badges,  42,  63, FLIP_NONE, GetAnimationClip((gBadges.unlocked_complete[0]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_COMPLETE] : gBadges.anim[BADGE_TYPE_LOCKED_COMPLETE]));
+    DrawImage(gBadges.badges,  42, 109, FLIP_NONE, GetAnimationClip((gBadges.unlocked_complete[1]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_COMPLETE] : gBadges.anim[BADGE_TYPE_LOCKED_COMPLETE]));
     // COLLECT
-    DrawImage(gBadges.badges, 110,  63, FLIP_NONE, GetAnimationClip((gBadges.unlocked_collect [1]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_COLLECT ] : gBadges.anim[BADGE_TYPE_LOCKED_COLLECT ]));
-    DrawImage(gBadges.badges, 110, 109, FLIP_NONE, GetAnimationClip((gBadges.unlocked_collect [2]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_COLLECT ] : gBadges.anim[BADGE_TYPE_LOCKED_COLLECT ]));
+    DrawImage(gBadges.badges, 110,  63, FLIP_NONE, GetAnimationClip((gBadges.unlocked_collect [0]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_COLLECT ] : gBadges.anim[BADGE_TYPE_LOCKED_COLLECT ]));
+    DrawImage(gBadges.badges, 110, 109, FLIP_NONE, GetAnimationClip((gBadges.unlocked_collect [1]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_COLLECT ] : gBadges.anim[BADGE_TYPE_LOCKED_COLLECT ]));
     // IRONMAN
-    DrawImage(gBadges.badges, 178,  63, FLIP_NONE, GetAnimationClip((gBadges.unlocked_ironman [1]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_IRONMAN ] : gBadges.anim[BADGE_TYPE_LOCKED_IRONMAN ]));
-    DrawImage(gBadges.badges, 178, 109, FLIP_NONE, GetAnimationClip((gBadges.unlocked_ironman [2]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_IRONMAN ] : gBadges.anim[BADGE_TYPE_LOCKED_IRONMAN ]));
+    DrawImage(gBadges.badges, 178,  63, FLIP_NONE, GetAnimationClip((gBadges.unlocked_ironman [0]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_IRONMAN ] : gBadges.anim[BADGE_TYPE_LOCKED_IRONMAN ]));
+    DrawImage(gBadges.badges, 178, 109, FLIP_NONE, GetAnimationClip((gBadges.unlocked_ironman [1]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_IRONMAN ] : gBadges.anim[BADGE_TYPE_LOCKED_IRONMAN ]));
     // SPEEDRUN
-    DrawImage(gBadges.badges, 246,  63, FLIP_NONE, GetAnimationClip((gBadges.unlocked_speedrun[1]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_SPEEDRUN] : gBadges.anim[BADGE_TYPE_LOCKED_SPEEDRUN]));
-    DrawImage(gBadges.badges, 246, 109, FLIP_NONE, GetAnimationClip((gBadges.unlocked_speedrun[2]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_SPEEDRUN] : gBadges.anim[BADGE_TYPE_LOCKED_SPEEDRUN]));
+    DrawImage(gBadges.badges, 246,  63, FLIP_NONE, GetAnimationClip((gBadges.unlocked_speedrun[0]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_SPEEDRUN] : gBadges.anim[BADGE_TYPE_LOCKED_SPEEDRUN]));
+    DrawImage(gBadges.badges, 246, 109, FLIP_NONE, GetAnimationClip((gBadges.unlocked_speedrun[1]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_SPEEDRUN] : gBadges.anim[BADGE_TYPE_LOCKED_SPEEDRUN]));
 
     float cx = 0.0f;
     float cy = 0.0f;
