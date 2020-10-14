@@ -31,8 +31,8 @@ INTERNAL void QuitApplication ()
 
 INTERNAL void UpdateApplication (float dt)
 {
-    if (IsKeyPressed(SDL_SCANCODE_F) || IsKeyPressed(SDL_SCANCODE_F11)){SetFullscreen(!IsFullscreen());}
-    
+    if (IsKeyPressed(SDL_SCANCODE_F) || IsKeyPressed(SDL_SCANCODE_F11)) SetFullscreen(!IsFullscreen());
+
     if (!IsFading())
     {
         switch (gAppState.state)
