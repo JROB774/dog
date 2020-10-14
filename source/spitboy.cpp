@@ -1,4 +1,5 @@
-GLOBAL constexpr float SPITBOY_SPIT_COOLDOWN = 0.75f;
+GLOBAL constexpr float SPITBOY_SPIT_COOLDOWN_NORMAL = 0.75f;
+GLOBAL constexpr float SPITBOY_SPIT_COOLDOWN_CHALLENGE = 0.5f;
 GLOBAL constexpr float SPITBOY_SPIT_FORCE = 225.0f;
 
 GLOBAL Image gSpitBoyImage;
@@ -68,7 +69,7 @@ INTERNAL void UpdateSpitBoy (SpitBoy& spitboy, float dt)
                 nvel.x = vel.x * cos(spit_angle) - vel.y * sin(spit_angle);
                 nvel.y = vel.x * sin(spit_angle) + vel.y * cos(spit_angle);
 
-                spitboy.timer = SPITBOY_SPIT_COOLDOWN;
+                spitboy.timer = (gGameState.mode == GAME_MODE_NORMAL) ? SPITBOY_SPIT_COOLDOWN_NORMAL : SPITBOY_SPIT_COOLDOWN_CHALLENGE;
                 spitboy.spit.push_back({ pos, nvel, { 2,2,4,4 }, false });
                 spitboy.state = SPITBOY_STATE_SPIT;
                 LoadAnimation(spitboy.spit.back().anim, "spit.anim");
