@@ -34,7 +34,7 @@ INTERNAL void InitBadges ()
     gBadges.description[2][2] = "COMPLETE NORMAL+\nWITHOUT DYING";
     gBadges.description[2][3] = "COMPLETE CHALLENGE+\nWITHOUT DYING";
     // SPEEDRUN
-    gBadges.description[3][0] = "COMPLETE NORMAL MODE\nIN 00:00 MINUTES";
+    gBadges.description[3][0] = "COMPLETE NORMAL MODE\nIN 01:00 MINUTE";
     gBadges.description[3][1] = "COMPLETE CHALLENGE MODE\nIN 00:00 MINUTES";
     gBadges.description[3][2] = "COMPLETE NORMAL+ MODE\nIN 00:00 MINUTES";
     gBadges.description[3][3] = "COMPLETE CHALLENGE+ MODE\nIN 00:00 MINUTES";
