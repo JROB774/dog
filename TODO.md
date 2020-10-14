@@ -63,10 +63,10 @@
 * [x] Add credits screen.
 * [x] Put Normal, Challenge, and Tutorial on their own menu screen.
 * [x] Setup the itch.io page.
-* [ ] Implement Levels/Zones:
-  * [ ] Normal Mode
+* [x] Implement Levels/Zones:
+  * [x] Normal Mode
   * [ ] Challenge Mode
-* [ ] Final polish and cleanup.
+* [x] Add stats screen after mode completion.
 * [ ] Test the game.
 * [ ] Package release.
 
@@ -82,3 +82,8 @@
 * [x] Add Enemies:
   * [x] Horizontal Crushers
   * [x] Vertiical Crushers
+* [x] Implement fullscreen hotkey.
+* [x] Implement reset hotkey.
+* [ ] Implement Levels/Zones:
+  * [x] Normal Mode
+  * [ ] Challenge Mode
