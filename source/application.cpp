@@ -9,6 +9,7 @@ INTERNAL void InitApplication ()
     InitMenu ();
     InitGame ();
     InitPause();
+    InitStats();
 
     GoToMenu();
 }
@@ -18,6 +19,7 @@ INTERNAL void QuitApplication ()
     SaveSettings();
     SaveData();
 
+    QuitStats();
     QuitPause();
     QuitGame ();
     QuitMenu ();
@@ -36,6 +38,7 @@ INTERNAL void UpdateApplication (float dt)
             case (APP_STATE_MENU ): UpdateMenu (dt); break;
             case (APP_STATE_GAME ): UpdateGame (dt); break;
             case (APP_STATE_PAUSE): UpdatePause(dt); break;
+            case (APP_STATE_STATS): UpdateStats(dt); break;
         }
     }
 }
@@ -47,6 +50,7 @@ INTERNAL void RenderApplication (float dt)
         case (APP_STATE_MENU ): RenderMenu (dt); break;
         case (APP_STATE_GAME ): RenderGame (dt); break;
         case (APP_STATE_PAUSE): RenderPause(dt); break;
+        case (APP_STATE_STATS): RenderStats(dt); break;
     }
 
     RenderFade(dt);

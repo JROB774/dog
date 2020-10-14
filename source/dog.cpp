@@ -372,7 +372,6 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
                 PlaySound(small_bone_sound);
                 PlaySound(big_bone_sound);
                 StartWinSequence();
-                // StartFade(FADE_SPECIAL, [](){ EndGame(); });
             }
         }
     }
