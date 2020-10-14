@@ -87,6 +87,7 @@ INTERNAL void StartGame (GameMode game_mode, bool retry)
     gGameState.dog.flip     = GAME_MODE_INFO[gGameState.mode].flip;
     gGameState.dog.grounded = true;
     gGameState.dog.deaths   = 0;
+    gGameState.dog.dead     = false;
 
     gGameState.dog.start_state    = gGameState.dog.state;
     gGameState.dog.start_pos      = gGameState.dog.pos;
