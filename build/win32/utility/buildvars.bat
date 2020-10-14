@@ -32,7 +32,7 @@ set InputSource=..\source\main.cpp
 set OutputExecutable=DOG-%Architecture%
 
 if %BuildMode%==Release (
-    set CompilerFlags=%CompilerFlags% -WX
+    set CompilerFlags=%CompilerFlags%
     set LinkerFlags=%LinkerFlags% -subsystem:windows
 )
 if %BuildMode%==Debug (
