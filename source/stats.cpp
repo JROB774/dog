@@ -38,6 +38,7 @@ INTERNAL void RenderStats (float dt)
     while (collected.length() < 3) collected = "0" + collected;
     while (total.length()     < 3) total = "0" + total;
     std::string bone_text = collected + "/" + total;
+    float bone_half_width = GetTextWidth(gAppState.sfont, bone_text)/2; // Calculate the width before the "!" so it doesn't impact placement.
     if (GetBoneCollectedCount() >= GetBoneTotalCount()) bone_text += "!";
 
     // Format and create the time string.
@@ -46,12 +47,14 @@ INTERNAL void RenderStats (float dt)
     while (minutes.length() < 2) minutes = "0" + minutes;
     while (seconds.length() < 2) seconds = "0" + seconds;
     std::string time_text = minutes + ":" + seconds;
+    float time_half_width = GetTextWidth(gAppState.sfont, time_text)/2; // Calculate the width before the "!" so it doesn't impact placement.
+    if (gGameState.timer <= GAME_MODE_INFO[gGameState.mode].speedrun_time) time_text += "!";
 
     // Draw the bones string.
-    DrawText(gAppState.sfont, bone_text, 87-(GetTextWidth(gAppState.sfont, bone_text)/2), 117, MakeColor(0,0,0));
+    DrawText(gAppState.sfont, bone_text, 87-bone_half_width, 117, MakeColor(0,0,0));
 
     // Draw the time string.
-    DrawText(gAppState.sfont, time_text, 242-(GetTextWidth(gAppState.sfont, time_text)/2), 117, MakeColor(0,0,0));
+    DrawText(gAppState.sfont, time_text, 242-time_half_width, 117, MakeColor(0,0,0));
 
     // Draw the achievements for the current game mode that was played.
     DrawImage(gBadges.badges,  42, 175, FLIP_NONE, GetAnimationClip((gBadges.unlocked_complete[gGameState.mode]) ? gBadges.anim[BADGE_TYPE_UNLOCKED_COMPLETE] : gBadges.anim[BADGE_TYPE_LOCKED_COMPLETE]));
