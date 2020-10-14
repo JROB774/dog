@@ -73,7 +73,7 @@ INTERNAL void ShakeCamera (float minx, float miny, float maxx, float maxy, float
     gCamera.shake_maxx += maxx;
     gCamera.shake_maxy += maxy;
 
-    gCamera.timer += duration;
+    gCamera.timer = duration;
 }
 
 INTERNAL void ResetCameraShake ()
