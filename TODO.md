@@ -67,6 +67,7 @@
   * [x] Normal Mode
   * [ ] Challenge Mode
 * [x] Add stats screen after mode completion.
+* [x] Add gamepad buttons to the tutorial.
 * [ ] Test the game.
 * [ ] Package release.
 
