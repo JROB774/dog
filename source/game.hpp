@@ -42,7 +42,7 @@ GLOBAL struct GameState
 GLOBAL const GameModeInfo GAME_MODE_INFO[GAME_MODE_TOTAL]
 {
 {   "normal-main-00.bmp", { 180, 140 }, FLIP_HORZ, &gGameState.mus_game,      60 },
-{ "tutorial-grid-00.bmp", {  56, 172 }, FLIP_NONE, &gGameState.mus_challenge, 60 },
+{ "challenge-main-00.bmp", { 180, 140 }, FLIP_HORZ, &gGameState.mus_challenge, 60 },
 { "tutorial-grid-00.bmp", {  56, 172 }, FLIP_NONE, &gGameState.mus_game,      60 },
 { "tutorial-grid-00.bmp", {  56, 172 }, FLIP_NONE, &gGameState.mus_challenge, 60 },
 { "tutorial-grid-00.bmp", {  56, 172 }, FLIP_NONE, &gGameState.mus_tutorial,  60 }
