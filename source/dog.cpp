@@ -103,15 +103,17 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
 
     // CreateParticles(PARTICLE_TYPE_TEST, (int)gGameState.dog.pos.x,(int)gGameState.dog.pos.y,(int)gGameState.dog.pos.x+24,(int)gGameState.dog.pos.y+24, 4,10);
 
+    if (IsKeyPressed(SDL_SCANCODE_R)){StartFade(FADE_SPECIAL, [](){ RetryGame(); });}
+
     // Handle controls!!!
     if (!gGameState.doing_win_sequence)
     {
-        dog.up           = (IsKeyDown(SDL_SCANCODE_UP)    || IsKeyDown(SDL_SCANCODE_W)         || IsButtonDown(SDL_CONTROLLER_BUTTON_DPAD_UP)    || IsLeftStickUp());
-        dog.right        = (IsKeyDown(SDL_SCANCODE_RIGHT) || IsKeyDown(SDL_SCANCODE_D)         || IsButtonDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT) || IsLeftStickRight());
-        dog.down         = (IsKeyDown(SDL_SCANCODE_DOWN)  || IsKeyDown(SDL_SCANCODE_S)         || IsButtonDown(SDL_CONTROLLER_BUTTON_DPAD_DOWN)  || IsLeftStickDown());
-        dog.left         = (IsKeyDown(SDL_SCANCODE_LEFT)  || IsKeyDown(SDL_SCANCODE_A)         || IsButtonDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT)  || IsLeftStickLeft());
-        dog.jump_press   = (IsKeyPressed(SDL_SCANCODE_Z)  || IsKeyPressed(SDL_SCANCODE_SPACE)  || IsButtonPressed(SDL_CONTROLLER_BUTTON_A));
-        dog.jump_release = (IsKeyReleased(SDL_SCANCODE_Z) || IsKeyReleased(SDL_SCANCODE_SPACE) || IsButtonReleased(SDL_CONTROLLER_BUTTON_A));
+        dog.up           = (IsKeyDown(SDL_SCANCODE_UP)    || IsButtonDown(SDL_CONTROLLER_BUTTON_DPAD_UP)    || IsLeftStickUp());
+        dog.right        = (IsKeyDown(SDL_SCANCODE_RIGHT) || IsButtonDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT) || IsLeftStickRight());
+        dog.down         = (IsKeyDown(SDL_SCANCODE_DOWN)  || IsButtonDown(SDL_CONTROLLER_BUTTON_DPAD_DOWN)  || IsLeftStickDown());
+        dog.left         = (IsKeyDown(SDL_SCANCODE_LEFT)  || IsButtonDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT)  || IsLeftStickLeft());
+        dog.jump_press   = (IsKeyPressed(SDL_SCANCODE_Z)  || IsButtonPressed(SDL_CONTROLLER_BUTTON_A));
+        dog.jump_release = (IsKeyReleased(SDL_SCANCODE_Z) || IsButtonReleased(SDL_CONTROLLER_BUTTON_A));
         dog.action       = (IsKeyPressed(SDL_SCANCODE_X)  || IsButtonPressed(SDL_CONTROLLER_BUTTON_X));
     }
     else
