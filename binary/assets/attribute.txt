@@ -1,5 +1,8 @@
-Smoke particle effect created by KnoblePersona (with modifications) on OpenGameArt under the Creative Commons license:
+Smoke effect created by KnoblePersona on OpenGameArt under the Creative Commons license:
     https://opengameart.org/content/smoke-fire-animated-particle-16x16
 
 Music created by Komiku on FreeMusicArchive under the Creative Commons license:
     https://www.freemusicarchive.org/music/Komiku/
+
+Superfats Font created by Darrell Flood on FontSpace under a Freeware license:
+    https://www.fontspace.com/superfats-font-f31716
