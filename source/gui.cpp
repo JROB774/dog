@@ -10,6 +10,10 @@ INTERNAL void QuitGui ()
 
 INTERNAL void DrawGui (float dt)
 {
+    #if defined(BUILD_DEBUG)
+    if (gAppState.screenshot_mode) return;
+    #endif
+
     DrawImage(gGui.splat, 0,0);
 
     // We pad all values with zeroes so that they are always the same length.
