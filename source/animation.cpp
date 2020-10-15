@@ -35,6 +35,11 @@ INTERNAL void FreeAnimation (Animation& animation)
 
 INTERNAL void UpdateAnimation (Animation& animation, float dt)
 {
+    // We don't want to update animations in debug screenshot mode!
+    #if defined(BUILD_DEBUG)
+    if (gAppState.screenshot_mode) return;
+    #endif
+
     if (animation.looped || animation.state.frame < animation.frames.size())
     {
         float time = 0.0f;

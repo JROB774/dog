@@ -31,6 +31,12 @@ INTERNAL void QuitApplication ()
 
 INTERNAL void UpdateApplication (float dt)
 {
+    // If in debug build SPACE can be pressed to pause the game's update whilst till rendering
+    #if defined(BUILD_DEBUG)
+    if (IsKeyPressed(SDL_SCANCODE_SPACE)) gAppState.screenshot_mode = !gAppState.screenshot_mode;
+    if (gAppState.screenshot_mode) return;
+    #endif
+
     if (IsKeyPressed(SDL_SCANCODE_F) || IsKeyPressed(SDL_SCANCODE_F11)) SetFullscreen(!IsFullscreen());
 
     if (!IsFading())

@@ -13,6 +13,7 @@ GLOBAL struct ApplicationState
 {
     Font lfont, sfont;
     AppState state;
+    bool screenshot_mode;
 
 } gAppState;
 
