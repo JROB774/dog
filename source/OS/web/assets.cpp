@@ -1,4 +1,4 @@
 INTERNAL void SetupAssetPath ()
 {
-    gAssetPath = "assets\\";
+    gAssetPath = "assets/";
 }
