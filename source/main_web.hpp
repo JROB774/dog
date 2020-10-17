@@ -28,7 +28,7 @@
 
 // Header includes.
 #include "utility.hpp"
-// #include "error.hpp"
+#include "error.hpp"
 // #include "assets.hpp"
 // #include "image.hpp"
 // #include "font.hpp"
@@ -64,7 +64,7 @@
 
 // Source includes.
 #include "utility.cpp"
-// #include "error.cpp"
+#include "error.cpp"
 // #include "assets.cpp"
 // #include "image.cpp"
 // #include "font.cpp"
