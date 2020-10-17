@@ -39,6 +39,7 @@ INTERNAL Color     MakeColor       (float r, float g, float b, float a = 1.0f);
 
 // Alert message box.
 
+#ifdef PLATFORM_WIN32
 GLOBAL constexpr int ALERT_BUTTON_YES_NO_CANCEL = MB_YESNOCANCEL;
 GLOBAL constexpr int ALERT_BUTTON_YES_NO        = MB_YESNO;
 GLOBAL constexpr int ALERT_BUTTON_OK            = MB_OK;
@@ -53,6 +54,24 @@ GLOBAL constexpr int ALERT_RESULT_CANCEL  = IDCANCEL;
 GLOBAL constexpr int ALERT_RESULT_OK      = IDOK;
 GLOBAL constexpr int ALERT_RESULT_NO      = IDNO;
 GLOBAL constexpr int ALERT_RESULT_YES     = IDYES;
+#endif // PLATFORM_WIN32
+
+#ifdef PLATFORM_WEB
+GLOBAL constexpr int ALERT_BUTTON_YES_NO_CANCEL = 0;
+GLOBAL constexpr int ALERT_BUTTON_YES_NO        = 0;
+GLOBAL constexpr int ALERT_BUTTON_OK            = 0;
+GLOBAL constexpr int ALERT_BUTTON_OK_CANCEL     = 0;
+
+GLOBAL constexpr int ALERT_TYPE_INFO    = 0;
+GLOBAL constexpr int ALERT_TYPE_WARNING = 0;
+GLOBAL constexpr int ALERT_TYPE_ERROR   = 0;
+
+GLOBAL constexpr int ALERT_RESULT_INVALID = 0;
+GLOBAL constexpr int ALERT_RESULT_CANCEL  = 0;
+GLOBAL constexpr int ALERT_RESULT_OK      = 0;
+GLOBAL constexpr int ALERT_RESULT_NO      = 0;
+GLOBAL constexpr int ALERT_RESULT_YES     = 0;
+#endif // PLATFORM_WEB
 
 INTERNAL int ShowAlert (std::string title, std::string msg, int type, int buttons);
 

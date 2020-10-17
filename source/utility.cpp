@@ -13,6 +13,7 @@ INTERNAL Color MakeColor (float r, float g, float b, float a)
     return Color { r,g,b,a };
 }
 
+#ifdef PLATFORM_WIN32
 INTERNAL int ShowAlert (std::string title, std::string msg, int type, int buttons)
 {
     // NOTE: We don't allow hidden windows because it causes program hang.
@@ -31,6 +32,15 @@ INTERNAL int ShowAlert (std::string title, std::string msg, int type, int button
 
     return MessageBoxA(hwnd, msg.c_str(), title.c_str(), (type|buttons));
 }
+#endif // PLATFORM_WIN32
+
+#ifdef PLATFORM_WEB
+INTERNAL int ShowAlert (std::string title, std::string msg, int type, int buttons)
+{
+    // This function does nothing on web builds...
+    return 0;
+}
+#endif // PLATFORM_WEB
 
 INTERNAL std::vector<std::string> TokenizeString (std::string str, char delim)
 {
@@ -153,5 +163,5 @@ INTERNAL float RandomFloatRange (float min, float max)
 
 INTERNAL float RandomFloat ()
 {
-    return RandomFloatRange(0, RAND_MAX);
+    return RandomFloatRange(0, (float)RAND_MAX);
 }

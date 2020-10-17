@@ -33,4 +33,11 @@ INTERNAL void SetupAssetPath ()
 
     printf("%s\n", gAssetPath.c_str());
 }
-#endif
+#endif // PLATFORM_WIN32
+
+#ifdef PLATFORM_WEB
+INTERNAL void SetupAssetPath ()
+{
+    gAssetPath = "assets\\";
+}
+#endif // PLATFORM_WEB
