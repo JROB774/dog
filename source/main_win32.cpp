@@ -17,6 +17,7 @@ int main (int argc, char** argv)
     gWindow.running = true;
 
     InitErrorSystem();
+    SetupAssetPath();
     LoadSettings();
     InitWindow();
     InitMixer();

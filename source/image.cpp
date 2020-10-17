@@ -1,6 +1,6 @@
 INTERNAL void LoadImage (Image& image, std::string file_name)
 {
-    file_name = "assets/" + file_name;
+    file_name = gAssetPath + file_name;
     SDL_Surface* surface = SDL_LoadBMP(file_name.c_str());
     if (!surface)
     {

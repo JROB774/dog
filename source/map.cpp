@@ -38,17 +38,17 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
     ASSERT(tokens.size() == 3); // Tileset-Zone-Map
 
     std::string background_file = "backs/" + file_name;
-    map.has_background = std::filesystem::exists("assets/" + background_file);
+    map.has_background = std::filesystem::exists(gAssetPath + background_file);
     if (map.has_background) LoadImage(map.background, background_file.c_str());
 
     std::string foreground_file = "fronts/" + file_name;
-    map.has_foreground = std::filesystem::exists("assets/" + foreground_file);
+    map.has_foreground = std::filesystem::exists(gAssetPath + foreground_file);
     if (map.has_foreground) LoadImage(map.foreground, foreground_file.c_str());
 
     std::string tileset_file = "t" + tokens[1] + ".bmp";
     LoadImage(map.tileset, tileset_file.c_str());
 
-    file_name = "assets/maps/" + file_name;
+    file_name = gAssetPath + "maps/" + file_name;
     SDL_Surface* surface = SDL_LoadBMP(file_name.c_str());
     if (!surface)
     {

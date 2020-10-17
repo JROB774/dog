@@ -1,6 +1,6 @@
 INTERNAL void LoadAnimation (Animation& animation, std::string file_name)
 {
-    file_name = "assets/anims/" + file_name;
+    file_name = gAssetPath + "anims/" + file_name;
     GonObject gon = GonObject::Load(file_name);
     if (gon.type != GonObject::FieldType::OBJECT)
     {

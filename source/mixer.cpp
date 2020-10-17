@@ -35,7 +35,7 @@ INTERNAL void QuitMixer ()
 
 INTERNAL void LoadSound (Sound& sound, std::string file_name)
 {
-    file_name = "assets/sounds/" + file_name;
+    file_name = gAssetPath + "sounds/" + file_name;
     sound.data = Mix_LoadWAV(file_name.c_str());
     if (!sound.data)
     {
@@ -59,7 +59,7 @@ INTERNAL void PlaySound (Sound& sound, int loops)
 
 INTERNAL void LoadMusic (Music& music, std::string file_name)
 {
-    file_name = "assets/music/" + file_name;
+    file_name = gAssetPath + "music/" + file_name;
     music.data = Mix_LoadMUS(file_name.c_str());
     if (!music.data)
     {
