@@ -1,12 +1,11 @@
 #include "main_win32.hpp"
 
-INTERNAL void QuitSystems ()
+void QuitSystems ()
 {
     QuitGame();
     QuitMixer();
     QuitInput();
     QuitWindow();
-
     QuitErrorSystem();
 }
 
