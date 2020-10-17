@@ -22,6 +22,9 @@
 #include <SDL2/SDL_syswm.h>
 #include <SDL2/SDL_mixer.h>
 
+#include <GON/GON.hpp>
+#include <GON/GON.cpp>
+
 // Header includes.
 // ...
 
