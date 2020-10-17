@@ -1,7 +1,6 @@
 #ifndef INPUT_HPP
 #define INPUT_HPP
 
-INTERNAL void InitInput ();
 INTERNAL void QuitInput ();
 
 INTERNAL void UpdateInputState  ();

@@ -21,7 +21,6 @@ int main (int argc, char** argv)
     LoadSettings();
     InitWindow();
     InitMixer();
-    InitInput();
     InitFrameTimer();
 
     RandomSeed();
