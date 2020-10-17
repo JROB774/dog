@@ -12,7 +12,7 @@ set Architecture=amd64
 :: Can be either "Debug" or "Release"
 set BuildMode=Debug
 
-set IncludeDirs=-I source\
+set IncludeDirs=-I source\ -I source\win32\
 set LibraryDirs=-libpath:library\win32\%Architecture%\
 
 set Defines=
