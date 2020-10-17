@@ -11,9 +11,8 @@ GLOBAL struct Settings
 
 } gSettings;
 
-INTERNAL void SaveSettings ();
-INTERNAL void LoadSettings ();
-
+INTERNAL void  SaveSettings ();
+INTERNAL void  LoadSettings ();
 INTERNAL void ResetSettings ();
 
 #endif /* SETTINGS_HPP */
