@@ -8,7 +8,7 @@ GLOBAL FILE* gErrorLog;
 // Unhandled exception dump taken from here <https://stackoverflow.com/a/700108>
 INTERNAL LONG WINAPI InternalUnhandledExceptionFilter (struct _EXCEPTION_POINTERS* info)
 {
-    ShowAlert("Error", "Fatal exception occurred!\nCreating crash dump!", ALERT_TYPE_ERROR, ALERT_BUTTON_OK);
+    ShowAlert("Error", "Fatal exception occurred!\nCreating crash dump!", ALERT_TYPE_ERROR, ALERT_BUTTONS_OK);
 
     std::string file_name(CRASH_DUMP_NAME);
     HANDLE file = CreateFileA(file_name.c_str(), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -73,7 +73,7 @@ INTERNAL void LogError (const char* file, int line, ErrorLevel level, const char
 
     va_start(args, format);
     std::string msg = FormatStringV(format, args);
-    ShowAlert("Error!", msg, ALERT_TYPE_ERROR, ALERT_BUTTON_OK);
+    ShowAlert("Error!", msg, ALERT_TYPE_ERROR, ALERT_BUTTONS_OK);
     va_end(args);
 
     if (level == ERR_MED) return;

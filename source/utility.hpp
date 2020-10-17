@@ -39,41 +39,29 @@ INTERNAL Color     MakeColor       (float r, float g, float b, float a = 1.0f);
 
 // Alert message box.
 
-#ifdef PLATFORM_WIN32
-GLOBAL constexpr int ALERT_BUTTON_YES_NO_CANCEL = MB_YESNOCANCEL;
-GLOBAL constexpr int ALERT_BUTTON_YES_NO        = MB_YESNO;
-GLOBAL constexpr int ALERT_BUTTON_OK            = MB_OK;
-GLOBAL constexpr int ALERT_BUTTON_OK_CANCEL     = MB_OKCANCEL;
+enum AlertButtons
+{
+    ALERT_BUTTONS_YES_NO_CANCEL,
+    ALERT_BUTTONS_YES_NO,
+    ALERT_BUTTONS_OK,
+    ALERT_BUTTONS_OK_CANCEL,
+};
+enum AlertType
+{
+    ALERT_TYPE_INFO,
+    ALERT_TYPE_WARNING,
+    ALERT_TYPE_ERROR,
+};
+enum AlertResult
+{
+    ALERT_RESULT_INVALID,
+    ALERT_RESULT_CANCEL,
+    ALERT_RESULT_OK,
+    ALERT_RESULT_NO,
+    ALERT_RESULT_YES,
+};
 
-GLOBAL constexpr int ALERT_TYPE_INFO    = MB_ICONINFORMATION;
-GLOBAL constexpr int ALERT_TYPE_WARNING = MB_ICONWARNING;
-GLOBAL constexpr int ALERT_TYPE_ERROR   = MB_ICONERROR;
-
-GLOBAL constexpr int ALERT_RESULT_INVALID = 0;
-GLOBAL constexpr int ALERT_RESULT_CANCEL  = IDCANCEL;
-GLOBAL constexpr int ALERT_RESULT_OK      = IDOK;
-GLOBAL constexpr int ALERT_RESULT_NO      = IDNO;
-GLOBAL constexpr int ALERT_RESULT_YES     = IDYES;
-#endif // PLATFORM_WIN32
-
-#ifdef PLATFORM_WEB
-GLOBAL constexpr int ALERT_BUTTON_YES_NO_CANCEL = 0;
-GLOBAL constexpr int ALERT_BUTTON_YES_NO        = 0;
-GLOBAL constexpr int ALERT_BUTTON_OK            = 0;
-GLOBAL constexpr int ALERT_BUTTON_OK_CANCEL     = 0;
-
-GLOBAL constexpr int ALERT_TYPE_INFO    = 0;
-GLOBAL constexpr int ALERT_TYPE_WARNING = 0;
-GLOBAL constexpr int ALERT_TYPE_ERROR   = 0;
-
-GLOBAL constexpr int ALERT_RESULT_INVALID = 0;
-GLOBAL constexpr int ALERT_RESULT_CANCEL  = 0;
-GLOBAL constexpr int ALERT_RESULT_OK      = 0;
-GLOBAL constexpr int ALERT_RESULT_NO      = 0;
-GLOBAL constexpr int ALERT_RESULT_YES     = 0;
-#endif // PLATFORM_WEB
-
-INTERNAL int ShowAlert (std::string title, std::string msg, int type, int buttons);
+INTERNAL AlertResult ShowAlert (std::string title, std::string msg, AlertType type, AlertButtons buttons);
 
 // Some utility functions.
 

@@ -1,3 +1,9 @@
+#if defined(PLATFORM_WIN32)
+#include "OS/win32/utility.cpp"
+#elif defined(PLATFORM_WEB)
+#include "OS/web/utility.cpp"
+#endif
+
 INTERNAL SDL_Color ColorToSDLColor (Color color)
 {
     SDL_Color c;
@@ -13,41 +19,12 @@ INTERNAL Color MakeColor (float r, float g, float b, float a)
     return Color { r,g,b,a };
 }
 
-#ifdef PLATFORM_WIN32
-INTERNAL int ShowAlert (std::string title, std::string msg, int type, int buttons)
-{
-    // NOTE: We don't allow hidden windows because it causes program hang.
-    HWND hwnd = NULL;
-    bool hidden = SDL_GetWindowFlags(gWindow.window) & SDL_WINDOW_HIDDEN;
-
-    if (!hidden)
-    {
-        SDL_SysWMinfo win_info = {};
-        SDL_VERSION(&win_info.version);
-        if (SDL_GetWindowWMInfo(gWindow.window, &win_info))
-        {
-            hwnd = win_info.info.win.window;;
-        }
-    }
-
-    return MessageBoxA(hwnd, msg.c_str(), title.c_str(), (type|buttons));
-}
-#endif // PLATFORM_WIN32
-
-#ifdef PLATFORM_WEB
-INTERNAL int ShowAlert (std::string title, std::string msg, int type, int buttons)
-{
-    // This function does nothing on web builds...
-    return 0;
-}
-#endif // PLATFORM_WEB
-
 INTERNAL std::vector<std::string> TokenizeString (std::string str, char delim)
 {
     std::stringstream test(str);
     std::string segment;
     std::vector<std::string> seglist;
-    while(std::getline(test, segment, delim)) seglist.push_back(segment);
+    while (std::getline(test, segment, delim)) seglist.push_back(segment);
     return seglist;
 }
 
