@@ -27,7 +27,7 @@ set ResourceFile=..\resource\resources.rc
 set ResourcePath=..\resource\
 
 set InputResource=..\resource\resources.res
-set InputSource=..\source\main.cpp
+set InputSource=..\source\main_win32.cpp
 
 set OutputExecutable=DOG-%Architecture%
 

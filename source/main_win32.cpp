@@ -1,4 +1,4 @@
-#include "main.hpp"
+#include "main_win32.hpp"
 
 INTERNAL void QuitSystems ()
 {

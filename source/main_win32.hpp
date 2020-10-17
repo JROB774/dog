@@ -1,10 +1,15 @@
-#ifndef MAIN_HPP
-#define MAIN_HPP
+#ifndef MAIN_WIN32_HPP
+#define MAIN_WIN32_HPP
+
+#define PLATFORM_WIN32
 
 #ifndef _CRT_SECURE_NO_WARNINGS
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
 #ifndef NOMINMAX
 #define NOMINMAX
 #endif
@@ -33,10 +38,6 @@
 
 #include <GON/GON.hpp>
 #include <GON/GON.cpp>
-
-#define GAME_VERSION_MAJOR 1
-#define GAME_VERSION_MINOR 0
-#define GAME_VERSION_PATCH 0
 
 // Header includes.
 #include "utility.hpp"
@@ -108,4 +109,4 @@
 #include "pause.cpp"
 #include "application.cpp"
 
-#endif /* MAIN_HPP */
+#endif /* MAIN_WIN32_HPP */

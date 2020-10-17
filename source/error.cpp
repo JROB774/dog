@@ -4,6 +4,7 @@ INTERNAL constexpr const char*  ERROR_LOG_NAME = "error.log";
 
 GLOBAL FILE* gErrorLog;
 
+#ifdef PLATFORM_WIN32
 // Unhandled exception dump taken from here <https://stackoverflow.com/a/700108>
 INTERNAL LONG WINAPI InternalUnhandledExceptionFilter (struct _EXCEPTION_POINTERS* info)
 {
@@ -31,6 +32,7 @@ INTERNAL LONG WINAPI InternalUnhandledExceptionFilter (struct _EXCEPTION_POINTER
 
     return EXCEPTION_EXECUTE_HANDLER;
 }
+#endif
 
 INTERNAL void LogError (const char* file, int line, ErrorLevel level, const char* format, ...)
 {
@@ -86,7 +88,9 @@ INTERNAL void LogError (const char* file, int line, ErrorLevel level, const char
 
 INTERNAL bool InitErrorSystem ()
 {
+    #ifdef PLATFORM_WIN32
     SetUnhandledExceptionFilter(&InternalUnhandledExceptionFilter);
+    #endif
     return true;
 }
 
