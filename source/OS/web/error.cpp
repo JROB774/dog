@@ -13,11 +13,6 @@ INTERNAL void LogError (const char* file, int line, ErrorLevel level, const char
     fprintf(stderr, "\n");
     va_end(args);
     fflush(stderr);
-
-    if (level == ERR_MAX)
-    {
-        // @Incomplete: Need to handle maximum error case...
-    }
 }
 
 INTERNAL bool InitErrorSystem ()

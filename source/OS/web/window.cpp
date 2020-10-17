@@ -9,6 +9,7 @@ INTERNAL bool InitWindow ()
     // These will never change or be used when in the web build of the game!
     gWindow.width = WINDOW_START_W;
     gWindow.height = WINDOW_START_H;
+    gWindow.running = true;
     gWindow.fullscreen = false;
 
     if (SDL_CreateWindowAndRenderer(WINDOW_START_W,WINDOW_START_H, 0, &gWindow.window, &gWindow.renderer) < 0)
