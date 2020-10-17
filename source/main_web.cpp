@@ -2,14 +2,19 @@
 
 void main_loop ()
 {
+    UpdateInputState();
+
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
-        // @Incomplete: ...
+        HandleInputEvents(event);
     }
 
     ClearWindow(MakeColor(0,0,0));
     SetViewport();
+
+    UpdateApplication(gTimer.delta_time);
+    RenderApplication(gTimer.delta_time);
 
     RefreshWindow();
     CapFramerate();
@@ -17,8 +22,14 @@ void main_loop ()
 
 int main (int argc, char** argv)
 {
-    InitFrameTimer();
+    SetupAssetPath();
+    LoadSettings();
     InitWindow();
+    InitMixer();
+    InitFrameTimer();
+
+    RandomSeed();
+    InitApplication();
 
     emscripten_set_main_loop(main_loop, -1, 1);
 
