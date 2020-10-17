@@ -11,13 +11,13 @@ void main_loop ()
     ClearWindow(MakeColor(0,0,0));
     SetViewport();
 
-    // @Incomplete: ...
-
     RefreshWindow();
+    CapFramerate();
 }
 
 int main (int argc, char** argv)
 {
+    InitFrameTimer();
     InitWindow();
 
     emscripten_set_main_loop(main_loop, -1, 1);
