@@ -1,8 +1,6 @@
 #ifndef BONE_HPP
 #define BONE_HPP
 
-// GLOBAL constexpr int LARGE_BONE_WORTH = 10; // Large bones are worth 10 bones!
-
 struct SmallBone
 {
     std::string id;

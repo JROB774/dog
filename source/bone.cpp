@@ -57,11 +57,9 @@ INTERNAL int GetBoneCollectedCount ()
     int collected = 0;
     for (auto& id: gBoneCollectedIds) {
         if (id.back() == 's') collected++;
-        //else if (id.back() == 'l') collected += LARGE_BONE_WORTH;
     }
     for (auto& id: gTempBoneCollectedIds) {
         if (id.back() == 's') collected++;
-        //else if (id.back() == 'l') collected += LARGE_BONE_WORTH;
     }
     return collected;
 }
