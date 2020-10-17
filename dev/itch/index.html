@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+  <head>
+    <style type="text/css">
+      canvas { border: 0px none; background-color: white; }
+      body { border: 0px; margin: 0px;  }
+      .canvas-wrap { border: 2px black; }
+    </style>
+  </head>
+  <body>
+    <div class="canvas-wrap">
+      <canvas id="canvas" tabindex=-1></canvas>
+    </div>
+    <script>
+      var Module = {
+        print: (function() {
+          var element = document.getElementById('output');
+          return function(text) {};
+        })(),
+        printErr: function(text) {
+        },
+        canvas: (function() {
+          var canvas = document.getElementById('canvas');
+          return canvas;
+        })()
+      };
+    </script>
+    <script src="dog.js"></script>
+  </body>
+</html>
