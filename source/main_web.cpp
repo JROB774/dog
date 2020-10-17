@@ -10,7 +10,7 @@ void main_loop ()
         HandleInputEvents(event);
     }
 
-    ClearWindow(MakeColor(0,0,0));
+    ClearWindow(MakeColor(1,1,1));
     SetViewport();
 
     UpdateApplication(gTimer.delta_time);
