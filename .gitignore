@@ -13,3 +13,4 @@ binary/**/*.dll
 binary/**/*.data
 binary/**/*.js
 binary/**/*.wasm
+binary/**/*.html
