@@ -9,5 +9,7 @@
 
 *.sublime-workspace
 
-binary/*.dll
-binary/*.data
+binary/**/*.dll
+binary/**/*.data
+binary/**/*.js
+binary/**/*.wasm

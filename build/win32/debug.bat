@@ -5,7 +5,7 @@ setlocal
 
 pushd ..\..
 call build\win32\utility\buildvars.bat
-start remedybg binary\%OutputExecutable%.rdbg
+start remedybg %OutputExecutable%.rdbg
 popd
 
 endlocal

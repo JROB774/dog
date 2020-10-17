@@ -12,8 +12,8 @@ set Architecture=amd64
 :: Can be either "Debug" or "Release"
 set BuildMode=Debug
 
-set IncludeDirs=-I ..\source\
-set LibraryDirs=-libpath:..\library\win32\%Architecture%\
+set IncludeDirs=-I source\
+set LibraryDirs=-libpath:library\win32\%Architecture%\
 
 set Defines=
 
@@ -23,20 +23,21 @@ set LinkerFlags=-opt:ref -incremental:no
 set CompilerWarnings=-wd4100 -wd4505 -wd4189
 set LinkerWarnings=-ignore:4099
 
-set ResourceFile=..\resource\resources.rc
-set ResourcePath=..\resource\
+set ResourceFile=resource\resources.rc
+set ResourcePath=resource\
 
-set InputResource=..\resource\resources.res
-set InputSource=..\source\main_win32.cpp
+set InputResource=resource\resources.res
+set InputSource=source\main_win32.cpp
 
-set OutputExecutable=DOG-%Architecture%
+set OutputPath=binary\win32\
+set OutputName=DOG-%Architecture%
 
 if %BuildMode%==Release (
     set CompilerFlags=%CompilerFlags%
     set LinkerFlags=%LinkerFlags% -subsystem:windows
 )
 if %BuildMode%==Debug (
-    set OutputExecutable=%OutputExecutable%-Debug
+    set OutputName=%OutputName%-Debug
     set Defines=%Defines% -DBUILD_DEBUG
     set InputResource=
     set LinkerFlags=%LinkerFlags% -subsystem:console
@@ -46,3 +47,5 @@ if %Architecture%==x86 (
     set CompilerFlags=%CompilerFlags% -arch:IA32
     set LinkerFlags=%LinkerFlags%,5.1
 )
+
+set OutputExecutable=%OutputPath%%OutputName%

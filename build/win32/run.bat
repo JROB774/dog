@@ -5,8 +5,8 @@ setlocal
 
 pushd ..\..
 call build\win32\utility\buildvars.bat
-pushd binary
-%OutputExecutable%
+pushd %OutputPath%
+%OutputName%.exe
 popd
 popd
 
