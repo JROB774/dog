@@ -2,16 +2,15 @@
 <html>
   <head>
     <style type="text/css">
-      canvas { border: 0px none; background-color: white; }
+      canvas { width: 640px; height: 480px; border: 0px none; background-image: url("loading.png"); margin-bottom: 40px; }
       body { border: 0px; margin: 0px;  }
-      .canvas-wrap { border: 2px black; }
     </style>
   </head>
   <body>
-    <div class="canvas-wrap">
-      <canvas id="canvas" tabindex=-1></canvas>
-    </div>
+    <canvas id="canvas" tabindex=-1></canvas>
     <script>
+      window.onload = function () { window.focus(); }
+      window.onclick = function () { window.focus(); }
       var Module = {
         print: (function() {
           var element = document.getElementById('output');
