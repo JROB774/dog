@@ -1,16 +1,3 @@
-////////////////////////////////////////////////////////////////////////////////
-//
-// HOW TILESETS WORK:
-//
-// The first two rows of tiles are the different directional pieces that make
-// up the solid tile. Row one and two are simply alternate graphics to add
-// some more visual variance to the solid tiles. The third row are different
-// graphics randomly selected for the inner-solid tiles. These graphics have a
-// small random change of appearing instead of the default inner-solid tiles.
-// The final row is the different directional pieces for background tiles.
-//
-////////////////////////////////////////////////////////////////////////////////
-
 //                                        AARRGGBB
 GLOBAL constexpr U32 TILE_EMPTY_COLOR = 0xFFFFFFFF; // WHITE
 GLOBAL constexpr U32 TILE_SOLID_COLOR = 0xFF000000; // BLACK
@@ -21,7 +8,7 @@ GLOBAL constexpr U32 TILE_BBLOC_COLOR = 0xFF00FFFF; // CYAN
 GLOBAL constexpr U32 TILE_SPITB_COLOR = 0xFFFF00FF; // MAGENTA
 GLOBAL constexpr U32 TILE_CBOIH_COLOR = 0xFFB6FF00; // LIME
 GLOBAL constexpr U32 TILE_CBOIV_COLOR = 0xFF5B7F00; // DARK LIME
-GLOBAL constexpr U32 TILE_WALKB_COLOR = 0xFF7F0037; // DARK PINK?? idk i am color blind...
+GLOBAL constexpr U32 TILE_WALKB_COLOR = 0xFF7F0037; // DARK PINK
 GLOBAL constexpr U32 TILE_CHRGB_COLOR = 0xFFFF006E; // PINK
 
 GLOBAL constexpr int TILE_FLAG_W = 0x01;
@@ -35,7 +22,7 @@ GLOBAL constexpr int TILE_CLIP_H = 32;
 INTERNAL void LoadMap (Map& map, std::string file_name)
 {
     auto tokens = TokenizeString(file_name, '-');
-    ASSERT(tokens.size() == 3); // Tileset-Zone-Map
+    ASSERT(tokens.size() == 3); // Zone-Tileset-Map
 
     std::string background_file = "backs/" + file_name;
     map.has_background = std::filesystem::exists(gAssetPath + background_file);
@@ -177,7 +164,7 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
                     float x = (float)(ix*TILE_W);
                     float y = (float)(iy*TILE_H);
                     map.cboi.push_back(CrushBoi());
-                    CreateCrushBoi(map.cboi.back(),(float)(ix*TILE_W), (float)(iy*TILE_H), true);
+                    CreateCrushBoi(map.cboi.back(), (float)(ix*TILE_W), (float)(iy*TILE_H), true);
                 } break;
                 case (TILE_CBOIH_COLOR): // CRUSHBOI HORIZONTAL!
                 {

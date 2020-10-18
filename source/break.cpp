@@ -1,10 +1,10 @@
-INTERNAL void InitBreakableBlock()
+INTERNAL void InitBreakableBlock ()
 {
     LoadImage(gBreakableBlockImage, "break.bmp");
     LoadSound(gBreakableBlockSound, "break.wav");
 }
 
-INTERNAL void DeleteBreakableBlock()
+INTERNAL void DeleteBreakableBlock ()
 {
     FreeImage(gBreakableBlockImage);
     FreeSound(gBreakableBlockSound);

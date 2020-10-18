@@ -197,8 +197,6 @@ INTERNAL bool EntityLineOfSight (Vec2 apos, Rect abounds, Vec2 bpos, Rect bbound
     float bx = bpos.x + bbounds.x + (bbounds.w/2);
     float by = bpos.y + bbounds.y + (bbounds.h/2);
 
-    // float distance = sqrtf(powf(bx - ax, 2) + pow(by - ay, 2) * 1.0);
-
     Vec2 delta = { bx-ax, by-ay };
 
     for (int iy=0; iy<map.h; ++iy)

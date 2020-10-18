@@ -8,28 +8,24 @@
 
 INTERNAL bool IsKeyDown (SDL_Scancode code)
 {
-    // if (IsFading()) return false; // @Incomplete
     if (code < 0 || code > SDL_NUM_SCANCODES) return false;
     return (gInput.current_key_state[code] != 0);
 }
 
 INTERNAL bool IsKeyUp (SDL_Scancode code)
 {
-    // if (IsFading()) return false; // @Incomplete
     if (code < 0 || code > SDL_NUM_SCANCODES) return false;
     return (gInput.current_key_state[code] == 0);
 }
 
 INTERNAL bool IsKeyPressed (SDL_Scancode code)
 {
-    // if (IsFading()) return false; // @Incomplete
     if (code < 0 || code > SDL_NUM_SCANCODES) return false;
     return (gInput.current_key_state[code] == 1 && gInput.previous_key_state[code] == 0);
 }
 
 INTERNAL bool IsKeyReleased (SDL_Scancode code)
 {
-    // if (IsFading()) return false; // @Incomplete
-    if(code < 0 || code > SDL_NUM_SCANCODES) return false;
+    if (code < 0 || code > SDL_NUM_SCANCODES) return false;
     return (gInput.current_key_state[code] == 0 && gInput.previous_key_state[code] == 1);
 }

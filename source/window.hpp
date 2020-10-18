@@ -11,7 +11,7 @@ GLOBAL struct Window
 {
     SDL_Renderer* renderer;
     SDL_Window*   window;
-    int           width; // Used to cache size when in fullscreen!!!
+    int           width;  // Used to cache size when in fullscreen!!!
     int           height; // Used to cache size when in fullscreen!!!
     bool          fullscreen;
     bool          running;

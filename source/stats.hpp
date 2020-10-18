@@ -7,10 +7,10 @@ GLOBAL struct StatsState
 
 } gStatsState;
 
-INTERNAL void InitStats   ();
-INTERNAL void QuitStats   ();
+INTERNAL void   InitStats ();
+INTERNAL void   QuitStats ();
 INTERNAL void UpdateStats (float dt);
 INTERNAL void RenderStats (float dt);
-INTERNAL void GoToStats   ();
+INTERNAL void   GoToStats ();
 
 #endif /* STATS_HPP */

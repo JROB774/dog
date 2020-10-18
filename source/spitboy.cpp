@@ -9,18 +9,18 @@ GLOBAL Sound gSpitBoyHitSound;
 
 INTERNAL void InitSpitBoy ()
 {
-    LoadImage(gSpitBoyImage, "spitboy.bmp");
-    LoadImage(gSpitImage, "spit.bmp");
-    LoadSound(gSpitBoySpitSound, "spit.wav");
-    LoadSound(gSpitBoyHitSound, "hit.wav");
+    LoadImage(gSpitBoyImage,     "spitboy.bmp");
+    LoadImage(gSpitImage,        "spit.bmp"   );
+    LoadSound(gSpitBoySpitSound, "spit.wav"   );
+    LoadSound(gSpitBoyHitSound,  "hit.wav"    );
 }
 
 INTERNAL void QuitSpitBoy ()
 {
-    FreeImage(gSpitBoyImage);
-    FreeImage(gSpitImage);
+    FreeImage(gSpitBoyImage    );
+    FreeImage(gSpitImage       );
     FreeSound(gSpitBoySpitSound);
-    FreeSound(gSpitBoyHitSound);
+    FreeSound(gSpitBoyHitSound );
 }
 
 INTERNAL void CreateSpitBoy (SpitBoy& spitboy, float x, float y, bool flip)
@@ -64,7 +64,7 @@ INTERNAL void UpdateSpitBoy (SpitBoy& spitboy, float dt)
                 Vec2 pos = { ax-(8/2)-2, ay-(8/2)-2 };
                 Vec2 vel = { -SPITBOY_SPIT_FORCE, 0.0f }, nvel;
 
-                float spit_angle = spitboy.angle /*+ DegToRad(RandomFloatRange(-3.0f, 3.0f))*/;
+                float spit_angle = spitboy.angle;
 
                 nvel.x = vel.x * cos(spit_angle) - vel.y * sin(spit_angle);
                 nvel.y = vel.x * sin(spit_angle) + vel.y * cos(spit_angle);

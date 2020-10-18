@@ -54,7 +54,7 @@ INTERNAL void CreateParticles (ParticleType type, int minx, int miny, int maxx, 
     CreateParticles(type, minx, miny, maxx, maxy, count, count, lifetime_multiplier);
 }
 
-INTERNAL void CreateParticlesRotated (ParticleType type, int minx, int miny, int maxx, int maxy, int min_count, int max_count,  float angle, float lifetime_multiplier)
+INTERNAL void CreateParticlesRotated (ParticleType type, int minx, int miny, int maxx, int maxy, int min_count, int max_count, float angle, float lifetime_multiplier)
 {
     int count = RandomRange(min_count, max_count);
     for (int i=0; i<count; ++i)
@@ -185,7 +185,6 @@ INTERNAL void ParticleUpdatePuff (Particle& particle, float dt)
 
     particle.pos.x += particle.vel.x * dt;
     particle.pos.y += particle.vel.y * dt;
-    // particle.pos.y -= PARTICLE_PUFF_RAISE * dt;
 }
 
 // PARTICLE_TYPE_PUFF_D
@@ -205,7 +204,6 @@ INTERNAL void ParticleUpdatePuffD (Particle& particle, float dt)
 
     particle.pos.x += particle.vel.x * dt;
     particle.pos.y += particle.vel.y * dt;
-    // particle.pos.y -= PARTICLE_PUFF_RAISE * dt;
 }
 
 

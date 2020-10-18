@@ -29,10 +29,10 @@ INTERNAL void CreateDog (Dog& dog, float x, float y, Flip flip)
     dog.footstep_timer = 0.0f;
 
     LoadSound(dog.snd_footstep, "footstep.wav");
-    LoadSound(dog.snd_land, "land.wav");
-    LoadSound(dog.snd_hithead, "hithead.wav");
-    LoadSound(dog.snd_jump, "jump.wav");
-    LoadSound(dog.snd_bark, "bark.wav");
+    LoadSound(dog.snd_land,     "land.wav"    );
+    LoadSound(dog.snd_hithead,  "hithead.wav" );
+    LoadSound(dog.snd_jump,     "jump.wav"    );
+    LoadSound(dog.snd_bark,     "bark.wav"    );
     LoadSound(dog.snd_explode0, "explode0.wav");
     LoadSound(dog.snd_explode1, "explode1.wav");
 
@@ -53,15 +53,12 @@ INTERNAL void CreateDog (Dog& dog, float x, float y, Flip flip)
     dog.jump_press   = false;
     dog.jump_release = false;
     dog.action       = false;
-
-    dog.grounded = true;
-
+    dog.grounded     = true;
     dog.ledge_buffer = 0.0f;
-    dog.jump_height = 0.0f;
-
-    dog.dead_timer = 0.0f;
-    dog.dead = false;
-    dog.deaths = 0;
+    dog.jump_height  = 0.0f;
+    dog.dead_timer   = 0.0f;
+    dog.dead         = false;
+    dog.deaths       = 0;
 
     // This gets updated whenever the dog transitions from room-to-room and acts as the respawn point.
     dog.start_state    = dog.state;
@@ -163,21 +160,24 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
         }
     }
 
-    if(dog.jump_release){
+    if (dog.jump_release)
+    {
         dog.jump_height = 0;
     }
 
     // Apply a gravity force to the dog.
-    if(dog.jump_height <= 0){
+    if (dog.jump_height <= 0)
+    {
         dog.vel.y += DOG_WEIGHT * GRAVITY;
     }
 
-    if (!dog.grounded){
+    if (!dog.grounded)
+    {
         dog.ledge_buffer -= dt;
         dog.jump_height -= dt;
     }
-    else{
-        // dog.vel.y = 0.0f;
+    else
+    {
         dog.ledge_buffer = 0.08f;
     }
 
@@ -238,7 +238,6 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
                     block_broken = true;
                     ResetAnimation(dog.anim[DOG_STATE_BARK]);
                     dog.state = DOG_STATE_BARK;
-                    // PlaySound(dog.snd_bark);
                 }
             }
         }
@@ -355,7 +354,7 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
                 CreateParticles(PARTICLE_TYPE_SBONE, (int)sbone.x+8,(int)sbone.y+8,(int)sbone.x+8,(int)sbone.y+8, 1);
                 gTempBoneCollectedIds.push_back(sbone.id);
                 sbone.dead = true;
-                PlaySound(small_bone_sound);
+                PlaySound(gSmallBoneSound);
             }
         }
     }
@@ -369,8 +368,8 @@ INTERNAL void UpdateDog (Dog& dog, float dt)
                 CreateParticles(PARTICLE_TYPE_SPEC, (int)lbone.x+12,(int)lbone.y+12,(int)lbone.x+12,(int)lbone.y+12, 40,72, 1.5f);
                 gTempBoneCollectedIds.push_back(lbone.id);
                 lbone.dead = true;
-                PlaySound(small_bone_sound);
-                PlaySound(big_bone_sound);
+                PlaySound(gSmallBoneSound);
+                PlaySound(gBigBoneSound);
                 StartWinSequence();
             }
         }

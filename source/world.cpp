@@ -117,8 +117,6 @@ INTERNAL void LoadWorld (std::string start_map)
         }
     }
 
-    // printf("World: %s (%d %d)\n", start_map, gWorld.current_map_x, gWorld.current_map_y);
-
     /////////////////////////////////////////////////
 
     // Move the camera to the dog's new position in the world.
@@ -210,8 +208,6 @@ INTERNAL void WorldTransitionIfOutOfBounds ()
         }
         if (done) break;
     }
-
-    // printf("World: %s (%d %d)\n", new_map.c_str(), gWorld.current_map_x, gWorld.current_map_y);
 
     // Calculate the player's new position relative to the new room.
     if (left)

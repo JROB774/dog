@@ -41,10 +41,9 @@ struct Particle
 INTERNAL void InitParticleSystem ();
 INTERNAL void QuitParticleSystem ();
 
-INTERNAL void CreateParticles (ParticleType type, int minx, int miny, int maxx, int maxy, int min_count, int max_count, float lifetime_multiplier = 1.0f);
-INTERNAL void CreateParticles (ParticleType type, int minx, int miny, int maxx, int maxy, int count, float lifetime_multiplier = 1.0f);
+INTERNAL void CreateParticles        (ParticleType type, int minx, int miny, int maxx, int maxy, int min_count, int max_count,               float lifetime_multiplier = 1.0f);
+INTERNAL void CreateParticles        (ParticleType type, int minx, int miny, int maxx, int maxy, int     count,                              float lifetime_multiplier = 1.0f);
 INTERNAL void CreateParticlesRotated (ParticleType type, int minx, int miny, int maxx, int maxy, int min_count, int max_count,  float angle, float lifetime_multiplier = 1.0f);
-
 
 INTERNAL void UpdateParticles (float dt);
 INTERNAL void DrawParticles   (float dt);
@@ -76,7 +75,7 @@ INTERNAL void ParticleCreateMBreak   (Particle& particle);
 INTERNAL void ParticleUpdateMBreak   (Particle& particle, float dt);
 INTERNAL void ParticleCreateLBreak   (Particle& particle);
 INTERNAL void ParticleUpdateLBreak   (Particle& particle, float dt);
-INTERNAL void ParticleCreatePuffD    (Particle& particle); // this pratical takes a direction
+INTERNAL void ParticleCreatePuffD    (Particle& particle); // This particle takes a direction!
 INTERNAL void ParticleUpdatePuffD    (Particle& particle, float dt);
 
 // Base information for each type of particle.
@@ -95,19 +94,19 @@ struct ParticleBase
 
 GLOBAL const ParticleBase PARTICLE_BASE[PARTICLE_TYPE_TOTAL]
 {
-    { ParticleCreateTest,     ParticleUpdateTest,     { "effect-test0.anim", "effect-test1.anim", "effect-test2.anim", "effect-test3.anim" }, 0.5f, 2.5f }, // PARTICLE_TYPE_TEST
-    { ParticleCreateSpec,     ParticleUpdateSpec,     { "effect-spec0.anim", "effect-spec1.anim", "effect-spec2.anim", "effect-spec3.anim", "effect-spec4.anim", "effect-spec5.anim", "effect-spec6.anim", "effect-spec7.anim" }, 0.05f, 0.2f }, // PARTICLE_TYPE_SPEC
-    { ParticleCreatePuff,     ParticleUpdatePuff,     { "effect-puff0.anim", "effect-puff1.anim", "effect-puff2.anim" }, -1, -1 }, // PARTICLE_TYPE_SPEC
-    { ParticleCreateBash,     ParticleUpdateBash,     { "effect-spec4.anim", "effect-spec5.anim", "effect-spec6.anim", "effect-spec7.anim" }, 0.1f, 0.3f }, // PARTICLE_TYPE_BASH
-    { ParticleCreateExplode1, ParticleUpdateExplode1, { "effect-explode0.anim", "effect-explode1.anim", "effect-explode2.anim", "effect-explode3.anim" }, -1, -1 }, // PARTICLE_TYPE_EXPLODE1
-    { ParticleCreateSmoke1,   ParticleUpdateSmoke1,   { "effect-smoke0.anim", "effect-smoke1.anim" }, -1, -1 }, // PARTICLE_TYPE_SMOKE1
-    { ParticleCreateSmoke2,   ParticleUpdateSmoke2,   { "effect-smoke2.anim", "effect-smoke3.anim" }, -1, -1 }, // PARTICLE_TYPE_SMOKE2
-    { ParticleCreateSBone,    ParticleUpdateSBone,    { "effect-sbone.anim" }, -1, -1 }, // PARTICLE_TYPE_SBONE
-    { ParticleCreateLBone,    ParticleUpdateLBone,    { "effect-lbone.anim" }, -1, -1 }, // PARTICLE_TYPE_LBONE
-    { ParticleCreateSBreak,   ParticleUpdateSBreak,   { "effect-sbreak0.anim", "effect-sbreak1.anim", "effect-sbreak2.anim", "effect-sbreak3.anim", "effect-sbreak4.anim", "effect-sbreak5.anim", "effect-sbreak6.anim", "effect-sbreak7.anim" }, 6,6 }, // PARTICLE_TYPE_SBREAK
-    { ParticleCreateMBreak,   ParticleUpdateMBreak,   { "effect-mbreak0.anim", "effect-mbreak1.anim" }, 6,6 }, // PARTICLE_TYPE_MBREAK
-    { ParticleCreateLBreak,   ParticleUpdateLBreak,   { "effect-lbreak0.anim" }, 6,6 }, // PARTICLE_TYPE_LBREAK
-    { ParticleCreatePuffD,    ParticleUpdatePuffD,    { "effect-puff0.anim", "effect-puff1.anim", "effect-puff2.anim" }, -1, -1 } // PARTICLE_TYPE_SPEC
+{ ParticleCreateTest,     ParticleUpdateTest,     { "effect-test0.anim", "effect-test1.anim", "effect-test2.anim", "effect-test3.anim"                                                                                                     },  0.5f,   2.5f }, // PARTICLE_TYPE_TEST
+{ ParticleCreateSpec,     ParticleUpdateSpec,     { "effect-spec0.anim", "effect-spec1.anim", "effect-spec2.anim", "effect-spec3.anim", "effect-spec4.anim", "effect-spec5.anim", "effect-spec6.anim", "effect-spec7.anim"                 },  0.05f,  0.2f }, // PARTICLE_TYPE_SPEC
+{ ParticleCreatePuff,     ParticleUpdatePuff,     { "effect-puff0.anim", "effect-puff1.anim", "effect-puff2.anim"                                                                                                                          }, -1,     -1    }, // PARTICLE_TYPE_SPEC
+{ ParticleCreateBash,     ParticleUpdateBash,     { "effect-spec4.anim", "effect-spec5.anim", "effect-spec6.anim", "effect-spec7.anim"                                                                                                     },  0.1f,   0.3f }, // PARTICLE_TYPE_BASH
+{ ParticleCreateExplode1, ParticleUpdateExplode1, { "effect-explode0.anim", "effect-explode1.anim", "effect-explode2.anim", "effect-explode3.anim"                                                                                         }, -1,     -1    }, // PARTICLE_TYPE_EXPLODE1
+{ ParticleCreateSmoke1,   ParticleUpdateSmoke1,   { "effect-smoke0.anim", "effect-smoke1.anim"                                                                                                                                             }, -1,     -1    }, // PARTICLE_TYPE_SMOKE1
+{ ParticleCreateSmoke2,   ParticleUpdateSmoke2,   { "effect-smoke2.anim", "effect-smoke3.anim"                                                                                                                                             }, -1,     -1    }, // PARTICLE_TYPE_SMOKE2
+{ ParticleCreateSBone,    ParticleUpdateSBone,    { "effect-sbone.anim"                                                                                                                                                                    }, -1,     -1    }, // PARTICLE_TYPE_SBONE
+{ ParticleCreateLBone,    ParticleUpdateLBone,    { "effect-lbone.anim"                                                                                                                                                                    }, -1,     -1    }, // PARTICLE_TYPE_LBONE
+{ ParticleCreateSBreak,   ParticleUpdateSBreak,   { "effect-sbreak0.anim", "effect-sbreak1.anim", "effect-sbreak2.anim", "effect-sbreak3.anim", "effect-sbreak4.anim", "effect-sbreak5.anim", "effect-sbreak6.anim", "effect-sbreak7.anim" },  6,      6    }, // PARTICLE_TYPE_SBREAK
+{ ParticleCreateMBreak,   ParticleUpdateMBreak,   { "effect-mbreak0.anim", "effect-mbreak1.anim"                                                                                                                                           },  6,      6    }, // PARTICLE_TYPE_MBREAK
+{ ParticleCreateLBreak,   ParticleUpdateLBreak,   { "effect-lbreak0.anim"                                                                                                                                                                  },  6,      6    }, // PARTICLE_TYPE_LBREAK
+{ ParticleCreatePuffD,    ParticleUpdatePuffD,    { "effect-puff0.anim", "effect-puff1.anim", "effect-puff2.anim"                                                                                                                          }, -1,     -1    }  // PARTICLE_TYPE_SPEC
 };
 
 #endif /* PARTICLE_HPP */

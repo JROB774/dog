@@ -19,7 +19,6 @@ struct Spike
 
 INTERNAL void CreateSpike (Spike& spike, float x, float y, SpikeDir dir);
 INTERNAL void DeleteSpike (Spike& spike);
-
-INTERNAL void DrawSpike (Spike& spike);
+INTERNAL void   DrawSpike (Spike& spike);
 
 #endif /* SPIKE_HPP */
