@@ -3,7 +3,7 @@
 ### ***THIS PROJECT HAS NOW BEEN ARCHIVED!***
 
 *The project has been archived to preserve its state at the end of 2020's
-**[A Game by Its Cover Jam](https://itch.io/jam/a-game-by-its-cover-2020)** contest.
+**[A Game by Its Cover Jam](https://itch.io/jam/a-game-by-its-cover-2020)** contest.*
 
 ***Below is the original README for this repository.***
 
