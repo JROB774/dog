@@ -1,5 +1,14 @@
 # A Game by Its Cover Jam 2020 (DOG!)
 
+### ***THIS PROJECT HAS NOW BEEN ARCHIVED!***
+
+*The project has been archived to preserve its state at the end of 2020's
+**[A Game by Its Cover Jam](https://itch.io/jam/a-game-by-its-cover-2020)** contest.
+
+***Below is the original README for this repository.***
+
+---
+
 This project was made for 2020's **[A Game by Its Cover Jam](https://itch.io/jam/a-game-by-its-cover-2020)**.
 It is a simple 2D platformer game with a couple of levels and some achievements to be collected. A download
 for the game can be found over on **[itch.io](https://jrob774.itch.io/dog)**, the game is also playable in
