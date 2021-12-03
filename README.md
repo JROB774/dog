@@ -1,4 +1,4 @@
-# A Game by Its Cover Jam 2020 (DOG!)
+# DOG! (A Game by Its Cover Jam 2020)
 
 This project was made for 2020's **[A Game by Its Cover Jam](https://itch.io/jam/a-game-by-its-cover-2020)**.
 It is a simple 2D platformer game with a couple of levels and some achievements to be collected. A download
