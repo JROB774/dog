@@ -80,6 +80,7 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
                 switch (tile->type)
                 {
                     case (TILE_SOLID): tile->yoff = RandomRange(0, 1); break;
+                    default: break;
                 }
 
                 // Set the direction for solid and background tiles.
@@ -92,6 +93,7 @@ INTERNAL void LoadMap (Map& map, std::string file_name)
                         if ((ix == (map.w-1)) || (pixels[(iy)*map.w+(ix+1)] == TILE_SOLID_COLOR)) tile->xoff |= TILE_FLAG_E;
                         if ((iy == (      0)) || (pixels[(iy-1)*map.w+(ix)] == TILE_SOLID_COLOR)) tile->xoff |= TILE_FLAG_N;
                     } break;
+                    default: break;
                 }
 
                 // Special case for inner-solid tiles to add some visual variance.

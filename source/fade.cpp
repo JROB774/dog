@@ -224,6 +224,8 @@ INTERNAL void StartFade (FadeType type, FadeCallback callback)
         case (FADE_DOWN   ): StartFadeDown   (); break;
         case (FADE_LEFT   ): StartFadeLeft   (); break;
         case (FADE_SPECIAL): StartFadeSpecial(); break;
+        default:
+            break;
     }
 }
 
@@ -241,6 +243,8 @@ INTERNAL void RenderFade (float dt)
         case (FADE_DOWN   ): DoFadeDown   (dt); break;
         case (FADE_LEFT   ): DoFadeLeft   (dt); break;
         case (FADE_SPECIAL): DoFadeSpecial(dt); break;
+        default:
+            break;
     }
 }
 
