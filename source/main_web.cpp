@@ -2,7 +2,14 @@
 
 void main_loop ()
 {
-    UpdateInputState();
+    static U64 performanceFrequency = SDL_GetPerformanceFrequency();
+    static U64 lastCounter = SDL_GetPerformanceCounter();
+    static U64 endCounter = 0;
+    static U64 elapsedCounter = 0;
+
+    static float updateTimer = 0.0f;
+
+    float updateRate = 1.0f / (float)60.0f;
 
     SDL_Event event;
     while (SDL_PollEvent(&event))
@@ -10,14 +17,28 @@ void main_loop ()
         HandleInputEvents(event);
     }
 
-    ClearWindow(MakeColor(1,1,1));
-    SetViewport();
+    bool updated = false;
+    while (updateTimer >= updateRate)
+    {
+        UpdateInputState();
+        ClearWindow(MakeColor(1,1,1));
+        SetViewport();
+        UpdateApplication(updateRate);
+        RenderApplication(updateRate);
+        updateTimer -= updateRate;
+        updated = true;
+    }
 
-    UpdateApplication(gTimer.delta_time);
-    RenderApplication(gTimer.delta_time);
+    endCounter = SDL_GetPerformanceCounter();
+    elapsedCounter = endCounter - lastCounter;
+    lastCounter = SDL_GetPerformanceCounter();
 
-    RefreshWindow();
-    CapFramerate();
+    updateTimer += (float)elapsedCounter / (float)performanceFrequency;
+
+    if (updated)
+    {
+        RefreshWindow();
+    }
 }
 
 int main (int argc, char** argv)
